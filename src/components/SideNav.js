@@ -10,7 +10,7 @@ function SideNav() {
           <div className="user-panel ">
             <div className="info">
               <h2> Your Company </h2>
-            </div> 
+            </div>   
             <div className="image">
              
             </div>
