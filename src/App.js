@@ -17,8 +17,8 @@ import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-  function App() {      
-  return (      
+  function App() {       
+  return (           
 <BrowserRouter>    
      <div className="wrapper">
      <Header />
