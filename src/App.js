@@ -1,4 +1,4 @@
- import React, {} from 'react';
+ import React, {useState} from 'react';
 import './App.css';
 import Header from  "./components/Header";
 import SideNav  from  "./components/SideNav";
@@ -17,7 +17,14 @@ import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-  function App() {       
+  function App() { 
+     
+    const [token, settoken]= useState([]);
+
+      if(!token){
+        return(<Login settoken={settoken}/>);
+      }
+      
   return (           
 <BrowserRouter>    
      <div className="wrapper">
