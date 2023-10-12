@@ -13,7 +13,7 @@ function SideNav() {
             </div>   
             <div className="image">
              
-            </div>
+            </div>  
             <div className="info text-center">
               <h4>Welcome</h4>
               <p>Admin</p>
