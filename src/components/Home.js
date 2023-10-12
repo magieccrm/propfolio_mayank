@@ -19,7 +19,7 @@ function Home() {
                       <h3>
                         {" "}Rs. 535920.00 (<span className="count-number"> 59 </span>){" "}
                       </h3>
-                    </div>
+                    </div>      
                   </div>
                 </div>
                   </div>
