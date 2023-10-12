@@ -15,11 +15,11 @@ function Home() {
                   <div className="panel-body bd-panel">
                     <div className="statistic-box text-center">
                       {" "}<i className="fa fa-credit-card fa-2x" />
-                      <h4> Invoice Awaiting Payment    222</h4>
+                      <h4> Invoice Awaiting Payment11111111111111111111111111</h4>
                       <h3>
                         {" "}Rs. 535920.00 (<span className="count-number"> 59 </span>){" "}
                       </h3>
-                    </div>      
+                    </div>
                   </div>
                 </div>
                   </div>
