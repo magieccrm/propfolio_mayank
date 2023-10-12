@@ -12,11 +12,7 @@ function SideNav() {
               <h2> Your Company </h2>
             </div>
             <div className="image">
-              <img
-                src="/dist/img/avatar5.png"
-                className="img-circle elevation-2"
-                alt="User Image"
-              />
+             
             </div>
             <div className="info text-center">
               <h4>Welcome</h4>
