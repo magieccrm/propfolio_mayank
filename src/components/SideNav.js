@@ -17,7 +17,7 @@ function SideNav() {
             <div className="info text-center">
               <h4>Welcome</h4>
               <p>Admin</p>
-            </div>
+            </div>  
           </div>
 
           {/* Sidebar Menu */}
