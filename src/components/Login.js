@@ -14,7 +14,7 @@ function Login() {
     const [loginPassword,setLoginPassword]=useState("");
    const loginSubmit=(e)=>{
     e.preventDefault();
-    console.log(loginEmail)
+    
     dispatch(login(loginEmail,loginPassword));
    }
 
