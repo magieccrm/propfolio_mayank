@@ -16,12 +16,13 @@ import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
   function App() { 
-     
+    const { isAuthenticated, agent } = useSelector((state) => state.agent);
     const [token, settoken]= useState();    
 
-      if(!token){
+      if(!isAuthenticated){
         return(<Login settoken={settoken}/>);
       }
       

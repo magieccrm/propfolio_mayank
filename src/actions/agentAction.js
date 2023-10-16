@@ -5,6 +5,7 @@ import {
     CLEAR_ERRORS,
   } from "../constants/agentConstants";
 
+
   import axios from "axios";
 
   export const login=(email,password)=>async (dispatch)=>{
@@ -15,9 +16,9 @@ import {
        const {data} =await axios.post(
         `https://crm-backend-1qcz.onrender.com/api/v1/agent_login`,
         {email,password},
-        config
+        config 
         );  
-
+          
              dispatch({type:LOGIN_SUCCESS,payload:data.agent});
     }catch(error){
        dispatch({type:LOGIN_FAIL,payload:error.response.data.message});
