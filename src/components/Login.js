@@ -1,6 +1,23 @@
-import React from 'react';
+import React , {useState} from 'react';
+
+
+import { UseSelector,useDispatch } from 'react-redux';
+import {clearErrors,login} from '../actions/agentAction';
+import Loader from './Loader';
+
 
 function Login() {
+
+     const dispatch=useDispatch();
+
+    const [loginEmail,setLoginEmail]=useState("");
+    const [loginPassword,setLoginPassword]=useState("");
+   const loginSubmit=(e)=>{
+    e.preventDefault();
+    dispatch(login(loginEmail,loginPassword));
+   }
+
+
   return (
     <div class="content-wrapper">
      <div className="login-box">
@@ -10,9 +27,15 @@ function Login() {
   <div className="card">
     <div className="card-body login-card-body">
       <p className="login-box-msg">Sign in to start your session</p>
-      <form action=" " method="post">
+      <form onSubmit={loginSubmit} >
         <div className="input-group mb-3">
-          <input type="email" className="form-control" placeholder="Email" />
+          <input type="email"
+          required
+          value={loginEmail}
+          onChange={(e)=>setLoginEmail(e.target.value)}
+
+          className="form-control"
+           placeholder="Email" />
           <div className="input-group-append">
             <div className="input-group-text">
               <span className="fas fa-envelope" />
@@ -20,7 +43,12 @@ function Login() {
           </div>
         </div>
         <div className="input-group mb-3">
-          <input type="password" className="form-control" placeholder="Password" />
+          <input type="password"
+          required
+          value={loginPassword}
+          onChange={(e)=>setLoginPassword(e.target.value)}
+           className="form-control"
+            placeholder="Password" />
           <div className="input-group-append">
             <div className="input-group-text">
               <span className="fas fa-lock" />
@@ -37,19 +65,11 @@ function Login() {
             </div>
           </div>
           <div className="col-4">
-            <button type="submit" className="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" value="login" className="btn btn-primary btn-block">Sign In</button>
           </div>
         </div>
       </form>
-      <div className="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" className="btn btn-block btn-primary">
-          <i className="fab fa-facebook mr-2" /> Sign in using Facebook
-        </a>
-        <a href="#" className="btn btn-block btn-danger">
-          <i className="fab fa-google-plus mr-2" /> Sign in using Google+
-        </a>
-      </div>
+      
       <p className="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>

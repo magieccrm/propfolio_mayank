@@ -19,7 +19,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
   function App() { 
      
-    const [token, settoken]= useState(['ll']);    
+    const [token, settoken]= useState();    
 
       if(!token){
         return(<Login settoken={settoken}/>);
