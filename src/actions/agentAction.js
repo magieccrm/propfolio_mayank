@@ -15,7 +15,8 @@ import {
         `https://crm-backend-1qcz.onrender.com/api/v1/agent_login`,
         {email,password},
         config
-        );    
+        );  
+          
              dispatch({type:LOGIN_SUCCESS,payload:data.agent});
     }catch(error){
        dispatch({type:LOGIN_FAIL,payload:error.response.data.message});
