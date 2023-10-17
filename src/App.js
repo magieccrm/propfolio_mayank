@@ -19,6 +19,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
   function App() { 
+         alert(window.location.hostname);  
     const { isAuthenticated, agent } = useSelector((state) => state.agent);
     const [token, settoken]= useState();    
 
