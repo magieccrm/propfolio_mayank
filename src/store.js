@@ -10,8 +10,18 @@ const reducer= combineReducers({
       agent:agentReducer
 });
 
-let initialState={};
+let initialState={
+      
+          agent:{
+            agent: localStorage.getItem("agent")
+              ? JSON.parse(localStorage.getItem("agent"))
+              : [],
+          },
+
+};
 const middleware=[thunk];
-const store=createStore(reducer,initialState,composeWithDevTools(applyMiddleware(...middleware)));
+const store=createStore(reducer,
+      initialState,
+      composeWithDevTools(applyMiddleware(...middleware)));
 
 export default store;   

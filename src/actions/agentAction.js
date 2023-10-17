@@ -20,6 +20,7 @@ import {
         );  
           
              dispatch({type:LOGIN_SUCCESS,payload:data.agent});
+             dispatch({type:LOGIN_SUCCESS,payload:data.token});
     }catch(error){
        dispatch({type:LOGIN_FAIL,payload:error.response.data.message});
     }
