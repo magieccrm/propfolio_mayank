@@ -5,19 +5,15 @@ import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { agentReducer } from "./reducers/agentReducer";
 
+//const { isAuthenticated, agent } = useSelector((state) => state.agent);
 const reducer= combineReducers({
      // products:productReducer,
       agent:agentReducer
-});
 
+});
+  console.log(reducer)
 let initialState={
       
-          agent:{
-            agent: localStorage.getItem("agent")
-              ? JSON.parse(localStorage.getItem("agent"))
-              : [],
-          },
-
 };
 const middleware=[thunk];
 const store=createStore(reducer,

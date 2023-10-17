@@ -17,7 +17,7 @@ export const agentReducer = (state = { agent: {} }, action) => {
         ...state,
         loading: false,
         isAuthenticated: true,
-        agent: action.payload,
+        token: action.payload,
       };
     case LOGIN_FAIL:
       return {
