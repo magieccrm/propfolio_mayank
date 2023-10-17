@@ -11,7 +11,7 @@ const reducer= combineReducers({
       agent:agentReducer
 
 });
-  console.log(reducer)
+ 
 let initialState={
       
 };

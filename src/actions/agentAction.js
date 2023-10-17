@@ -2,6 +2,9 @@ import {
     LOGIN_FAIL,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
+    LOAD_USER_REQUEST,
+    LOAD_USER_SUCCESS,
+    LOAD_USER_FAIL,
     CLEAR_ERRORS,
   } from "../constants/agentConstants";
 
