@@ -588,5 +588,6 @@ table.dataTable tbody th, table.dataTable tbody td {
   max-width: 360px;
   display: block;
   margin: 0 auto;
-  padding-top: 91px
+  padding-top: 91px;
+  margin-left: 385px;
 }

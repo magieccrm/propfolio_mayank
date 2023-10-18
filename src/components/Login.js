@@ -25,7 +25,7 @@ function Login() {
     <div class="content-wrapper">
      <div className="login-box">
   <div className="login-logo">
-    <a href=" "><b>Admin</b>LTE</a>
+    <a href=" "><b>CRM</b></a>
   </div>
   <div className="card">
     <div className="card-body login-card-body">
@@ -76,9 +76,7 @@ function Login() {
       <p className="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
-      <p className="mb-0">
-        <a href=" " className="text-center">Register a new membership</a>
-      </p>
+      
     </div>
   </div>
 </div>

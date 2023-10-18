@@ -19,20 +19,24 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //import { useSelector } from "react-redux";
 
   function App() { 
+    
      
     const [isLogined, setIsLogined]= useState(false); 
-    const isTokenPresent=()=>{
+    //const [isDomain, setIsDomain] = useState([]);
+
+    const isTokenPresent=()=>{   
       if(localStorage.getItem('token')){ return true;    }
     }
-    const isTokenExpired=()=>{
+    // const isTokenExpired=()=>{
 
-    }
+    // }
     
     useEffect(() => {
      const tokenPresent= isTokenPresent()
-     const tokenExprired= isTokenExpired()
+   //  const tokenExprired= isTokenExpired()
 
-     if(tokenPresent&&!tokenExprired)
+    // if(tokenPresent&&!tokenExprired)
+     if(tokenPresent)
      {
       setIsLogined(true);
      }
