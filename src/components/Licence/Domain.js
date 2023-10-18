@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Domain() {
   return (
-    <div>Domain</div>
+    <div>This Domain is not Varify </div>
   )
 }

@@ -24,7 +24,7 @@ import Domain from './components/Licence/Domain';
 
      
     const [isLogined, setIsLogined]= useState(false); 
-    const [isDomain, setIsDomain] = useState([]);
+    const [isDomain, setIsDomain] = useState(false);
     //const [isLicenceStatus, setLicenceStatus] = useState([]);
 
     const isTokenPresent=()=>{   
@@ -48,8 +48,8 @@ import Domain from './components/Licence/Domain';
 
     useEffect( ()=>{  
       var host=window.location.hostname;
-      console.log(host)
-      const getCountry = async ()=>{
+    
+      const getDomain = async ()=>{
          
         try{
           const config={Headers:{"Content-Type":"application/json"}};
@@ -60,15 +60,15 @@ import Domain from './components/Licence/Domain';
             );  
 
 
-          const getcon = await res.json();   
-          console.log(getcon) 
+          //const getcon = await res.json();   
+          console.log(res.status) 
         //  console.log(getcon[0].status)
-          setIsDomain(getcon); 
+          setIsDomain(true); 
           }catch(error){  
             console.log(error)
         }
       }
-      getCountry();
+      getDomain();
   },[]);
 
     
