@@ -16,13 +16,16 @@ import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import axios from "axios";
+import Domain from './components/Licence/Domain';
 //import { useSelector } from "react-redux";
 
   function App() { 
-    
+
      
     const [isLogined, setIsLogined]= useState(false); 
-    //const [isDomain, setIsDomain] = useState([]);
+    const [isDomain, setIsDomain] = useState([]);
+    //const [isLicenceStatus, setLicenceStatus] = useState([]);
 
     const isTokenPresent=()=>{   
       if(localStorage.getItem('token')){ return true;    }
@@ -43,10 +46,37 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
  
     }, [])
 
+    useEffect( ()=>{  
+      var host=window.location.hostname;
+      console.log(host)
+      const getCountry = async ()=>{
+         
+        try{
+          const config={Headers:{"Content-Type":"application/json"}};
+          const res =await axios.post(
+            `https://task-mernss.onrender.com/api/v1/getByDomain/`,
+            {host},
+            config      
+            );  
+
+
+          const getcon = await res.json();   
+          console.log(getcon) 
+          console.log(getcon[0].status)
+          setIsDomain(getcon); 
+          }catch(error){  
+            console.log(error)
+        }
+      }
+      getCountry();
+  },[]);
+
     
 
    
-
+     if(!isDomain){
+      return(<Domain />);
+     }
       if(!isLogined){
         return(<Login />);
       }
