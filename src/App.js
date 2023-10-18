@@ -34,11 +34,11 @@ import Domain from './components/Licence/Domain';
 
     // }
     
-    useEffect(() => {
+    useEffect(() => {       
      const tokenPresent= isTokenPresent()
    //  const tokenExprired= isTokenExpired()
 
-    // if(tokenPresent&&!tokenExprired)
+    // if(tokenPresent&&!tokenExprired)     
      if(tokenPresent)
      {
       setIsLogined(true);
@@ -50,7 +50,7 @@ import Domain from './components/Licence/Domain';
       var host=window.location.hostname;
       console.log(host)
       const getCountry = async ()=>{
-         
+            
         try{
           const config={Headers:{"Content-Type":"application/json"}};
           const res =await axios.post(
