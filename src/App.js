@@ -18,6 +18,7 @@ import ManageUser from './components/Pages/ManageUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Domain from './components/Licence/Domain';
+import Licenceform from './components/Licence/Licenceform';
 //import { useSelector } from "react-redux";
 
   function App() { 
@@ -34,11 +35,11 @@ import Domain from './components/Licence/Domain';
 
     // }
     
-    useEffect(() => {
+    useEffect(() => {       
      const tokenPresent= isTokenPresent()
    //  const tokenExprired= isTokenExpired()
 
-    // if(tokenPresent&&!tokenExprired)
+    // if(tokenPresent&&!tokenExprired)     
      if(tokenPresent)
      {
       setIsLogined(true);
@@ -48,9 +49,9 @@ import Domain from './components/Licence/Domain';
 
     useEffect( ()=>{  
       var host=window.location.hostname;
-    
-      const getDomain = async ()=>{
-         
+      console.log(host)
+      const getCountry = async ()=>{
+            
         try{
           const config={Headers:{"Content-Type":"application/json"}};
           const res =await axios.post(
@@ -68,7 +69,7 @@ import Domain from './components/Licence/Domain';
             console.log(error)
         }
       }
-      getDomain();
+      getCountry();
   },[]);
 
     
