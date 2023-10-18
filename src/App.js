@@ -62,7 +62,7 @@ import Domain from './components/Licence/Domain';
 
           const getcon = await res.json();   
           console.log(getcon) 
-          console.log(getcon[0].status)
+        //  console.log(getcon[0].status)
           setIsDomain(getcon); 
           }catch(error){  
             console.log(error)

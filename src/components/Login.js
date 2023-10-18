@@ -23,7 +23,7 @@ function Login() {
 
   return (
     <div class="content-wrapper">
-     <div className="login-box">
+     <div className="login-box">  
   <div className="login-logo">
     <a href=" "><b>CRM</b></a>
   </div>
