@@ -21,11 +21,16 @@ import {
         {email,password},
         config 
         );  
-          
-            // dispatch({type:LOGIN_SUCCESS,payload:data.agent});
-             dispatch({type:LOGIN_SUCCESS,payload:data.token});
+        if(data.success)
+        {
+         console.log(data.token)
+         localStorage.setItem('token',data?.token)
+       // dispatch({type:LOGIN_SUCCESS,payload:data.agent});
+        dispatch({type:LOGIN_SUCCESS,payload:data.token});
+       }
+
     }catch(error){
-       dispatch({type:LOGIN_FAIL,payload:error.response.data.message});
+       dispatch({type:LOGIN_FAIL,payload:error?.response?.data?.message||'Login failed'});
     }
   }
   

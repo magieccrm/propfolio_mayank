@@ -124,11 +124,11 @@ function SideNav() {
                 </ul>
               </li>
               <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <a to="#" className="nav-link">
                   <i className="nav-icon fas fa fa fa-cog" />
                   Call  Manage  
                   <i className="fas fa-angle-left right" />
-                </Link>
+                </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
                   <Link to="/ManageEmployee" className="nav-link">

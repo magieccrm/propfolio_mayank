@@ -1,16 +1,18 @@
 import React , {useState} from 'react';
 
-
-import { UseSelector,useDispatch } from 'react-redux';
-import {clearErrors,login} from '../actions/agentAction';
-import Loader from './Loader';
+//useSelector
+import { useDispatch } from 'react-redux';
+import {login} from '../actions/agentAction';
+//import Loader from './Loader';
 
 
 function Login() {
 
+ 
+
      const dispatch=useDispatch();
 
-    const [loginEmail,setLoginEmail]=useState("");
+    const [loginEmail,setLoginEmail]=useState("");  
     const [loginPassword,setLoginPassword]=useState("");
    const loginSubmit=(e)=>{
     e.preventDefault();

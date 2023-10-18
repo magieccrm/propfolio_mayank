@@ -1,6 +1,15 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
+
 function Header() {
+
+  
+  const logout = () => {
+     
+    localStorage.removeItem('token');
+   // setIsLogined(false);
+};
+
   return (
     <div>
       {/* Navbar */}
@@ -79,7 +88,7 @@ function Header() {
               <div className="dropdown-divider" />
               <Link to="#" className="dropdown-item">
                 {/* Message Start */}
-                <i className="nav-icon far fa fa-cog" /> Logout
+                <i className="nav-icon far fa fa-cog"  /> <button onClick={logout}>logout user</button>
                 {/* Message End */}
               </Link>
             </div>
