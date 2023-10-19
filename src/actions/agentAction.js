@@ -7,6 +7,7 @@ import {
     LOAD_USER_FAIL,
     CLEAR_ERRORS,
   } from "../constants/agentConstants";
+  
 
 
   import axios from "axios";
@@ -25,8 +26,10 @@ import {
         {
          console.log(data.token)
          localStorage.setItem('token',data?.token)
+
        // dispatch({type:LOGIN_SUCCESS,payload:data.agent});
         dispatch({type:LOGIN_SUCCESS,payload:data.token});
+         
        }
 
     }catch(error){

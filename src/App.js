@@ -26,14 +26,15 @@ import Licenceform from './components/Licence/Licenceform';
      
     const [isLogined, setIsLogined]= useState(false); 
     const [isDomain, setIsDomain] = useState(false);
-    //const [isLicenceStatus, setLicenceStatus] = useState([]);
+    const [isLicenceStatus, setLicenceStatus] = useState(false);
 
     const isTokenPresent=()=>{   
       if(localStorage.getItem('token')){ return true;    }
+      else return false;
     }
     // const isTokenExpired=()=>{
 
-    // }
+    // }  
     
     useEffect(() => {       
      const tokenPresent= isTokenPresent()
@@ -43,29 +44,41 @@ import Licenceform from './components/Licence/Licenceform';
      if(tokenPresent)
      {
       setIsLogined(true);
+     }else{
+      setIsLogined(false);
      }
  
     }, [])
 
     useEffect( ()=>{  
       var host=window.location.hostname;
-      console.log(host)
+       //console.log(host);
       const getCountry = async ()=>{
             
-        try{
+        try{ 
           const config={Headers:{"Content-Type":"application/json"}};
           const res =await axios.post(
             `https://task-mernss.onrender.com/api/v1/getByDomain/`,
-            {host},
+            {domain:host},
             config      
-            );  
+            );    
 
+             if(!res.data.statue){
+             setIsDomain(false);     
+       }else{
+            setIsDomain(true);  
+            console.log(res.data.data.states)  
+            if(res.data.data.states==='inactive'){
+              setLicenceStatus(false); 
+              }else{  
+              setLicenceStatus(true); 
+             } 
+    
+       }
+        
 
-          //const getcon = await res.json();   
-          console.log(res.status) 
-        //  console.log(getcon[0].status)
-          setIsDomain(true); 
-          }catch(error){  
+      
+          }catch(error){   
             console.log(error)
         }
       }
@@ -75,23 +88,28 @@ import Licenceform from './components/Licence/Licenceform';
     
 
    
-     if(!isDomain){
-      return(<Domain />);
-     }
-      if(!isLogined){
-        return(<Login />);
+    if(!isDomain){ 
+      return(<Domain />); 
+    }else{
+     if(!isLicenceStatus){
+        return(<Licenceform />);    
       }
+      if(!isLogined){
+       return(<Login />);
+      }
+    }
+      
       
   return (           
-<BrowserRouter>    
+<BrowserRouter>   
+     
      <div className="wrapper">
      <Header />
-     <Routes>
+     <Routes> 
         
-        
-         <Route path="/" element={<Home />}></Route>
-         <Route path="/Home" element={<Home />}></Route>
-         <Route path="/login" element={<Login />}></Route>
+        {/* {!isLogined?(<Route path="/login" element={<Login />}></Route>):(<>
+          <Route path="/" element={<Home />}></Route>
+           
          <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
@@ -102,6 +120,24 @@ import Licenceform from './components/Licence/Licenceform';
          <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
          <Route path="/ManageUser" element={<ManageUser />}></Route>
          <Route path="/Setting" element={<Setting />}></Route>
+        </>)} */}
+
+         
+          <Route path="/" element={<Home />}></Route>
+          {/* <Route path="/login" element={<Login />}></Route> */}
+         <Route path="/Addlead" element={<Addlead />}></Route>
+         <Route path="/Leads" element={<Leads />}></Route>
+         <Route path="/Followupleads" element={<Followupleads />}></Route>
+         <Route path="/Forwardleads" element={<Forwardleads />}></Route>
+         <Route path="/Clients" element={<Clients />}></Route>
+         <Route path="/Productservices" element={<Productservices />}></Route>
+         <Route path="/ManageEmployee" element={<ManageEmployee />}></Route>
+         <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
+         <Route path="/ManageUser" element={<ManageUser />}></Route>
+         <Route path="/Setting" element={<Setting />}></Route>
+      
+        
+         
         </Routes>
         <SideNav />
          <Footer />

@@ -592,10 +592,10 @@ table.dataTable tbody th, table.dataTable tbody td {
   /* margin-left: 385px; */
 }
  
-/* Licence form  css */
+/*Background color*/
 #grad1 {
   background-color:#9C27B0;
-  background-image:linear-gradient(120deg, #FF4081, #81D4FA);
+  background-image: linear-gradient(120deg, #FF4081, #81D4FA);
 }
 
 /*form styles*/
@@ -833,6 +833,7 @@ select.list-dt:focus {
   width: 100%;
   object-fit: cover;
 }
+
 .installer_css{
   padding: 20px 30px;
     background: #FBFBFB;

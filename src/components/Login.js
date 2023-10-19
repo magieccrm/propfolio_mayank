@@ -3,21 +3,23 @@ import React , {useState} from 'react';
 //useSelector
 import { useDispatch } from 'react-redux';
 import {login} from '../actions/agentAction';
+// import { useNavigate } from 'react-router-dom';
 //import Loader from './Loader';
 
 
 function Login() {
 
- 
+  // const navigate = useNavigate();
 
      const dispatch=useDispatch();
 
     const [loginEmail,setLoginEmail]=useState("");  
     const [loginPassword,setLoginPassword]=useState("");
-   const loginSubmit=(e)=>{
+   const loginSubmit= async (e)=>{
     e.preventDefault();
     
-    dispatch(login(loginEmail,loginPassword));
+    await dispatch(login(loginEmail,loginPassword));
+    // navigate('/');     
    }
 
 

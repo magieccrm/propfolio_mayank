@@ -29,10 +29,10 @@ function SideNav() {
               <li className="nav-item">
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="/Home" className="nav-link">
+                    <Link to="/" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       Dashboard
-                    </Link>
+                    </Link>   
                   </li>
                   <li className="nav-item">
                     <Link to="" className="nav-link">
@@ -89,7 +89,7 @@ function SideNav() {
                 </ul>
               </li>
               <li className="nav-item">
-                <Link to="/Home" className="nav-link">
+                <Link to="/" className="nav-link">
                   <i className="nav-icon fas fa fa-home" />
                   Dashboard
                 </Link>

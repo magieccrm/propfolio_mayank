@@ -2,6 +2,9 @@ import React from "react";
 
 import {  Link } from "react-router-dom";
 function Home() {
+       
+  // const navigate = useNavigate();
+        
   return (
     <div>
       <div className="content-wrapper">
