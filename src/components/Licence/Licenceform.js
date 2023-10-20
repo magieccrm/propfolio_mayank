@@ -157,11 +157,8 @@ export default function Licenceform() {
                     <br />
                     <br />
                     <div className="row justify-content-center">
-                      <div className="col-3">
-                        <img
-                          src="https://img.icons8.com/color/96/000000/ok--v2.png"
-                          className="fit-image"
-                        />
+                      <div className="col-3">  
+                       
                       </div>
                     </div> 
                     <br />
