@@ -1,10 +1,12 @@
+import React from "react";
+import "./Loader.css";
 
-import { Audio } from  'react-loader-spinner';
-
-function Loader() {
-    return (  
-        <Audio/>
-    );
-}
+const Loader = () => {
+  return (
+    <div className="loading">
+      <div></div>
+    </div>
+  );
+};
 
 export default Loader;

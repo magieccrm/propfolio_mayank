@@ -2,24 +2,25 @@ import React , {useState} from 'react';
 
 //useSelector
 import { useDispatch } from 'react-redux';
-import {login} from '../actions/agentAction';
-// import { useNavigate } from 'react-router-dom';
-//import Loader from './Loader';
+// import {login} from '../actions/agentAction';
 
+import { useNavigate } from 'react-router-dom';
+
+//import Loader from './Loader';
+import {login1} from '../features/licenceSlice';
 
 function Login() {
 
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  
      const dispatch=useDispatch();
-
-    const [loginEmail,setLoginEmail]=useState("");  
-    const [loginPassword,setLoginPassword]=useState("");
+    const [data,setData]=useState({});
+   
    const loginSubmit= async (e)=>{
     e.preventDefault();
     
-    await dispatch(login(loginEmail,loginPassword));
-    // navigate('/');     
+    await dispatch(login1(data)); 
+     navigate('/home');     
    }
 
 
@@ -36,9 +37,9 @@ function Login() {
         <div className="input-group mb-3">
           <input type="email"
           required
-          value={loginEmail}
-          onChange={(e)=>setLoginEmail(e.target.value)}
-
+          //value={loginEmail}
+         // onChange={(e)=>setLoginEmail(e.target.value)}
+         onChange={e => setData({...data, email: e.target.value})}
           className="form-control"
            placeholder="Email" />
           <div className="input-group-append">
@@ -50,8 +51,9 @@ function Login() {
         <div className="input-group mb-3">
           <input type="password"
           required
-          value={loginPassword}
-          onChange={(e)=>setLoginPassword(e.target.value)}
+          //value={loginPassword}
+         // onChange={(e)=>setLoginPassword(e.target.value)}
+         onChange={e => setData({...data, password: e.target.value})}
            className="form-control"
             placeholder="Password" />
           <div className="input-group-append">

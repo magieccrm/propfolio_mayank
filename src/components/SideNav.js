@@ -89,7 +89,7 @@ function SideNav() {
                 </ul>
               </li>
               <li className="nav-item">
-                <Link to="/" className="nav-link">
+                <Link to="/home" className="nav-link">
                   <i className="nav-icon fas fa fa-home" />
                   Dashboard
                 </Link>

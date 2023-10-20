@@ -151,7 +151,7 @@ export default function Licenceform() {
                     defaultValue="Confirm"
                   />
                 </fieldset>
-                <fieldset>
+                <fieldset>  
                   <div className="form-card">
                     <h2 className="fs-title text-center">Success !</h2>
                     <br />
@@ -163,7 +163,7 @@ export default function Licenceform() {
                           className="fit-image"
                         />
                       </div>
-                    </div>
+                    </div> 
                     <br />
                     <br />
                     <div className="row justify-content-center">

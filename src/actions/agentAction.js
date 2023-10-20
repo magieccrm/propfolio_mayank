@@ -32,12 +32,12 @@ import {
          
        }
 
-    }catch(error){
+    }catch(error){ 
        dispatch({type:LOGIN_FAIL,payload:error?.response?.data?.message||'Login failed'});
     }
   }
   
    // clearing error  
  export const clearErrors= ()=>async (dispatch)=>{ 
-    dispatch({type:CLEAR_ERRORS});
+    dispatch({type:CLEAR_ERRORS}); 
 } 

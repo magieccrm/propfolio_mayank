@@ -19,15 +19,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Domain from './components/Licence/Domain';
 import Licenceform from './components/Licence/Licenceform';
-//import { useSelector } from "react-redux";
-
+import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import {getHostingbydomain} from './features/licenceSlice';
+import Loader from './components/Loader';
+import Main from './components/Main';
   function App() { 
-
-     
+    //  change 
+    const {hostings,loading} = useSelector((state)=>state.app);
+     //  change  
     const [isLogined, setIsLogined]= useState(false); 
     const [isDomain, setIsDomain] = useState(false);
     const [isLicenceStatus, setLicenceStatus] = useState(false);
-
+   const dispatch=useDispatch();
     const isTokenPresent=()=>{   
       if(localStorage.getItem('token')){ return true;    }
       else return false;
@@ -50,65 +54,79 @@ import Licenceform from './components/Licence/Licenceform';
  
     }, [])
 
-    useEffect( ()=>{  
-      var host=window.location.hostname;
-       //console.log(host);
-      const getCountry = async ()=>{
+  //   useEffect( ()=>{  
+  //     var host=window.location.hostname;
+      
+  //     const getCountry = async ()=>{
             
-        try{ 
-          const config={Headers:{"Content-Type":"application/json"}};
-          const res =await axios.post(
-            `https://task-mernss.onrender.com/api/v1/getByDomain/`,
-            {domain:host},
-            config      
-            );    
+  //       try{ 
+  //         const config={Headers:{"Content-Type":"application/json"}};
+  //         const res =await axios.post(
+  //           `https://task-mernss.onrender.com/api/v1/getByDomain/`,
+  //           {domain:host},
+  //           config      
+  //           );    
 
-             if(!res.data.statue){
-             setIsDomain(false);     
-       }else{
-            setIsDomain(true);  
-            console.log(res.data.data.states)  
-            if(res.data.data.states==='inactive'){
-              setLicenceStatus(false); 
-              }else{  
-              setLicenceStatus(true); 
-             } 
+  //            if(!res.data.statue){
+  //            setIsDomain(false);     
+  //      }else{
+  //           setIsDomain(true);  
+  //           console.log(res.data.data.states)  
+  //           if(res.data.data.states==='inactive'){
+  //             setLicenceStatus(false); 
+  //             }else{  
+  //             setLicenceStatus(true); 
+  //            } 
     
-       }
+  //      }
         
 
       
-          }catch(error){   
-            console.log(error)
-        }
-      }
-      getCountry();
-  },[]);
+  //         }catch(error){   
+  //           console.log(error)
+  //       }
+  //     }
+  //     getCountry();
+  // },[]);
+
+      //  useEffect(()=>{
+      //   var host=window.location.hostname;
+      //   dispatch(getHostingbydomain(host));
+      //         },[]);
 
     
+  // if(loading){
+  //   return(<Loader />); 
+  // }
+  //   if(hostings[0]===null){     
+  //     return(<Domain />);   
+  //   }else{ 
+    
+  //    let Lstatus = hostings[0]?.states;
+  //      if (Lstatus === 'inactive') {
+  //                  return(<Licenceform />);   
+  //   } 
+    
+    // if(!isLogined){   
+    //   return(<Main />);
+    //  }
+    
+  //   }
 
-   
-    if(!isDomain){ 
-      return(<Domain />); 
-    }else{
-     if(!isLicenceStatus){
-        return(<Licenceform />);    
-      }
-      if(!isLogined){
-       return(<Login />);
-      }
-    }
+
       
       
   return (           
 <BrowserRouter>   
      
      <div className="wrapper">
-     <Header />
+       {isLogined?(<Header />):(<></>)}
+     
      <Routes> 
-        
-        {/* {!isLogined?(<Route path="/login" element={<Login />}></Route>):(<>
-          <Route path="/" element={<Home />}></Route>
+       
+
+        {!isLogined?(<Route path="/" element={<Main />}></Route>):(<>
+          <Route path="/home" element={<Home />}></Route>
            
          <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
@@ -120,11 +138,11 @@ import Licenceform from './components/Licence/Licenceform';
          <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
          <Route path="/ManageUser" element={<ManageUser />}></Route>
          <Route path="/Setting" element={<Setting />}></Route>
-        </>)} */}
-
+        </>)}
          
-          <Route path="/" element={<Home />}></Route>
-          {/* <Route path="/login" element={<Login />}></Route> */}
+         
+          {/* <Route path="/" element={<Home />}></Route>
+         
          <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
@@ -134,13 +152,15 @@ import Licenceform from './components/Licence/Licenceform';
          <Route path="/ManageEmployee" element={<ManageEmployee />}></Route>
          <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
          <Route path="/ManageUser" element={<ManageUser />}></Route>
-         <Route path="/Setting" element={<Setting />}></Route>
+         <Route path="/Setting" element={<Setting />}></Route> */}
       
         
          
         </Routes>
-        <SideNav />
-         <Footer />
+        {isLogined?(<SideNav />):(<></>)}
+        
+        {isLogined?(<Footer />):(<></>)}
+         
       </div>
 </BrowserRouter>
   );
