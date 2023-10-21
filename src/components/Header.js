@@ -12,8 +12,8 @@ function Header() {
     window.location.reload(false);
 }, 500);   
             };
-
-  return (
+  
+  return (    
     <div>
       {/* Navbar */}   
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
