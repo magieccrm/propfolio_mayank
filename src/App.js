@@ -54,81 +54,18 @@ import Main from './components/Main';
  
     }, [])
 
-  //   useEffect( ()=>{  
-  //     var host=window.location.hostname;
-      
-  //     const getCountry = async ()=>{
-            
-  //       try{ 
-  //         const config={Headers:{"Content-Type":"application/json"}};
-  //         const res =await axios.post(
-  //           `https://task-mernss.onrender.com/api/v1/getByDomain/`,
-  //           {domain:host},
-  //           config      
-  //           );    
-
-  //            if(!res.data.statue){
-  //            setIsDomain(false);     
-  //      }else{
-  //           setIsDomain(true);  
-  //           console.log(res.data.data.states)  
-  //           if(res.data.data.states==='inactive'){
-  //             setLicenceStatus(false); 
-  //             }else{  
-  //             setLicenceStatus(true); 
-  //            } 
-    
-  //      }
-        
-
-      
-  //         }catch(error){   
-  //           console.log(error)
-  //       }
-  //     }
-  //     getCountry();
-  // },[]);
-
-      //  useEffect(()=>{
-      //   var host=window.location.hostname;
-      //   dispatch(getHostingbydomain(host));
-      //         },[]);
-
-    
-  // if(loading){
-  //   return(<Loader />); 
-  // }
-  //   if(hostings[0]===null){     
-  //     return(<Domain />);   
-  //   }else{ 
-    
-  //    let Lstatus = hostings[0]?.states;
-  //      if (Lstatus === 'inactive') {
-  //                  return(<Licenceform />);   
-  //   } 
-    
-    // if(!isLogined){   
-    //   return(<Main />);
-    //  }
-    
-  //   }
-
+  
 
       
       
   return (           
 <BrowserRouter>   
-     
      <div className="wrapper">
        {isLogined?(<Header />):(<></>)}
-     
      <Routes> 
-       
-
         {!isLogined?(<Route path="/" element={<Main />}></Route>):(<>
-          <Route path="/home" element={<Home />}></Route>
-           
-         <Route path="/Addlead" element={<Addlead />}></Route>
+          <Route path="/home" element={<Home />}></Route>  
+          <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
          <Route path="/Forwardleads" element={<Forwardleads />}></Route>
@@ -139,10 +76,8 @@ import Main from './components/Main';
          <Route path="/ManageUser" element={<ManageUser />}></Route>
          <Route path="/Setting" element={<Setting />}></Route>
         </>)}
-         
-         
-          {/* <Route path="/" element={<Home />}></Route>
-         
+          
+           {/* <Route path="/" element={<Home />}></Route>
          <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
@@ -152,13 +87,10 @@ import Main from './components/Main';
          <Route path="/ManageEmployee" element={<ManageEmployee />}></Route>
          <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
          <Route path="/ManageUser" element={<ManageUser />}></Route>
-         <Route path="/Setting" element={<Setting />}></Route> */}
-      
-        
-         
-        </Routes>
+         <Route path="/Setting" element={<Setting />}></Route> */}   
+         </Routes>
         {isLogined?(<SideNav />):(<></>)}
-        
+          
         {isLogined?(<Footer />):(<></>)}
          
       </div>

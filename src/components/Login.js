@@ -1,27 +1,40 @@
 import React , {useState} from 'react';
 
-//useSelector
-import { useDispatch } from 'react-redux';
-// import {login} from '../actions/agentAction';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import { useNavigate } from 'react-router-dom';
 
-//import Loader from './Loader';
 import {login1} from '../features/licenceSlice';
+import {  toast } from 'react-toastify';
+
 
 function Login() {
 
-  const navigate = useNavigate();
+const message=useSelector((state)=>state.app); 
   
+  const navigate = useNavigate();
+   
      const dispatch=useDispatch();
     const [data,setData]=useState({});
    
-   const loginSubmit= async (e)=>{
+   const loginSubmit= async (e)=>{  
     e.preventDefault();
     
-    await dispatch(login1(data)); 
-     navigate('/home');     
-   }
+    const aaaa=await dispatch(login1(data)); 
+      
+       if(aaaa.payload.success===true){
+           toast.success("login Successfully!");
+         navigate('/home');  
+         setTimeout(()=>{ 
+          window.location.reload(false);
+      }, 500); 
+       }else{  
+        toast.warn(aaaa.payload); 
+       }
+    
+   }  
 
 
   return (
@@ -37,11 +50,10 @@ function Login() {
         <div className="input-group mb-3">
           <input type="email"
           required
-          //value={loginEmail}
-         // onChange={(e)=>setLoginEmail(e.target.value)}
-         onChange={e => setData({...data, email: e.target.value})}
+           onChange={e => setData({...data, email: e.target.value})}
           className="form-control"
            placeholder="Email" />
+           
           <div className="input-group-append">
             <div className="input-group-text">
               <span className="fas fa-envelope" />
@@ -51,8 +63,6 @@ function Login() {
         <div className="input-group mb-3">
           <input type="password"
           required
-          //value={loginPassword}
-         // onChange={(e)=>setLoginPassword(e.target.value)}
          onChange={e => setData({...data, password: e.target.value})}
            className="form-control"
             placeholder="Password" />
@@ -67,7 +77,7 @@ function Login() {
             <div className="icheck-primary">
               <input type="checkbox" id="remember" />
               <label htmlFor="remember">
-                Remember Me
+                Remember Me  
               </label>
             </div>
           </div>

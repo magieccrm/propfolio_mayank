@@ -5,12 +5,11 @@ import axios from "axios";
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
     const response= await axios.post("https://task-mernss.onrender.com/api/v1/getByDomain/", { domain:host });
-     
+   
     try {
-        // const result=await response;   
-      ///  console.log(response)  
-        return response.data.hosting; 
-    } catch (error) {  
+         return response.data.hosting; 
+    } catch (error) { 
+          
        return rejectWithValue(error);
     }
 })  
@@ -21,22 +20,43 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
 export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
     const response=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/agent_login",{
            method:"POST", 
-           headers:{ 
+           headers:{   
             "Content-Type":"application/json",
            }, 
            body:JSON.stringify(data)
     });
-    try {
-        const result=await response.json();
-        
-        console.log(result) 
-        localStorage.setItem('token',result?.token)
-        return result;
-    } catch (error) {
-       return rejectWithValue(error);
-    }
-          
+    const result=await response.json();
+         
+
+         if(result.success===true){
+            localStorage.setItem('token',result?.token)
+            return result;
+        }else{  
+            return rejectWithValue(result.message);
+        } 
+    
 });
+
+export const licenceactive=createAsyncThunk("licenceactive",async(data,{rejectWithValue})=>{
+     
+    const response=await fetch(`https://task-mernss.onrender.com/api/v1/editHosting/${data._id}`,{
+           method:"PUT",
+           headers:{ 
+            "Content-Type":"application/json",
+           },
+           body:JSON.stringify(data)  
+    });
+    const result=await response.json();
+      //console.log(result);  
+
+      if(result.success===true){
+         
+        return result;
+    }else{  
+        return rejectWithValue(result.message);
+    }  
+    
+})
 
 
 
@@ -48,7 +68,8 @@ export const allhosting=createSlice({
     initialState:{
        hostings:[],
        loading:false,  
-       error:null, 
+       error:null,
+       message:'', 
     },
     extraReducers:{
       // create hosting
@@ -63,21 +84,36 @@ export const allhosting=createSlice({
            state.loading=false;
            state.hostings=action.payload; 
        }, 
-       
+       //// login dashbord 
 
        [login1.pending]:(state) =>{
         state.loading=true; 
-    },
+            },
     [login1.fulfilled]:(state,action) =>{
         state.loading=false;
-        //state.hostings.push(action.payload); 
-       // state.hostings=action.payload; 
+        
+        state.message=action.payload.message; 
     },
     [login1.rejected]:(state,action) =>{
-        state.loading=false;
-        state.hostings=action.payload; 
+        state.loading=false;     
+        
+        state.message=action.payload.message; 
     }, 
-    
+
+    ////inactive to active account 
+    [licenceactive.pending]:(state) =>{
+        state.loading=true; 
+            },
+    [licenceactive.fulfilled]:(state,action) =>{
+        state.loading=false;
+        
+      //  state.message=action.payload.message; 
+    },
+    [licenceactive.rejected]:(state,action) =>{
+        state.loading=false;     
+        
+      //  state.message=action.payload.message; 
+    }, 
 
        },
 })

@@ -1,17 +1,17 @@
 import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+
 function Header() {
-
+  const navigate = useNavigate();
   
-  const logout = () => {
-
-  //  const navigate = useNavigate();
-     
-    localStorage.removeItem('token');
-   // setIsLogined(false);
-  // navigate('/main')
-};
+  const Logout = () => {
+     localStorage.removeItem('token');
+        navigate('/')     
+  setTimeout(()=>{ 
+    window.location.reload(false);
+}, 500);   
+            };
 
   return (
     <div>
@@ -91,7 +91,7 @@ function Header() {
               <div className="dropdown-divider" />
               <Link to="#" className="dropdown-item">
                 {/* Message Start */}
-                <i className="nav-icon far fa fa-cog"  /> <button onClick={logout}>logout user</button>
+                <i className="nav-icon far fa fa-cog"  /> <button onClick={Logout}>logout user</button>
                 {/* Message End */}
               </Link>
             </div>
