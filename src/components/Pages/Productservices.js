@@ -1,6 +1,6 @@
 import React from "react";
-
 function productservices() {
+ 
   return (
     <div>
       <div className="content-wrapper">
@@ -14,7 +14,7 @@ function productservices() {
               <div className="btn-group">
                 <p>Lead Information </p>
               </div>
-              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome"> Add New</button>
+              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary"   id="add-new"> Add New</button>
     </div>
 <div classname="panel-body">
   <div className="panel-body">
@@ -118,6 +118,110 @@ function productservices() {
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div className="panel-body" id="clients-edit-wrapper">
+  <div className="col-sm-12 col-md-8 col-xs-12">
+    <div id="add-new-service" style={{ display: "none" }}>
+      <form method="post" id="addService" name="addService">
+        <div className="cardses">
+           <div className="card-headers">
+            <div className="row">
+              <div className="col-md-4 pd-top">
+                <lable>Add New Services</lable>
+              </div>
+              <div className="col-md-8">
+                <div className="form-group">
+                  <input type="hidden" name="pid" id="pid" defaultValue="" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="product_name"
+                    placeholder="Product & Service Name"
+                    defaultValue=""
+                    required=""
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 pd-top">
+                <lable>Setup fee</lable>
+              </div>
+              <div className="col-md-8">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="setupfee"
+                    placeholder="Setup fee"
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 pd-top">
+                <lable>Payment</lable>
+              </div>
+              <div className="col-md-8">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Payment"
+                    name="payment"
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 pd-top">
+                <lable>Recurring Payment</lable>
+              </div>
+              <div className="col-md-8">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Recurring Payment"
+                    name="recurring"
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 pd-top">
+                <lable>Billing Cycle</lable>
+              </div>
+              <div className="col-md-8">
+                <div className="form-group">
+                  <select className="form-control" name="billing-cycle">
+                    <option value="">Billing cycle</option>
+                    <option value="onetime">One Time</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="semesterly">Semesterly</option>
+                    <option value="yearly">Yearly</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-md-12 text-right">
+                <div className="resets-button">
+                  <button
+                    type="button"
+                      className="btn btn-danger mr-3 close-div" 
+                >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"  
+                     className="btn btn-primary"
+                  >
+                    Submit
+                  </button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

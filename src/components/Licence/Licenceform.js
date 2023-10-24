@@ -34,54 +34,57 @@ export default function Licenceform() {
       <>
   {/* MultiStep Form */}
   <div className="container-fluid" id="grad1">
-    <div className="row justify-content-center mt-0">
-      <div className="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
-        <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
+    <div className="row  ">
+      <div className="col-12 col-sm-4 col-md-4 offset-4 col-lg-4 text-center p-0 mt-3 mb-2">
+        <div className="card px-0 margintop  pb-0   mb-3">
           <h2>
             <strong>Set Database Account</strong>
           </h2>
-          <p>Fill all form field to go to next step</p>
-          <div className="row">
-            <div className="col-md-12 mx-0">
+          
               <form id="msform"  onSubmit={saveData} ref={formRef}>
               
                   <div className="form-card">
                     <h2 className="fs-title">Account Information</h2>
-                    <input type="text" name="username"
+                    <div className="form-group">
+                    <input type="text" name="username" className="form-control"
                     required
                     onChange={e => setData({...data, username: e.target.value})}
                     placeholder="database username" />
-                    <input type="password" 
+                    </div>
+                     <div className="form-group">
+                    <input type="password" className="form-control"
                     required
                     onChange={e => setData({...data, password: e.target.value})}
                     name="password" placeholder="Database Password" />
-   
-                     <input type="hidden" 
+                   </div>
+                   <div className="form-group">
+                     <input type="hidden" className="form-control"
                     required
                     value={message.hostings[0]?._id}
                     onChange={e => setData({...data, _id: e.target.value})}
                     name="_id" placeholder="_id" />
-
-
-                    <input type="text" 
+                    </div>
+                    <div className="form-group">
+                    <input type="text" className="form-control"
                     required
                     onChange={e => setData({...data, database: e.target.value})}
                     name="name" placeholder="Database Name" />
-
-              <input type="hidden" 
+                     </div>
+                     <div className="form-group">
+                    <input type="hidden" className="form-control"
                     required
                    value="active"
                     name="states"  /> 
                    
-                     
+                    </div> 
                     
                   </div>
-                <button type="submit" class="btn btn-primary">Activate </button>
-              
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary">Activate </button>
+                </div>
                
               </form>
-            </div>
-          </div>
+            
         </div>
       </div>
     </div>

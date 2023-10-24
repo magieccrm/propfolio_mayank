@@ -239,12 +239,7 @@ label {
   margin-bottom: 5px;
   font-weight: 700;
 }
-@media (min-width: 768px) {
-  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
-    transition: margin-left .3s ease-in-out;
-    margin-left: 215px;
-  }
-}
+
 select {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
@@ -592,17 +587,13 @@ table.dataTable tbody th, table.dataTable tbody td {
   /* margin-left: 385px; */
 }
  
-/*Background color*/
-#grad1 {
-  background-color:#9C27B0;
-  background-image: linear-gradient(120deg, #FF4081, #81D4FA);
-}
+ 
 
 /*form styles*/
 #msform {
   text-align: center;
   position: relative;
-  margin-top: 20px;
+  
 }
 
 #msform fieldset .form-card {
@@ -641,22 +632,24 @@ table.dataTable tbody th, table.dataTable tbody td {
   text-align: left;
   color: #9E9E9E;
 }
-
+.form-group{
+  margin-bottom: 15px!important;
+}
 #msform input, #msform textarea {
   padding: 0px 8px 4px 8px;
-  border: none;
-  border-bottom: 1px solid #ccc;
   border-radius: 0px;
-  margin-bottom: 25px;
   margin-top: 2px;
-  width: 100%;
+  max-width: 350px;
   box-sizing: border-box;
-  font-family: montserrat;
   color: #2C3E50;
   font-size: 16px;
   letter-spacing: 1px;
+  display: block;
+  margin: 0 auto;
 }
-
+ .margintop{
+  margin-top: 100px;
+ }
 #msform input:focus, #msform textarea:focus {
   -moz-box-shadow: none !important;
   -webkit-box-shadow: none !important;
@@ -683,6 +676,7 @@ table.dataTable tbody th, table.dataTable tbody td {
 #msform .action-button:hover, #msform .action-button:focus {
   box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
 }
+ 
 
 /*Previous Buttons*/
 #msform .action-button-previous {
@@ -728,7 +722,7 @@ select.list-dt:focus {
   color: #2C3E50;
   margin-bottom: 10px;
   font-weight: bold;
-  text-align: left;
+  text-align: center;
 }
 
 /*progressbar*/
@@ -840,4 +834,29 @@ select.list-dt:focus {
     border: 1px solid lightgray;
     color: red!important;
     text-align: center;
+}
+
+
+@media (min-width: 768px) {
+  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    transition: margin-left .3s ease-in-out;
+    margin-left: 215px;
+  }
+  .margintop {
+    margin-top:100px;
+  }
+  
+}
+@media (max-width: 768px) {
+  .offset-4 {
+    margin-left:0%!important;
+  }
+  .margintop  h2{
+    font-size: 23px;
+  }
+  #msform {
+    text-align: center;
+    position: relative;
+    padding: 10px;
+  }
 }
