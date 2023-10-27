@@ -6,11 +6,16 @@ import Home from  "./components/Home";
 import Footer from  "./components/Footer";
 import Login from './components/Login';
 import Addlead from './components/Pages/Addlead';
- import Leads from './components/Pages/Leads';
+import Leads from './components/Pages/Leads';
 import Followupleads from './components/Pages/Followupleads';
 import Forwardleads from './components/Pages/Forwardleads';
 import Clients from './components/Pages/Clients';
 import Setting from './components/Pages/Setting';
+import Sms from './components/Pages/Sms';
+import Report from './components/Pages/Report';
+import Createinvoice from './components/Pages/Createinvoice';
+import Addclient from './components/Pages/Addclient';
+import Listinvoice from './components/Pages/Listinvoice';
 import Productservices from './components/Pages/Productservices';
 import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
@@ -75,6 +80,11 @@ import Main from './components/Main';
          <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
          <Route path="/ManageUser" element={<ManageUser />}></Route>
          <Route path="/Setting" element={<Setting />}></Route>
+         <Route path="/Sms" element={<Sms />}></Route>
+         <Route path="/Report" element={<Report />}></Route>
+         <Route path="/Listinvoice" element={<Listinvoice />}></Route>
+         <Route path="/Createinvoice" element={<Createinvoice />}></Route>
+         <Route path="/Addclient" element={<Addclient />}></Route>
         </>)}
           
            {/* <Route path="/" element={<Home />}></Route>

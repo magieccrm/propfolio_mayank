@@ -79,7 +79,7 @@ function SideNav() {
                     </Link>
                   </li>
                   <li className="nav-item">
-                  <Link to="pages/layout/collapsed-sidebar.html"
+                  <Link to=" "
                       className="nav-link"
                     >
                       <i className="far fa-circle nav-icon" />
@@ -174,25 +174,25 @@ function SideNav() {
                 </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="pages/UI/general.html" className="nav-link">
+                    <Link to="/Listinvoice" className="nav-link">
                       <p> List Invoice</p>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="pages/UI/icons.html" className="nav-link">
+                    <Link to="/Createinvoice" className="nav-link">
                       <p>Create Open invoice</p>
                     </Link>
                   </li>
                 </ul>
               </li>
               <li className="nav-item">
-                <Link to=" " className="nav-link">
+                <Link to="/Report" className="nav-link">
                   <i className="nav-icon far fa-file" />
                   Report
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to=" " className="nav-link">
+                <Link to="/Sms" className="nav-link">
                   <i className="nav-icon far fa-envelope" />
                   Sms
                 </Link>
@@ -202,7 +202,7 @@ function SideNav() {
                   <i className="nav-icon far fa fa-cog" />
                   Setting
                 </Link>
-              </li>
+              </li>  
             </ul>
           </nav>
         </div>

@@ -121,9 +121,9 @@ function productservices() {
     </div>
   </div>
 </div>
-<div className="panel-body" id="clients-edit-wrapper">
+<div className="panel-body" id="add-new-service" style={{ display: "none" }}>
   <div className="col-sm-12 col-md-8 col-xs-12">
-    <div id="add-new-service" style={{ display: "none" }}>
+    <div>
       <form method="post" id="addService" name="addService">
         <div className="cardses">
            <div className="card-headers">

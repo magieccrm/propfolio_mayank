@@ -18,6 +18,55 @@ function Clients() {
             </div>
             
    <div className="panel-body">
+   <div className="cards">
+    <div className="card-headers">
+    <form action method="get" className="advS" style={{display: 'block'}}>
+    <div className="row">
+      <div className="col-md-2">
+        <div className="searchbuy">
+          <button type="button" id="advS" className="btns exports"><i className="fa fa-search" /> Advance</button>
+        </div>
+      </div>
+     
+        <div className="col-md-2 pd-02">
+          <div className="form-group">
+            <input type="text" className="form-control" name="c_name" placeholder="Client Name"  />
+          </div>
+        </div>
+        <div className="col-md-2 pd-02">
+          <div className="form-group">
+            <input type="text" className="form-control" name="c_company" placeholder="Company Name"  />
+          </div>
+        </div>
+        <div className="col-md-2 pd-02">
+          <div className="form-group">
+            <input type="text" className="form-control" name="c_mobile" placeholder="Contact No" />
+          </div>
+        </div>
+        <div className="col-md-2 pd-02">
+          <div className="form-group">
+            <select name="product" className="form-control">
+              <option value>Product/Service</option>
+               <option value="Mzc=">Addon</option>
+              <option value="NTQ=">Book Printing  Binding</option>
+              <option value="NTc=">Business Loan</option>
+              <option value="NDg=">Cloud Hosting</option>
+              <option value="NDI=">CRM</option>
+              
+            </select>
+          </div>
+        </div>
+        <div className="col-md-2 pd-02" style={{float: 'right'}}>
+          <div className="form-group">
+            <button type="submit" className="btn btnss btn-success">Submit</button>
+          </div>
+        </div>
+        </div>
+  
+      </form>
+      </div>  
+</div>
+
   <table id="example" className="table table-striped nowrap" style={{width: '100%'}}>
   <thead>
     <tr>
