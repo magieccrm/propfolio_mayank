@@ -1,9 +1,39 @@
-import React from "react";
+import React ,{ useState } from "react";
 import {  Link } from "react-router-dom";
 // import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
 
 function SideNav() {
 
+
+  ////// Hide And Show/////
+  const [line, setline] = useState("none");
+  const [lead1, setlead] = useState("none");
+  const [callManageshow, setcallManageshow] = useState("none");
+      const openclose=()=>{
+        if(line==='none'){
+          setline("block")
+        }else{
+          setline("none")
+        }
+
+      }
+      const lead=()=>{
+        if(lead1==='none'){
+          setlead("block")
+        }else{
+          setlead("none")
+        }
+
+      }
+      const callManage=()=>{
+        if(callManageshow==='none'){
+          setcallManageshow("block")
+        }else{
+          setcallManageshow("none")
+        }
+
+      }
+////// Hide And Show/////
 
   return (
     <div>
@@ -12,7 +42,7 @@ function SideNav() {
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}
           <div className="user-panel ">
-            <div className="info">
+            <div className="info">  
               <h2> Your Company </h2>
             </div>   
             <div className="image">
@@ -99,12 +129,12 @@ function SideNav() {
                 </Link>
               </li>
               <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <Link to="#" className="nav-link" onClick={lead}>
                   <i className="nav-icon fas fa fa-user-md" />
                   Lead
                   <i className="fas fa-angle-left right" />
                 </Link>
-                <ul className="nav nav-treeview">
+                <ul className="nav nav-treeview" style={{display:lead1}}>
                   <li className="nav-item">
                   <Link to="/Addlead" className="nav-link">
                       <p>Add Lead</p>
@@ -129,12 +159,12 @@ function SideNav() {
               </li>
               
               <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <Link to="#" className="nav-link" onClick={callManage}>
                   <i className="nav-icon fas fa fa fa-cog" />
                   Call  Manage  
                   <i className="fas fa-angle-left right" />
                 </Link>
-                <ul className="nav nav-treeview">
+                <ul className="nav nav-treeview" style={{display:callManageshow}}>
                   <li className="nav-item">
                   <Link to="/ManageEmployee" className="nav-link">
                       <p>Employees</p>
@@ -175,11 +205,11 @@ function SideNav() {
 
              
               <li className="nav-item">
-                <Link to="#" className="nav-link">
+                <Link to="#" className="nav-link" onClick={openclose}>
                   <i className="nav-icon far fa-credit-card"  />
                   Invoice <i className="fas fa-angle-left right" />
                 </Link>
-                <ul className="nav nav-treeview">
+                <ul className="nav nav-treeview " style={{display:line}}>
                   <li className="nav-item">
                     <Link to="/Listinvoice" className="nav-link">
                       <p> List Invoice</p>

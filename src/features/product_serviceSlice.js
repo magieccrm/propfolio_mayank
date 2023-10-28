@@ -70,52 +70,13 @@ export const productservice=createSlice({
     },    
     extraReducers:{
       // create add 
-       [addproductservice.pending]:(state) =>{
-           state.loading=true; 
-       },
-       [addproductservice.fulfilled]:(state,action) =>{
-           state.loading=false;
-             
-             state.ProductService.productservice.push(action.payload.productservice);    
-         
-       },
-       [addproductservice.rejected]:(state,action) =>{
-           state.loading=false;
-           state.ProductService=action.payload; 
-       }, 
+     
        /// get Alll lead Source
-       [getAllStatus.pending]:(state) =>{
-        state.loading=true; 
-       },
-       [getAllStatus.fulfilled]:(state,action) =>{
-        state.loading=false;
-        state.Statusdata=action.payload; 
-       // state.message=action.payload.message; 
-       },
-       [getAllStatus.rejected]:(state,action) =>{
-        state.loading=false;
-        state.Statusdata=action.payload; 
-       }, 
-   ///  DeleteLeadSource
-
-      [deleteStatus.pending]:(state) =>{
-      state.loading=true; 
-      },
-        [deleteStatus.fulfilled]:(state,action) =>{
-         state.loading=false;
-          const {_id} =action.payload.leadstatus; 
-         if(_id){  
-             state.Statusdata.leadstatus=state.Statusdata.leadstatus.filter((ele)=>ele._id!==_id);  
-         }
-       },
-      [deleteStatus.rejected]:(state,action) =>{
-      state.loading=false;
-      state.Statusdata=action.payload; 
-      }, 
+    
       
 
 
        },
 })
-
-export default  leadStatus.reducer;
+   
+export default  productservice.reducer;

@@ -1,16 +1,25 @@
 import React , { useState ,useEffect} from "react";
+import { useDispatch } from "react-redux";
+// import {addProductService} from "../../features/product_serviceSlice";
 
 function Productservices() {
   const [line, setline] = useState("none");
-
+  const [data,setData]=useState({});
+    const dispatch=useDispatch();
   const showForm=(e)=>{
     if(line==='none'){
       setline("block")
     }else{
       setline("none")
     }
-      
-  }
+   }
+   const newdata=(e)=>{
+    setData({...data,[e.target.name]:e.target.value});
+   }
+   const productsubmit=async(e)=>{  
+       e.preventDefault();
+      // const aaaa=await dispatch(addProductService(data));
+   }
 
         
   return (
@@ -136,7 +145,7 @@ function Productservices() {
 <div className="panel-body" id="add-new-service" style={{ display: line }}>
   <div className="col-sm-12 col-md-8 col-xs-12">
     <div>
-      <form method="post" id="addService" name="addService">
+      <form  onSubmit={productsubmit}>
         <div className="cardses">
            <div className="card-headers">
             <div className="row">  
@@ -145,14 +154,16 @@ function Productservices() {
               </div>
               <div className="col-md-8">
                 <div className="form-group">
-                  <input type="hidden" name="pid" id="pid" defaultValue="" />
+                 
                   <input
                     type="text"
                     className="form-control"
                     name="product_name"
+                    required
+                    onChange={newdata} 
                     placeholder="Product & Service Name"
                     defaultValue=""
-                    required=""
+                   
                   />
                 </div>
               </div>
@@ -163,6 +174,8 @@ function Productservices() {
                 <div className="form-group">
                   <input
                     type="text"
+                    required
+                    onChange={newdata} 
                     className="form-control"
                     name="setupfee"
                     placeholder="Setup fee"
@@ -177,6 +190,8 @@ function Productservices() {
                 <div className="form-group">
                   <input
                     type="text"
+                    required
+                    onChange={newdata} 
                     className="form-control"
                     placeholder="Payment"
                     name="payment"
@@ -191,6 +206,8 @@ function Productservices() {
                 <div className="form-group">
                   <input
                     type="text"
+                    required
+                    onChange={newdata} 
                     className="form-control"
                     placeholder="Recurring Payment"
                     name="recurring"
@@ -203,7 +220,7 @@ function Productservices() {
               </div>
               <div className="col-md-8">
                 <div className="form-group">
-                  <select className="form-control" name="billing-cycle">
+                  <select className="form-control" name="billing-cycle" onChange={newdata} required>
                     <option value="">Billing cycle</option>
                     <option value="onetime">One Time</option>
                     <option value="monthly">Monthly</option>
@@ -215,14 +232,9 @@ function Productservices() {
               </div>
               <div className="col-md-12 text-right">
                 <div className="resets-button">
+                 
                   <button
-                    type="button"
-                      className="btn btn-danger mr-3 close-div" 
-                >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"  
+                    type="submit"  
                      className="btn btn-primary"
                   >
                     Submit
