@@ -15,7 +15,7 @@ function productservices() {
                 <p>Lead Information </p>
               </div>
               <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary"   id="add-new"> Add New</button>
-    </div>
+    </div>  
 <div classname="panel-body">
   <div className="panel-body">
     <div className="col-sm-12 col-md-12 col-xs-12">
