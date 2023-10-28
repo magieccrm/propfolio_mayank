@@ -107,7 +107,7 @@ function productservices() {
                   <td>Web Hosting</td>
                   <td>Yearly</td>
                   <td>Rs. 2000</td>
-                  <td>
+                  <td>   
                     <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
                     <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
                   </td>
