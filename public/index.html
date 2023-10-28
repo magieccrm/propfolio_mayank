@@ -48,7 +48,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-
+<script src="%PUBLIC_URL%/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="%PUBLIC_URL%/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="%PUBLIC_URL%/plugins/datatables-bs4/js/dataTables.responsive.min.js"></script>
 <!-- ChartJS -->
@@ -86,17 +86,16 @@
  <script src="%PUBLIC_URL%/plugins/datatables/adminlte.min.js"></script>
  <script src="%PUBLIC_URL%/plugins/moment/moment.min.js"></script>
  <script src="%PUBLIC_URL%/plugins/fullcalendar/main.js"></script>
- <script src="%PUBLIC_URL%/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
  <!-- <script src="%PUBLIC_URL%/dist/js/demo.js"></script> -->
  <script>
    
   
   
-      function toggleTab(e){
-        var hrefVal = $(e).attr('href');
-        $('.nav-tabs li').removeClass('active');
-        $('.nav-tabs li[data-active="'+hrefVal+'"]').addClass('active');
-    }
+    //   function toggleTab(e){
+    //     var hrefVal = $(e).attr('href');
+    //     $('.nav-tabs li').removeClass('active');
+    //     $('.nav-tabs li[data-active="'+hrefVal+'"]').addClass('active');
+    // }
 
      
 </script>
@@ -177,24 +176,9 @@
     
   });
 });
- 
-// $(".close-div").on("click", function(event) {
-//      alert('ok')
-//     $("#clients-edit-wrapper").remove();
-//     event.preventDefault();
-// });
-</script>
-<script>
-  $(document).ready(function() {
-  $('#show-hidden-menu').click(function() {
-    $('.hidden-menu').slideToggle("slow");
-    // Alternative animation for example
-    // slideToggle("fast");
-  });
-});
-</script>
-<script>
+
 
 </script>
+
   </body>
 </html>

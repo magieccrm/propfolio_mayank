@@ -1,8 +1,50 @@
-import React from "react";
 
+import React , { useState ,useEffect} from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import {addleadSource,getAllLeadSource,DeleteLeadSource} from '../../features/leadSource';
+import {  toast } from 'react-toastify';
+import { addStatus,getAllStatus,deleteStatus } from "../../features/statusSlice";
 function Setting() {
+
+  const {leadSourcedata} = useSelector((state)=>state.leadSource);
+  const {Statusdata} = useSelector((state)=>state.StatusData); 
+    const dispatch=useDispatch();
+  const [data,setData]=useState({});
+  const [status,setStatus]=useState({});
+   const  submitleadsource=async(e)=>{
+     e.preventDefault();
+     const aaaa= await dispatch(addleadSource(data));
+     if(aaaa.payload.success===true){   
+     
+      toast.success(aaaa.payload.message);
+     }else{  
+   toast.warn(aaaa.payload.message);   
+  }
+   }
+   const submitStatus=async(e)=>{
+         e.preventDefault();
+         const aaaa=await dispatch(addStatus(status));
+         console.log(aaaa)
+         if(aaaa.payload.success===true){       
+     
+          toast.success("Status add Successfully");
+         }else{   
+       toast.warn("There are some problem");   
+      }
+   }
+
+   const deleteLeadSource=async(_id)=>{
+         const aaaa=await dispatch(DeleteLeadSource(_id))
+         
+   }
+  
+
+   useEffect(()=>{
+    dispatch(getAllLeadSource());  
+    dispatch(getAllStatus())
+ },[])  ;
+
   return (
- 
   <div className="content-wrapper"> {/* Main content */}
     <section className="content py-2 pt-3">
       <div className="container">
@@ -1083,7 +1125,7 @@ function Setting() {
   </div>
   <div className="panel-body">
     <div className="cards">
-      <form method="post" name="add_lead_source" id="add_lead_source">
+      <form   onSubmit={submitleadsource} >
         <div className="row">
           <div className="col-md-2 pd-top">
             <button
@@ -1099,32 +1141,26 @@ function Setting() {
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <input
-                type="hidden"
-                name="lsid"
-                id="lshiddenid"
-                defaultValue=""
-                autoComplete="off"
-              />
+             
               <input
                 type="text"
-                name="lead_source"
-                id="lead_source"
+                name="lead_source_name"
+                required
+         onChange={e => setData({...data, lead_source_name:e.target.value})}
                 className="form-control"
                 placeholder="Lead Source"
                 autoComplete="off"
-              />
-              <span id="lserror" className="text-danger" />
-              <span id="lssuccess" className="text-success" />
+              />  
+             
             </div>
           </div>
           <div className="col-md-2">
             <div className="resets-button">
               <button
                 type="submit"
-                name="submit"
+                
                  className="btn btn-success form-control"
-                autoComplete="off" placeholder="Submit"
+               
                >Submit</button>
             </div>
           </div>
@@ -1141,293 +1177,50 @@ function Setting() {
           <table className="table table-bordered table-hover" id="lstable">
             <thead>
               <tr>
-                <th>Lead Source Name</th>
+                <th>S.N.</th>
                 <th>
-                  Action
-                  <button
-                    style={{ float: "right" }}
-                    className="btn btn-sm btn-success "
-                    type="submit"
-                  >
-                    Sort
-                  </button>
+                Lead Source Name
+                </th>
+                <th>
+                Action
                 </th>
               </tr>
             </thead>
             <tbody id="lead_source_list">
-              <tr data-fire="lMTU=">
-                <td>
-                  <span data-take="lMTU=">Outbound call</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={6}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTU=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
 
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTU=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMTc=">
-                <td>
-                  <span data-take="lMTc=">Existing Client</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTc="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={7}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTc=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTc=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMTg=">
-                <td>
-                  <span data-take="lMTg=">FaceBook lead</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTg="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={8}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTg=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTg=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjQ=">
-                <td>
-                  <span data-take="lMjQ=">Website</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjQ="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={9}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjQ=');"
-                    className="btn btn-info btn-xs"
-                  >
-                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjQ=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjU=">
-                <td>
-                  <span data-take="lMjU=">google</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={10}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjU=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjU=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span data-take="lMjY=">99acre</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjY="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={11}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjY=');"
-                    className="btn btn-info btn-xs"
-                  >
-                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjY=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjc=">
-                <td>
-                  <span data-take="lMjc=">housing</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="Mjc="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={12}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('Mjc=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('Mjc=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjg=">
-                <td>
-                  <span data-take="lMjg=">Sulekha</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="Mjg="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={13}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('Mjg=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('Mjg=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
+             
+               {   leadSourcedata.leadSource?.map((country1, index) => {
+        var sr=index+1;
+        return (<tr data-fire="lMTU=">
+           <td>  
+          <span data-take="lMTU=">{sr}</span>
+          
+        </td>
+        <td>  
+          <span data-take="lMTU=">{country1.lead_source_name}</span>
+          
+        </td>
+        <td>
+          {/* <button
+            type="button"
+            onclick="editLs('MTU=');"
+            className="btn btn-info btn-xs"
+          >
+            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+
+          </button> */}
+          <button
+            type="button"
+            onClick={(e)=>{ deleteLeadSource(country1._id)}}
+            className="btn btn-danger btn-xs"
+          >
+            <i className="fa fa-trash" />
+          </button>
+        </td>
+      </tr>
+     )
+      })}
+              
             </tbody>
           </table>
         </form>
@@ -1445,39 +1238,28 @@ function Setting() {
   </div>
   <div className="panel-body">
     <div className="cards">
-      <form method="post" name="add_lead_source" id="add_lead_source">
+      <form  onSubmit={submitStatus}>
         <div className="row">
           <div className="col-md-2 pd-top">
-            <button
-              type="button"
-              id="addleadsource"
-              className="btn btn-sm btn-success form-control"
-            >
-              Add New
-            </button>
+           
           </div>
           <div className="col-md-2 pd-top">
             <label>Status</label>
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <input
-                type="hidden"
-                name="lsid"
-                id="lshiddenid"
-                defaultValue=""
-                autoComplete="off"
-              />
+              
               <input
                 type="text"
-                name="lead_source"
+                name="status_name"
                 id="lead_source"
+                required
+                onChange={e=>setStatus({...status,status_name:e.target.value})}
                 className="form-control"
                 placeholder="Status"
                 autoComplete="off"
               />
-              <span id="lserror" className="text-danger" />
-              <span id="lssuccess" className="text-success" />
+              
             </div>
           </div>
           <div className="col-md-2">
@@ -1486,7 +1268,7 @@ function Setting() {
                 type="submit"
                 name="submit"
                  className="btn btn-success form-control"
-                autoComplete="off" placeholder="Submit"
+               
                >Submit</button>
             </div>
           </div>
@@ -1503,293 +1285,49 @@ function Setting() {
           <table className="table table-bordered table-hover" id="lstable">
             <thead>
               <tr>
+              <th>S.N.</th>
                 <th>Status Name</th>
-                <th>
-                  Action
-                  <button
-                    style={{ float: "right" }}
-                    className="btn btn-sm btn-success "
-                    type="submit"
-                  >
-                    Sort
-                  </button>
-                </th>
+                <th> Action</th>
               </tr>
             </thead>
             <tbody id="lead_source_list">
-              <tr data-fire="lMTU=">
-                <td>
-                  <span data-take="lMTU=">Outbound call</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={6}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
+
+            {Statusdata.leadstatus?.map((state,key)=>{
+                
+              return(
+<tr data-fire="lMTU=">
+              <td>
+                  <span data-take="lMTU=">{key+1}</span>
                 </td>
                 <td>
-                  <button
+                  <span data-take="lMTU=">{state.status_name}</span>
+                </td>
+                <td>
+                  {/* <button
                     type="button"
                     onclick="editLs('MTU=');"
                     className="btn btn-info btn-xs"
                   >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
 
-                  </button>
+                  </button> */}
                   <button
                     type="button"
-                    onclick="deleteLs('MTU=');"
+                    onClick={e=>{dispatch(deleteStatus(state._id))}}  
                     className="btn btn-danger btn-xs"
                   >
                     <i className="fa fa-trash" />
                   </button>
                 </td>
               </tr>
-              <tr data-fire="lMTc=">
-                <td>
-                  <span data-take="lMTc=">Existing Client</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTc="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={7}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTc=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTc=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMTg=">
-                <td>
-                  <span data-take="lMTg=">FaceBook lead</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTg="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={8}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTg=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTg=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjQ=">
-                <td>
-                  <span data-take="lMjQ=">Website</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjQ="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={9}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjQ=');"
-                    className="btn btn-info btn-xs"
-                  >
-                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjQ=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjU=">
-                <td>
-                  <span data-take="lMjU=">google</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={10}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjU=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjU=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span data-take="lMjY=">99acre</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjY="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={11}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjY=');"
-                    className="btn btn-info btn-xs"
-                  >
-                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjY=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjc=">
-                <td>
-                  <span data-take="lMjc=">housing</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="Mjc="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={12}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('Mjc=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('Mjc=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjg=">
-                <td>
-                  <span data-take="lMjg=">Sulekha</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="Mjg="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={13}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('Mjg=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('Mjg=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
+              );
+                
+
+
+            })}
+
+              
+            
             </tbody>
           </table>
         </form>

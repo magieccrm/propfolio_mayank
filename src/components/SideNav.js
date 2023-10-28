@@ -1,6 +1,10 @@
 import React from "react";
 import {  Link } from "react-router-dom";
+// import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
+
 function SideNav() {
+
+
   return (
     <div>
       <side className="main-sidebar sidebar-dark-primary elevationes-4">
@@ -29,7 +33,7 @@ function SideNav() {
               <li className="nav-item">
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="/" className="nav-link">
+                    <Link to="/home" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       Dashboard
                     </Link>   
@@ -123,6 +127,7 @@ function SideNav() {
                   </li>
                 </ul>
               </li>
+              
               <li className="nav-item">
               <Link to="#" className="nav-link">
                   <i className="nav-icon fas fa fa fa-cog" />
@@ -167,9 +172,11 @@ function SideNav() {
                   Product & Services
                 </Link>
               </li>
+
+             
               <li className="nav-item">
                 <Link to="#" className="nav-link">
-                  <i className="nav-icon far fa-credit-card" />
+                  <i className="nav-icon far fa-credit-card"  />
                   Invoice <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview">

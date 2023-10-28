@@ -1,15 +1,19 @@
 import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-
+import {  toast } from 'react-toastify';
 function Header() {
   const navigate = useNavigate();
   
   const Logout = () => {
+  
      localStorage.removeItem('token');
-        navigate('/')     
+    
   setTimeout(()=>{ 
-    window.location.reload(false);
+    // toast.warn('Logout Successfully'); 
+   window.location.reload(false);
+   navigate("/");
+    
 }, 500);   
             };
   
@@ -89,9 +93,9 @@ function Header() {
                 {/* Message End */}
               </Link>
               <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item">
+              <Link to="/" className="dropdown-item" onClick={Logout}>
                 {/* Message Start */}
-                <i className="nav-icon far fa fa-cog"  /> <button onClick={Logout}>logout user</button>
+                <i className="nav-icon far fa fa-cog"  /> logout user
                 {/* Message End */}
               </Link>
             </div>
