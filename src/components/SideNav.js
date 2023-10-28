@@ -33,7 +33,7 @@ function SideNav() {
         }
 
       }
-////// Hide And Show/////
+////// Hide And Show///////
 
   return (
     <div>

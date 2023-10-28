@@ -1,25 +1,59 @@
 import React , { useState ,useEffect} from "react";
-import { useDispatch } from "react-redux";
-// import {addProductService} from "../../features/product_serviceSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import {addProductService , getAllProductService } from "../../features/product_serviceSlice";
+// import getAllProductService from "../../features/product_serviceSlice"
+import {  toast } from 'react-toastify';
+
 
 function Productservices() {
-  const [line, setline] = useState("none");
-  const [data,setData]=useState({});
-    const dispatch=useDispatch();
+const {ProductService} = useSelector((state)=>state.ProductService); 
+
+
+  const dispatch=useDispatch();
+
+  //// For Show Product And Service
+ 
+useEffect(()=>{
+  dispatch(getAllProductService());  
+ 
+},[])  ;  
+    
+//// For Show Product And Service
+
+  
+///// Product And Service Add 
+    const [data,setData]=useState({});
+    const newdata=(e)=>{
+      setData({...data,[e.target.name]:e.target.value});
+     }
+     const productsubmit=async(e)=>{  
+         e.preventDefault();
+        const aaaa=await dispatch(addProductService(data));
+  
+        if(aaaa.payload.success===true){   
+       
+          toast.success(aaaa.payload.message);
+         }else{  
+       toast.warn(aaaa.payload.message);   
+      }
+     }
+///// Product And Service Add 
+
+
+
+  
+/// add form show 
+    const [line, setline] = useState("none");
   const showForm=(e)=>{
     if(line==='none'){
       setline("block")
-    }else{
+    }else{  
       setline("none")
     }
-   }
-   const newdata=(e)=>{
-    setData({...data,[e.target.name]:e.target.value});
-   }
-   const productsubmit=async(e)=>{  
-       e.preventDefault();
-      // const aaaa=await dispatch(addProductService(data));
-   }
+   } 
+   /// add form show 
+
+  
 
         
   return (
@@ -47,92 +81,34 @@ function Productservices() {
               <thead>
                 <tr>
                   <th className="list-check">
-                    <input type="checkbox" className="check" />
+                    S.N.
                   </th>
                   <th>Product Name</th>
                   <th>Billing Cycle</th>
                   <th>Price</th>
                   <th>Action</th>
-                </tr>
+                </tr> 
               </thead>
               <tbody>
-                <tr>
+      {
+         ProductService?.map((ProductService1,key)=>{
+               return(
+<tr>
                   <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="NTg=" /></td>
-                  <td>Python Course</td>
-                  <td>Onetime</td>
-                  <td>Rs. 5000</td>
+                   {key+1}</td>
+                  <td>{ProductService1?.product_service?.product_service_name}</td>
+                  <td>{ProductService1?.product_service?.billing_cycle}</td>
+                  <td>Rs.  {ProductService1?.product_service?.payment}</td> 
                   <td>
-                    <a href=" " className="btn btn-info btn-xs"> <i className="fa fa-pencil-square-o"></i></a>
+                    {/* <a href=" " className="btn btn-info btn-xs"> <i className="fa fa-pencil-square-o"></i></a> */}
                     <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
                   </td>
                 </tr>
-                <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="NTc=" /></td>
-                  <td>Business Loan</td>
-                  <td>Onetime</td>
-                  <td>Rs. 0</td>
-                  <td>
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="NTY=" /></td>
-                  <td>Personal Loan</td>
-                  <td>Onetime</td>
-                  <td>Rs. 0</td>
-                  <td>
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="NTU=" /></td>
-                  <td>Website Maintenance Qtly</td>
-                  <td>Quarterly</td>
-                  <td>Rs. 0</td>
-                  <td>
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
-               <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="MjU=" /></td>
-                  <td>Web Designing  Development</td>
-                  <td>Onetime</td>
-                  <td>Rs. 10000</td>
-                  <td>
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="MjQ=" /></td>
-                  <td>Domain registration</td>
-                  <td>Yearly</td>
-                  <td>Rs. 850</td>
-                  <td>
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="list-check">
-                    <input type="checkbox" className="checkme" defaultValue="MjM=" /></td>
-                  <td>Web Hosting</td>
-                  <td>Yearly</td>
-                  <td>Rs. 2000</td>
-                  <td>   
-                    <a href=" " className="btn btn-info btn-xs"><i className="fa fa-pencil-square-o"></i></a>
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
-                </tr>
+               )
+     })}
+
+                
+              
               </tbody>
             </table>
             <button type="button"   className="btn btn-sm btn-danger">Delete</button>
@@ -158,7 +134,7 @@ function Productservices() {
                   <input
                     type="text"
                     className="form-control"
-                    name="product_name"
+                    name="product_service_name"
                     required
                     onChange={newdata} 
                     placeholder="Product & Service Name"
@@ -173,11 +149,11 @@ function Productservices() {
               <div className="col-md-8">
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="Number"
                     required
                     onChange={newdata} 
                     className="form-control"
-                    name="setupfee"
+                    name="set_up_fee"
                     placeholder="Setup fee"
                     defaultValue=""
                   />
@@ -189,7 +165,7 @@ function Productservices() {
               <div className="col-md-8">
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="Number"
                     required
                     onChange={newdata} 
                     className="form-control"
@@ -205,7 +181,7 @@ function Productservices() {
               <div className="col-md-8">
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="number"
                     required
                     onChange={newdata} 
                     className="form-control"
@@ -220,7 +196,7 @@ function Productservices() {
               </div>
               <div className="col-md-8">
                 <div className="form-group">
-                  <select className="form-control" name="billing-cycle" onChange={newdata} required>
+                  <select className="form-control" name="billing_cycle" onChange={newdata} required>
                     <option value="">Billing cycle</option>
                     <option value="onetime">One Time</option>
                     <option value="monthly">Monthly</option>
