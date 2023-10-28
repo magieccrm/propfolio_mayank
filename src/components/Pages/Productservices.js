@@ -1,6 +1,18 @@
-import React from "react";
-function productservices() {
- 
+import React , { useState ,useEffect} from "react";
+
+function Productservices() {
+  const [line, setline] = useState("none");
+
+  const showForm=(e)=>{
+    if(line==='none'){
+      setline("block")
+    }else{
+      setline("none")
+    }
+      
+  }
+
+        
   return (
     <div>
       <div className="content-wrapper">
@@ -14,7 +26,7 @@ function productservices() {
               <div className="btn-group">
                 <p>Lead Information </p>
               </div>
-              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary"   id="add-new"> Add New</button>
+              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary"  onClick={showForm}  id="add-new"> Add New</button>
     </div>  
 <div classname="panel-body">
   <div className="panel-body">
@@ -121,13 +133,13 @@ function productservices() {
     </div>
   </div>
 </div>
-<div className="panel-body" id="add-new-service" style={{ display: "none" }}>
+<div className="panel-body" id="add-new-service" style={{ display: line }}>
   <div className="col-sm-12 col-md-8 col-xs-12">
     <div>
       <form method="post" id="addService" name="addService">
         <div className="cardses">
            <div className="card-headers">
-            <div className="row">
+            <div className="row">  
               <div className="col-md-4 pd-top">
                 <lable>Add New Services</lable>
               </div>
@@ -236,4 +248,4 @@ function productservices() {
     </div>
   );
 }
-export default productservices;
+export default Productservices;

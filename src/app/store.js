@@ -9,6 +9,7 @@ import statusSlice from "../features/statusSlice";
       app:licence,
       leadSource:leadSource,
       StatusData:statusSlice,
+      
    },
 });
 
