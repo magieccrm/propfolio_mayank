@@ -1,6 +1,41 @@
-import React from "react";
-
+import React , { useState ,useEffect} from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import {getAllProductService} from "../../features/product_serviceSlice";
+import {getAllLeadSource} from '../../features/leadSource';
+import {getAllCountry} from "../../features/country_stateSlice";
+import {getStatebycountry} from "../../features/getStateByCountrySlice";
+import {  toast } from 'react-toastify';
+import { getAllStatus } from "../../features/statusSlice";
 function Addlead() {
+  const [leaddata,setleaddata]=useState({});
+  const {ProductService} = useSelector((state)=>state.ProductService); 
+  const {leadSourcedata} = useSelector((state)=>state.leadSource);
+  const {Statusdata} = useSelector((state)=>state.StatusData); 
+  const {CountryState} = useSelector((state)=>state.Country_State); 
+  const {StateByCountry}=useSelector((state)=>state.getStateByCountry)
+    
+  const dispatch=useDispatch(); 
+
+
+
+  //// For Show Product And Service
+ 
+useEffect(()=>{
+  dispatch(getAllProductService());  
+  dispatch(getAllLeadSource());  
+  dispatch(getAllStatus())
+  dispatch(getAllCountry())
+},[])  ;  
+    
+    const submitLead=(e)=>{
+         alert('ok')
+    }
+
+    const getStateByCountry=(data)=>{
+   
+    dispatch(getStatebycountry(data));
+    }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -13,13 +48,13 @@ function Addlead() {
               <div className="btn-group">
                 <p>Lead Information </p>
               </div>
-              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome"> Add Custom Field</button>
+              {/* <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome"> Add Custom Field</button> */}
                
             </div>
             
    <div className="panel-body">
            
-            <form action name="addlead" id="addlead" method="post">
+            <form  onSubmit={submitLead}>
    <div className="row">   
     <input type="hidden" name="client_id"  autoComplete="off" />
     <div className="col-md-6  row mob-left-right col-xs-12">
@@ -28,7 +63,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="full_name"   placeholder="Full Name" className="form-control" tabIndex={1} required="required" />
+          <input type="text" name="full_name"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Full Name" className="form-control" tabIndex={1} required="required" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -38,7 +73,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="email" name="email_id"    placeholder="Email Id" className="form-control"   />
+          <input type="email" name="email_id"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}   placeholder="Email Id" className="form-control"   />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -48,7 +83,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="company_name"  placeholder="Company Name" className="form-control ui-autocomplete-input" tabIndex={3} autoComplete="off" />
+          <input type="text" name="company_name"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Company Name" className="form-control ui-autocomplete-input" tabIndex={3} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -58,19 +93,25 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="website"  placeholder="Website" className="form-control" tabIndex={4} autoComplete="off" />
+          <input type="text" name="website" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Website" className="form-control" tabIndex={4} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
     <div className="col-md-6 row mob-left-right col-xs-12">
       <div className="col-md-4 pd-top mobile-hids">
-        <label htmlFor="service">Service </label>
+        <label htmlFor="service">Product & Service </label>
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="service"  className="form-control" value tabIndex={5}>
+          <select name="service" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  className="form-control" >
             <option value selected="selected">Select</option>
-            <option value={37}>Addon</option>
+            { ProductService.product_service?.map((service,key)=>{
+                return(
+                  <option value={service._id}>{service.product_service_name}</option>
+                )
+               })
+            }
+          
           </select>
           <span className="text-danger ferror"> </span> </div>
       </div>
@@ -81,7 +122,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="contact_no"   placeholder="Contact No" className="form-control" tabIndex={6} required="required" autoComplete="off" />
+          <input type="text" name="contact_no" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}   placeholder="Contact No" className="form-control" tabIndex={6} required="required" autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -91,7 +132,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="alternative_no"  placeholder="Alternative No" className="form-control" tabIndex={7} autoComplete="off" />
+          <input type="text" name="alternative_no"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Alternative No" className="form-control" tabIndex={7} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -101,7 +142,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="position"   placeholder="Position" className="form-control" tabIndex={8} autoComplete="off" />
+          <input type="text" name="position"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Position" className="form-control" tabIndex={8} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -111,9 +152,16 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="lead_source"  className="form-control" value tabIndex={9}>
+          <select name="lead_source" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  className="form-control" >
             <option value selected="selected">Select</option>
-            <option value={15}>Outbound call</option>
+          
+            { leadSourcedata.leadSource?.map((leadsource,key)=>{
+                return(
+                  <option value={leadsource._id}>{leadsource.lead_source_name}</option>
+                )
+               })
+            }
+
           </select>
           <span className="text-danger ferror"> </span> </div>
       </div>
@@ -124,7 +172,7 @@ function Addlead() {
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="lead_cost"  placeholder="Lead Cost" className="form-control" tabIndex={10} autoComplete="off" />
+          <input type="text" name="lead_cost"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Lead Cost" className="form-control" tabIndex={10} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -138,9 +186,17 @@ function Addlead() {
             <label htmlFor="country">Country </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <select name="country"  className="form-control" value tabIndex={11}>
+            <select name="country"  
+        
+            onChange={e => getStateByCountry(e.target.value)}
+            className="form-control"  tabIndex={11}>
               <option value selected="selected">Select</option>
-              <option value={1}>Afghanistan </option>
+              {CountryState?.country?.map((country1,key)=>{
+                return (
+                  <option value={country1.short_name}>{country1.name} </option>
+                )
+              })}
+             
             </select>
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
@@ -153,11 +209,15 @@ function Addlead() {
             <label htmlFor="state">State </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <select name="state"  className="form-control" value tabIndex={13}>
+            <select name="state"  className="form-control"  >
               <option value selected="selected">Select</option>
-              <option value={1}>Andhra Pradesh</option>
-              <option value={2}>Arunachal Pradesh</option>
-            </select>
+               { StateByCountry?.state?.map((state1,key)=>{
+                return(
+                  <option value={state1._id}>{state1.name}</option>
+                )
+               })
+               }
+             </select>
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="city">City </label>
@@ -203,18 +263,18 @@ function Addlead() {
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="status">Status <span className="text-danger">*</span> </label>
-          </div>
+          </div>  
           <div className="col-md-8 mob-left-right col-xs-12 form-group">
-            <select name="status" className="form-control" value tabIndex={18} required="required">
+            <select name="status" className="form-control" required="required">
               <option value selected="selected">Select</option>
-              <option value={11}>Pending</option>
-              <option value={7}>Call Back</option>
-              <option value={3}>Meeting</option>
-              <option value={6}>Invoice Send</option>
-              <option value={10}>Won</option>
-              <option value={5}>Lost</option>
-              <option value={12}>Not Attempt</option>
-              <option value={13}>Transferred</option>
+             
+              { Statusdata.leadstatus?.map((status,key)=>{
+                return(
+                  <option value={status._id}>{status.status_name}</option>
+                )
+               })
+            }
+              
             </select>
             <span className="text-danger ferror"> </span> </div>
         </div>
@@ -223,22 +283,22 @@ function Addlead() {
      </div>
 	 
 	
-    <div className="col-sm-6 row mob-left-right col-xs-12">
-      <div className="col-sm-12 row mob-left-right col-xs-12">
+    <div className="col-sm-6 row mob-left-right col-xs-12 ">
+      <div className="col-sm-12 row mob-left-right col-xs-12 d-none">
         <div className="address_information">
           <div className="address-sec"> Clinic Detail </div>
         </div>
         
       </div>
      
-    <div className="col-sm-12 row mob-left-right col-xs-12">
+    <div className="col-sm-12 row mob-left-right col-xs-12 d-none">
       <div className="col-sm-12 row mob-left-right col-xs-12">
         <div className="address_information">
           <div className="address-sec"> Test 1 </div>
         </div>
         
       </div>
-	   <div className="col-sm-12 row mob-left-right col-xs-12">
+	   <div className="col-sm-12 row mob-left-right col-xs-12 d-none">
         <div className="address_information">
           <div className="address-sec">Followup</div>
         </div>
@@ -272,11 +332,11 @@ function Addlead() {
         </label>
       </div>
       <input type="hidden" name="isAddNew"    autoComplete="off" />
-      <div className="col-md-4 col-xs-6">
+      {/* <div className="col-md-4 col-xs-6">
         <button type="button"  className="btn btnes btn-sm btn-primary fontsize" tabIndex={20}>Save and Add another</button>
-      </div>
+      </div> */}
       <div className="col-md-3 col-xs-6">
-        <button type="button"  className="btn btnes btn-sm btn-primary pull-right fontsize" tabIndex={20}>Submit</button>
+        <button type="submit"  className="btn btnes btn-sm btn-primary pull-right fontsize" tabIndex={20}>Submit</button>
       </div>
      </div>
      </div> 

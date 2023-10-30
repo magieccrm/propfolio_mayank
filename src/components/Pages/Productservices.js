@@ -1,6 +1,6 @@
 import React , { useState ,useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import {addProductService , getAllProductService } from "../../features/product_serviceSlice";
+import {addProductService,getAllProductService, deleteProductService  } from "../../features/product_serviceSlice";
 // import getAllProductService from "../../features/product_serviceSlice"
 import {  toast } from 'react-toastify';
 
@@ -91,18 +91,25 @@ useEffect(()=>{
               </thead>
               <tbody>
       {
-         ProductService?.map((ProductService1,key)=>{
+         
+         ProductService.product_service?.map((ProductService1,key)=>{
                return(
 <tr>
                   <td className="list-check">
-                   {key+1}</td>
-                  <td>{ProductService1?.product_service?.product_service_name}</td>
-                  <td>{ProductService1?.product_service?.billing_cycle}</td>
-                  <td>Rs.  {ProductService1?.product_service?.payment}</td> 
+                   {key+1}</td> 
+                  <td>{ProductService1?.product_service_name}</td>
+                  <td>{ProductService1?.billing_cycle}</td>
+                  <td>Rs.  {ProductService1?.payment}</td> 
                   <td>
                     {/* <a href=" " className="btn btn-info btn-xs"> <i className="fa fa-pencil-square-o"></i></a> */}
-                    <a   href=" " className="btn btn-danger btn-xs"><i className="fa fa-trash" /></a>
-                  </td>
+                    <button
+                    type="button"
+                    onClick={e=>{dispatch(deleteProductService(ProductService1._id))}}  
+                    className="btn btn-danger btn-xs"
+                  >
+                    <i className="fa fa-trash" />
+                  </button>  </td>
+
                 </tr>
                )
      })}

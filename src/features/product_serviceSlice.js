@@ -14,7 +14,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
                body:JSON.stringify(data)
         })      
         const result=await responce.json();
-         console.log(result)
+     
       if(result.success===true){  
          
          return result;
@@ -27,32 +27,32 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    ////////get app status 
    export const getAllProductService=createAsyncThunk("getAllProductService",async(dara,{rejectWithValue})=>{
         
-//        const resource=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_product_service/")
-//        const result=await resource.json();
-       
-//     if(result.success===true){             
-//         return result;    
-//    }else{    
-//        return rejectWithValue(result.message);
-//    }  
+       const resource=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_product_service/")
+       const result=await resource.json();
+      // console.log(result.success) 
+    if(result.success===true){             
+        return result;     
+   }else{    
+       return rejectWithValue(result.message);
+   }  
    })
 
-   ///////delete status 
+   /////// deleteProduct_service 
 
-//    export const deleteStatus=createAsyncThunk("deleteStatus",async(_id,{rejectWithValue})=>{
+   export const deleteProductService=createAsyncThunk("deleteProductService",async(_id,{rejectWithValue})=>{
          
-//     const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_lead_status/${_id}`,{
-//                       method:"DELETE",
-//         })
+    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_product_service/${_id}`,{
+                      method:"DELETE",
+        })
 
-//         const  result =await responce.json();
+        const  result =await responce.json();
         
-//         if(result.success===true){     
-//           return result;    
-//      }else{  
-//          return rejectWithValue(result.message);
-//      }  
-//  })
+        if(result.success===true){     
+          return result;    
+     }else{  
+         return rejectWithValue(result.message);
+     }  
+ })
 
 
 
@@ -77,7 +77,8 @@ export const productservice=createSlice({
       },
       [addProductService.fulfilled]:(state,action) =>{
         state.loading=false; 
-        state.ProductService.push(action.payload);      
+          //console.log(action.payload)
+        state.ProductService.product_service.push(action.payload.product_service);      
       },
       [addProductService.rejected]:(state,action) =>{
         state.loading=false;
@@ -96,6 +97,18 @@ export const productservice=createSlice({
         state.loading=false;
         state.ProductService=action.payload; 
        }, 
+
+       //// deleteProduct_service 
+       [deleteProductService.pending]:(state)=>{
+        state.loading=true;  
+       },
+       [deleteProductService.fulfilled]:(state,action)=>{
+        state.loading=false;  
+        const {_id} =action.payload.product_service; 
+        if(_id){
+           state.ProductService.product_service=state.ProductService.product_service.filter((ele)=>ele._id!==_id);  
+      }
+       }
 
 
        },
