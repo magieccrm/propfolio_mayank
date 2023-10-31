@@ -8,6 +8,12 @@ function Header() {
   const Logout = () => {
   
      localStorage.removeItem('token');
+     localStorage.removeItem('user_id');
+     localStorage.removeItem('agent_name');
+     localStorage.removeItem('agent_email');
+     localStorage.removeItem('agent_mobile');
+     localStorage.removeItem('role');
+
     
   setTimeout(()=>{ 
     // toast.warn('Logout Successfully'); 

@@ -29,7 +29,13 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
          
 
          if(result.success===true){
-            localStorage.setItem('token',result?.token)
+            localStorage.setItem('token',result?.token);
+            localStorage.setItem('user_id',result?.agent?._id);
+            localStorage.setItem('agent_name',result?.agent?.agent_name);
+            localStorage.setItem('agent_email',result?.agent?.agent_email);
+            localStorage.setItem('agent_mobile',result?.agent?.agent_mobile);
+            localStorage.setItem('role',result?.agent?.role);
+          
             return result;
         }else{  
             return rejectWithValue(result.message);
@@ -67,6 +73,7 @@ export const allhosting=createSlice({
     name:"hostingDetails",
     initialState:{
        hostings:[],
+       agent:[],
        loading:false,  
        error:null,
        message:'', 
@@ -91,7 +98,8 @@ export const allhosting=createSlice({
             },
     [login1.fulfilled]:(state,action) =>{
         state.loading=false;
-        
+        console.log(action.payload)
+        state.agent=action.payload; 
         state.message=action.payload.message; 
     },
     [login1.rejected]:(state,action) =>{

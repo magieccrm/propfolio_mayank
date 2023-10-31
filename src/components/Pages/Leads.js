@@ -1,7 +1,17 @@
-import React from "react";
- 
+import React , { useState ,useEffect} from "react";
+import {addlead,getAllLead } from "../../features/leadSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 function Leads() {
+   
+  const dispatch=useDispatch(); 
+  const {lead} = useSelector((state)=>state.lead); 
+  useEffect(()=>{
+    dispatch(getAllLead());  
+   
+  },[])  ;
+
+
   return (
     <div>
       <div className="content-wrapper">
@@ -12,7 +22,7 @@ function Leads() {
        
     <div className="panel-body">
    <div className="row export-data">
-  <div className="col-md-5 col-xs-12">
+  <div className="col-md-5 col-xs-12 d-none">
     <div className="row">
       <div className="col-md-4 col-sm-4 col-xs-6">
         <div className="btn-group">
@@ -31,8 +41,8 @@ function Leads() {
       </div>
     </div>
   </div>
-  <div className="col-md-7 col-xs-12">
-    <div className="ipades">
+  <div className="col-md-7 col-xs-12 d-none">
+    <div className="ipades d-none" >
       <form id="bulkForm" method="POST">
         <div className="row">
           <div className="col-md-3 col-sm-3 col-xs-12">
@@ -76,95 +86,35 @@ function Leads() {
   <table id="example1" className="table table-bordered table-striped">
     <thead>
       <tr>
+      <th>S.No.</th>
            <th>Full Name</th>
             <th>Number</th>
             <th>Agent</th>
             <th>Service</th>
             <th>status</th>
-            <th>status</th>
+            {/* <th>status</th> */}
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>vinod </td>
-        <td>9954321345  </td>
-        <td>Anurag</td>
-        <td> HRMS</td>
-        <td>FaceBook lead</td>
-        <td>Pending</td>
-      </tr>
+     
+        {
+          lead?.lead?.map((led,key)=>{
+
+              return(<tr>
+                 <td>{key+1} </td>
+                <td>{led.full_name} </td>
+                <td>{led.contact_no}   </td>
+                <td>Anurag </td>
+                <td> {led.service} </td>
+                <td>{led.status}  </td>
+                {/* <td>{led.full_name} </td> */}
+              </tr>);
+          })
+        }
+
+
+      
+     
     </tbody>
     
   </table>

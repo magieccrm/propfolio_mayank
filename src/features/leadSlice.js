@@ -14,9 +14,9 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
                body:JSON.stringify(data)
         })  
         const result=await responce.json();
-        
-      if(result.success===true){  
          
+      if(result.success===true){  
+        
          return result;
     }else{  
         return rejectWithValue(result.message);
@@ -24,9 +24,9 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
     
    });
 
-   export const getAllLeadSource=createAsyncThunk("getAllLeadSource",async(data,{rejectWithValue})=>{
+   export const getAllLead=createAsyncThunk("getAllLead",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_lead");
+    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead");
     const result=await responce.json();
    
     if(result.success===true){    
@@ -56,32 +56,35 @@ export const leadSource=createSlice({
     },
     extraReducers:{
       // create add leadsource
+
        [addlead.pending]:(state) =>{
            state.loading=true; 
-       },
+       }, 
        [addlead.fulfilled]:(state,action) =>{
            state.loading=false;
-               
-              state.lead.lead.push(action.payload.lead); 
-          // state.message=action.payload.message; 
+            //  state.lead.lead.push(action.payload.lead); 
+              state.message=action.payload.message; 
        },
        [addlead.rejected]:(state,action) =>{
            state.loading=false;
            state.lead=action.payload; 
        }, 
+
+
+
        /// get Alll lead Source
-    //    [getAllLeadSource.pending]:(state) =>{
-    //        state.loading=true; 
-    //    },
-    //    [getAllLeadSource.fulfilled]:(state,action) =>{
-    //        state.loading=false;
-    //       state.leadSourcedata=action.payload; 
+       [getAllLead.pending]:(state) =>{
+           state.loading=true; 
+       },
+       [getAllLead.fulfilled]:(state,action) =>{
+           state.loading=false;
+          state.lead=action.payload; 
           
-    //    },
-    //    [getAllLeadSource.rejected]:(state,action) =>{
-    //        state.loading=false;
-    //        state.leadSourcedata=action.payload; 
-    //    }, 
+       },
+       [getAllLead.rejected]:(state,action) =>{
+           state.loading=false; 
+           state.lead=action.payload; 
+       }, 
 
       
        },

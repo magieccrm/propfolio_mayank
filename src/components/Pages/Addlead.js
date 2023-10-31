@@ -7,13 +7,21 @@ import {getStatebycountry} from "../../features/getStateByCountrySlice";
 import {  toast } from 'react-toastify';
 import { getAllStatus } from "../../features/statusSlice";
 import {addlead} from "../../features/leadSlice";
+import Loader from "../Loader";
+
+
 function Addlead() {
+  const formRef = React.useRef(null); 
+
   const [leaddata,setleaddata]=useState({});
   const {ProductService} = useSelector((state)=>state.ProductService); 
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   const {Statusdata} = useSelector((state)=>state.StatusData); 
   const {CountryState} = useSelector((state)=>state.Country_State); 
-  const {StateByCountry}=useSelector((state)=>state.getStateByCountry)
+  const {StateByCountry}=useSelector((state)=>state.getStateByCountry);
+  const {message,loading}=useSelector((state)=>state.lead);
+
+  const user_id = localStorage.getItem('user_id');
     
   const dispatch=useDispatch(); 
 
@@ -30,16 +38,21 @@ useEffect(()=>{
     
     const submitLead=(e)=>{
         e.preventDefault();
-        // console.log(leaddata);
+       // const formData = {...leaddata,  country: formRef.current.country.value};
+       
        const aaaa =dispatch(addlead(leaddata));
-       console.log(aaaa);
+       toast.success(message);   
+     
     }
 
     const getStateByCountry=(data)=>{
    
     dispatch(getStatebycountry(data));
+      
     }
-
+               if(loading){
+                return(<Loader/>)
+               }
   return (
     <div>
       <div className="content-wrapper">
@@ -57,10 +70,10 @@ useEffect(()=>{
             </div>
             
    <div className="panel-body">
-           
+          
             <form  onSubmit={submitLead}>
    <div className="row">   
-    <input type="hidden" name="client_id"  autoComplete="off" />
+    <input type="hidden" name="client_id"  value={user_id} />
     <div className="col-md-6  row mob-left-right col-xs-12">
       <div className="col-md-4 pd-top mobile-hids">
         <label htmlFor="full_name">Full Name <span className="text-danger">*</span> </label>
@@ -107,7 +120,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="service" onChange={e=>setleaddata({...leaddata,service:e.target.value})}  className="form-control" >
+          <select name="service" onChange={e=>setleaddata({...leaddata,service:e.target.value})}  required className="form-control" >
             <option value selected="selected">Select</option>
             { ProductService.product_service?.map((service,key)=>{
                 return(
@@ -126,7 +139,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="contact_no" onChange={e=>setleaddata({...leaddata,contact_no:e.target.value})}   placeholder="Contact No" className="form-control" tabIndex={6} required="required" autoComplete="off" />
+          <input type="text" name="contact_no" onChange={e=>setleaddata({...leaddata,contact_no:e.target.value})}   placeholder="Contact No" className="form-control" required="required"/>
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -337,8 +350,9 @@ useEffect(()=>{
       </div>
       <input type="hidden" name="isAddNew"    autoComplete="off" />
       {/* <div className="col-md-4 col-xs-6">
-        <button type="button"  className="btn btnes btn-sm btn-primary fontsize" tabIndex={20}>Save and Add another</button>
+        <button type="button"  className="btn btnes btn-sm btn-primary  fontsize" tabIndex={20}>Save and Add another</button>
       </div> */}
+     
       <div className="col-md-3 col-xs-6"> 
         <button type="submit"  className="btn btnes btn-sm btn-primary pull-right fontsize" tabIndex={20}>Submit</button>
       </div>

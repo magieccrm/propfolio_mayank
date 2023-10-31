@@ -5,6 +5,7 @@ import statusSlice from "../features/statusSlice";
 import product_serviceSlice from "../features/product_serviceSlice";
 import country_stateSlice from "../features/country_stateSlice";
 import getStateByCountrySlice from "../features/getStateByCountrySlice";
+import leadSlice from "../features/leadSlice";
 
 
  export  const store = configureStore({
@@ -15,6 +16,7 @@ import getStateByCountrySlice from "../features/getStateByCountrySlice";
       ProductService:product_serviceSlice,
       Country_State:country_stateSlice,
       getStateByCountry:getStateByCountrySlice,
+      lead:leadSlice,
    },
 });
 
