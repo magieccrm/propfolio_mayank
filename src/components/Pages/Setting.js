@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import {addleadSource,getAllLeadSource,DeleteLeadSource} from '../../features/leadSource';
 import {  toast } from 'react-toastify';
 import { addStatus,getAllStatus,deleteStatus } from "../../features/statusSlice";
+import {addagent} from "../../features/agentSlice";
 function Setting() {
 
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   const {Statusdata} = useSelector((state)=>state.StatusData); 
     const dispatch=useDispatch();
   const [data,setData]=useState({});
+  const [agent,setagent]=useState({});
   const [status,setStatus]=useState({});
    const  submitleadsource=async(e)=>{
      e.preventDefault();
@@ -21,6 +23,14 @@ function Setting() {
    toast.warn(aaaa.payload.message);   
   }
    }
+
+  const agentSubmit=async(e)=>{
+           e.preventDefault();
+
+       const aaaaa= dispatch(addagent(agent));
+       console.log(aaaaa);          
+  }
+
    const submitStatus=async(e)=>{
          e.preventDefault();
          const aaaa=await dispatch(addStatus(status));
@@ -969,47 +979,58 @@ function Setting() {
                          </div>
                    </div>
                    <div className="tab-pane" id="v-pills-department" role="tabpanel" aria-labelledby="v-pills-department-tab">
-                     <form name="agentForm" id="agentForm">
+                   <form onSubmit={agentSubmit}>
                               <div className="col-sm-12 col-xs-12 pt-3">
                                 <div className="service-con">
                                   <div className="cardses">
+                                 
                                     <div className="row">
+                                  
                                        <div className="col-md-3">
                                           <div className="form-group">
-                                            <input type="hidden" name="aid" id="aid" autoComplete="off" />
-                                            <input type="text" className="form-control" name="aname" placeholder="User Name" required id="aname" autoComplete="off" />
+                                            {/* <input type="hidden" name="aid" id="aid" autoComplete="off" /> */}
+                                            <input type="text"  onChange={e => setagent({...agent, agent_name:e.target.value})}
+                                             className="form-control" name="agent_name" placeholder="User Name" required id="aname" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <input type="email" className="form-control" name="aemail" placeholder="Email" required id="aemail" autoComplete="off" />
+                                            <input type="email" className="form-control" 
+                                            onChange={e => setagent({...agent, agent_email:e.target.value})} 
+                                            name="agent_email" placeholder="Email" required id="aemail" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <input type="text" maxLength={10} className="form-control" name="amobile" placeholder="Mobile" required id="amobile" autoComplete="off" />
+                                            <input type="number" maxLength={10} className="form-control" 
+                                              onChange={e => setagent({...agent, agent_mobile:e.target.value})} 
+                                            name="agent_mobile" 
+                                            placeholder="Mobile" required id="amobile" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <input type="password" className="form-control" name="apassword" placeholder="Password" id="apassword" autoComplete="off" />
+                                            <input type="password" className="form-control" 
+                                             name="agent_password"  
+                                             onChange={e => setagent({...agent, agent_password:e.target.value})}  
+                                              placeholder="Password" id="apassword" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <select className="form-control" name="aroll" id="aroll">
-                                              <option value>Roll</option>
-                                              <option value="sales">Sales</option>
-                                              <option value="support">Support</option>
+                                            <select className="form-control"  onChange={e => setagent({...agent, agent_status:e.target.value})}  name="agent_status" id="aroll">
+                                              <option value>Status</option>
+                                              <option value="1">Enable</option>
+                                              <option value="0">Disable</option>
                                             </select>
                                           </div>
                                         </div>
                                          
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <select className="form-control" name="afeature" id="afeature">
-                                              <option value>Feature Action</option>
-                                              <option value="yes">Client Access</option>
+                                            <select className="form-control"  onChange={e => setagent({...agent, client_access:e.target.value})} name="client_access" id="afeature">
+                                              <option value>Feature Action</option>  
+                                              <option value="yes">Client Access</option>    
                                             </select>
                                           </div>
                                         </div>
@@ -1019,6 +1040,8 @@ function Setting() {
                                             <button type="button" className="btn btn-danger" id="acancel" style={{display: 'none'}}>Cancel</button>
                                           </div>
                                         </div>
+                                      
+                                      
                                         <table className="table dataTable no-footer" role="grid">
                         <thead>
                           <tr role="row">
@@ -1032,6 +1055,8 @@ function Setting() {
                           </tr>
                         </thead>
                         <tbody id="DBbfiles">
+
+
                           <tr role="row" className="odd">
                             <td className="sorting_1"> 	Anurag</td>
                             <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
@@ -1043,58 +1068,15 @@ function Setting() {
                               <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
                               <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
                           </tr>
-                          <tr role="row" className="odd">
-                            <td className="sorting_1"> 	Anurag</td>
-                            <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
-                            <td className="sorting_1"> 	5011978498</td>
-                            <td className="sorting_1"> 	Sales</td>
-                            <td className="sorting_1"> 	Client Access <input type="checkbox" id="" onclick="agentF(this)" data-id="MjQ=" ></input></td>
-                            <td className="sorting_1"> 	Enabled </td>
-                            <td><a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                              <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
-                              <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
-                          </tr>
-                          <tr role="row" className="odd">
-                            <td className="sorting_1"> 	Anurag</td>
-                            <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
-                            <td className="sorting_1"> 	5011978498</td>
-                            <td className="sorting_1"> 	Sales</td>
-                            <td className="sorting_1"> 	Client Access <input type="checkbox" id="" onclick="agentF(this)" data-id="MjQ=" ></input></td>
-                            <td className="sorting_1"> 	Enabled </td>
-                            <td><a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                              <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
-                              <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
-                          </tr>
-                          <tr role="row" className="odd">
-                            <td className="sorting_1"> 	Anurag</td>
-                            <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
-                            <td className="sorting_1"> 	5011978498</td>
-                            <td className="sorting_1"> 	Sales</td>
-                            <td className="sorting_1"> 	Client Access <input type="checkbox" id="" onclick="agentF(this)" data-id="MjQ=" ></input></td>
-                            <td className="sorting_1"> 	Enabled </td>
-                            <td><a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                              <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
-                              <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
-                          </tr>
-                          <tr role="row" className="odd">
-                            <td className="sorting_1"> 	Anurag</td>
-                            <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
-                            <td className="sorting_1"> 	5011978498</td>
-                            <td className="sorting_1"> 	Sales</td>
-                            <td className="sorting_1"> 	Client Access <input type="checkbox" id="" onclick="agentF(this)" data-id="MjQ=" ></input></td>
-                            <td className="sorting_1"> 	Enabled </td>
-                            <td><a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                              <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
-                              <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
-                          </tr>
-                          
+
+                         
                         </tbody>
                                           </table>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                     </form>
+                              </form>
                   </div>
                   <div className="tab-pane" id="v-pills-crm-filed" role="tabpanel" aria-labelledby="v-pills-crm-filed">
                       <div className="row">
