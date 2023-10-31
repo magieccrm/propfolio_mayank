@@ -6,6 +6,7 @@ import {getAllCountry} from "../../features/country_stateSlice";
 import {getStatebycountry} from "../../features/getStateByCountrySlice";
 import {  toast } from 'react-toastify';
 import { getAllStatus } from "../../features/statusSlice";
+import {addlead} from "../../features/leadSlice";
 function Addlead() {
   const [leaddata,setleaddata]=useState({});
   const {ProductService} = useSelector((state)=>state.ProductService); 
@@ -28,7 +29,10 @@ useEffect(()=>{
 },[])  ;  
     
     const submitLead=(e)=>{
-         alert('ok')
+        e.preventDefault();
+        // console.log(leaddata);
+       const aaaa =dispatch(addlead(leaddata));
+       console.log(aaaa);
     }
 
     const getStateByCountry=(data)=>{
@@ -63,7 +67,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="full_name"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Full Name" className="form-control" tabIndex={1} required="required" />
+          <input type="text" name="full_name"  onChange={e=>setleaddata({...leaddata,full_name:e.target.value})}  placeholder="Full Name" className="form-control" tabIndex={1} required="required" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -73,7 +77,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="email" name="email_id"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}   placeholder="Email Id" className="form-control"   />
+          <input type="email" name="email_id"  onChange={e=>setleaddata({...leaddata,email_id:e.target.value})}   placeholder="Email Id" className="form-control"   />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -83,7 +87,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="company_name"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Company Name" className="form-control ui-autocomplete-input" tabIndex={3} autoComplete="off" />
+          <input type="text" name="company_name"  onChange={e=>setleaddata({...leaddata,company_name:e.target.value})} placeholder="Company Name" className="form-control ui-autocomplete-input" tabIndex={3} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -93,7 +97,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="website" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Website" className="form-control" tabIndex={4} autoComplete="off" />
+          <input type="text" name="website" onChange={e=>setleaddata({...leaddata,website:e.target.value})}  placeholder="Website" className="form-control" tabIndex={4} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -103,7 +107,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="service" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  className="form-control" >
+          <select name="service" onChange={e=>setleaddata({...leaddata,service:e.target.value})}  className="form-control" >
             <option value selected="selected">Select</option>
             { ProductService.product_service?.map((service,key)=>{
                 return(
@@ -122,7 +126,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="contact_no" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}   placeholder="Contact No" className="form-control" tabIndex={6} required="required" autoComplete="off" />
+          <input type="text" name="contact_no" onChange={e=>setleaddata({...leaddata,contact_no:e.target.value})}   placeholder="Contact No" className="form-control" tabIndex={6} required="required" autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -132,7 +136,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="alternative_no"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Alternative No" className="form-control" tabIndex={7} autoComplete="off" />
+          <input type="text" name="alternative_no"  onChange={e=>setleaddata({...leaddata,alternative_no:e.target.value})} placeholder="Alternative No" className="form-control" tabIndex={7} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -142,7 +146,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="position"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  placeholder="Position" className="form-control" tabIndex={8} autoComplete="off" />
+          <input type="text" name="position"  onChange={e=>setleaddata({...leaddata,position:e.target.value})}  placeholder="Position" className="form-control" tabIndex={8} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -152,7 +156,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="lead_source" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  className="form-control" >
+          <select name="lead_source" onChange={e=>setleaddata({...leaddata,lead_source:e.target.value})}  className="form-control" >
             <option value selected="selected">Select</option>
           
             { leadSourcedata.leadSource?.map((leadsource,key)=>{
@@ -172,7 +176,7 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <input type="text" name="lead_cost"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})} placeholder="Lead Cost" className="form-control" tabIndex={10} autoComplete="off" />
+          <input type="text" name="lead_cost"  onChange={e=>setleaddata({...leaddata,lead_cost:e.target.value})} placeholder="Lead Cost" className="form-control" tabIndex={10} autoComplete="off" />
           <span className="text-danger ferror"> </span> </div>
       </div>
     </div>
@@ -203,13 +207,13 @@ useEffect(()=>{
             <label htmlFor="full_address">Full Address </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <textarea name="full_address" cols={40} rows={3}  className="form-control" tabIndex={12} defaultValue={""} />
+            <textarea name="full_address" cols={40} rows={3}  onChange={e=>setleaddata({...leaddata,full_address:e.target.value})}  className="form-control"  />
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="state">State </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <select name="state"  className="form-control"  >
+            <select name="state"  onChange={e=>setleaddata({...leaddata,state:e.target.value})}  className="form-control"  >
               <option value selected="selected">Select</option>
                { StateByCountry?.state?.map((state1,key)=>{
                 return(
@@ -223,13 +227,13 @@ useEffect(()=>{
             <label htmlFor="city">City </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <input type="text" name="city"   placeholder="City" className="form-control" tabIndex={14} autoComplete="off" />
+            <input type="text" name="city"  onChange={e=>setleaddata({...leaddata,city:e.target.value})}   placeholder="City" className="form-control" tabIndex={14} autoComplete="off" />
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="pincode">Pincode </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <input type="text" name="pincode"   placeholder="Pincode" className="form-control" tabIndex={15} autoComplete="off" />
+            <input type="number" name="pincode"  onChange={e=>setleaddata({...leaddata,pincode:e.target.value})}  placeholder="Pincode" className="form-control" tabIndex={15} autoComplete="off" />
             <span className="text-danger ferror"> </span> </div>
         
       </div>
@@ -244,14 +248,14 @@ useEffect(()=>{
             <label htmlFor="description">Description </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <textarea name="description" cols={40} rows={3}  className="form-control" tabIndex={16} defaultValue={""} />
+            <textarea name="description" cols={40} rows={3} onChange={e=>setleaddata({...leaddata,description:e.target.value})}   className="form-control"  />
             <span className="text-danger ferror"> </span> </div>
 			
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="assign_to_agent">Assign to agent <span className="text-danger">*</span> </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <select name="assign_to_agent"  className="form-control" value tabIndex={17} required="required">
+            <select name="assign_to_agent" onChange={e=>setleaddata({...leaddata,assign_to_agent:e.target.value})}  className="form-control"  >
               <option value selected="selected">Select</option>
               <option value={24}>Anurag</option>
               <option value={34}>Devrishi</option>
@@ -265,7 +269,7 @@ useEffect(()=>{
             <label htmlFor="status">Status <span className="text-danger">*</span> </label>
           </div>  
           <div className="col-md-8 mob-left-right col-xs-12 form-group">
-            <select name="status" className="form-control" required="required">
+            <select name="status" className="form-control" onChange={e=>setleaddata({...leaddata,status:e.target.value})}  required="required">
               <option value selected="selected">Select</option>
              
               { Statusdata.leadstatus?.map((status,key)=>{
@@ -308,34 +312,34 @@ useEffect(()=>{
      
        
         <div className="row mob-left-right form-group">
-          <div className="col-md-4 pd-top mobile-hids">
+          {/* <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="followup">Description</label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <textarea name="followup_desc" tabIndex={20} className="form-control"  />
-          </div>
+            <textarea name="followup_desc" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  tabIndex={20} className="form-control"  />
+          </div> */}
         </div>
         <div className="row mob-left-right form-group">
           <div className="col-md-4 pd-top mobile-hids">
             <label htmlFor="followup">Followup Date</label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <input type="text" name="followup" tabIndex={20} className="form-control" autoComplete="off" />
+            <input type="date" name="followup_date" onChange={e=>setleaddata({...leaddata,followup_date:e.target.value})}  tabIndex={20} className="form-control" autoComplete="off" />
           </div>
         </div>
       
     
     <div className="row" style={{float: 'right'}}>
       <div className="col-md-5">
-        <label htmlFor="addtocal"> Add to calender
-          <input type="checkbox" name="addtocal"   autoComplete="off" />
-        </label>
+        {/* <label htmlFor="addtocal"> Add to calender
+          <input type="checkbox"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  name="addtocal"   autoComplete="off" />
+        </label> */}
       </div>
       <input type="hidden" name="isAddNew"    autoComplete="off" />
       {/* <div className="col-md-4 col-xs-6">
         <button type="button"  className="btn btnes btn-sm btn-primary fontsize" tabIndex={20}>Save and Add another</button>
       </div> */}
-      <div className="col-md-3 col-xs-6">
+      <div className="col-md-3 col-xs-6"> 
         <button type="submit"  className="btn btnes btn-sm btn-primary pull-right fontsize" tabIndex={20}>Submit</button>
       </div>
      </div>
