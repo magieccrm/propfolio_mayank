@@ -1,35 +1,46 @@
 
-import React , { useState ,useEffect} from "react";
+import React , { Fragment,useState ,useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import {addleadSource,getAllLeadSource,DeleteLeadSource} from '../../features/leadSource';
 import {  toast } from 'react-toastify';
 import { addStatus,getAllStatus,deleteStatus } from "../../features/statusSlice";
-import {addagent} from "../../features/agentSlice";
+import {addagent, getAllAgent ,deleteAgent, checkedAgent} from "../../features/agentSlice";
+import Loader from "../Loader"
 function Setting() {
 
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
-  const {Statusdata} = useSelector((state)=>state.StatusData); 
+  var  {Statusdata,loading} = useSelector((state)=>state.StatusData); 
+  var {message, agent,loading}=useSelector((state)=>state.agent);
     const dispatch=useDispatch();
   const [data,setData]=useState({});
-  const [agent,setagent]=useState({});
+  const [agents,setagent]=useState({});
   const [status,setStatus]=useState({});
    const  submitleadsource=async(e)=>{
      e.preventDefault();
      const aaaa= await dispatch(addleadSource(data));
      if(aaaa.payload.success===true){   
-     
       toast.success(aaaa.payload.message);
-     }else{  
-   toast.warn(aaaa.payload.message);   
+     }else{   
+   toast.warn(aaaa.payload.message);     
   }
    }
 
   const agentSubmit=async(e)=>{
            e.preventDefault();
-
-       const aaaaa= dispatch(addagent(agent));
-       console.log(aaaaa);          
+      const aaaaa= await dispatch(addagent(agents));
+      if(aaaaa.payload.success===true){       
+     
+        toast.success("Agent add Successfully");
+       }else{   
+     toast.warn("There are some problem");   
+    }
   }
+
+
+  // const updateAgentAccess=async(_id)=>{
+  //   checkedAgent(_id)
+  // }
+    
 
    const submitStatus=async(e)=>{
          e.preventDefault();
@@ -52,6 +63,7 @@ function Setting() {
    useEffect(()=>{
     dispatch(getAllLeadSource());  
     dispatch(getAllStatus())
+    dispatch(getAllAgent())
  },[])  ;
 
   return (
@@ -66,7 +78,7 @@ function Setting() {
           </div>
                <div className="container ind-module">
             <div className="row mt-50">
-              <div className="col-12 col-sm-3 mt-20">
+              <div className="col-12 col-sm-2 mt-20">
                 <ul className="nav flex-column nav-tabs tabs-left border-lefttab destop-View">
                   <li>
                    <a classname="active" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="true"><i className="fa wiht fa-wrench" /> General Setting</a>
@@ -106,7 +118,7 @@ function Setting() {
                    </li>
                 </ul>
               </div>
-              <div className="col-12 col-sm-9">
+              <div className="col-12 col-sm-10">
                 <div className="tab-content" id="v-pills-tabContent">
                   <div className="tab-pane fade show active" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
                       <form action=" " method="post" name="general_setting" id="general_setting">
@@ -989,21 +1001,21 @@ function Setting() {
                                        <div className="col-md-3">
                                           <div className="form-group">
                                             {/* <input type="hidden" name="aid" id="aid" autoComplete="off" /> */}
-                                            <input type="text"  onChange={e => setagent({...agent, agent_name:e.target.value})}
+                                            <input type="text"  onChange={e => setagent({...agents, agent_name:e.target.value})}
                                              className="form-control" name="agent_name" placeholder="User Name" required id="aname" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
                                             <input type="email" className="form-control" 
-                                            onChange={e => setagent({...agent, agent_email:e.target.value})} 
+                                            onChange={e => setagent({...agents, agent_email:e.target.value})} 
                                             name="agent_email" placeholder="Email" required id="aemail" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
                                             <input type="number" maxLength={10} className="form-control" 
-                                              onChange={e => setagent({...agent, agent_mobile:e.target.value})} 
+                                              onChange={e => setagent({...agents, agent_mobile:e.target.value})} 
                                             name="agent_mobile" 
                                             placeholder="Mobile" required id="amobile" autoComplete="off" />
                                           </div>
@@ -1012,13 +1024,13 @@ function Setting() {
                                           <div className="form-group">
                                             <input type="password" className="form-control" 
                                              name="agent_password"  
-                                             onChange={e => setagent({...agent, agent_password:e.target.value})}  
+                                             onChange={e => setagent({...agents, agent_password:e.target.value})}  
                                               placeholder="Password" id="apassword" autoComplete="off" />
                                           </div>
                                         </div>
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <select className="form-control"  onChange={e => setagent({...agent, agent_status:e.target.value})}  name="agent_status" id="aroll">
+                                            <select className="form-control"  onChange={e => setagent({...agents, agent_status:e.target.value})}  name="agent_status" id="aroll">
                                               <option value>Status</option>
                                               <option value="1">Enable</option>
                                               <option value="0">Disable</option>
@@ -1028,13 +1040,13 @@ function Setting() {
                                          
                                         <div className="col-md-3">
                                           <div className="form-group">
-                                            <select className="form-control"  onChange={e => setagent({...agent, client_access:e.target.value})} name="client_access" id="afeature">
+                                            <select className="form-control"  onChange={e => setagent({...agents, client_access:e.target.value})} name="client_access" id="afeature">
                                               <option value>Feature Action</option>  
                                               <option value="yes">Client Access</option>    
                                             </select>
                                           </div>
                                         </div>
-                                        <div className="col-md-2">
+                                        <div className="col-md-2"> 
                                           <div className="form-group"> 
                                             <button className="btn btn-primary form-control" type="post" id="aaction">Add</button>
                                             <button type="button" className="btn btn-danger" id="acancel" style={{display: 'none'}}>Cancel</button>
@@ -1045,6 +1057,7 @@ function Setting() {
                                         <table className="table dataTable no-footer" role="grid">
                         <thead>
                           <tr role="row">
+                          <th className="sorting_asc">S.No.</th>
                             <th className="sorting_asc">User Name</th>
                             <th className="sorting">Email</th>
                             <th className="sorting">Mobile</th>
@@ -1056,18 +1069,56 @@ function Setting() {
                         </thead>
                         <tbody id="DBbfiles">
 
+                         {
+                            agent?.agent?.map((agents,key)=>{
+                                 if(agents.agent_status=='0'){
+                                    var  lllll="Disable";
+                                }else{
+                                   lllll="Enable";
+                                }
 
-                          <tr role="row" className="odd">
-                            <td className="sorting_1"> 	Anurag</td>
-                            <td className="sorting_1"> 	sales@itinfotechnologies.com</td>
-                            <td className="sorting_1"> 	5011978498</td>
-                            <td className="sorting_1"> 	Sales</td>
-                            <td className="sorting_1"> 	Client Access <input type="checkbox" id="" onclick="agentF(this)" data-id="MjQ=" ></input></td>
-                            <td className="sorting_1"> 	Enabled </td>
-                            <td><a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                              <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button>
-                              <button type="button" className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
-                          </tr>
+                                if(agents.client_access=='no'){
+                                  var  client_access1="";
+                              }else{
+                                var  client_access1="checked";  
+                               }
+                               
+                                return(
+                           
+                                 <Fragment>
+                                  {loading?(<Fragment>
+                                    <Loader/>
+                                    </Fragment>  
+                                    ):(
+                                      <>
+                                      <tr role="row" className="odd">
+                                      <td className="sorting_1"> 	{key+1}</td>
+                                      <td className="sorting_1"> 	{agents.agent_name}</td>
+                                      <td className="sorting_1"> 	{agents.agent_email}</td>
+                                      <td className="sorting_1"> 		{agents.agent_mobile}</td>
+                                      <td className="sorting_1"> 		{agents.agent_roll}</td>
+                                      <td className="sorting_1">  Client Access <input  checked={client_access1} 
+                                      //  onClick={updateAgentAccess(agents._id)}
+                                      type="checkbox" id=""  
+                                       data-id="MjQ=" ></input></td>
+                                      <td className="sorting_1"> {lllll} </td>
+                                      <td>
+                                        {/* <a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
+                                        <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button> */}
+                                        <button type="button"
+                                          onClick={(e)=>{ deleteAgent(agents._id)}}  
+                                      className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
+                                    </tr>
+                                      </>
+                                      )}
+                                   
+                                 </Fragment>
+
+                                  
+                              )
+                            })
+                         }
+                         
 
                          
                         </tbody>

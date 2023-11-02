@@ -98,7 +98,6 @@ export const allhosting=createSlice({
             },
     [login1.fulfilled]:(state,action) =>{
         state.loading=false;
-        console.log(action.payload)
         state.agent=action.payload; 
         state.message=action.payload.message; 
     },

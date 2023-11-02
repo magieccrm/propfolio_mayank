@@ -19,14 +19,15 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
       if(result.success===true){  
          return result;
     }else{  
-        return rejectWithValue(result.message);
+       return rejectWithValue(result);
+       //return result.message;
     }  
     
    });
 
    export const getAllAgent=createAsyncThunk("getAllAgent",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead");
+    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_all_agent");
     const result=await responce.json();
    
     if(result.success===true){    
@@ -34,6 +35,41 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    }else{  
        return rejectWithValue(result.message); 
    }  
+   })
+
+   export const deleteAgent=createAsyncThunk("deleteAgent",async(_id,{rejectWithValue})=>{
+
+    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/agent_delete/${_id}`,{
+        method:"DELETE",
+})
+
+const  result =await responce.json(); 
+
+if(result.success===true){     
+return result;    
+}else{  
+return rejectWithValue(result.message);
+}  
+
+   });
+
+   export const checkedAgent=createAsyncThunk("checkedAgent",async(_id,{rejectWithValue})=>{
+    const responce=await fetch(`http://localhost:4000/api/v1/update_agent_access/${_id}`,{
+        method:"PUT",
+        headers:{ 
+            "Content-Type":"application/json",
+           },
+        
+})
+
+const  result =await responce.json(); 
+    console.log(result)
+if(result.success===true){     
+return result;     
+}else{  
+return rejectWithValue(result.message);
+}  
+            
    })
 
   
@@ -46,8 +82,8 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
 
 
-export const leadSource=createSlice({
-    name:"lead",
+export const agentSource=createSlice({
+    name:"agent",
     initialState:{
        agent:[],
        loading:false,  
@@ -61,35 +97,55 @@ export const leadSource=createSlice({
            state.loading=true; 
        }, 
        [addagent.fulfilled]:(state,action) =>{
-             state.loading=false;  
-             state.agent.agent.push(action.payload.agent); 
+             state.loading=false;    
+            state.agent.agent.push(action.payload.agent);   
             //   state.message=action.payload.message; 
+            state.message=action.payload.message; 
        },
        [addagent.rejected]:(state,action) =>{
            state.loading=false;
-           
-           state.agent.agent=action.payload; 
+         
+        //   state.agent=action.payload; 
+           state.message=action.payload.message; 
+
        }, 
 
 
 
        /// get Alll lead Source
 
-    //    [getAllAgent.pending]:(state) =>{
-    //        state.loading=true; 
-    //    },
-    //    [getAllAgent.fulfilled]:(state,action) =>{
-    //        state.loading=false;
-    //       state.lead=action.payload; 
+       [getAllAgent.pending]:(state) =>{
+           state.loading=true; 
+       },
+       [getAllAgent.fulfilled]:(state,action) =>{
+           state.loading=false;
+          state.agent=action.payload; 
           
-    //    },
-    //    [getAllAgent.rejected]:(state,action) =>{      
-    //        state.loading=false; 
-    //        state.lead=action.payload; 
-    //    }, 
+       },
+       [getAllAgent.rejected]:(state,action) =>{      
+           state.loading=false; 
+           state.agent=action.payload;  
+       }, 
+
+
+       /// Delete  Agent 
+       [deleteAgent.pending]:(state)=>{
+          state.loading=true;
+       },
+       [deleteAgent.fulfilled]:(state,action)=>{
+          state.loading=false;
+          
+          const {_id} =action.payload.agent; 
+          if(_id){
+             state.agent.agent=state.agent.agent.filter((ele)=>ele._id!==_id);  
+        }
+
+       },
+
+       
 
       
        },
 })
 
-export default  leadSource.reducer;
+export default  agentSource.reducer;
