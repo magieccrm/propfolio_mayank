@@ -1,11 +1,11 @@
-import React , { useState ,useEffect} from "react";
+import React , {Fragment, useState ,useEffect} from "react";
 import {addlead,getAllLead } from "../../features/leadSlice";
 import { useDispatch, useSelector } from 'react-redux';
-
+import Loader from "../Loader";
 function Leads() {
    
   const dispatch=useDispatch(); 
-  const {lead} = useSelector((state)=>state.lead); 
+  const {lead,loading} = useSelector((state)=>state.lead); 
   useEffect(()=>{
     dispatch(getAllLead());  
    
@@ -92,7 +92,7 @@ function Leads() {
             <th>Agent</th>
             <th>Service</th>
             <th>status</th>
-            {/* <th>status</th> */}
+           
       </tr>
     </thead>
     <tbody>
@@ -100,7 +100,14 @@ function Leads() {
         {
           lead?.lead?.map((led,key)=>{
 
-              return(<tr>
+              return(
+                
+                <Fragment>
+                {loading?(<Fragment>
+                  <Loader/>
+                  </Fragment>  
+                  ):(<Fragment>
+                  <tr>
                  <td>{key+1} </td>
                 <td>{led.full_name} </td>
                 <td>{led.contact_no}   </td>
@@ -108,7 +115,11 @@ function Leads() {
                 <td> {led.service} </td>
                 <td>{led.status}  </td>
                 {/* <td>{led.full_name} </td> */}
-              </tr>);
+              </tr>  
+                    </Fragment>
+                  )
+                     }   </Fragment>  
+             );
           })
         }
 

@@ -7,6 +7,7 @@ import {getStatebycountry} from "../../features/getStateByCountrySlice";
 import {  toast } from 'react-toastify';
 import { getAllStatus } from "../../features/statusSlice";
 import {addlead} from "../../features/leadSlice";
+import { getAllAgent } from "../../features/agentSlice";
 import Loader from "../Loader";
 
 
@@ -20,7 +21,7 @@ function Addlead() {
   const {CountryState} = useSelector((state)=>state.Country_State); 
   const {StateByCountry}=useSelector((state)=>state.getStateByCountry);
   const {message,loading}=useSelector((state)=>state.lead);
-
+  const { agent }=useSelector((state)=>state.agent);
   const user_id = localStorage.getItem('user_id');
     
   const dispatch=useDispatch(); 
@@ -32,8 +33,9 @@ function Addlead() {
 useEffect(()=>{
   dispatch(getAllProductService());  
   dispatch(getAllLeadSource());  
-  dispatch(getAllStatus())
-  dispatch(getAllCountry())
+  dispatch(getAllStatus());
+  dispatch(getAllCountry());
+  dispatch(getAllAgent());
 },[])  ;  
     
     const submitLead=(e)=>{
@@ -270,12 +272,15 @@ useEffect(()=>{
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
             <select name="assign_to_agent" onChange={e=>setleaddata({...leaddata,assign_to_agent:e.target.value})}  className="form-control"  >
               <option value selected="selected">Select</option>
-              <option value={24}>Anurag</option>
-              <option value={34}>Devrishi</option>
-              <option value={31}>Jassy</option>
-              <option value={32}>Neha</option>
-              <option value={35}>nisar</option>
-              <option value={29}>Rahul</option>
+              
+              {
+                 agent?.agent?.map((agents,key)=>{
+                return( <option value={agents._id}>{agents.agent_name}</option>) 
+                 })
+              }
+
+          
+             
             </select>
             <span className="text-danger ferror"> </span> </div>
           <div className="col-md-4 pd-top mobile-hids">
