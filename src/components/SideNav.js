@@ -150,11 +150,11 @@ function SideNav() {
                       <p> Followup Leads</p>
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link to="/forwardleads" className="nav-link">
                       <p>Forward Leads</p>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
               
@@ -184,7 +184,7 @@ function SideNav() {
                 </ul>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to=" " className="nav-link">
                   <i className="nav-icon far fa fa-sitemap" />
                   ToDo List
@@ -195,7 +195,7 @@ function SideNav() {
                   <i className="nav-icon far fa-list-alt" />
                   Clients
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to="/productservices" className="nav-link">
                   <i className="nav-icon far fa-credit-card" />
@@ -204,7 +204,7 @@ function SideNav() {
               </li>
 
              
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="#" className="nav-link" onClick={openclose}>
                   <i className="nav-icon far fa-credit-card"  />
                   Invoice <i className="fas fa-angle-left right" />
@@ -221,7 +221,7 @@ function SideNav() {
                     </Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to="/Report" className="nav-link">
                   <i className="nav-icon far fa-file" />

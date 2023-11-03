@@ -52,9 +52,9 @@ useEffect(()=>{
     dispatch(getStatebycountry(data));
       
     }
-               if(loading){
-                return(<Loader/>)
-               }
+              //  if(loading){
+              //   return(<Loader/>)
+              //  }
   return (
     <div>
       <div className="content-wrapper">

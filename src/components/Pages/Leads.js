@@ -2,6 +2,8 @@ import React , {Fragment, useState ,useEffect} from "react";
 import {addlead,getAllLead } from "../../features/leadSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from "../Loader";
+import { Allleadstable } from "./Allleadstable";
+import { Link } from "react-router-dom";
 function Leads() {
    
   const dispatch=useDispatch(); 
@@ -9,7 +11,7 @@ function Leads() {
   useEffect(()=>{
     dispatch(getAllLead());  
    
-  },[])  ;
+  },[]);
 
 
   return (
@@ -22,27 +24,27 @@ function Leads() {
        
     <div className="panel-body">
    <div className="row export-data">
-  <div className="col-md-5 col-xs-12 d-none">
+  <div className="col-md-5 col-xs-12 ">
     <div className="row">
       <div className="col-md-4 col-sm-4 col-xs-6">
         <div className="btn-group">
-          <a className="btn btnes exports" href=" "> <i className="fa fa-plus" />&nbsp;  Add Lead </a>
+          <Link className="btn btnes exports" to="/Addlead"> <i className="fa fa-plus" />&nbsp;  Add Lead </Link>
         </div>
       </div>
       <div className="col-md-4 col-sm-4 mobil-nns col-xs-4">
-        <div className="btn-group">
+        {/* <div className="btn-group">
           <a className="btn btnes exports" href=" "> <i className="fa fa-download" aria-hidden="true" />&nbsp;  Import </a>
-        </div>
+        </div> */}
       </div>
       <div className="col-md-4 col-sm-4 col-xs-6">
-        <div className="btn-group">
+        {/* <div className="btn-group">
           <a type="button" id="advS" className="btn btnes exports"><i className="fa fa-search" aria-hidden="true" />&nbsp;  Advance</a>
-        </div>
+        </div> */}
       </div>
     </div>
   </div>
-  <div className="col-md-7 col-xs-12 d-none">
-    <div className="ipades d-none" >
+  <div className="col-md-7 col-xs-12 ">
+    <div className="ipades " >
       <form id="bulkForm" method="POST">
         <div className="row">
           <div className="col-md-3 col-sm-3 col-xs-12">
@@ -82,8 +84,16 @@ function Leads() {
     </div>
   </div>
 </div>
- <div className="card-body">
-  <table id="example1" className="table table-bordered table-striped">
+
+   {/* datatable */}
+   <div className="card-body">
+    <div className="">
+    <Allleadstable/>
+    </div>
+  
+  </div>
+ {/* <div className="card-body">
+    <table id="example1" className="table table-bordered table-striped">
     <thead>
       <tr>
       <th>S.No.</th>
@@ -91,7 +101,8 @@ function Leads() {
             <th>Number</th>
             <th>Agent</th>
             <th>Service</th>
-            <th>status</th>
+            <th>Lead Source</th>
+            <th>Status</th>
            
       </tr>
     </thead>
@@ -113,8 +124,9 @@ function Leads() {
                 <td>{led.contact_no}   </td>
                 <td>{led?.agent_details[0]?.agent_name}   </td>
                 <td> {led.service_details[0]?.product_service_name} </td>
-                <td>{led.status}  </td>
-                {/* <td>{led.full_name} </td> */}
+                <td> {led.lead_source_details[0]?.lead_source_name}</td>
+                <td>{led.status_details[0]?.status_name}  </td>
+              
               </tr>  
                     </Fragment>
                   )
@@ -128,9 +140,11 @@ function Leads() {
      
     </tbody>
     
-  </table>
-</div>
+     </table>
+</div> */}
 
+
+ {/* datatable */}
 
 
            
