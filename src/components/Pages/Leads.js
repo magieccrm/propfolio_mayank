@@ -111,7 +111,7 @@ function Leads() {
                  <td>{key+1} </td>
                 <td>{led.full_name} </td>
                 <td>{led.contact_no}   </td>
-                <td>{led.assign_to_agent}   </td>
+                <td>{led?.agent_details[0]?.agent_name}   </td>
                 <td> {led.service} </td>
                 <td>{led.status}  </td>
                 {/* <td>{led.full_name} </td> */}
