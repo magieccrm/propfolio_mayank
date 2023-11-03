@@ -112,7 +112,7 @@ function Leads() {
                 <td>{led.full_name} </td>
                 <td>{led.contact_no}   </td>
                 <td>{led?.agent_details[0]?.agent_name}   </td>
-                <td> {led.service} </td>
+                <td> {led.service_details[0]?.product_service_name} </td>
                 <td>{led.status}  </td>
                 {/* <td>{led.full_name} </td> */}
               </tr>  
