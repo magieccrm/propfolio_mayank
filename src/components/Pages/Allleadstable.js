@@ -95,7 +95,7 @@ export const Allleadstable = () => {
     ]   
         
 
-
+  
   return (
     <DataTable   responsive  title="Lead List"  columns={columns}  data={filterleads} pagination fixedHeader 
     fixedHeaderScrollHeight="450px" selectableRows
