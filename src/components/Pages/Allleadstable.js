@@ -72,7 +72,7 @@ export const Allleadstable = () => {
             sortable:true,
         },
     ]
-  
+      
 
 
 
