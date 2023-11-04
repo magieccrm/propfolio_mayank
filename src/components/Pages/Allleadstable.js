@@ -91,10 +91,9 @@ export const Allleadstable = () => {
             name:"Status",
             selector:(row)=>row?.status_details[0]?.status_name,
             sortable:true,
-        },  
-    ]
-  
-
+        },
+    ]   
+        
 
 
   return (
