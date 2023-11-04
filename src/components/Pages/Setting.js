@@ -8,6 +8,12 @@ import {addagent, getAllAgent ,deleteAgent, checkedAgent} from "../../features/a
 import Loader from "../Loader"
 function Setting() {
 
+  const removeSite = async (_id) => {
+      
+     dispatch(deleteAgent(_id))
+    // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
+  };
+
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   var  {Statusdata,loading} = useSelector((state)=>state.StatusData); 
   var {message, agent,loading}=useSelector((state)=>state.agent);
@@ -25,15 +31,19 @@ function Setting() {
   }
    }
 
+   const handleChange = (_id) => {
+    console.log(_id);
+  };
+
   const agentSubmit=async(e)=>{
            e.preventDefault();
       const aaaaa= await dispatch(addagent(agents));
       if(aaaaa.payload.success===true){       
      
         toast.success("Agent add Successfully");
-       }else{   
+       }else{    
      toast.warn("There are some problem");   
-    }
+        }
   }
 
 
@@ -100,13 +110,13 @@ function Setting() {
                   </li>
                   <li>
                    <a  id="v-pills-smssetting-tab" data-toggle="pill" href="#v-pills-smssetting" role="tab" aria-controls="v-pills-smssetting" aria-selected="false"><i className="fa wiht fa-comments" /> SMS Setting</a>
-                   </li>
-                  <li> 
+                   </li>  
+                  {/* <li> 
                   <a id="v-pills-invoicesetting-tab" data-toggle="pill" href="#v-pills-invoicesetting" role="tab" aria-controls="v-pills-invoicesetting" aria-selected="false"><i className="fa wiht fa-credit-card" /> Invoice Setting</a>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                    <a id="email-template-tab" data-toggle="pill" href="#email-template-exim" role="tab" aria-controls="email-template-exim" aria-selected="false"><i className="fa wiht fa-globe" /> Email Templates</a>
-                   </li>
+                   </li> */}
                   <li>
                    <a id="v-pills-department-tab" data-toggle="pill" href="#v-pills-department" role="tab" aria-controls="v-pills-department" aria-selected="false"><i className="fa wiht fa-users" /> Department</a>
                    </li>
@@ -1053,7 +1063,8 @@ function Setting() {
                                           </div>
                                         </div>
                                       
-                                      
+                                        <div className="col-md-12"> 
+                                        <div className="table-responsive mob-bord">
                                         <table className="table dataTable no-footer" role="grid">
                         <thead>
                           <tr role="row">
@@ -1085,12 +1096,9 @@ function Setting() {
                                
                                 return(
                            
-                                 <Fragment>
-                                  {loading?(<Fragment>
-                                    <Loader/>
-                                    </Fragment>  
-                                    ):(
-                                      <>
+                                
+                                  
+                                     
                                       <tr role="row" className="odd">
                                       <td className="sorting_1"> 	{key+1}</td>
                                       <td className="sorting_1"> 	{agents.agent_name}</td>
@@ -1098,21 +1106,20 @@ function Setting() {
                                       <td className="sorting_1"> 		{agents.agent_mobile}</td>
                                       <td className="sorting_1"> 		{agents.agent_roll}</td>
                                       <td className="sorting_1">  Client Access <input  checked={client_access1} 
-                                      //  onClick={updateAgentAccess(agents._id)}
-                                      type="checkbox" id=""  
+                                     type="checkbox" id=""  
                                        data-id="MjQ=" ></input></td>
                                       <td className="sorting_1"> {lllll} </td>
-                                      <td>
-                                        {/* <a target="_blank" href className="btn btn-xs btn-success"><i className="fa fa-download" /></a>
-                                        <button type="button" className="btn btn-xs btn-success"><i className="fa fa-upload" /></button> */}
-                                        <button type="button"
-                                          onClick={(e)=>{ deleteAgent(agents._id)}}  
-                                      className="btn btn-xs btn-danger"><i className="fa fa-trash" /></button></td>
+                                    
+      <td>
+      <button  type="button" className="btn btn-danger btn-xl" onClick={(e) => removeSite(agents._id)}>Delete</button>
+      
+      </td>
+
                                     </tr>
-                                      </>
-                                      )}
+                                     
+                                  
                                    
-                                 </Fragment>
+                                 
 
                                   
                               )
@@ -1123,6 +1130,9 @@ function Setting() {
                          
                         </tbody>
                                           </table>
+                                        </div>
+                                        
+                                          </div>
                                     </div>
                                   </div>
                                 </div>
@@ -1234,14 +1244,7 @@ function Setting() {
           
         </td>
         <td>
-          {/* <button
-            type="button"
-            onclick="editLs('MTU=');"
-            className="btn btn-info btn-xs"
-          >
-            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-
-          </button> */}
+        
           <button
             type="button"
             onClick={(e)=>{ deleteLeadSource(country1._id)}}

@@ -1,13 +1,19 @@
 import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+<<<<<<< Updated upstream
 import {  toast } from 'react-toastify';
 function Header() {
+=======
+
+function Header() {  
+>>>>>>> Stashed changes
   const navigate = useNavigate();
   
   const Logout = () => {
   
      localStorage.removeItem('token');
+<<<<<<< Updated upstream
      localStorage.removeItem('user_id');
      localStorage.removeItem('agent_name');
      localStorage.removeItem('agent_email');
@@ -15,6 +21,9 @@ function Header() {
      localStorage.removeItem('role');
 
     
+=======
+        navigate('/')       
+>>>>>>> Stashed changes
   setTimeout(()=>{ 
     // toast.warn('Logout Successfully'); 
    window.location.reload(false);

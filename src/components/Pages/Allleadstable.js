@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from "../Loader";
 import axios from "axios";
 import DataTable from 'react-data-table-component';
+import { Link } from "react-router-dom";
 
 export const Allleadstable = () => {
 
@@ -45,6 +46,26 @@ export const Allleadstable = () => {
             name:"Full Name",
             selector:(row)=>row?.full_name,
             sortable:true,
+            //filterable: false,
+            //Header: 'Click here',
+            //accessor: 'link',
+        //    render: e => <Link to={e.value}> {e.value} </Link>,
+        Cell: row => (
+            <span>
+              <span style={{
+                color: row.value === 'relationship' ? '#ff2e00'
+                  : row.value === 'complicated' ? '#ffbf00'
+                  : '#57d500',
+                transition: 'all .3s ease'
+              }}>
+                &#x25cf;
+              </span> {
+                row.value === 'relationship' ? 'In a relationship'
+                : row.value === 'complicated' ? `It's complicated`
+                : 'Single'
+              }
+            </span>
+          )
         },
         {
             name:"Number",
@@ -75,16 +96,16 @@ export const Allleadstable = () => {
         
 
 
-
   return (
-    <DataTable  responsive  title="Lead List"  columns={columns}  data={filterleads} pagination fixedHeader 
+    <DataTable   responsive  title="Lead List"  columns={columns}  data={filterleads} pagination fixedHeader 
     fixedHeaderScrollHeight="450px" selectableRows
     selectableRowsHighlight highlightOnHover subHeader subHeaderComponent={
         <input type="text" placeholder="Search here" 
            value={search} onChange={(e)=> setsearch(e.target.value)}
-        className="w-25 form-controll"/>
+        className="w-25 form-controll"/> 
     }
+
     actions={<button className="btn btn-sm btn-info">Export</button> }
     />
-  )
+  )  
 }

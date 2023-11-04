@@ -38,7 +38,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    })
 
    export const deleteAgent=createAsyncThunk("deleteAgent",async(_id,{rejectWithValue})=>{
-
+            
     const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/agent_delete/${_id}`,{
         method:"DELETE",
 })
@@ -134,8 +134,10 @@ export const agentSource=createSlice({
        },
        [deleteAgent.fulfilled]:(state,action)=>{
           state.loading=false;
-          
+        //   console.log(action.payload)
+        //   console.log(action.payload)
           const {_id} =action.payload.agent; 
+          
           if(_id){
              state.agent.agent=state.agent.agent.filter((ele)=>ele._id!==_id);  
         }

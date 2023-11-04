@@ -1,6 +1,9 @@
 import React ,{ useState } from "react";
 import {  Link } from "react-router-dom";
+<<<<<<< Updated upstream
 // import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
+=======
+>>>>>>> Stashed changes
 
 function SideNav() {
 
@@ -201,6 +204,7 @@ function SideNav() {
                   <i className="nav-icon far fa-credit-card" />
                   Product & Services
                 </Link>
+<<<<<<< Updated upstream
               </li>
 
              
@@ -210,6 +214,16 @@ function SideNav() {
                   Invoice <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview " style={{display:line}}>
+=======
+              </li>    
+              
+              <li className="nav-item">
+                <Link to="#" className="nav-link sub-btn">
+                  <i className="nav-icon far fa-credit-card" />
+                  Invoice <i className="fas fa-angle-left right dropdown" />
+                </Link>
+                <ul className="nav nav-treeview sub-menu">
+>>>>>>> Stashed changes
                   <li className="nav-item">
                     <Link to="/Listinvoice" className="nav-link">
                       <p> List Invoice</p>
@@ -244,6 +258,7 @@ function SideNav() {
           </nav>
         </div>
       </side>
+      
     </div>
   );
 }
