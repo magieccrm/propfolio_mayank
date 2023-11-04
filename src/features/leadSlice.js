@@ -62,7 +62,8 @@ export const leadSource=createSlice({
        }, 
        [addlead.fulfilled]:(state,action) =>{
            state.loading=false;
-            //  state.lead.lead.push(action.payload.lead); 
+          // console.log(action.payload)
+             // state.lead.lead.push(action.payload); 
               state.message=action.payload.message; 
        },
        [addlead.rejected]:(state,action) =>{

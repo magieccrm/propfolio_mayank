@@ -602,7 +602,12 @@ table.dataTable tbody th, table.dataTable tbody td {
   overflow: hidden;
   opacity: 0;
 }
-
+button.btn.btnes.btn-sm.btn-primary.pull-right.fontsize {
+  width: 122px!important;
+  display: block;
+  padding: 5px;
+  font-size: 20px;
+}
 #v-pills-crm-filed .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
   border: 1px solid #e4e5e7;
     border-right-color: rgb(228, 229, 231);
