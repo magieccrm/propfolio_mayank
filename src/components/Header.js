@@ -137,5 +137,5 @@ function Header() {
     </div>
   );
 }
-}
+
 export default Header;
