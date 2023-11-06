@@ -1,7 +1,9 @@
 import React ,{ useState } from "react";
 import {  Link } from "react-router-dom";
 // import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
+
 import companyLogo from "./avatar5.png";
+
 function SideNav() {
 
 
@@ -26,7 +28,7 @@ function SideNav() {
 
       }
       const callManage=()=>{
-        if(callManageshow==='none'){
+        if(callManageshow==='none'){  
           setcallManageshow("block")
         }else{
           setcallManageshow("none")
