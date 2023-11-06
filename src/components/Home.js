@@ -10,7 +10,7 @@ function Home() {
       <div className="content-wrapper">
         {/* Main content */}
         <section className="content py-5">
-          <div className="container-fluid">
+          <div className="container ">
             {/* Small boxes (Stat box) */}
             <div className="row">
                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-3"> 
@@ -21,7 +21,7 @@ function Home() {
                       <h4> Invoice Awaiting Payment</h4>
                       <h3>
                         {" "}Rs. 535920.00 (<span className="count-number"> 59 </span>){" "}
-                      </h3>
+                      </h3>  
                     </div>
                   </div>
                 </div>

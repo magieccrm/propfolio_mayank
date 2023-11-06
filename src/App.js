@@ -29,6 +29,7 @@ import { useSelector } from "react-redux";
 import {getHostingbydomain} from './features/licenceSlice';
 import Loader from './components/Loader';
 import Main from './components/Main';
+import Followupage from './components/Pages/Followupage';
   function App() { 
     //  change 
     const {hostings,loading} = useSelector((state)=>state.app);
@@ -85,6 +86,7 @@ import Main from './components/Main';
          <Route path="/Listinvoice" element={<Listinvoice />}></Route>
          <Route path="/Createinvoice" element={<Createinvoice />}></Route>
          <Route path="/Addclient" element={<Addclient />}></Route>
+         <Route path="/followupleads/:id"  element={<Followupage/>} ></Route>
         </>)}
           
            {/* <Route path="/" element={<Home />}></Route>

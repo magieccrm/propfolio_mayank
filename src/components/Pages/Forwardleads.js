@@ -13,7 +13,7 @@ function Forwardleads() {
    <div className="row export-data">
   <div className="col-md-5 col-xs-12">
     <div className="row">
-      <div className="col-md-4 col-sm-4 col-xs-6">
+      <div className="col-md-4 col-sm-4 col-xs-6">   
         <div className="btn-group">
           <a className="btn btnes exports" href=" "> <i className="fa fa-plus" />&nbsp;  Add Lead </a>
         </div>

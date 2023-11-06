@@ -59,13 +59,23 @@ a {
     line-height: 1.1;
     color: inherit;
   }
-  .user-panel .image img {
+  /* .user-panel .image img {
     width: 100%;
     max-width: 65px;
     height: auto;
     margin-right: auto;
     display: block;
     margin-left: auto;
+} */
+.user-panel .image img {
+  width: 100%;   
+  max-width: 65px;
+  height: auto;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  margin-right: auto;
+  display: block;
+  margin-left: auto;
+  border-radius: 50%;
 }
 .img-circle {
     border-radius: 50%;
@@ -198,7 +208,7 @@ a {
 }
 .main-sidebar, .main-sidebar::before {
   transition: margin-left .3s ease-in-out,width .3s ease-in-out;
-  width: 220px;
+  width: 231px;
 }
 .nav-sidebar > li {
   position: relative;
@@ -349,6 +359,24 @@ select {
 }
 .fontsize {
   font-size: 13px;
+}
+.bottoms-border {
+  border-bottom: solid 1px #ddd !important;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.left-border {
+  border-right: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+.status-bottom {
+  margin-bottom: 10px;
+}
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: inherit;
+  -webkit-overflow-scrolling: touch;
 }
 .btn-primary {
   background-color: #009688;
@@ -602,12 +630,7 @@ table.dataTable tbody th, table.dataTable tbody td {
   overflow: hidden;
   opacity: 0;
 }
-button.btn.btnes.btn-sm.btn-primary.pull-right.fontsize {
-  width: 122px!important;
-  display: block;
-  padding: 5px;
-  font-size: 20px;
-}
+
 #v-pills-crm-filed .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
   border: 1px solid #e4e5e7;
     border-right-color: rgb(228, 229, 231);
@@ -983,6 +1006,9 @@ select.list-dt:focus {
   background-color: rgb(0, 150, 136);
   border: 1px solid rgb(0, 150, 136);
   color: rgba(255, 255, 255, 0.8);
+}
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+  max-width: 1250px;
 }
 .reset-buttons {
   text-align: right;
