@@ -60,9 +60,9 @@ useEffect(()=>{
     dispatch(getStatebycountry(data));
       
     }
-              //  if(loading){
-              //   return(<Loader/>)
-              //  }
+               if(loading){
+                return(<Loader/>)
+               }
   return (
     <div>
       <div className="content-wrapper">
@@ -130,8 +130,8 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group"> 
-          <select    {...required} name="service" onChange={e=>setleaddata({...leaddata,service:e.target.value})}    className="form-control" >
-            <option value selected="selected">Select</option> 
+          <select      name="service" onChange={e=>setleaddata({...leaddata,service:e.target.value})}    className="form-control"  required>
+            <option value="">Select</option> 
             { ProductService.product_service?.map((service,key)=>{
                 return(      
                   <option value={service._id}>{service.product_service_name}</option>
@@ -179,8 +179,8 @@ useEffect(()=>{
       </div>
       <div className="col-md-8 mob-left-right col-xs-12">
         <div className="form-group">
-          <select name="lead_source" onChange={e=>setleaddata({...leaddata,lead_source:e.target.value})}  className="form-control" >
-            <option value selected="selected">Select</option>
+          <select name="lead_source" onChange={e=>setleaddata({...leaddata,lead_source:e.target.value})}  className="form-control" required>
+            <option value="">Select</option>
           
             { leadSourcedata.leadSource?.map((leadsource,key)=>{
                 return(
@@ -217,7 +217,7 @@ useEffect(()=>{
         
             onChange={e => getStateByCountry(e.target.value)}
             className="form-control"  tabIndex={11}>
-              <option value selected="selected">Select</option>
+              <option value="">Select</option>
               {CountryState?.country?.map((country1,key)=>{
                 return (
                   <option value={country1.short_name}>{country1.name} </option>
@@ -237,7 +237,7 @@ useEffect(()=>{
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
             <select name="state"  onChange={e=>setleaddata({...leaddata,state:e.target.value})}  className="form-control"  >
-              <option value selected="selected">Select</option>
+              <option value="">Select</option>
                { StateByCountry?.state?.map((state1,key)=>{
                 return(
                   <option value={state1._id}>{state1.name}</option>
@@ -289,8 +289,8 @@ useEffect(()=>{
             <label htmlFor="assign_to_agent">Assign to agent <span className="text-danger">*</span> </label>
           </div>
           <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <select name="assign_to_agent" onChange={e=>setleaddata({...leaddata,assign_to_agent:e.target.value})}  className="form-control"  >
-              <option value selected="selected">Select</option>
+            <select name="assign_to_agent" onChange={e=>setleaddata({...leaddata,assign_to_agent:e.target.value})}  className="form-control" required >
+              <option value="">Select</option>
               
               {
                  agent?.agent?.map((agents,key)=>{
@@ -306,8 +306,8 @@ useEffect(()=>{
             <label htmlFor="status">Status <span className="text-danger">*</span> </label>
           </div>  
           <div className="col-md-8 mob-left-right col-xs-12 form-group">
-            <select name="status" className="form-control" onChange={e=>setleaddata({...leaddata,status:e.target.value})}  required="required">
-              <option value selected="selected">Select</option>
+            <select name="status" className="form-control" onChange={e=>setleaddata({...leaddata,status:e.target.value})}  required >
+              <option value="">Select</option>
              
               { Statusdata.leadstatus?.map((status,key)=>{
                 return(

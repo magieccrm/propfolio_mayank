@@ -2,7 +2,7 @@ import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import {  toast } from 'react-toastify';
-function Header() {
+
 
 function Header() {  
   const navigate = useNavigate();
@@ -43,11 +43,12 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <Link to="" className="nav-link">
-              <i class="fa fa-home" /> Home{" "}
+            <Link to="/home" className="nav-link">
+              <i class="fa fa-home" /> Home
             </Link>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
+            
             <div className="nav-link">Dashboard</div>
           </li>
         </ul>

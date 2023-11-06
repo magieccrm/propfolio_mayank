@@ -85,66 +85,14 @@ function Leads() {
   </div>
 </div>
 
-   {/* datatable */}
+ 
    <div className="card-body">
     <div className="">
     <Allleadstable/>
     </div>
   
   </div>
- {/* <div className="card-body">
-    <table id="example1" className="table table-bordered table-striped">
-    <thead>
-      <tr>
-      <th>S.No.</th>
-           <th>Full Name</th>
-            <th>Number</th>
-            <th>Agent</th>
-            <th>Service</th>
-            <th>Lead Source</th>
-            <th>Status</th>
-           
-      </tr>
-    </thead>
-    <tbody>
-     
-        {
-          lead?.lead?.map((led,key)=>{
 
-              return(
-                
-                <Fragment>    
-                {loading?(<Fragment>
-                  <Loader/>
-                  </Fragment>  
-                  ):(<Fragment>
-                  <tr>
-                 <td>{key+1} </td>
-                <td>{led.full_name} </td>
-                <td>{led.contact_no}   </td>
-                <td>{led?.agent_details[0]?.agent_name}   </td>
-                <td> {led.service_details[0]?.product_service_name} </td>
-                <td> {led.lead_source_details[0]?.lead_source_name}</td>
-                <td>{led.status_details[0]?.status_name}  </td>
-              
-              </tr>  
-                    </Fragment>
-                  )
-                     }   </Fragment>  
-             );
-          })
-        }
-
-
-      
-     
-    </tbody>
-    
-     </table>
-</div> */}
-
-
- {/* datatable */}
 
 
            

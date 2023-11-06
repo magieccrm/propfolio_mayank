@@ -2,6 +2,8 @@ import React ,{ useState } from "react";
 import {  Link } from "react-router-dom";
 // import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
 
+import companyLogo from "./avatar5.png";
+
 function SideNav() {
 
 
@@ -46,7 +48,9 @@ function SideNav() {
               <h2> Your Company </h2>
             </div>   
             <div className="image">
-             
+            <div class="image pull-center">
+                        <img src={companyLogo} alt="BigCo Inc. logo"/>
+         </div>
             </div>  
             <div className="info text-center">
               <h4>Welcome</h4>
