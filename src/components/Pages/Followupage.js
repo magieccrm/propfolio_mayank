@@ -6,28 +6,89 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllLead } from '../../features/leadSlice';
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
+import {getAllCountry} from "../../features/country_stateSlice";
+import {getStatebycountry} from "../../features/getStateByCountrySlice";
+import {addfollowup, getAllFollowup } from "../../features/followupSlice";
+import Loader from '../Loader';
+import { toast } from 'react-toastify';
 export default function Followupage() {
 
   const { agent }=useSelector((state)=>state.agent);
+  const {CountryState} = useSelector((state)=>state.Country_State); 
+  const {StateByCountry}=useSelector((state)=>state.getStateByCountry);
+const {followup} =useSelector((state)=>state.followup);  
+ 
+  const   _id = useParams();
+ // console.log(_id.id) 
   useEffect(()=>{
-    dispatch(getAllStatus());
+      dispatch(getAllStatus());
       dispatch(getAllLead()); 
       dispatch(getAllAgent());
-  },[]); 
+      dispatch(getAllCountry());
+    
+     if(_id.id){    
+      dispatch(getAllFollowup(_id.id));     
+     }
+    
+  },[_id.id]);  
+
+ 
+
+  
+
   const dispatch=useDispatch(); 
 
+  const handleInputChange = (e) => {
+    getStateByCountry(e.target.value);    
+  };
+
+  const getStateByCountry=(data)=>{
+   
+    dispatch(getStatebycountry(data));
+      
+    }
+     
+
   const {lead,loading} = useSelector((state)=>state.lead);
+
+
   const {Statusdata} = useSelector((state)=>state.StatusData); 
-  const   _id = useParams();
+  
   
   const foundObject = lead?.lead?.find(obj => obj._id === _id.id);
+
+  const [data,setdata]=useState({});
+    const submitFollowup=async(e)=>{
+      e.preventDefault(); 
+   
+      setdata({...data,lead_id:e.target.lead_id.value,
+        commented_by:e.target.elements.commented_by?.value,
+        assign_to_agent:e.target.elements.assign_to_agent?.value,
+        followup_status_id:e.target.elements.followup_status_id?.value});  
+
+       if(data.lead_id){
+        const aaaa=   await dispatch(addfollowup(data));
+     
+        if(aaaa.payload.success==true){   
+         toast.success(aaaa.payload.message);  
+         window.location.reload(false);
+          }else{       
+         toast.warn(aaaa.payload?.message);   
+     } 
+ 
+    }else{
+        toast.warn('all field required');   
+       }
+      
+    }  
   
   return (
     <div>
       <div className="content-wrapper">
     
         <section className="container">
-          <div className="container">
+
+          {loading?<Loader/>:(  <div className="container">
             <div className="panel-body">
              
                 <div className="col-sm-12">
@@ -39,8 +100,7 @@ export default function Followupage() {
 					</div>
                     <div className="col-md-6 col-xs-6">
                     <div className="reset-buttons">
-							<button type="button" className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome">
-							Add Custom Field</button>
+						
 						</div>
 					</div>
                        </div>
@@ -51,10 +111,7 @@ export default function Followupage() {
       <div className="card-headers lead_fallow">
         <div className="table-responsive mob-bord">
           <form
-            action=" "
-            name="addfollowup"
-            id="addfollowup"
-            method="post"
+             onSubmit={submitFollowup}
           >
            
               <div className="mai-falows">
@@ -68,24 +125,22 @@ export default function Followupage() {
                       <input
                         type="hidden"
                         name="lead_id"
-                        defaultValue={3868}
-                        autoComplete="off"
+                        value={foundObject?._id} 
+                       
                       />
-                      <input
-                        type="hidden"
-                        id="lmobile"
-                        defaultValue={9954321345}
-                        autoComplete="off"
+                       <input
+                        type="hidden" 
+                        name="commented_by" 
+                        value={localStorage.getItem('user_id')} 
+                       
                       />
-                     
-                      <input
-                        type="hidden"
-                        id="lmobile"
-                        name="forword_agent_id"
-                        defaultValue={24}
+                       {/* <input
+                        type="text"
+                        name="followup_status_id"
+                        value={foundObject?.status}   
                         autoComplete="off"
-                      />
-                   
+                      /> */}
+                    
                       {foundObject?.full_name} 
                     </div>
                   </div>
@@ -125,9 +180,9 @@ export default function Followupage() {
                   <div className="row bottoms-border none-border">
                     <div className="col-md-4 col-xs-4 pd-top">
                       <lable>Agent Name </lable>
-                    </div>
+                    </div> 
                     <div className="col-md-8 col-xs-8">
-                      <select className="form-control" required  name="followup_asign">
+                      <select className="form-control" required  onChange={e=>setdata({...data,assign_to_agent:e.target.value})}  name="assign_to_agent">
                         <option value="">Select Options </option>
                        
                           
@@ -136,7 +191,7 @@ export default function Followupage() {
                 return( <option  selected={foundObject?.assign_to_agent===agents._id? 'selected':''} value={agents._id}   >{agents.agent_name}</option>) 
                  })
               }
-
+        
                       </select>
                     </div>
                   </div>
@@ -148,22 +203,23 @@ export default function Followupage() {
                     </div>
                     <div className="col-md-8 col-xs-8">
                       <select
+                        onChange={e=>setdata({...data,followup_status_id:e.target.value})} 
                         className="form-control"
-                        name="followup_status"
-                        onchange="fireFS()"
+                        name="followup_status_id"
+                       
                         id="followup_status"
-                        required
+                        required   
                       >
                         <option value="">Select Status</option>
                         { Statusdata.leadstatus?.map((status,key)=>{
                 return(
                   <option   selected={foundObject?.status===status._id? 'selected':''}    value={status._id}>{status.status_name}</option>
-                )
+                 )
                })
             }
 
                       </select>
-                      <select
+                      {/* <select
                         className="form-control"
                         name="lost_reason_id"
                         style={{ display: "none" }}
@@ -176,28 +232,30 @@ export default function Followupage() {
                         <option value={4}>Details is not valid.</option>
                         <option value={2}>Customer is not responding.</option>
                         <option value={14}>Fake Lead</option>
-                      </select>
-                      <input
+                      </select> */}
+                      {/* <input
                         type="number"
                         className="form-control"
                         name="won_amount"
                         style={{ display: "none" }}
                         id="won_amount"
                         autoComplete="off"
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div className="row status-bottom">
                     <div className="col-md-4 pd-top col-xs-4">Followup</div>
                     <div className="col-md-8 col-xs-8">
                       <input
-                        type="text"
-                        name="followup_date"
-                        id="followup_date"
+                 onChange={e=>setdata({...data,followup_date:e.target.value})} 
+
+                        type="date"
+                        name="followup_date"     
+                        id="followup_date" 
                         className="form-control"
                         placeholder="Followup date"
-                        defaultValue=""
-                        required=""
+                      
+                        required
                         autoComplete="off"
                       />
                     </div>
@@ -206,15 +264,17 @@ export default function Followupage() {
                     <div className="col-md-4 pd-top col-xs-4">
                       <lable>Description</lable>
                     </div>
-                    <div className="col-md-8 col-xs-8">
+                    <div className="col-md-8 col-xs-8">   
                       <textarea
                         className="form-control text-areasss"
-                        rows={3}
+                        rows={3}   
+
+                        onChange={e=>setdata({...data,followup_desc:e.target.value})} 
                         name="followup_desc"
                         id="followup_desc"
                         placeholder="Enter description..."
-                        required=""
-                        defaultValue={""}
+                        required=""  
+                       
                       />
                     </div>
                   </div>
@@ -235,8 +295,10 @@ export default function Followupage() {
                             </div>
                           </div>
                           </div>
+                    
+                    
                         <div className="row">
-                          <div className="col-md-6 col-xs-6">
+                          <div className="col-md-12 col-xs-12">
                             <input
                               type="submit"
                               name="submit"
@@ -247,7 +309,9 @@ export default function Followupage() {
                             />
                          
                           </div>
-                          <div className="col-md-6 col-xs-6">
+                        
+                        
+                          {/* <div className="col-md-6 col-xs-6 d-none">
                             <input
                               type="button"
                               onclick="openSmsM();"
@@ -256,14 +320,18 @@ export default function Followupage() {
                               className="btn btn-warning paddingsss form-control"
                               autoComplete="off"
                             />
-                          </div>
+                          </div>   */}
+                       
+                       
                           <div
                             id="smsModal"
                             className="modal fade"
                             role="dialog"
                           >
+                          
+                          
                             <div className="modal-dialog">
-                              {/* Modal content*/}
+                          
                               <div className="modal-content">
                                 <div className="modal-header">
                                   <button
@@ -301,7 +369,11 @@ export default function Followupage() {
                                 </div>
                               </div>
                             </div>
+
+
                           </div>
+                      
+                      
                         </div>
                       
                     </div>
@@ -312,10 +384,10 @@ export default function Followupage() {
           </form>
         </div>
       </div>
-      {/* Nav tabs */}
-      <ul className="nav nav-tabs mobiltabs bottom-border">
-        <li className="active">
-          <a href="#tab6" data-toggle="tab" aria-expanded="true">
+       {/* Nav tabs */}
+       <ul className="nav nav-tabs mobiltabs bottom-border">
+        <li className="">
+          <a href="#tab6"  className="active" data-toggle="tab" aria-expanded="true">  
             <span className="tabnone">History</span>{" "}
             <i className="fa fa-history" aria-hidden="true" />
           </a>
@@ -344,7 +416,7 @@ export default function Followupage() {
           {/*-------------------------------------------tab2-----------------------------*/}
           <div className="tab-pane fade" id="tab3">
             <form
-              action="https://www.crm.bizavtar.com/lead/update_lead"
+              action=" "
               name="ldform"
               method="post"
               encType="multipart/form-data"
@@ -353,171 +425,161 @@ export default function Followupage() {
                 <div className="row">
                   <input
                     type="hidden"
-                    name="lead_id"
+                    name="lead_id1"
                     defaultValue={3868}
                     autoComplete="off"
                   />
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                   <div className="row">
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="full_name">Full Name</label>
+                      <div className="form-group"> <label htmlFor="full_name">Full Name</label></div> 
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="full_name"
-                        defaultValue="vinod"
+                       
                         id="full_name"
                         placeholder="Full Name"
                         className="form-control"
-                        autoComplete="off"
+                        
+                        value={foundObject?.full_name} 
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div className="row">
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="email_id">Email Id</label>
+                    <div className="form-group"> <label htmlFor="email_id">Email Id</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="email"
                         name="email_id"
-                        defaultValue=""
+                        value={foundObject?.email_id} 
                         id="email_id"
                         placeholder="Email Id"
                         className="form-control"
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div className="row">
                     <div className="col-md-4 col-xs-12 pd-top">
+                     <div className="form-group">
                       <label htmlFor="company_name">Company Name</label>
+                      </div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="company_name"
-                        defaultValue=""
+                        value={foundObject?.company_name} 
                         id="company_name"
                         placeholder="Company Name"
                         className="form-control"
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                    <div className="row"> 
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="website">Website</label>
+                    <div className="form-group"> <label htmlFor="website">Website</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="website"
-                        defaultValue=""
+                        value={foundObject?.website} 
                         id="website"
                         placeholder="Website"
                         className="form-control"
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                    <div className="row"> 
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="service">Service</label>
+                    <div className="form-group"><label htmlFor="service">Service</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <select
                         name="service"
                         id="service"
                         className="form-control"
-                        value={41}
+                       required
                       >
                         <option value="">Select</option>
-                        <option value={0}> </option>
-                        <option value={37}>Addon</option>
-                        <option value={54}>Book Printing Binding</option>
-                        <option value={57}>Business Loan</option>
-                        <option value={48}>Cloud Hosting</option>
-                        <option value={42}>CRM</option>
-                        <option value={30}>Digital Marketing</option>
-                        <option value={50}>Digital Services Fee</option>
-                        <option value={24}>Domain registration</option>
-                        <option value={32}>E-Commerce</option>
-                        <option value={47}>Email Hosting</option>
-                        <option value={39}>Google Apps</option>
-                        <option value={41} selected="selected">
-                          HRMS
-                        </option>
-                        <option value={40}>Inventory Management</option>
-                        <option value={56}>Personal Loan</option>
-                        <option value={58}>Python Course</option>
-                        <option value={52}>Real-Estate</option>
-                        <option value={31}>SEO</option>
-                        <option value={35}>SMS</option>
-                        <option value={46}>Software Development</option>
-                        <option value={43}>SSL</option>
-                        <option value={49}>Staff Management Fee</option>
-                        <option value={33}>Test Razor Pay</option>
-                        <option value={25}>Web Designing Development</option>
-                        <option value={23}>Web Hosting</option>
-                        <option value={38}>Website Maintenance</option>
-                        <option value={55}>Website Maintenance Qtly</option>
-                        <option value={36}>WhatsApp</option>
-                        <option value={53}>Whoisdomaintool</option>
+                       
                       </select>
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div className="row"> 
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="contact_no">Contact No</label>
+                    <div className="form-group">   <label htmlFor="contact_no">Contact No</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="contact_no"
-                        defaultValue={9954321345}
+                        value={foundObject?.contact_no}
                         id="contact_no"
                         placeholder="Contact No"
                         className="form-control"
                         autoComplete="off"
                       />
-                    </div>
+                    </div></div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div className="row">
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="alternative_no">Alternative No</label>
+                    <div className="form-group"> 
+                     <label htmlFor="alternative_no">Alternative No</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="alternative_no"
-                        defaultValue=""
+                        value={foundObject?.alternative_no}
                         id="alternative_no"
                         placeholder="Alternative No"
                         className="form-control"
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div className="row"> 
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="position">Position</label>
+                    <div className="form-group">  <label htmlFor="position">Position</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="position"
-                        defaultValue=""
+                        value={foundObject?.position}
                         id="position"
                         placeholder="Position"
                         className="form-control"
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div class="row">
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="lead_source">Lead Source</label>
+                    <div className="form-group">  <label htmlFor="lead_source">Lead Source</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <select
@@ -539,21 +601,24 @@ export default function Followupage() {
                         <option value={28}>Sulekha</option>
                       </select>
                     </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 col-xs-12 card">
+                  <div className="col-md-6 col-xs-12">
+                  <div class="row">
                     <div className="col-md-4 col-xs-12 pd-top">
-                      <label htmlFor="lead_cost">Lead Cost</label>
+                    <div className="form-group"> <label htmlFor="lead_cost">Lead Cost</label></div>
                     </div>
                     <div className="col-md-8 col-xs-12">
                       <input
                         type="text"
                         name="lead_cost"
-                        defaultValue=""
+                        value={foundObject?.lead_cost}
                         id="lead_cost"
                         placeholder="Lead Cost"
                         className="form-control"
                         autoComplete="off"
                       />
+                    </div>
                     </div>
                   </div>
                   <div className="col-md-6" />
@@ -579,269 +644,49 @@ export default function Followupage() {
           {/*-------------------------------------------tab2-----------------------------*/}
           <div className="tab-pane fade" id="tab4">
             <form
-              action="https://www.crm.bizavtar.com/lead/update_lead"
+              action=" "
               name="ldform"
               method="post"
               encType="multipart/form-data"
             >
               <input
                 type="hidden"
-                name="lead_id"
+                name="lead_id2"
                 defaultValue={3868}
                 autoComplete="off"
               />
               <div className="row">
                 <div className="col-sm-6 col-xs-12 ">
-                  <div className="card-headers">
-                    <div className="col-md-12 pd-0">
+                  <div className="card-headeres">
+                    <div className="form-group pt-3">
                       <div className="address-sec">Address </div>
                     </div>
+                    <div className="row">
                     <div className="col-md-4 pd-top">
-                      <label htmlFor="country">Country</label>
+                       <div className="form-group"> <label htmlFor="country">Country</label></div> 
+                      </div>
+                          <div className="col-md-8">
+                    
+                          <select name="country"  
+         onChange={handleInputChange}
+          //  onChange={e => getStateByCountry(e.target.value)}
+            className="form-control"   required>
+              <option value="">Select</option>
+              {CountryState?.country?.map((country1,key)=>{
+                return (
+                  <option value={country1.short_name}>{country1.name} </option>   
+                )
+              })}
+             
+            </select>
+
+                       </div>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control"
-                        value={0}
-                      >
-                        <option value="">Select</option>
-                        <option value={1}>Afghanistan </option>
-                        <option value={2}>Albania </option>
-                        <option value={3}>Algeria </option>
-                        <option value={4}>American Samoa </option>
-                        <option value={5}>Andorra </option>
-                        <option value={6}>Angola </option>
-                        <option value={7}>Anguilla </option>
-                        <option value={8}>Antigua &amp; Barbuda </option>
-                        <option value={9}>Argentina </option>
-                        <option value={10}>Armenia </option>
-                        <option value={11}>Aruba </option>
-                        <option value={12}>Australia </option>
-                        <option value={13}>Austria </option>
-                        <option value={14}>Azerbaijan </option>
-                        <option value={15}>Bahamas, The </option>
-                        <option value={16}>Bahrain </option>
-                        <option value={17}>Bangladesh </option>
-                        <option value={18}>Barbados </option>
-                        <option value={19}>Belarus </option>
-                        <option value={20}>Belgium </option>
-                        <option value={21}>Belize </option>
-                        <option value={22}>Benin </option>
-                        <option value={23}>Bermuda </option>
-                        <option value={24}>Bhutan </option>
-                        <option value={25}>Bolivia </option>
-                        <option value={26}>Bosnia &amp; Herzegovina </option>
-                        <option value={27}>Botswana </option>
-                        <option value={28}>Brazil </option>
-                        <option value={29}>British Virgin Is. </option>
-                        <option value={30}>Brunei </option>
-                        <option value={31}>Bulgaria </option>
-                        <option value={32}>Burkina Faso </option>
-                        <option value={33}>Burma </option>
-                        <option value={34}>Burundi </option>
-                        <option value={35}>Cambodia </option>
-                        <option value={36}>Cameroon </option>
-                        <option value={37}>Canada </option>
-                        <option value={38}>Cape Verde </option>
-                        <option value={39}>Cayman Islands </option>
-                        <option value={40}>Central African Rep. </option>
-                        <option value={41}>Chad </option>
-                        <option value={42}>Chile </option>
-                        <option value={43}>China </option>
-                        <option value={44}>Colombia </option>
-                        <option value={45}>Comoros </option>
-                        <option value={46}>Congo, Dem. Rep. </option>
-                        <option value={47}>Congo, Repub. of the </option>
-                        <option value={48}>Cook Islands </option>
-                        <option value={49}>Costa Rica </option>
-                        <option value={50}>Cote d'Ivoire </option>
-                        <option value={51}>Croatia </option>
-                        <option value={52}>Cuba </option>
-                        <option value={53}>Cyprus </option>
-                        <option value={54}>Czech Republic </option>
-                        <option value={55}>Denmark </option>
-                        <option value={56}>Djibouti </option>
-                        <option value={57}>Dominica </option>
-                        <option value={58}>Dominican Republic </option>
-                        <option value={59}>East Timor </option>
-                        <option value={60}>Ecuador </option>
-                        <option value={61}>Egypt </option>
-                        <option value={62}>El Salvador </option>
-                        <option value={63}>Equatorial Guinea </option>
-                        <option value={64}>Eritrea </option>
-                        <option value={65}>Estonia </option>
-                        <option value={66}>Ethiopia </option>
-                        <option value={67}>Faroe Islands </option>
-                        <option value={68}>Fiji </option>
-                        <option value={69}>Finland </option>
-                        <option value={70}>France </option>
-                        <option value={71}>French Guiana </option>
-                        <option value={72}>French Polynesia </option>
-                        <option value={73}>Gabon </option>
-                        <option value={74}>Gambia, The </option>
-                        <option value={75}>Gaza Strip </option>
-                        <option value={76}>Georgia </option>
-                        <option value={77}>Germany </option>
-                        <option value={78}>Ghana </option>
-                        <option value={79}>Gibraltar </option>
-                        <option value={80}>Greece </option>
-                        <option value={81}>Greenland </option>
-                        <option value={82}>Grenada </option>
-                        <option value={83}>Guadeloupe </option>
-                        <option value={84}>Guam </option>
-                        <option value={85}>Guatemala </option>
-                        <option value={86}>Guernsey </option>
-                        <option value={87}>Guinea </option>
-                        <option value={88}>Guinea-Bissau </option>
-                        <option value={89}>Guyana </option>
-                        <option value={90}>Haiti </option>
-                        <option value={91}>Honduras </option>
-                        <option value={92}>Hong Kong </option>
-                        <option value={93}>Hungary </option>
-                        <option value={94}>Iceland </option>
-                        <option value={95}>India </option>
-                        <option value={96}>Indonesia </option>
-                        <option value={97}>Iran </option>
-                        <option value={98}>Iraq </option>
-                        <option value={99}>Ireland </option>
-                        <option value={100}>Isle of Man </option>
-                        <option value={101}>Israel </option>
-                        <option value={102}>Italy </option>
-                        <option value={103}>Jamaica </option>
-                        <option value={104}>Japan </option>
-                        <option value={105}>Jersey </option>
-                        <option value={106}>Jordan </option>
-                        <option value={107}>Kazakhstan </option>
-                        <option value={108}>Kenya </option>
-                        <option value={109}>Kiribati </option>
-                        <option value={110}>Korea, North </option>
-                        <option value={111}>Korea, South </option>
-                        <option value={112}>Kuwait </option>
-                        <option value={113}>Kyrgyzstan </option>
-                        <option value={114}>Laos </option>
-                        <option value={115}>Latvia </option>
-                        <option value={116}>Lebanon </option>
-                        <option value={117}>Lesotho </option>
-                        <option value={118}>Liberia </option>
-                        <option value={119}>Libya </option>
-                        <option value={120}>Liechtenstein </option>
-                        <option value={121}>Lithuania </option>
-                        <option value={122}>Luxembourg </option>
-                        <option value={123}>Macau </option>
-                        <option value={124}>Macedonia </option>
-                        <option value={125}>Madagascar </option>
-                        <option value={126}>Malawi </option>
-                        <option value={127}>Malaysia </option>
-                        <option value={128}>Maldives </option>
-                        <option value={129}>Mali </option>
-                        <option value={130}>Malta </option>
-                        <option value={131}>Marshall Islands </option>
-                        <option value={132}>Martinique </option>
-                        <option value={133}>Mauritania </option>
-                        <option value={134}>Mauritius </option>
-                        <option value={135}>Mayotte </option>
-                        <option value={136}>Mexico </option>
-                        <option value={137}>Micronesia, Fed. St. </option>
-                        <option value={138}>Moldova </option>
-                        <option value={139}>Monaco </option>
-                        <option value={140}>Mongolia </option>
-                        <option value={141}>Montserrat </option>
-                        <option value={142}>Morocco </option>
-                        <option value={143}>Mozambique </option>
-                        <option value={154}>N. Mariana Islands </option>
-                        <option value={144}>Namibia </option>
-                        <option value={145}>Nauru </option>
-                        <option value={146}>Nepal </option>
-                        <option value={147}>Netherlands </option>
-                        <option value={148}>Netherlands Antilles </option>
-                        <option value={149}>New Caledonia </option>
-                        <option value={150}>New Zealand </option>
-                        <option value={151}>Nicaragua </option>
-                        <option value={152}>Niger </option>
-                        <option value={153}>Nigeria </option>
-                        <option value={155}>Norway </option>
-                        <option value={156}>Oman </option>
-                        <option value={157}>Pakistan </option>
-                        <option value={158}>Palau </option>
-                        <option value={159}>Panama </option>
-                        <option value={160}>Papua New Guinea </option>
-                        <option value={161}>Paraguay </option>
-                        <option value={162}>Peru </option>
-                        <option value={163}>Philippines </option>
-                        <option value={164}>Poland </option>
-                        <option value={165}>Portugal </option>
-                        <option value={166}>Puerto Rico </option>
-                        <option value={167}>Qatar </option>
-                        <option value={168}>Reunion </option>
-                        <option value={169}>Romania </option>
-                        <option value={170}>Russia </option>
-                        <option value={171}>Rwanda </option>
-                        <option value={172}>Saint Helena </option>
-                        <option value={173}>Saint Kitts &amp; Nevis </option>
-                        <option value={174}>Saint Lucia </option>
-                        <option value={176}>
-                          Saint Vincent and the Grenadines{" "}
-                        </option>
-                        <option value={177}>Samoa </option>
-                        <option value={178}>San Marino </option>
-                        <option value={179}>Sao Tome &amp; Principe </option>
-                        <option value={180}>Saudi Arabia </option>
-                        <option value={181}>Senegal </option>
-                        <option value={182}>Serbia </option>
-                        <option value={183}>Seychelles </option>
-                        <option value={184}>Sierra Leone </option>
-                        <option value={185}>Singapore </option>
-                        <option value={186}>Slovakia </option>
-                        <option value={187}>Slovenia </option>
-                        <option value={188}>Solomon Islands </option>
-                        <option value={189}>Somalia </option>
-                        <option value={190}>South Africa </option>
-                        <option value={191}>Spain </option>
-                        <option value={192}>Sri Lanka </option>
-                        <option value={175}>St Pierre &amp; Miquelon </option>
-                        <option value={193}>Sudan </option>
-                        <option value={194}>Suriname </option>
-                        <option value={195}>Swaziland </option>
-                        <option value={196}>Sweden </option>
-                        <option value={197}>Switzerland </option>
-                        <option value={198}>Syria </option>
-                        <option value={199}>Taiwan </option>
-                        <option value={200}>Tajikistan </option>
-                        <option value={201}>Tanzania </option>
-                        <option value={202}>Thailand </option>
-                        <option value={203}>Togo </option>
-                        <option value={204}>Tonga </option>
-                        <option value={205}>Trinidad &amp; Tobago </option>
-                        <option value={206}>Tunisia </option>
-                        <option value={207}>Turkey </option>
-                        <option value={208}>Turkmenistan </option>
-                        <option value={209}>Turks &amp; Caicos Is </option>
-                        <option value={210}>Tuvalu </option>
-                        <option value={211}>Uganda </option>
-                        <option value={212}>Ukraine </option>
-                        <option value={213}>United Arab Emirates </option>
-                        <option value={214}>United Kingdom </option>
-                        <option value={215}>United States </option>
-                        <option value={216}>Uruguay </option>
-                        <option value={217}>Uzbekistan </option>
-                        <option value={218}>Vanuatu </option>
-                        <option value={219}>Venezuela </option>
-                        <option value={220}>Vietnam </option>
-                        <option value={221}>Virgin Islands </option>
-                        <option value={222}>Wallis and Futuna </option>
-                        <option value={223}>West Bank </option>
-                        <option value={224}>Western Sahara </option>
-                        <option value={225}>Yemen </option>
-                        <option value={226}>Zambia </option>
-                        <option value={227}>Zimbabwe </option>
-                      </select>
-                    </div>
+                    <div className="row">
                     <div className="col-md-4 pd-top">
-                      <label htmlFor="full_address">Full Address</label>
+                    <div className="form-group">  <label htmlFor="full_address">Full Address</label></div>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
+                    <div className="col-md-8 cardes">
                       <textarea
                         name="full_address"
                         cols={40}
@@ -851,52 +696,38 @@ export default function Followupage() {
                         defaultValue={""}
                       />
                     </div>
-                    <div className="col-md-4 pd-top">
-                      <label htmlFor="state">State</label>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
-                      <select
+                    <div className="row"> 
+                    <div className="col-md-4 pd-top">
+                    <div className="form-group"> <label htmlFor="state">State</label></div>
+                    </div>
+                    <div className="col-md-8">
+                       <div className="form-group"> 
+                     <select
                         name="state"
                         id="state"
                         className="form-control"
-                        value={0}
+                      
                       >
-                        <option value="">Select</option>
-                        <option value={1}>Andhra Pradesh</option>
-                        <option value={2}>Arunachal Pradesh</option>
-                        <option value={3}>Assam</option>
-                        <option value={4}>Bihar </option>
-                        <option value={5}>Chhattisgarh</option>
-                        <option value={29}>Delhi</option>
-                        <option value={6}>Goa</option>
-                        <option value={7}>Gujarat</option>
-                        <option value={8}>Haryana</option>
-                        <option value={9}>Himachal Pradesh</option>
-                        <option value={10}>Jharkhand</option>
-                        <option value={11}>Karnataka</option>
-                        <option value={12}>Kerala</option>
-                        <option value={13}>Madhya Pradesh</option>
-                        <option value={14}>Maharashtra</option>
-                        <option value={15}>Manipur</option>
-                        <option value={16}>Meghalaya</option>
-                        <option value={17}>Mizoram</option>
-                        <option value={18}>Nagaland</option>
-                        <option value={19}>Odisha</option>
-                        <option value={20}>Punjab</option>
-                        <option value={21}>Rajasthan</option>
-                        <option value={22}>Sikkim</option>
-                        <option value={23}>Tamil Nadu</option>
-                        <option value={24}>Telangana </option>
-                        <option value={25}>Tripura</option>
-                        <option value={27}>Uttar Pradesh </option>
-                        <option value={26}>Uttarakhand</option>
-                        <option value={28}>West Bengal</option>
+                         <option value="">Select State</option>
+                      { StateByCountry?.state?.map((state1,key)=>{
+                return(
+                  <option value={state1._id}>{state1.name}</option>
+                )
+               })
+               }
                       </select>
+
+                     
+
+                        </div>
                     </div>
+                    </div>
+                  <div className="row">
                     <div className="col-md-4 pd-top">
-                      <label htmlFor="city">City</label>
+                    <div className="form-group"> <label htmlFor="city">City</label></div>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
+                    <div className="col-md-8">
                       <input
                         type="text"
                         name="city"
@@ -907,10 +738,12 @@ export default function Followupage() {
                         autoComplete="off"
                       />
                     </div>
-                    <div className="col-md-4 pd-top">
-                      <label htmlFor="pincode">Pincode</label>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
+                    <div className="row">
+                    <div className="col-md-4 pd-top">
+                    <div className="form-group"> <label htmlFor="pincode">Pincode</label></div>
+                    </div>
+                    <div className="col-md-8">
                       <input
                         type="text"
                         name="pincode"
@@ -921,17 +754,19 @@ export default function Followupage() {
                         autoComplete="off"
                       />
                     </div>
+                    </div>
                   </div>
                 </div>
                 <div className="col-sm-6 col-xs-12 ">
-                  <div className="card-headers">
+                  <div className="card-headeres pt-3">
                     <div className="col-md-12 pd-0">
                       <div className="address-sec">Additional Information </div>
                     </div>
+                    <div className="row">
                     <div className="col-md-4 pd-top">
-                      <label htmlFor="description">Description</label>
+                    <div className="form-group"> <label htmlFor="description">Description</label></div>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
+                    <div className="col-md-8" style={{ padding: 0 }}>
                       <textarea
                         name="description"
                         cols={40}
@@ -941,63 +776,65 @@ export default function Followupage() {
                         defaultValue={""}
                       />
                     </div>
-                    <div className="col-md-4 pd-top">
-                      <label htmlFor="assign_to_agent">Assign to agent</label>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
+                    <div className="row"> 
+                    <div className="col-md-4 pd-top">
+                    <div className="form-group"><label htmlFor="assign_to_agent">Assign to agent</label></div>
+                    </div>
+                    <div className="col-md-8 cardese" style={{ padding: 0 }}>
                       <select
                         name="assign_to_agent"
                         id="assign_to_agent"
                         className="form-control"
-                        value={24}
+                       required
                       >
                         <option value="">Select</option>
-                        <option value={24} selected="selected">
-                          Anurag
-                        </option>
-                        <option value={34}>Devrishi</option>
-                        <option value={31}>Jassy</option>
-                        <option value={32}>Neha</option>
-                        <option value={35}>nisar</option>
-                        <option value={29}>Rahul</option>
-                        <option value={36}>Umesh</option>
-                        <option value={37}>Umesh Yadav1</option>
+                        {
+                 agent?.agent?.map((agents,key)=>{
+                return( <option  selected={foundObject?.assign_to_agent===agents._id? 'selected':''} value={agents._id}   >{agents.agent_name}</option>) 
+                 })
+              }
+
+
                       </select>
                     </div>
-                    <div className="col-md-4 pd-top">
-                      <label htmlFor="status">Status</label>
                     </div>
-                    <div className="col-md-8 card" style={{ padding: 0 }}>
-                      <select
+                    <div className="row"> 
+                    <div className="col-md-4 pd-top">
+                    <div className="form-group"><label htmlFor="status">Status</label></div>
+                    </div>
+                       <div className="col-md-8" style={{ padding: 0 }}>
+                       <div className="form-group">
+                        <select
                         name="status"
                         id="status"
                         className="form-control"
-                        value={11}
+                        required
                       >
                         <option value="">Select</option>
-                        <option value={11} selected="selected">
-                          Pending
-                        </option>
-                        <option value={7}>Call Back</option>
-                        <option value={3}>Meeting</option>
-                        <option value={6}>Invoice Send</option>
-                        <option value={10}>Won</option>
-                        <option value={5}>Lost</option>
-                        <option value={12}>Not Attempt</option>
-                        <option value={13}>Transferred</option>
+                       
+                        { Statusdata.leadstatus?.map((status,key)=>{
+                return(
+                  <option   selected={foundObject?.status===status._id? 'selected':''}    value={status._id}>{status.status_name}</option>
+                )
+               })
+            }
+
                       </select>
+                    </div>
+                    </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-sm-6 col-xs-12 ">
-                  <div className="card-headers">
+                  <div className="card-headeres">
                     <div className="col-md-12 pd-0">
                       <div className="address-sec">Clinic Detail </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-sm-6 col-xs-12 ">
-                  <div className="card-headers">
+                  <div className="card-headeres">
                     <div className="col-md-12 pd-0">
                       <div className="address-sec">Test 1 </div>
                     </div>
@@ -1028,11 +865,12 @@ export default function Followupage() {
             >
               <input
                 type="hidden"
-                name="lead_id"
+                name="lead_id3"
                 defaultValue={3868}
                 autoComplete="off"
               />
               <div className="panel-body border-tbal">
+                <div className="row">
                 <div className="col-md-2">
                   <div className="form-group">
                     <label className="file-upl-o"> Attach File</label>
@@ -1067,13 +905,19 @@ export default function Followupage() {
                     </button>
                   </div>
                 </div>
+                </div>
                 {/* Progress bar */}
+                <div className="row">
+                <div className="col-12 col-6 col-xl-6 col-md-6">
                 <div className="progress">
                   <div className="progress-bar" />
                 </div>
+                </div>
+                <div className="col-12 col-6 col-xl-6 col-md-6">
                 <span className="text-danger">Max Size : 800000 bytes</span>
                 <span id="uerror" className="text-danger" />
                 <span id="usuccess" className="text-success" />
+              </div></div>
               </div>
             </form>
             <div className="col-md-12">
@@ -1098,7 +942,7 @@ export default function Followupage() {
               </div>
             </div>
           </div>
-          <div className="tab-pane fade active in" id="tab6">
+          <div className="tab-pane fade in active show" id="tab6">
             <div className="panel-body border-tbal">
               <div className="table-responsive mob-bord">
                 <table className="table table-bordered" id="followup_table">
@@ -1111,7 +955,25 @@ export default function Followupage() {
                       <th>COMMENT</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+
+                       {
+                     
+                        followup?.followuplead?.map((follow,key)=>{
+                         
+
+                           
+                            return(   <tr>
+                              <td> {follow?.comment_by[0]?.agent_name}</td>
+                              <td>{follow?.created}</td>
+                              <td>{follow?.status_details[0]?.status_name}</td>
+                              <td>{follow?.followup_date}</td>  
+                              <td>{follow?.followup_desc}</td>
+                            </tr>); 
+                        })  
+                       }
+
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -1126,7 +988,8 @@ export default function Followupage() {
               </div>
          
            </div>
-          </div>
+          </div>)}
+        
       </section>  
       </div>
      

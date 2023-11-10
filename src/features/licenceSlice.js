@@ -35,6 +35,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
             localStorage.setItem('agent_email',result?.agent?.agent_email);
             localStorage.setItem('agent_mobile',result?.agent?.agent_mobile);
             localStorage.setItem('role',result?.agent?.role);
+            localStorage.setItem('agent_roll',result?.agent?.agent_roll);   
           
             return result;
         }else{  

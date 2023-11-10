@@ -68,7 +68,7 @@ import Followupage from './components/Pages/Followupage';
 <BrowserRouter>   
      <div className="wrapper">
        {isLogined?(<Header />):(<></>)}
-     <Routes> 
+     <Routes>  
         {!isLogined?(<Route path="/" element={<Main />}></Route>):(<>
           <Route path="/home" element={<Home />}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>

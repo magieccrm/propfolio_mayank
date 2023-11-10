@@ -29,7 +29,7 @@ function SideNav() {
       }
       const callManage=()=>{
         if(callManageshow==='none'){  
-          setcallManageshow("block")
+          setcallManageshow("block") 
         }else{
           setcallManageshow("none")
         }
@@ -58,11 +58,10 @@ function SideNav() {
             </div>  
           </div>
 
-          {/* Sidebar Menu */}
+        
           <nav className="mt-2">
             <ul  className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              {/* Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library */}
+             
 
               <li className="nav-item">
                 <ul className="nav nav-treeview">
@@ -126,7 +125,9 @@ function SideNav() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
+    {  localStorage.getItem("role")==='admin'?(<>
+          
+               <li className="nav-item">
                 <Link to="/home" className="nav-link">
                   <i className="nav-icon fas fa fa-home" />
                   Dashboard
@@ -154,11 +155,7 @@ function SideNav() {
                       <p> Followup Leads</p>
                     </Link>
                   </li>
-                  {/* <li className="nav-item">
-                    <Link to="/forwardleads" className="nav-link">
-                      <p>Forward Leads</p>
-                    </Link>
-                  </li> */}
+                
                 </ul>
               </li>
               
@@ -188,6 +185,8 @@ function SideNav() {
                 </ul>
               </li>
 
+
+
               {/* <li className="nav-item">
                 <Link to=" " className="nav-link">
                   <i className="nav-icon far fa fa-sitemap" />
@@ -200,6 +199,8 @@ function SideNav() {
                   Clients
                 </Link>
               </li> */}
+
+
               <li className="nav-item">
                 <Link to="/productservices" className="nav-link">
                   <i className="nav-icon far fa-credit-card" />
@@ -252,6 +253,68 @@ function SideNav() {
                   Setting
                 </Link>
               </li>  
+
+    </>):(<>
+      <li className="nav-item">
+                <Link to="/home" className="nav-link">
+                  <i className="nav-icon fas fa fa-home" />
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={lead}>
+                  <i className="nav-icon fas fa fa-user-md" />
+                  Lead
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:lead1}}>
+                  <li className="nav-item">
+                  <Link to="/Addlead" className="nav-link">
+                      <p>Add Lead</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/leads" className="nav-link">
+                      <p>All Leads</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/followupleads" className="nav-link">
+                      <p> Followup Leads</p>
+                    </Link>
+                  </li>
+                
+                </ul>
+              </li>
+              
+              <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={callManage}>
+                  <i className="nav-icon fas fa fa fa-cog" />
+                  Call  Manage  
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:callManageshow}}>
+                  <li className="nav-item">
+                  <Link to="/ManageEmployee" className="nav-link">
+                      <p>Employees</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/Manageexcludenos" className="nav-link">
+                      <p>Exclude Phone Number</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/ManageUser" className="nav-link">
+                      <p> User</p>
+                    </Link>
+                  </li>
+                  
+                </ul>
+              </li>
+    </>)  }
+
+
             </ul>
           </nav>
         </div>
