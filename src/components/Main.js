@@ -25,10 +25,10 @@ export default function Main(props) {
    
           },[]);
 
-    if(loading){
+    if(loading){  
         return(<Loader />); 
       }
-    if(hostings[0]===null){     
+    if(hostings[0]===null){         
         return(<Domain />);   
       }else{ 
       
