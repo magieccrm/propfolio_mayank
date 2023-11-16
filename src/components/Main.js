@@ -21,13 +21,7 @@ export default function Main(props) {
    useEffect(()=>{
     var host=window.location.hostname;
     dispatch(getHostingbydomain(host));
-    // const tokenPresent= isTokenPresent()
-    // if(tokenPresent)
-    // {
-    //  setIsLogined(true);
-    // }else{
-    //  setIsLogined(false);
-    // }
+   
    
           },[]);
 
