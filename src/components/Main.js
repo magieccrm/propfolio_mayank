@@ -31,7 +31,7 @@ export default function Main() {
          if (Lstatus === 'inactive') {
                      return(<Licenceform />);    
       } 
-      
+       
       if(!isLogined){   
         return(<Login />);
        }

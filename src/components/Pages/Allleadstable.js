@@ -1,18 +1,18 @@
-import React, { useState, useEffect, Component } from "react";
-import { addlead } from "../../features/leadSlice";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+
+//import { useDispatch } from "react-redux";
 import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
-import XLSX from "xlsx";
-import { CSVLink } from "react-csv";
+// import { Link } from "react-router-dom";
+// import XLSX from "xlsx";
+// import { CSVLink } from "react-csv";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 export const Allleadstable = () => {
-  const dispatch = useDispatch();
+ // const dispatch = useDispatch();
 
   const [leads, setleads] = useState([]);
   const [search, setsearch] = useState("");
@@ -40,7 +40,7 @@ export const Allleadstable = () => {
           }
         
       );
-      console.log(responce?.data)
+      
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
     } catch (error) {
@@ -55,11 +55,10 @@ export const Allleadstable = () => {
    if(localStorage.getItem("role")==='admin'){
     getAllLead1();
    }else{
-
-    getAllLead2(localStorage.getItem("user_id"));
+       getAllLead2(localStorage.getItem("user_id"));
    }     
   }, [localStorage.getItem("user_id")]);
-  
+
   useEffect(() => {
     const result = leads.filter((lead) => {
       return (
@@ -160,14 +159,35 @@ export const Allleadstable = () => {
   };
 
   if (leads.length === 0) {
-    return <Loader />;
+    //return <Loader />;
   }
 
-  return (
-    <>
-      <button className="btn btn-sm btn-info" onClick={exportToPDF}>Export PDF</button>
-      <DataTable
-        responsive
+     return(
+      <div>
+      {leads.length === 0 ? (
+       <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
+       <thead>
+         <tr>
+           <th>Full Name</th>
+           <th>Number</th>
+           <th>Agent</th>
+           <th>Service</th>
+           <th>Lead Source</th>
+           <th>Status</th> 
+         </tr> 
+       </thead>
+       <tbody>
+         <tr>
+        <p className="text-center">No Followup leads Founds</p>
+         </tr>
+      
+       </tbody>
+     </table>
+      ) : (
+        <>
+        <button className="btn btn-sm btn-info" onClick={exportToPDF}>Export PDF</button>
+        <DataTable
+        responsive 
         id="table-to-export"
         columns={columns}
         data={filterleads}
@@ -187,9 +207,17 @@ export const Allleadstable = () => {
             className="form-control w-25 "
           />
         }
-        customStyles={customStyles} // Apply the custom styles here
-        //actions={<button className="btn btn-sm btn-info">Export</button>}
+        customStyles={customStyles} 
       />
-    </>
-  );
+        </>
+        
+      )}
+      
+    
+     
+     
+      
+      
+    </div>
+     )
 };
