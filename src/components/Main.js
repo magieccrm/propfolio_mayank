@@ -42,7 +42,7 @@ export default function Main(props) {
          if (Lstatus === 'inactive') {
                      return(<Licenceform />);    
       }  
-      
+       
       if(!isLogined){   
         return(<Login />);
        }
