@@ -6,18 +6,29 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
 import Loader from './Loader';
 import {getHostingbydomain} from '../features/licenceSlice';
-
-export default function Main() {
+import { useNavigate } from 'react-router-dom';
+import Home from './Home';
+export default function Main(props) {
+  const navigate = useNavigate();
     const dispatch=useDispatch();
     const {hostings,loading} = useSelector((state)=>state.app);  
     //  change  
    const [isLogined, setIsLogined]= useState(false); 
    const [isDomain, setIsDomain] = useState(false);
    const [isLicenceStatus, setLicenceStatus] = useState(false);
-      
+   
+  
    useEffect(()=>{
     var host=window.location.hostname;
     dispatch(getHostingbydomain(host));
+    // const tokenPresent= isTokenPresent()
+    // if(tokenPresent)
+    // {
+    //  setIsLogined(true);
+    // }else{
+    //  setIsLogined(false);
+    // }
+   
           },[]);
 
     if(loading){
@@ -30,11 +41,12 @@ export default function Main() {
        let Lstatus = hostings[0]?.states;
          if (Lstatus === 'inactive') {
                      return(<Licenceform />);    
-      } 
+      }  
       
       if(!isLogined){   
         return(<Login />);
        }
+      
       
       }
 

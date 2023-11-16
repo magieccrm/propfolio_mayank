@@ -76,9 +76,9 @@ export const followup=createSlice({
        },
        [addfollowup.fulfilled]:(state,action) =>{
            state.loading=false;
-               console.log(action.payload)
-              state.followup.followuplead.push(action.payload.followuplead); 
-          // state.message=action.payload.message;   
+                console.log(action.payload)
+              state.followup.followuplead.push(action.payload?.followuplead['0']);  
+        
        },
        [addfollowup.rejected]:(state,action) =>{
            state.loading=false;

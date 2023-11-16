@@ -75,7 +75,6 @@ export const leadSource=createSlice({
        },
        [addleadSource.fulfilled]:(state,action) =>{
            state.loading=false;
-               
               state.leadSourcedata.leadSource.push(action.payload.leadSource); 
           // state.message=action.payload.message; 
        },
@@ -87,10 +86,9 @@ export const leadSource=createSlice({
        [getAllLeadSource.pending]:(state) =>{
            state.loading=true; 
        },
-       [getAllLeadSource.fulfilled]:(state,action) =>{
+       [getAllLeadSource.fulfilled]:(state,action) =>{ 
            state.loading=false;
           state.leadSourcedata=action.payload; 
-          
        },
        [getAllLeadSource.rejected]:(state,action) =>{
            state.loading=false;

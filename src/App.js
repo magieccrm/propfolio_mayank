@@ -30,6 +30,7 @@ import {getHostingbydomain} from './features/licenceSlice';
 import Loader from './components/Loader';
 import Main from './components/Main';
 import Followupage from './components/Pages/Followupage';
+import Home1 from './components/Home1';
   function App() { 
     //  change 
     const {hostings,loading} = useSelector((state)=>state.app);
@@ -52,7 +53,7 @@ import Followupage from './components/Pages/Followupage';
 
     // if(tokenPresent&&!tokenExprired)     
      if(tokenPresent)
-     {
+     {  
       setIsLogined(true);
      }else{
       setIsLogined(false);
@@ -62,14 +63,16 @@ import Followupage from './components/Pages/Followupage';
 
   
 
-      
-           
+    //  console.log(isLogined);
+          
   return (           
 <BrowserRouter>   
      <div className="wrapper">
        {isLogined?(<Header />):(<></>)}
      <Routes>  
-        {!isLogined?(<Route path="/" element={<Main />}></Route>):(<>
+        {!isLogined?(
+        <Route path="/" element={<Main  lo={isLogined}/>}></Route>):(<>
+          <Route path="/" element={<Home1 />}></Route>  
           <Route path="/home" element={<Home />}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>

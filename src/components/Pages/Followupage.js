@@ -60,18 +60,25 @@ const {followup} =useSelector((state)=>state.followup);
   const [data,setdata]=useState({});
     const submitFollowup=async(e)=>{
       e.preventDefault(); 
-   
-      setdata({...data,lead_id:e.target.lead_id.value,
+    
+      const updatedLeadData = await { ...data, lead_id: e.target.lead_id.value,
         commented_by:e.target.elements.commented_by?.value,
         assign_to_agent:e.target.elements.assign_to_agent?.value,
-        followup_status_id:e.target.elements.followup_status_id?.value});  
+        followup_status_id:e.target.elements.followup_status_id?.value
+       };
 
-       if(data.lead_id){
-        const aaaa=   await dispatch(addfollowup(data));
+
+      // setdata({...data,lead_id:e.target.lead_id.value,
+      //   commented_by:e.target.elements.commented_by?.value,
+      //   assign_to_agent:e.target.elements.assign_to_agent?.value,
+      //   followup_status_id:e.target.elements.followup_status_id?.value});  
+
+       if(updatedLeadData.lead_id){
+        const aaaa=   await dispatch(addfollowup(updatedLeadData));
      
         if(aaaa.payload.success==true){   
-         toast.success(aaaa.payload.message);  
-         window.location.reload(false);
+         toast.success(aaaa.payload?.message);  
+       //  window.location.reload(false);
           }else{       
          toast.warn(aaaa.payload?.message);   
      } 
@@ -219,28 +226,7 @@ const {followup} =useSelector((state)=>state.followup);
             }
 
                       </select>
-                      {/* <select
-                        className="form-control"
-                        name="lost_reason_id"
-                        style={{ display: "none" }}
-                        id="lost_reason_id"
-                      >
-                        <option value="">Lost Reason</option>
-                        <option value={12}>User is not responding.</option>
-                        <option value={11}>User is not interested.</option>
-                        <option value={13}>Customer is not available.</option>
-                        <option value={4}>Details is not valid.</option>
-                        <option value={2}>Customer is not responding.</option>
-                        <option value={14}>Fake Lead</option>
-                      </select> */}
-                      {/* <input
-                        type="number"
-                        className="form-control"
-                        name="won_amount"
-                        style={{ display: "none" }}
-                        id="won_amount"
-                        autoComplete="off"
-                      /> */}
+                   
                     </div>
                   </div>
                   <div className="row status-bottom">
