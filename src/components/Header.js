@@ -18,7 +18,7 @@ function Header() {
 
     
         navigate('/')       
-  setTimeout(()=>{ 
+  setTimeout(()=>{   
     // toast.warn('Logout Successfully'); 
    window.location.reload(false);
    navigate("/");
