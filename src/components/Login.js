@@ -28,7 +28,7 @@ const message=useSelector((state)=>state.app);
            toast.success("login Successfully!");
          navigate('/home');  
          setTimeout(()=>{ 
-          //window.location.reload(false);
+          window.location.reload(false);
       }, 500); 
        }else{  
         toast.warn(aaaa.payload); 
