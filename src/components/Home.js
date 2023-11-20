@@ -1,8 +1,10 @@
+import { Tooltip } from "bootstrap";
 import React from "react";
 
 import {  Link } from "react-router-dom";
+import  LineChart  from "./LineChart";
 function Home() {
-       
+ 
   // const navigate = useNavigate();
         
   return (
@@ -145,8 +147,10 @@ function Home() {
                         <div className="panel-title" style={{maxWidth: 'calc(100% - 0px)'}}>
                           <h4>Income Graph</h4>
                         </div>
- 
- 
+                      </div>
+                      <div className="panel-body personal">
+                         
+                        <LineChart/>
 
                       </div>
                     </div>

@@ -31,6 +31,9 @@ import Loader from './components/Loader';
 import Main from './components/Main';
 import Followupage from './components/Pages/Followupage';
 import Home1 from './components/Home1';
+import EmployeeReport from './components/Pages/EmployeeReport';
+import CallLogDetails from './components/Pages/CallLogDetails';
+
   function App() { 
     //  change 
     const {hostings,loading} = useSelector((state)=>state.app);
@@ -74,6 +77,8 @@ import Home1 from './components/Home1';
         <Route path="/" element={<Main  lo={isLogined}/>}></Route>):(<>
           <Route path="/" element={<Home1 />}></Route>  
           <Route path="/home" element={<Home />}></Route>  
+          <Route path="/employeesreport" element={<EmployeeReport />}></Route>  
+          <Route path="/call_log_details/:id" element={<CallLogDetails/>}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>

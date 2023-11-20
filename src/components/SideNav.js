@@ -171,7 +171,7 @@ function SideNav() {
                       <p>Employees</p>
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                   <Link to="/Manageexcludenos" className="nav-link">
                       <p>Exclude Phone Number</p>
                     </Link>
@@ -179,6 +179,11 @@ function SideNav() {
                   <li className="nav-item">
                   <Link to="/ManageUser" className="nav-link">
                       <p> User</p>
+                    </Link>
+                  </li> */}
+                  <li className="nav-item">
+                  <Link to="/employeesreport" className="nav-link">
+                      <p> Employees Report</p>   
                     </Link>
                   </li>
                   
@@ -299,7 +304,7 @@ function SideNav() {
                       <p>Employees</p>
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                   <Link to="/Manageexcludenos" className="nav-link">
                       <p>Exclude Phone Number</p>
                     </Link>
@@ -307,6 +312,12 @@ function SideNav() {
                   <li className="nav-item">
                   <Link to="/ManageUser" className="nav-link">
                       <p> User</p>
+                    </Link>
+                  </li> */}
+
+                  <li className="nav-item">
+                  <Link to="/employeesreport" className="nav-link">
+                      <p> Employees Report</p>   
                     </Link>
                   </li>
                   

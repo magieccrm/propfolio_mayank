@@ -25,12 +25,12 @@ export default function Main(props) {
    
           },[]);
 
-    if(loading){  
+    if(loading){    
         return(<Loader />); 
       }
     if(hostings[0]===null){         
         return(<Domain />);   
-      }else{ 
+      }else{   
       
        let Lstatus = hostings[0]?.states;
          if (Lstatus === 'inactive') {
