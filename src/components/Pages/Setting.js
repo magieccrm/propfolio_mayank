@@ -10,7 +10,7 @@ function Setting() {
 
   const removeSite = async (_id) => {
       
-     dispatch(deleteAgent(_id))
+     dispatch(deleteAgent(_id))  
     // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
   };
 

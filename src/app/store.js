@@ -8,6 +8,7 @@ import getStateByCountrySlice from "../features/getStateByCountrySlice";
 import leadSlice from "../features/leadSlice";
 import agentSlice from "../features/agentSlice";
 import followupSlice from "../features/followupSlice";
+import employeesreportSlice from "../features/employeesreportSlice";
 
 
  export  const store = configureStore({
@@ -20,7 +21,8 @@ import followupSlice from "../features/followupSlice";
       getStateByCountry:getStateByCountrySlice,
       lead:leadSlice,
       agent:agentSlice,
-      followup:followupSlice
+      followup:followupSlice,
+      employeesreportSlice:employeesreportSlice
    },
 });
 

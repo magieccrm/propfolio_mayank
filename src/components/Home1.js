@@ -1,5 +1,6 @@
 
 import {  Link } from "react-router-dom";
+import  LineChart  from "./LineChart";
 function Home1() {
        
   // const navigate = useNavigate();
@@ -144,7 +145,11 @@ function Home1() {
                         <div className="panel-title" style={{maxWidth: 'calc(100% - 0px)'}}>
                           <h4>Income Graph</h4>
                         </div>
- 
+                        <div className="panel-body personal">
+                       
+                       <LineChart/>
+
+                     </div>
  
 
                       </div>
