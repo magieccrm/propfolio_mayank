@@ -290,12 +290,12 @@ export default function EmployeeReport() {
             <div className="row">
               <div className="col-md-6">
               <div className="border-box">
-                  <img src="dist/img/total_call.png" className="w-100" />
+                  <img src="dist/img/IMG-20231121-WA0012.jpg" className="w-100" />
                   </div>
               </div>
               <div className="col-md-6">
               <div className="border-box"> 
-               <img src="dist/img/call-duration.png" className="w-100" />
+               <img src="dist/img/IMG-20231121-WA0013.jpg" className="w-100" />
                </div>
               </div>
             </div>
