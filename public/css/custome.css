@@ -410,7 +410,7 @@ a {
 }
 .content-wrapper {
   background-color: #fff;
-  width:1300px;
+  /* width:1300px; */
 }
 .panel-bd > .panel-heading {
   color: #374767;
