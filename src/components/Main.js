@@ -11,7 +11,7 @@ import Home from './Home';
 export default function Main({lo}) {
     const navigate = useNavigate();
    useEffect(()=>{
-    //navigate('/login');
+    navigate('/login');
  },[]);
     const dispatch=useDispatch();
     const {hostings,loading} = useSelector((state)=>state.app);  
