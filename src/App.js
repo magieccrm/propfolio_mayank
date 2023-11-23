@@ -52,7 +52,7 @@ import NotFound from './components/Pages/NotFound';
       checkToken();
     }, []);
     
-    if (!isLogined) {
+    if (!isLogined) {   
       return (           
         <BrowserRouter>   
              <Routes>  

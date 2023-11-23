@@ -11,11 +11,14 @@ import Home from './Home';
 export default function Main({lo}) {
     const navigate = useNavigate();
    useEffect(()=>{
-    navigate('/login');
+    if(!lo){
+     // navigate('/login');
+    }
+  
  },[]);
     const dispatch=useDispatch();
     const {hostings,loading} = useSelector((state)=>state.app);  
-    //  change  
+    //  change    
    const [isLogined, setIsLogined]= useState(false); 
    const [isDomain, setIsDomain] = useState(false);
    const [isLicenceStatus, setLicenceStatus] = useState(false);
