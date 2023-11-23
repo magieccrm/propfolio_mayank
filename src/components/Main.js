@@ -8,8 +8,11 @@ import Loader from './Loader';
 import {getHostingbydomain} from '../features/licenceSlice';
 import { useNavigate } from 'react-router-dom';
 import Home from './Home';
-export default function Main(props) {
-  const navigate = useNavigate();
+export default function Main({lo}) {
+    const navigate = useNavigate();
+   useEffect(()=>{
+    //navigate('/login');
+ },[]);
     const dispatch=useDispatch();
     const {hostings,loading} = useSelector((state)=>state.app);  
     //  change  
@@ -38,7 +41,7 @@ export default function Main(props) {
       }  
        
       if(!isLogined){   
-        return(<Login />);
+        return(<Login />); 
        }
       
       

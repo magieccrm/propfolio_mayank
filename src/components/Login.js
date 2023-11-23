@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import {login1} from '../features/licenceSlice';
 import {  toast } from 'react-toastify';
-
+import { Navigate } from 'react-router-dom';
 
 function Login() {
 
@@ -26,10 +26,12 @@ const message=useSelector((state)=>state.app);
         
        if(aaaa.payload.success===true){
            toast.success("login Successfully!");
-         navigate('/home');  
-         setTimeout(()=>{ 
+           navigate('/home'); 
+          
+       
+           setTimeout(()=>{ 
           window.location.reload(false);
-      }, 500); 
+          }, 500); 
        }else{  
         toast.warn(aaaa.payload); 
        }

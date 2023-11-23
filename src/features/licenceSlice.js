@@ -74,7 +74,7 @@ export const allhosting=createSlice({
     name:"hostingDetails",
     initialState:{
        hostings:[],
-       agent:[],
+       agents:[],
        loading:false,  
        error:null,
        message:'', 
@@ -99,7 +99,8 @@ export const allhosting=createSlice({
             },
     [login1.fulfilled]:(state,action) =>{
         state.loading=false;
-        state.agent=action.payload; 
+        
+        state.agents.push(action.payload.token); 
         state.message=action.payload.message; 
     },
     [login1.rejected]:(state,action) =>{

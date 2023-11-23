@@ -20,64 +20,86 @@ import Productservices from './components/Pages/Productservices';
 import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import Domain from './components/Licence/Domain';
-import Licenceform from './components/Licence/Licenceform';
-import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux";
-import {getHostingbydomain} from './features/licenceSlice';
-import Loader from './components/Loader';
+import { BrowserRouter, Routes, Route  } from "react-router-dom";
 import Main from './components/Main';
 import Followupage from './components/Pages/Followupage';
 import Home1 from './components/Home1';
 import EmployeeReport from './components/Pages/EmployeeReport';
 import CallLogDetails from './components/Pages/CallLogDetails';
-
-  function App() { 
-    //  change 
-    const {hostings,loading} = useSelector((state)=>state.app);
-     //  change  
-    const [isLogined, setIsLogined]= useState(false); 
-    const [isDomain, setIsDomain] = useState(false);
-    const [isLicenceStatus, setLicenceStatus] = useState(false);
-   const dispatch=useDispatch();
-    const isTokenPresent=()=>{   
-      if(localStorage.getItem('token')){ return true;    }
-      else return false;
-    }
-    // const isTokenExpired=()=>{
-
-    // }  
-    
-    useEffect(() => {       
-     const tokenPresent= isTokenPresent()
-   //  const tokenExprired= isTokenExpired()
-
-    // if(tokenPresent&&!tokenExprired)     
-     if(tokenPresent)
-     {  
-      setIsLogined(true);
-     }else{
-      setIsLogined(false);
-     }
+import MultipleForm from './components/Licence/MultipleForm';
+import NotFound from './components/Pages/NotFound';
  
-    }, [])
-
+  function App() { 
   
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLogined, setIsLogined]= useState(false); 
+    
 
-    //  console.log(isLogined);
-          
+ 
+
+    useEffect(() => {
+      const checkToken = async () => {
+        try {
+          const token = await localStorage.getItem('token');
+          setIsLogined(Boolean(token));  
+        } catch (error) {
+          console.error('Error reading token from localStorage:', error);
+        } finally {
+           setIsLoading(false);  
+        }
+      };
+  
+      checkToken();
+    }, []);
+    
+    if (!isLogined) {
+      return (           
+        <BrowserRouter>   
+             <Routes>  
+          <Route path="/login" element={<Main  lo={isLogined}/>}></Route>
+          {/* Catch-all route for unknown URLs */}
+        <Route path="*" element={<NotFound />} />
+          <Route path="/home"  element={<Main  lo={isLogined}/>}></Route>  
+          <Route path="/" element={<Main  lo={isLogined}/>}></Route>  
+         <Route path="/employeesreport" element={<Main  lo={isLogined}/>}></Route>
+         
+          <Route path="/call_log_details/:id" element={<Main  lo={isLogined}/>}></Route>  
+          <Route path="/Addlead" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Leads" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Followupleads" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Forwardleads" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Clients" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Productservices" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/ManageEmployee" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Manageexcludenos" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/ManageUser" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Setting" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Sms" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Report" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Listinvoice" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Createinvoice" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Addclient" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/MultipleForm" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/followupleads/:id"  element={<Main  lo={isLogined}/>} ></Route>
+
+                  </Routes>
+        </BrowserRouter>
+          );
+    }  
+        
   return (           
 <BrowserRouter>   
      <div className="wrapper">
-       {isLogined?(<Header />):(<></>)}
+
+     {isLogined && <Header />}
      <Routes>  
-        {!isLogined?(
-        <Route path="/" element={<Main  lo={isLogined}/>}></Route>):(<>
-          <Route path="/" element={<Home1 />}></Route>  
+
+     {isLogined ?(<><Route path="/login" element={<Home1 />}></Route>  
           <Route path="/home" element={<Home />}></Route>  
-          <Route path="/employeesreport" element={<EmployeeReport />}></Route>  
+          <Route path="/" element={<Home />}></Route>  
+         <Route path="/employeesreport" element={<EmployeeReport />}></Route>
+         {/* Catch-all route for unknown URLs */}
+        <Route path="*" element={<NotFound />} />
           <Route path="/call_log_details/:id" element={<CallLogDetails/>}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
@@ -94,25 +116,16 @@ import CallLogDetails from './components/Pages/CallLogDetails';
          <Route path="/Listinvoice" element={<Listinvoice />}></Route>
          <Route path="/Createinvoice" element={<Createinvoice />}></Route>
          <Route path="/Addclient" element={<Addclient />}></Route>
-         <Route path="/followupleads/:id"  element={<Followupage/>} ></Route>
-        </>)}
-          
-           {/* <Route path="/" element={<Home />}></Route>
-         <Route path="/Addlead" element={<Addlead />}></Route>
-         <Route path="/Leads" element={<Leads />}></Route>
-         <Route path="/Followupleads" element={<Followupleads />}></Route>
-         <Route path="/Forwardleads" element={<Forwardleads />}></Route>
-         <Route path="/Clients" element={<Clients />}></Route>
-         <Route path="/Productservices" element={<Productservices />}></Route>
-         <Route path="/ManageEmployee" element={<ManageEmployee />}></Route>
-         <Route path="/Manageexcludenos" element={<Manageexcludenos />}></Route>
-         <Route path="/ManageUser" element={<ManageUser />}></Route>
-         <Route path="/Setting" element={<Setting />}></Route> */}   
-         </Routes>
-        {isLogined?(<SideNav />):(<></>)}
-          
-        {isLogined?(<Footer />):(<></>)}
-         
+         <Route path="/MultipleForm" element={<MultipleForm />}></Route>
+         <Route path="/followupleads/:id"  element={<Followupage/>} ></Route></>)
+         :<>
+         <Route path="/login" element={<Main  lo={isLogined}/>}></Route>
+         </>
+         }
+            </Routes>
+      
+        {isLogined && <SideNav />}
+        {isLogined && <Footer />}
       </div>
 </BrowserRouter>
   );
