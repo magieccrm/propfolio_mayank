@@ -1,10 +1,13 @@
 
-import {  Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import  LineChart  from "./LineChart";
+import { useEffect } from "react";
 function Home1() {
-       
-  // const navigate = useNavigate();
-        
+  const navigate = useNavigate();
+     useEffect(()=>{
+        navigate('/');
+     },[]);
+         
   return (
     <div>
       <div className="content-wrapper">

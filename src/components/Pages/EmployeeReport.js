@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { getEmployeeReport } from '../../features/employeesreportSlice';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart,Tooltip,Title,ArcElement,Legend}  from 'chart.js';
+import BarChart from './BarGraph1';
 Chart.register(
   Tooltip,Title,ArcElement,Legend
 );
@@ -266,7 +267,7 @@ export default function EmployeeReport() {
           <span>
             <i className="las la-hourglass" /> Working Hours
           </span>
-          <strong>{EmployeeReport[0]?.details[0]?.totalDuration}</strong>
+          <strong>{EmployeeReport[0]?.details[0]?.totalworkinghoure}</strong>
         </div>
       </div>
     </div>
@@ -289,13 +290,18 @@ export default function EmployeeReport() {
         <div className="card-body ng-star-inserted">
             <div className="row">
               <div className="col-md-6">
-              <div className="border-box">
-                  <img src="dist/img/IMG-20231121-WA0012.jpg" className="w-100" />
+              <div className="border-box" style={{width:"100%",height:"400px"}}>
+                 <BarChart  lo={[EmployeeReport[0]?.details[0]?.totalIncommingCall,
+       EmployeeReport[0]?.details[0]?.totalOutgoingCall, EmployeeReport[0]?.details[0]?.totalMissCall,
+       EmployeeReport[0]?.details[0]?.totalRejectedCall]}/>
                   </div>
               </div>
               <div className="col-md-6">
-              <div className="border-box"> 
-               <img src="dist/img/IMG-20231121-WA0013.jpg" className="w-100" />
+              <div className="border-box" style={{width:"100%",height:"400px"}}> 
+              <BarChart  lo={[EmployeeReport[0]?.details[0]?.totalIncommingCall,
+       EmployeeReport[0]?.details[0]?.totalOutgoingCall, EmployeeReport[0]?.details[0]?.totalMissCall,
+       EmployeeReport[0]?.details[0]?.totalRejectedCall]}/>
+               {/* <img src="dist/img/IMG-20231121-WA0013.jpg" className="w-100" /> */}
                </div>
               </div>
             </div>

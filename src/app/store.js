@@ -9,10 +9,11 @@ import leadSlice from "../features/leadSlice";
 import agentSlice from "../features/agentSlice";
 import followupSlice from "../features/followupSlice";
 import employeesreportSlice from "../features/employeesreportSlice";
-
+import licenceSlice from "../features/licenceSlice";
 
  export  const store = configureStore({
   reducer: {
+      licenceSlice:licenceSlice,
       app:licence,
       leadSource:leadSource,
       StatusData:statusSlice,

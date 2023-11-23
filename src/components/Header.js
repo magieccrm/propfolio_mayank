@@ -7,7 +7,7 @@ import {  toast } from 'react-toastify';
 function Header() {  
   const navigate = useNavigate();
   
-  const Logout = () => {
+  const Logout = async() => {
   
      localStorage.removeItem('token');
      localStorage.removeItem('user_id');
@@ -17,20 +17,20 @@ function Header() {
      localStorage.removeItem('role');
 
     
-        navigate('/')       
+       await  navigate('/login')       
   setTimeout(()=>{   
-    // toast.warn('Logout Successfully'); 
-   window.location.reload(false);
-   navigate("/");
+
+     toast.warn('Logout Successfully'); 
+     window.location.reload(false);
     
 }, 500);   
             };
   
   return (    
     <div>
-      {/* Navbar */}   
+    
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-        {/* Left navbar links */}
+    
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link
@@ -103,7 +103,7 @@ function Header() {
                 {/* Message End */}
               </Link>
               <div className="dropdown-divider" />
-              <Link to="/" className="dropdown-item" onClick={Logout}>
+              <Link to="/login" className="dropdown-item" onClick={Logout}>
                 {/* Message Start */}
                 <i className="nav-icon far fa fa-cog"  /> logout user
                 {/* Message End */}
