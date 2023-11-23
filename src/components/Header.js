@@ -97,7 +97,7 @@ function Header() {
               />
             </Link>
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <Link to="#" className="dropdown-item">
+              <Link to="/Setting" className="dropdown-item">
                 {/* Message Start */}
                 <i className="nav-icon far fa fa-cog" /> Settings
                 {/* Message End */}
