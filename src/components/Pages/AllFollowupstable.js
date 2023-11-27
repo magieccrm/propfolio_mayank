@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-//import { useDispatch } from "react-redux";
 import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-// import { Link } from "react-router-dom";
-// import XLSX from "xlsx";
-// import { CSVLink } from "react-csv";
+
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -21,7 +18,7 @@ export default function AllFollowupstable() {
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead"
+        "https://crm-backend-1qcz.onrender.com/api/v1/get_All_Lead_Followup"
       );
       
       setleads(responce?.data?.lead);
@@ -119,17 +116,27 @@ export default function AllFollowupstable() {
       sortable: true,
      },
     {
-      name: "Status",
-      selector: (row) => row?.status_details[0]?.status_name,
+     name: "Followup date",
+      selector: (row) => getdatetimeformate(row?.followup_date)+ row?.status_details['0']?.status_name,
       sortable: true,
      },
-  ];
+  ]; 
+
+  const getdatetimeformate=(datetime)=>{
+    const dateObject = new Date(datetime);
+    const formattedDate = `${dateObject.getFullYear()}-${padZero(dateObject.getMonth() + 1)}-${padZero(dateObject.getDate())} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
+    return formattedDate;
+   
+  }
+  function padZero(num) {
+    return num < 10 ? `0${num}` : num;
+  }
 
   
   
 
   const exportToPDF = () => {
-    // const loopTime = 5;
+    
     const doc = new jsPDF();
     const tableDataForPDF = filterleads.map((row1,key) =>
     

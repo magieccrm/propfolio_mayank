@@ -301,7 +301,7 @@ function Addlead() {
                           <select
                             name="lead_source"
                             onChange={(e) =>
-                              setleaddata({
+                              setleaddata({ 
                                 ...leaddata,
                                 lead_source: e.target.value,
                               })
@@ -344,6 +344,7 @@ function Addlead() {
                             className="form-control"
                             tabIndex={10}
                             autoComplete="off"
+                            required="required"
                           />
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
@@ -473,7 +474,7 @@ function Addlead() {
                           </div>
                           <div className="col-md-8 mob-left-right col-xs-12  form-group">
                             <input
-                              type="date"
+                              type="datetime-local"
                               name="followup_date"
                               onChange={(e) =>
                                 setleaddata({
@@ -484,6 +485,7 @@ function Addlead() {
                               tabIndex={20}
                               className="form-control"
                               autoComplete="off"
+                               required
                             />
                           </div>
 

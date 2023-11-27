@@ -1,9 +1,4 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-
-
-
-
-
    export const addagent=createAsyncThunk("addagent",async(data,{rejectWithValue})=>{
            
         const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_agent/",{

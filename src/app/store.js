@@ -10,6 +10,7 @@ import agentSlice from "../features/agentSlice";
 import followupSlice from "../features/followupSlice";
 import employeesreportSlice from "../features/employeesreportSlice";
 import licenceSlice from "../features/licenceSlice";
+import lostreasonSlice from "../features/lostreasonSlice";
 
  export  const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ import licenceSlice from "../features/licenceSlice";
       lead:leadSlice,
       agent:agentSlice,
       followup:followupSlice,
-      employeesreportSlice:employeesreportSlice
+      employeesreportSlice:employeesreportSlice,
+      lostreasonSlice:lostreasonSlice
    },
 });
 

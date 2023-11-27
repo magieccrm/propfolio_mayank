@@ -28,6 +28,8 @@ import EmployeeReport from './components/Pages/EmployeeReport';
 import CallLogDetails from './components/Pages/CallLogDetails';
 import MultipleForm from './components/Licence/MultipleForm';
 import NotFound from './components/Pages/NotFound';
+import ForgotPassword from './components/ForgotPassword';
+import MonthlyCalendar from './components/Pages/MonthlyCalendar';
  
   function App() { 
   
@@ -62,6 +64,7 @@ import NotFound from './components/Pages/NotFound';
           <Route path="/home"  element={<Main  lo={isLogined}/>}></Route>  
           <Route path="/" element={<Main  lo={isLogined}/>}></Route>  
          <Route path="/employeesreport" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/forgotpassword" element={<ForgotPassword  lo={isLogined}/>}></Route>
          
           <Route path="/call_log_details/:id" element={<Main  lo={isLogined}/>}></Route>  
           <Route path="/Addlead" element={<Main  lo={isLogined}/>}></Route>

@@ -5,6 +5,7 @@ import {addleadSource,getAllLeadSource,DeleteLeadSource} from '../../features/le
 import {  toast } from 'react-toastify';
 import { addStatus,getAllStatus,deleteStatus } from "../../features/statusSlice";
 import {addagent, getAllAgent ,deleteAgent, checkedAgent} from "../../features/agentSlice";
+import { addLostReason,getAllLostReason,deleteLostReason, LostReason } from "../../features/lostreasonSlice";
 import Loader from "../Loader"
 function Setting() {
 
@@ -17,10 +18,14 @@ function Setting() {
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   var  {Statusdata,loading} = useSelector((state)=>state.StatusData); 
   var {message, agent,loading}=useSelector((state)=>state.agent);
+  const {lostreason} =useSelector((state)=>state.lostreasonSlice.LostReasondata);
     const dispatch=useDispatch();
   const [data,setData]=useState({});
   const [agents,setagent]=useState({});
   const [status,setStatus]=useState({});
+  const [lostreasonset,setlostreasonset]=useState({});
+
+  
    const  submitleadsource=async(e)=>{
      e.preventDefault();
      const aaaa= await dispatch(addleadSource(data));
@@ -64,16 +69,28 @@ function Setting() {
       }
    }
 
+   const LostReasonSave=async(e)=>{
+    e.preventDefault();
+    const aaaa=await dispatch(addLostReason(lostreasonset));
+    //console.log(aaaa)
+    if(aaaa.payload.success===true){       
+
+     toast.success("Lost Reason add Successfully");
+    }else{   
+  toast.warn("There are some problem");   
+ }
+
+   }
+
    const deleteLeadSource=async(_id)=>{
          const aaaa=await dispatch(DeleteLeadSource(_id))
-         
-   }
-  
-
+   } 
+ 
    useEffect(()=>{
     dispatch(getAllLeadSource());  
-    dispatch(getAllStatus())
-    dispatch(getAllAgent())
+    dispatch(getAllStatus());
+    dispatch(getAllAgent());
+    dispatch(getAllLostReason());
  },[])  ;
 
   return (
@@ -1144,7 +1161,7 @@ function Setting() {
                       <div className="col-12 col-xl-9 col-lg-9 col-md-9">
                             <ul className="nav nav-tabs">
                                 <li className="active" data-active="#Option"><a data-toggle="tab" href="#home">Option</a></li>
-                                <li data-active="#custome-field"><a data-toggle="tab" href="#custome-field">Custom Field</a></li>
+                                {/* <li data-active="#custome-field"><a data-toggle="tab" href="#custome-field">Custom Field</a></li> */}
                                
                             
                               </ul>
@@ -1382,39 +1399,27 @@ function Setting() {
   </div>
   <div className="panel-body">
     <div className="cards">
-      <form method="post" name="add_lead_source" id="add_lead_source">
+      <form  onSubmit={LostReasonSave}>
         <div className="row">
           <div className="col-md-2 pd-top">
-            <button
-              type="button"
-              id="addleadsource"
-              className="btn btn-sm btn-success form-control"
-            >
-              Add New
-            </button>
+           
           </div>
           <div className="col-md-2 pd-top">
             <label>Lost Reason</label>
-          </div>
-          <div className="col-md-6">
+          </div>  
+       
+             <div className="col-md-6">
             <div className="form-group">
               <input
-                type="hidden"
-                name="lsid"
-                id="lshiddenid"
-                defaultValue=""
-                autoComplete="off"
-              />
-              <input
                 type="text"
-                name="lead_source"
-                id="lead_source"
+                onChange={e=>setlostreasonset({...status,lost_reason_name:e.target.value})}
+                name="lost_reason_name"
+                id="lost_reason_name"
+
                 className="form-control"
-                placeholder="Lead Source"
+                placeholder="Lost Reason"  
                 autoComplete="off"
               />
-              <span id="lserror" className="text-danger" />
-              <span id="lssuccess" className="text-success" />
             </div>
           </div>
           <div className="col-md-2">
@@ -1423,208 +1428,57 @@ function Setting() {
                 type="submit"
                 name="submit"
                  className="btn btn-success form-control"
-                autoComplete="off" placeholder="Submit"
-               >Submit</button>
+              >Submit</button>
             </div>
           </div>
+
+         
+
         </div>
       </form>
       <div className="table-responsive">
         <form name="leadsort" id="leadsort" method="post">
-          <input
-            type="hidden"
-            name="name"
-            defaultValue="lead_source"
-            autoComplete="off"
-          />
+         
           <table className="table table-bordered table-hover" id="lstable">
             <thead>
               <tr>
+              <th>Sr. No.</th>
                 <th>Lost Reason</th>
                 <th>
                   Action
-                  <button
-                    style={{ float: "right" }}
-                    className="btn btn-sm btn-success "
-                    type="submit"
-                  >
-                    Sort
-                  </button>
-                </th>
+                  </th>
               </tr>
             </thead>
             <tbody id="lead_source_list">
-              <tr data-fire="lMTU=">
-                <td>
-                  <span data-take="lMTU=">User is not responding.</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={6}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTU=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+             
+             {lostreason?.map((lostreason1,key)=>{
 
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTU=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMTc=">
+               return(
+                <tr data-fire="lMTU=">
                 <td>
-                  <span data-take="lMTc=">User is not interested.</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTc="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={7}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTc=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTc=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMTg=">
-                <td>
-                  <span data-take="lMTg=">Customer is not available.</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MTg="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={8}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MTg=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MTg=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjQ=">
-                <td>
-                  <span data-take="lMjQ=">Details is not valid.</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjQ="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={9}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjQ=');"
-                    className="btn btn-info btn-xs"
-                  >
-                   <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjQ=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
-              <tr data-fire="lMjU=">
-                <td>
-                  <span data-take="lMjU=">google</span>
-                  <input
-                    type="hidden"
-                    name="id[]"
-                    defaultValue="MjU="
-                    autoComplete="off"
-                  />
-                  <input
-                    type="hidden"
-                    name="index[]"
-                    defaultValue={10}
-                    autoComplete="off"
-                  />
-                  <span className="d-trans">Drag to adjust order</span>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="editLs('MjU=');"
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="deleteLs('MjU=');"
-                    className="btn btn-danger btn-xs"
-                  >
-                    <i className="fa fa-trash" />
-                  </button>
-                </td>
-              </tr>
+                    <span data-take="lMTU=">{key+1}</span>
+                  
+                     </td>
+                  <td>
+                    <span data-take="lMTU=">{lostreason1.lost_reason_name}</span>
+                    </td>
+                  <td>
+                   
+                    <button
+                      type="button"
+                      onClick={e=>{dispatch(deleteLostReason(lostreason1._id))}}  
+                      className="btn btn-danger btn-xs"
+                    >
+                      <i className="fa fa-trash" />
+                    </button>
+                  </td>
+                </tr>
+               );
+
+             })}
+             
+             
+             
                
             </tbody>
           </table>
