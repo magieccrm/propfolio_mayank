@@ -78,7 +78,7 @@ function Addlead() {
     <div>
       <div className="content-wrapper">
         {/* Main content */}
-        <section className="content py-5">
+        <section className="content content-header  py-5">
           <div className="container">
             <div className="panel panel-bd lobidrag lobipanel">
               <div className="panel-heading">
@@ -92,7 +92,8 @@ function Addlead() {
                 <form onSubmit={submitLead}>
                   <div className="row">
                     <input type="hidden" name="client_id" value={user_id} />
-                    <div className="col-md-6  row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="full_name">
                           Full Name <span className="text-danger">*</span>{" "}
@@ -116,8 +117,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6   mob-left-right col-xs-12">
+                    <div className="row"> 
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="email_id">Email Id </label>
                       </div>
@@ -138,8 +141,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="company_name">Company Name </label>
                       </div>
@@ -162,8 +167,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="website">Website </label>
                       </div>
@@ -186,8 +193,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="service">Product & Service </label>
                       </div>
@@ -218,9 +227,11 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
-                      <div className="col-md-4 pd-top mobile-hids">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
+                        <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="contact_no">
                           Contact No <span className="text-danger">*</span>{" "}
                         </label>
@@ -243,8 +254,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="alternative_no">Alternative No </label>
                       </div>
@@ -267,8 +280,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6 mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="position">Position </label>
                       </div>
@@ -291,8 +306,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6  mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="lead_source">Lead Source </label>
                       </div>
@@ -324,8 +341,10 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-md-6 row mob-left-right col-xs-12">
+                    <div className="col-md-6 mob-left-right col-xs-12">
+                    <div className="row">
                       <div className="col-md-4 pd-top mobile-hids">
                         <label htmlFor="lead_cost">Lead Cost </label>
                       </div>
@@ -349,13 +368,14 @@ function Addlead() {
                           <span className="text-danger ferror"> </span>{" "}
                         </div>
                       </div>
+                      </div>
                     </div>
-                    <div className="col-sm-6 row mob-left-right col-xs-12">
+                    <div className="col-sm-6   mob-left-right col-xs-12">
                       <div className="row">
                         <div className="col-12 address_information">
                           <div className="address-sec"> Address </div>
                         </div>
-
+                         
                         <div className="col-md-4 pd-top mobile-hids">
                           <label htmlFor="country">Country </label>
                         </div>
@@ -460,14 +480,16 @@ function Addlead() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-6 row mob-left-right col-xs-12">
+                    <div className="col-sm-6  mob-left-right col-xs-12">
                       <div className="row">
-                        <div className="col-12 address_information">
+                        <div className="address_information newaddress">
                           <div className="address-sec">
                             {" "}
                             Additional Information{" "}
                           </div>
                         </div>
+                        </div>
+
                         <div className="row">
                           <div className="col-md-4 pd-top mobile-hids">
                             <label htmlFor="followup">Followup Date</label>
@@ -571,12 +593,12 @@ function Addlead() {
                                 );
                               })}
                             </select>
-                            <span className="text-danger ferror"> </span>{" "}
+                             <span className="text-danger ferror"> </span>{" "}
                           </div>
                         </div>
-                      </div>
+                       
                     </div>
-                  </div>
+                  
 
                   <div className="col-sm-6 row mob-left-right col-xs-12 ">
                     <div className="col-sm-12 row mob-left-right col-xs-12 d-none">
@@ -625,11 +647,11 @@ function Addlead() {
                         Submit
                       </button>
                     </div>
-                  </div>
+                  </div></div>
                 </form>
               </div>
             </div>
-          </div>
+          </div> 
         </section>
       </div>
     </div>

@@ -66,7 +66,7 @@ export default function Incomereport() {
          
          ProductService?.product_service?.map((ProductService1)=>{  
             return(
-                <option value="Mzc=">{ProductService1?.product_service_name}</option>
+                <option value={ProductService1?._id}>{ProductService1?.product_service_name}</option>
             )
 
           })   }
