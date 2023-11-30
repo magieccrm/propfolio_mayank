@@ -364,9 +364,15 @@ export default function Followupage() {
                                             <label htmlFor="is_cal">
                                               Add to Calender &nbsp;&nbsp;
                                               <input
+                                               onChange={(e) =>
+                                                setdata({
+                                                  ...data,
+                                                  add_to_calender: e.target.value,
+                                                })
+                                              }
                                                 type="checkbox"
                                                 id="is_cal"
-                                                name="is_cal"
+                                                name="add_to_calender"
                                                 defaultValue="yes"
                                                 autoComplete="off"
                                               />
