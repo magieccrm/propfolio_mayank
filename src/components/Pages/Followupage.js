@@ -124,7 +124,7 @@ export default function Followupage() {
                     <div className="panel-body">
                       <div className="cards">
                         <div className="card-headers lead_fallow">
-                          <div className="table-responsive mob-bord">
+                          <div className=" mob-bord">
                             <form onSubmit={submitFollowup}>
                               <div className="mai-falows">
                                 <div className="row">

@@ -117,7 +117,7 @@ function Setting() {
                    <a id="cronjob-tab" data-toggle="pill" href="#cronjob" role="tab" aria-controls="cronjob-inventory" aria-selected="false"><i className="fa wiht fa-wrench" /> Cron Jobs</a>
                    </li>
                   <li>
-                   <a id="v-pills-purchase-tab" data-toggle="pill" href="#v-pills-purchase" role="tab" aria-controls="v-pills-purchase" aria-selected="false"> <i className="fa wiht fa-mixcloud " />Security Setting</a>
+                   <a id="v-pills-purchase-tab" data-toggle="pill" href="#v-pills-purchase" role="tab" aria-controls="v-pills-purchase" aria-selected="false"> <i className="fa wiht fa-cloud " /> Security Setting</a>
                    </li>
                   <li> 
                   <a id="v-pills-manufacturing-tab" data-toggle="pill" href="#v-pills-manufacturing" role="tab" aria-controls="v-pills-manufacturing" aria-selected="false"><i className="fa wiht fa-cog" /> Payment</a>
@@ -525,7 +525,7 @@ function Setting() {
                           </div>
                           </div>
                         </div>
-                      <table className="table dataTable no-footer" role="grid">
+                      <table className="table-bordered table dataTable no-footer" role="grid">
                         <thead>
                           <tr role="row">
                             <th className="sorting_asc">Filename</th>
@@ -1082,7 +1082,7 @@ function Setting() {
                                       
                                         <div className="col-md-12"> 
                                         <div className="table-responsive mob-bord">
-                                        <table className="table dataTable no-footer" role="grid">
+                                        <table className="table-bordered table dataTable no-footer" role="grid">
                         <thead>
                           <tr role="row">
                           <th className="sorting_asc">S.No.</th>
@@ -2356,7 +2356,7 @@ function Setting() {
                   </div>
                   <div className="tab-pane" id="v-pills-loginhistory" role="tabpanel" aria-labelledby="v-pills-loginhistory-tab">
                       <div className="row">
-                      <table className="table dataTable no-footer">
+                      <table className="table-bordered table dataTable no-footer">
   <thead>
     <tr role="row">
       <th className="sorting_asc">#</th>
@@ -2364,7 +2364,7 @@ function Setting() {
       <th className="sorting">System</th>
       <th className="sorting">Browser</th>
       <th className="sorting">IP</th>
-      <a href>Clear History </a>
+      <th className="sorting">Clear History </th>
 
     </tr>
   </thead>
