@@ -32,7 +32,7 @@ const ChartComponent = () => {
      
         <Chart
           type="bar"
-          width={800}
+          width={1200}
           height={400}
           series={[
             {
@@ -51,7 +51,7 @@ const ChartComponent = () => {
             //   style: { fontSize: 18 },
             },
 
-            colors: ["#f90000"],
+            colors: ["#02b053"],
             theme: { mode: "light" },
 
             xaxis: {
@@ -72,7 +72,7 @@ const ChartComponent = () => {
               ],
               title: {
                 text: "Income Graph Monthly",
-                style: { color: "#f90000", fontSize: 10 },
+                style: { color: "#000", fontSize: 10 },
               },
             },
 
@@ -81,11 +81,11 @@ const ChartComponent = () => {
                 formatter: (val) => {
                   return `${val}`;
                 },
-                style: { fontSize: "15", colors: ["#f90000"] },
+                style: { fontSize: "15", colors: ["#000"] },
               },
               title: {
                 text: "Amount In (K)",
-                style: { color: "#f90000", fontSize: 15 },
+                style: { color: "#000", fontSize: 15 },
               },
             },
 
@@ -99,7 +99,7 @@ const ChartComponent = () => {
                 return `${val}`;
               },
               style: {
-                colors: ["#f4f4f4"],
+                colors: ["#000"],
                 fontSize: 15,
               },
             },

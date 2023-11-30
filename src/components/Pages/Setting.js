@@ -1126,20 +1126,11 @@ function Setting() {
                                      type="checkbox" id=""  
                                        data-id="MjQ=" ></input></td>
                                       <td className="sorting_1"> {lllll} </td>
-                                    
-      <td>
+       <td>
       <button  type="button" className="btn btn-danger btn-xl" onClick={(e) => removeSite(agents._id)}>Delete</button>
-      
       </td>
-
-                                    </tr>
-                                     
-                                  
-                                   
-                                 
-
-                                  
-                              )
+   </tr>
+                         )
                             })
                          }
                          

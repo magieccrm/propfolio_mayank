@@ -9,17 +9,21 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from 'react-apexcharts';
 import { getAllLeadSource } from "../features/leadSource";
 import axios from "axios";
+import MyCalendar from "../components/Pages/MonthlyCalendar"
 
 
 function Home() {
 
   const  [Sale, setSale]=useState([]);
+  const [leadsource , setleadsource]=useState([]);
+  const [leadsourcedata1 , setleadsourcedata]=useState([]);
   var { agent } = useSelector((state) => state.agent);
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllAgent());
     dispatch(getAllLeadSource())
+  
   }, []);
 
   const getSale = async () => {
@@ -33,20 +37,32 @@ function Home() {
       console.log(error);
     }
   };
+
+  const getAllLeadSourceOverview=async ()=>{
+    try {
+      const responce = await axios.get(
+        "https://crm-backend-1qcz.onrender.com/api/v1/lead_source_overview_api"
+      );
+      setleadsourcedata(responce?.data?.Lead_source_count);
+      setleadsource(responce?.data?.Lead_source_name);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(()=>{
       getSale()  
+      getAllLeadSourceOverview()
     },[]);
 
-    const labels = [];
-       leadSourcedata?.leadSource?.map((country1) => {
-  labels.push(country1.lead_source_name);
-});
+   
+  
     const options = {
-      labels: labels,
+      labels: leadsource,
     };
    
 
-  const series = [1,2,3,4,5,6,7,8];
+ 
 
   return (
     <div>
@@ -172,7 +188,10 @@ function Home() {
                       <h4>Calender</h4>
                       <div className="card card-primary">
                         <div className="card-body p-0">
-                          <div id="calendar"></div>
+                          <div id="calendar">
+                               <MyCalendar/>
+
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -184,7 +203,7 @@ function Home() {
                   <div className="panel-heading ui-sortable-handle">
                     <div className="panel-title">
                       <h4>Leads Source Overview</h4>
-                      <Chart  options={options} series={series} type="pie" width="100%" />
+                      <Chart  options={options} series={leadsourcedata1} type="pie" width="100%" />
                     </div>
                   </div>
                 </div>

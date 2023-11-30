@@ -30,6 +30,7 @@ import MultipleForm from './components/Licence/MultipleForm';
 import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/ForgotPassword';
 import MonthlyCalendar from './components/Pages/MonthlyCalendar';
+import Incomereport from './components/Pages/Incomereport';
  
   function App() { 
   
@@ -83,6 +84,7 @@ import MonthlyCalendar from './components/Pages/MonthlyCalendar';
          <Route path="/Createinvoice" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/Addclient" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/MultipleForm" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/Incomereport" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/followupleads/:id"  element={<Main  lo={isLogined}/>} ></Route>
 
                   </Routes>
@@ -116,6 +118,7 @@ import MonthlyCalendar from './components/Pages/MonthlyCalendar';
          <Route path="/Setting" element={<Setting />}></Route>
          <Route path="/Sms" element={<Sms />}></Route>
          <Route path="/Report" element={<Report />}></Route>
+         <Route path="/Incomereport" element={<Incomereport/>}></Route>
          <Route path="/Listinvoice" element={<Listinvoice />}></Route>
          <Route path="/Createinvoice" element={<Createinvoice />}></Route>
          <Route path="/Addclient" element={<Addclient />}></Route>

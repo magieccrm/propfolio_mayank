@@ -16,7 +16,7 @@ const message=useSelector((state)=>state.app);
   
   const navigate = useNavigate();
    
-     const dispatch=useDispatch();
+    const dispatch=useDispatch();
     const [data,setData]=useState({});
    
    const loginSubmit= async (e)=>{  
@@ -39,8 +39,6 @@ const message=useSelector((state)=>state.app);
    }  
 
    
-
-
   return (
     <div class="content-wrapperes ">
      <div className="login-box">
