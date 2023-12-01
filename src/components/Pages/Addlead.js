@@ -240,6 +240,7 @@ function Addlead() {
                         <div className="form-group">
                           <input
                             type="number"
+                            pattern="[0-9]{10}"
                             name="contact_no"
                             onChange={(e) =>
                               setleaddata({
@@ -266,6 +267,7 @@ function Addlead() {
                           <input
                             type="number"
                             name="alternative_no"
+                            pattern="[0-9]{10}"
                             onChange={(e) =>
                               setleaddata({
                                 ...leaddata,

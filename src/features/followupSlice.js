@@ -46,7 +46,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
           
         
           if(result.success===true){     
-            return result;   
+            return result;     
        }else{  
            return rejectWithValue(result.message);
        }  
