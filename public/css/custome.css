@@ -13,6 +13,7 @@ body {
 }
 .sub-title {
   font-size: 18px;
+  
   color: #252525;
   font-weight: 700;
   margin-bottom: 20px;
@@ -456,7 +457,7 @@ a {
 }
 .content-wrapper {
   background-color: #fff;
-  /* width:1300px; */
+
 }
 .panel-bd > .panel-heading {
   color: #374767;
@@ -1528,5 +1529,5 @@ background-color: var(--pink);
     display: block;
     text-align: center;
   }
- 
+
 }
