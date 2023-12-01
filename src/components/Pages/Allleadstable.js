@@ -120,17 +120,12 @@ export const Allleadstable = () => {
   
 
   const exportToPDF = () => {
-    // const loopTime = 5;
-    const doc = new jsPDF();
-    const tableDataForPDF = filterleads.map((row1,key) =>
     
-      columns.map((column) =>    
-     
-      (row) => row?.full_name,
-      ) 
-     
-     
-    );
+    const doc = new jsPDF();
+    
+    const tableDataForPDF = filterleads.map((row) =>
+    columns.map((column) => 'kkk')
+  );
 
     
 

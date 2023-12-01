@@ -89,7 +89,7 @@ export default function Followupage() {
 
       if (aaaa.payload.success == true) {
         navigate("/followupleads");
-        toast.success(aaaa.payload?.message);
+        toast.success(aaaa.payload?.message);  
       } else {
         toast.warn(aaaa.payload?.message);
       }

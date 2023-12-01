@@ -7,6 +7,10 @@ body {
   background-color: #fff;
   font-family: 'Karla', sans-serif;
 }
+.panel-heading p {
+  font-size: 20px;
+  font-weight: 600;
+}
 .sub-title {
   font-size: 18px;
   color: #252525;
@@ -1524,4 +1528,5 @@ background-color: var(--pink);
     display: block;
     text-align: center;
   }
+ 
 }
