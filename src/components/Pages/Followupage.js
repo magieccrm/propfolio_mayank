@@ -87,7 +87,7 @@ export default function Followupage() {
     if (updatedLeadData.lead_id) {
       const aaaa = await dispatch(addfollowup(updatedLeadData));
 
-      if (aaaa.payload.success == true) {
+      if (aaaa.payload.success == true) { 
         navigate("/followupleads");
         toast.success(aaaa.payload?.message);  
       } else {

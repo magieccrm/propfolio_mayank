@@ -203,7 +203,7 @@ export const Allleadstable = () => {
           />
         }
         customStyles={customStyles} 
-      />
+      /> 
         </>
         
       )}
