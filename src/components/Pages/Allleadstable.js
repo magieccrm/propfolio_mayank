@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
 
-//import { useDispatch } from "react-redux";
-import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-// import { Link } from "react-router-dom";
-// import XLSX from "xlsx";
-// import { CSVLink } from "react-csv";
 
+import { writeFileXLSX } from "xlsx";
+ 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-export const Allleadstable = () => {
- // const dispatch = useDispatch();
+export const Allleadstable = ({sendDataToParent}) => {
+
+  
+
+ 
 
   const [leads, setleads] = useState([]);
+  const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
-  const getAllLead1 = async () => {
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const getAllLead1 = async () => { 
     try {
       const responce = await axios.get(
         "https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead"
       );
-      setleads(responce?.data?.lead);
+     
+       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
     } catch (error) {
       console.log(error);
@@ -40,17 +43,28 @@ export const Allleadstable = () => {
           }
         
       );
-      
-      setleads(responce?.data?.lead);
-      setfilterleads(responce?.data?.lead);
+      if(responce?.data?.success===true){ 
+        setstatus(responce?.data?.success)
+        setleads(responce?.data?.lead); 
+        setfilterleads(responce?.data?.lead);
+      }
+      if(responce?.data?.success===false){
+        
+        setstatus(responce?.data?.success)
+        setleads(responce?.data?.lead); 
+        setfilterleads(responce?.data?.lead);
+       
+      }
+     
     } catch (error) {
+     
       console.log(error);
       setfilterleads();
     }
  };
 
 
-
+  
   useEffect(() => {
    if(localStorage.getItem("role")==='admin'){
     getAllLead1();
@@ -85,7 +99,7 @@ export const Allleadstable = () => {
       name: "Full Name",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>{row?.full_name}</a>
-      ),
+      ), 
       selector: (row) => row?.full_name,
       sortable: true,
     },
@@ -116,21 +130,20 @@ export const Allleadstable = () => {
      },
   ];
 
+ 
   
   
 
   const exportToPDF = () => {
-    
     const doc = new jsPDF();
-    
-    const tableDataForPDF = filterleads.map((row) =>
-    columns.map((column) => 'kkk')
+      const tableDataForPDF = filterleads.map((row) =>
+    columns.map((column) => {
+          if (column.selector && typeof column.selector === 'function') {
+        return column.selector(row);
+      }
+      return row[column.selector];
+    })
   );
-
-    
-
-    
-
     doc.autoTable({
       head: [columns.map((column) => column.name)],
       body: tableDataForPDF,
@@ -138,6 +151,7 @@ export const Allleadstable = () => {
       doc.save('table.pdf');
   };
 
+ 
   const customStyles = {
     cells: {
       style: {
@@ -153,13 +167,17 @@ export const Allleadstable = () => {
     },
   };
 
-  if (leads.length === 0) {
-    //return <Loader />;
-  }
+  const handleSelectedRowsChange = ({ selectedRows }) => {
+     const selectedIds = selectedRows.map((row) => row._id);
+  setSelectedRowIds(selectedIds);
+  sendDataToParent(selectedIds);
+  };
 
+
+ 
      return(
       <div>
-      {leads.length === 0 ? (
+      {status === false ? (
        <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
        <thead>
          <tr>
@@ -181,6 +199,8 @@ export const Allleadstable = () => {
       ) : (
         <>
         <button className="btn btn-sm btn-info" onClick={exportToPDF}>Export PDF</button>
+        
+        
         <DataTable
         responsive 
         id="table-to-export"
@@ -203,6 +223,8 @@ export const Allleadstable = () => {
           />
         }
         customStyles={customStyles} 
+        selectedRows={selectedRowIds}
+      onSelectedRowsChange={handleSelectedRowsChange}
       /> 
         </>
         
