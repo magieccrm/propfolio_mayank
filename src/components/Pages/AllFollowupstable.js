@@ -13,6 +13,7 @@ export default function AllFollowupstable() {
 
     
   const [leads, setleads] = useState([]);
+  const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
   const getAllLead1 = async () => {
@@ -39,14 +40,26 @@ export default function AllFollowupstable() {
           } 
         
       );
-      if(responce?.data?.lead.length===0){
-        setleads([]);   
-        setfilterleads([]);
-      }else{
-        setleads(responce?.data?.lead);   
+      // if(responce?.data?.lead.length===0){
+      //   setleads([]);   
+      //   setfilterleads([]);
+      // }else{
+      //   setleads(responce?.data?.lead);   
+      //   setfilterleads(responce?.data?.lead);
+      // }
+       
+      if(responce?.data?.success===true){ 
+        setstatus(responce?.data?.success)
+        setleads(responce?.data?.lead); 
         setfilterleads(responce?.data?.lead);
       }
+      if(responce?.data?.success===false){
+        
+        setstatus(responce?.data?.success)
+        setleads(responce?.data?.lead); 
+        setfilterleads(responce?.data?.lead);
        
+      }
      
       
     } catch (error) { 
@@ -138,15 +151,14 @@ export default function AllFollowupstable() {
   const exportToPDF = () => {
     
     const doc = new jsPDF();
-    const tableDataForPDF = filterleads.map((row1,key) =>
-    
-      columns.map((column) =>    
-     
-      (row) => row?.full_name,
-      ) 
-     
-     
-    );
+    const tableDataForPDF = filterleads.map((row) =>
+    columns.map((column) => {
+          if (column.selector && typeof column.selector === 'function') {
+        return column.selector(row);
+      }
+      return row[column.selector];
+    })
+  );
 
     
 
@@ -174,14 +186,14 @@ export default function AllFollowupstable() {
     },
   };
 
-  if (leads.length === 0) {
+  //if (leads.length === 0) {
    /// return <Loader />;
    //return  <p>No leads found.</p>;
-  }
+ // }
    
   return (   
     <div>
-      {leads.length === 0 ? (
+      {status === false ? (
        <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
        <thead>
          <tr>
