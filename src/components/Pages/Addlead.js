@@ -214,11 +214,11 @@ function Addlead() {
                             required
                           >
                             <option value="">Select</option>
-                            {ProductService.product_service?.map(
+                            {ProductService?.product_service?.map(
                               (service, key) => {
                                 return (
                                   <option value={service._id}>
-                                    {service.product_service_name}
+                                    {service?.product_service_name}
                                   </option>
                                 );
                               }
@@ -330,11 +330,11 @@ function Addlead() {
                           >
                             <option value="">Select</option>
 
-                            {leadSourcedata.leadSource?.map(
+                            {leadSourcedata?.leadSource?.map(
                               (leadsource, key) => {
                                 return (
                                   <option value={leadsource._id}>
-                                    {leadsource.lead_source_name}
+                                    {leadsource?.lead_source_name}
                                   </option>
                                 );
                               }
@@ -587,7 +587,7 @@ function Addlead() {
                             >
                               <option value="">Select</option>
 
-                              {Statusdata.leadstatus?.map((status, key) => {
+                              {Statusdata?.leadstatus?.map((status, key) => {
                                 return (
                                   <option value={status._id}>
                                     {status.status_name}

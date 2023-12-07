@@ -31,7 +31,7 @@ function Followupleads() {
     </div>
   </div>
 </div>
-<div className="col-md-7 col-xs-12 ">
+<div className="col-md-7 col-xs-12 d-none">
   <div className="ipades " >
     <form id="bulkForm" method="POST">
       <div className="row">

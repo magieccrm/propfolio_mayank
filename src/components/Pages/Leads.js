@@ -6,30 +6,70 @@ import { Allleadstable } from "./Allleadstable";
 import { Link } from "react-router-dom";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 function Leads() {
    
   const dispatch=useDispatch(); 
   const {lead,loading} = useSelector((state)=>state.lead); 
   const { agent } = useSelector((state) => state.agent);
   const { Statusdata } = useSelector((state) => state.StatusData);
- 
+  const [LeadStatus,setLeadStatus]=useState();
+  const [Leadagent,setLeadagent]=useState();
+     
   useEffect(()=>{
     dispatch(getAllLead());  
     dispatch(getAllAgent()); 
     dispatch(getAllStatus());
   },[]);
+ const BulkAction=async(e)=>{ 
+      e.preventDefault();
+  const updatedData = {
+      leads,
+      Leadagent,
+      LeadStatus    
+  };
+     console.log(updatedData)
 
-  const BulkAction=async(e)=>{
-       e.preventDefault();
+  try {
+    const response = await axios.put(
+      `https://crm-backend-1qcz.onrender.com/api/v1/BulkLeadUpdate/`,
+      updatedData
+    );
+   
+   if(response.data.success===false){
+    toast.warn(response.data.message); 
+    }
+    if(response.data.success===true){
+      window.location.reload(false); 
+      toast.success(response.data.message); 
 
+    }
+  } catch (error) {
+   
+    toast.warn(error.response?.data?.message); 
+  //  console.error('Error updating lead', error);
   }
 
-  const [leads, setLeadID] = useState([]);
-
-  const handleChildData = (data) => {
+ }
+ const [leads, setLeadID] = useState([]);
+ const [none,setnone]=useState('none');
+ const handleChildData = (data) => {
     setLeadID(data);
+    
   };
-   // console.log(leads)  
+
+  const advanceserch=()=>{
+    if(none=='none'){
+      setnone('block');
+    }else{
+      setnone('none');
+    }
+  
+  }
+
+
+  
   
 
   return (
@@ -50,7 +90,11 @@ function Leads() {
         </div>
       </div>
       <div className="col-md-4 col-sm-4 mobil-nns col-xs-4">
-       
+      <div className="btn-group">
+          <button className="btn btnes exports" onClick={advanceserch}>
+          <i class="fa fa-search" aria-hidden="true"></i>
+          &nbsp;  Advance </button>
+        </div>
       </div>
       <div className="col-md-4 col-sm-4 col-xs-6">
        
@@ -67,9 +111,11 @@ function Leads() {
             </div>
           </div>
           <div className="col-md-4 col-sm-3 col-xs-12">
-            <select className="form-control" name="bstatus" id="bstatus" required >
+            <select className="form-control" 
+            onChange={e => setLeadStatus({...LeadStatus, status:e.target.value})}
+            name="status" id="status" required >
               <option value>Change Status</option> 
-              {Statusdata.leadstatus?.map((status, key) => {
+              {Statusdata?.leadstatus?.map((status, key) => {
                                 return (
                                   <option value={status._id}>
                                     {status.status_name}
@@ -79,7 +125,9 @@ function Leads() {
             </select>
           </div>
           <div className="col-md-3 col-sm-3 col-xs-12">
-            <select className="form-control" name="agent" id="agent" required >
+            <select className="form-control"
+             onChange={e => setLeadagent({...Leadagent, agent:e.target.value})}
+            name="agent" id="agent" required >
               <option value>Transfer to</option>
               
               {agent?.agent?.map((agents, key) => {
@@ -98,13 +146,17 @@ function Leads() {
       </form>
     </div>
   </div>
+
+
+
 </div>
 
  
    <div className="card-body">
     <div className="">
+
     
-    <Allleadstable   sendDataToParent={handleChildData} />
+    <Allleadstable   sendDataToParent={handleChildData}  dataFromParent={none}/> 
     </div>
   
   </div>
