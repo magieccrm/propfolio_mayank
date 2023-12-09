@@ -40,7 +40,7 @@ export const Allleadstable = ({ sendDataToParent,dataFromParent  }) => {
   const getAllLead2 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_Leadby_agentid_status",
+        "https://crm-backend-1qcz.onrender.com/api/v1/get_Leadby_agentid_with_status",
 
         {
           assign_to_agent,
