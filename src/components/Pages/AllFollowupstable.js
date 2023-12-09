@@ -40,21 +40,14 @@ export default function AllFollowupstable() {
           } 
         
       );
-      // if(responce?.data?.lead.length===0){
-      //   setleads([]);   
-      //   setfilterleads([]);
-      // }else{
-      //   setleads(responce?.data?.lead);   
-      //   setfilterleads(responce?.data?.lead);
-      // }
-       
+           
       if(responce?.data?.success===true){ 
         setstatus(responce?.data?.success)
         setleads(responce?.data?.lead); 
         setfilterleads(responce?.data?.lead);
       }
       if(responce?.data?.success===false){
-        
+
         setstatus(responce?.data?.success)
         setleads(responce?.data?.lead); 
         setfilterleads(responce?.data?.lead);
@@ -128,10 +121,10 @@ export default function AllFollowupstable() {
       selector: (row) => row?.lead_source_details[0]?.lead_source_name,
       sortable: true,
      },
-    {
+    {  
      name: "Followup date",
-      selector: (row) => getdatetimeformate(row?.followup_date)+ row?.status_details['0']?.status_name,
-      sortable: true,
+      selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
+      sortable: true,  
      },
   ]; 
 
