@@ -68,7 +68,7 @@ export const Allleadstable = ({ sendDataToParent,dataFromParent  }) => {
     } else {
       getAllLead2(localStorage.getItem("user_id"));
     }
-  }, [localStorage.getItem("user_id")]);
+  },[localStorage.getItem("user_id")]);
 
   useEffect(() => {
     const result = leads.filter((lead) => {

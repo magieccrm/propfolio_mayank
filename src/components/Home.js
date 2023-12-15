@@ -10,6 +10,7 @@ import Chart from 'react-apexcharts';
 import { getAllLeadSource } from "../features/leadSource";
 import axios from "axios";
 import MyCalendar from "../components/Pages/MonthlyCalendar"
+import Notification from "./Notification";
 
 
 function Home() {
@@ -20,10 +21,13 @@ function Home() {
   var { agent } = useSelector((state) => state.agent);
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   const dispatch = useDispatch();
+
+
+
   useEffect(() => {
     dispatch(getAllAgent());
     dispatch(getAllLeadSource())
-  
+   
   }, []);
 
   const getSale = async () => {
@@ -66,6 +70,7 @@ function Home() {
 
   return (
     <div>
+      <Notification/>
       <div className="content-wrapper">
       
         <section className="content py-5">

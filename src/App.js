@@ -31,7 +31,7 @@ import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/ForgotPassword';
 import MonthlyCalendar from './components/Pages/MonthlyCalendar';
 import Incomereport from './components/Pages/Incomereport';
- 
+
   function App() { 
   
     const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +58,7 @@ import Incomereport from './components/Pages/Incomereport';
     if (!isLogined) {   
       return (           
         <BrowserRouter>   
+     
              <Routes>  
           <Route path="/login" element={<Main  lo={isLogined}/>}></Route>
           {/* Catch-all route for unknown URLs */}
@@ -95,7 +96,7 @@ import Incomereport from './components/Pages/Incomereport';
   return (           
 <BrowserRouter>   
      <div className="wrapper">
-
+    
      {isLogined && <Header />}
      <Routes>  
 

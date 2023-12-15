@@ -22,7 +22,10 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
         return rejectWithValue(result.message);
     }  
     
-   });
+   }); 
+ 
+
+   
 
    export const getAllFollowup=createAsyncThunk("getAllFollowup",async(_id,{rejectWithValue})=>{
     const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/all_followup_lead_by_id/${_id}`);
@@ -76,8 +79,8 @@ export const followup=createSlice({
        },
        [addfollowup.fulfilled]:(state,action) =>{
            state.loading=false;
-                console.log(action.payload)
-              state.followup.followuplead.push(action.payload?.followuplead['0']);  
+              console.log(action.payload)
+             // state.followup.followuplead.push(action.payload?.followuplead['0']);  
         
        },
        [addfollowup.rejected]:(state,action) =>{
