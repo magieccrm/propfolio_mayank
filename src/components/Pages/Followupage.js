@@ -59,6 +59,7 @@ export default function Followupage() {
   const setStatus = (e) => {
     if (e.target.value == "6539fa950b9756b61601287b") {
       setdata(e.target.value);
+
       setshow("block");
       setshowforlostlead("none");
     }else 
@@ -72,6 +73,7 @@ export default function Followupage() {
     }
 
   };
+
   const submitFollowup = async (e) => {
     e.preventDefault();
 
@@ -82,14 +84,15 @@ export default function Followupage() {
       assign_to_agent: e.target.elements.assign_to_agent?.value,
       followup_status_id: e.target.elements.followup_status_id?.value,
     };
-    console.log(data);
+    // console.log(data);
 
     if (updatedLeadData.lead_id) {
       const aaaa = await dispatch(addfollowup(updatedLeadData));
-
-      if (aaaa.payload.success == true) { 
-        navigate("/followupleads");
+     
+      if (aaaa.payload.success === true) {  
+        navigate("/Followupleads");   
         toast.success(aaaa.payload?.message);  
+
       } else {
         toast.warn(aaaa.payload?.message);
       }
