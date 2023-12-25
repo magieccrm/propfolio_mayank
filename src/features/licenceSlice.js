@@ -20,7 +20,7 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
 export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
     const response=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/agent_login",{
            method:"POST", 
-           headers:{   
+           headers:{    
             "Content-Type":"application/json",
            }, 
            body:JSON.stringify(data)
