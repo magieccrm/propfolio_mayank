@@ -25,7 +25,7 @@ const ChartComponent = () => {
    useEffect(()=>{
        
     getAllLeadSourceOverview();
-   })
+   },[])
    
   return (
     <React.Fragment>

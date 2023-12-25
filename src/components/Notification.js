@@ -12,8 +12,11 @@ useEffect(()=>{
         // console.log("mmmm",currentToken)  
    const unsubscribe=onMessageListener().then(payload=>{
     setNotification({
-        title:payload?.notification?.title,
-        body:payload?.notification?.body
+        // title:payload?.notification?.title,
+        // body:payload?.notification?.body
+
+        title:'kkk',
+        body:'kkkkkk'
     });
     toast.success(`${payload?.notification?.title}:${payload?.notification?.body}`,
    {
@@ -25,6 +28,10 @@ useEffect(()=>{
     return ()=>{
         unsubscribe.catch(err=>console.log("Failed :",err));
     };
+
+
+    
+
 },[]);
 return (
     <div>

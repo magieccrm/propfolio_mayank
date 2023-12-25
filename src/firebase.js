@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { useEffect } from "react";
+
 const firebaseConfig = {
   apiKey: "AIzaSyA67s0_1pbtnFE2Arr2QaMIktf0THmMBGY",
   authDomain: "push-notification-for-we-26abb.firebaseapp.com",
@@ -24,7 +24,7 @@ const saveTokenToServer = async(token) => {
  
   const aaa= await { user_id: localStorage.getItem("user_id"),token:token };
  
-   
+     
   
   const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/update_and_save_notification_for_web/",{
     method:"POST",
@@ -32,7 +32,7 @@ const saveTokenToServer = async(token) => {
         "Content-Type":"application/json",
        }, 
        body:JSON.stringify(aaa) 
-})  
+   })  
 const result=await responce.json();
 
 if(result.success===true){  
@@ -54,9 +54,9 @@ export const requestPermission = () => {
     if (permission === "granted") {
       console.log("notification user permission Granted.........");
 
-      return getToken(messaging, {
+      return getToken(messaging, { 
         vapidKey:
-          "BDZuaSSjKO9YRGpuDCy2BsY-dcZrwG06pUfVVHo-2OtIrF9EyjyNQ6sRxcyXaDXoRGoIUeeBaNkWMRN477P1SQo",
+          "BKx3jub1v0latbywC6SDuU6FEjBFNhvlc6f8ivdtw9EHiXB5dIVqbvhmTBgwRbiOPN1zxeAB_68c8TR5dS73NsY",
       })
         .then((currentToken) => {
           if (currentToken) {
