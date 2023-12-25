@@ -7,6 +7,7 @@ import "jspdf-autotable";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel'; // Import the library
 
 export const Allleadstable = ({ sendDataToParent,dataFromParent  }) => {
 
@@ -165,15 +166,68 @@ export const Allleadstable = ({ sendDataToParent,dataFromParent  }) => {
     sendDataToParent(selectedIds);
     
   };
-  
-
-  const AdvanceSerch=async(e)=>{
-    e.preventDefault();
-        console.log(adSerch)     
-  }
   const [adSerch,setAdvanceSerch]=useState([]);
 
 
+
+  const AdvanceSerch=async(e)=>{
+    e.preventDefault();
+        console.log(adSerch)  
+        fetch('https://crm-backend-1qcz.onrender.com/api/v1/getAdvanceFillter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(adSerch),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Response from server:', data);
+            setstatus(data?.success);
+            setleads(data?.lead);
+            setfilterleads(data?.lead);
+          })
+          .catch(error => {
+            console.error('Fetch error:', error);
+            // Handle errors
+          });
+        
+  }
+
+  const exportToExcel = () => {
+    const columnsForExport = columns.map(column => ({
+      title: column.name,
+      dataIndex: column.selector,
+    }));
+
+    const dataForExport = filterleads.map(row =>
+      columns.map(column => {
+        if (column.selector && typeof column.selector === "function") {
+          return column.selector(row);
+        }
+        return row[column.selector];
+      })
+    );
+
+    const exportData = [columnsForExport.map(col => col.title), ...dataForExport];
+
+    // Create a Blob from the data array and create an Excel file
+    const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
+      type: 'application/vnd.ms-excel',
+    });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table.xls';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+ 
   return (
     <div>
       <div className="row " style={{display:dataFromParent}}>
@@ -275,6 +329,19 @@ export const Allleadstable = ({ sendDataToParent,dataFromParent  }) => {
           <button className="btn btn-sm btn-info" onClick={exportToPDF}>
             Export PDF
           </button>
+
+          <button className="btn btn-sm btn-success" onClick={exportToExcel}>
+        Export Excel
+      </button>
+
+      {/* <ReactHTMLTableToExcel
+        id="test-table-xls-button"
+        className="btn btn-sm btn-info"
+        table="table-to-export"
+        filename="table"
+        sheet="Sheet 1"
+        buttonText="Export Excel"
+      /> */}
 
           <DataTable
             responsive

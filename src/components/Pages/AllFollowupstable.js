@@ -179,6 +179,35 @@ export default function AllFollowupstable() {
     },
   };
 
+
+  const exportToExcel = () => {
+    const columnsForExport = columns.map(column => ({
+      title: column.name,
+      dataIndex: column.selector,
+    }));
+
+    const dataForExport = filterleads.map(row =>
+      columns.map(column => {
+        if (column.selector && typeof column.selector === "function") {
+          return column.selector(row);
+        }
+        return row[column.selector];
+      })
+    );
+
+    const exportData = [columnsForExport.map(col => col.title), ...dataForExport];
+
+    // Create a Blob from the data array and create an Excel file
+    const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
+      type: 'application/vnd.ms-excel',
+    });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table.xls';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   //if (leads.length === 0) {
    /// return <Loader />;
    //return  <p>No leads found.</p>;
@@ -207,7 +236,10 @@ export default function AllFollowupstable() {
      </table>
       ) : (
         <>
-        <button className="btn btn-sm btn-info" onClick={exportToPDF}>Export PDF</button>
+        <button className="btn btn-sm btn-success" onClick={exportToPDF}>Export PDF</button>
+        <button className="btn btn-sm btn-success" onClick={exportToExcel}>
+        Export Excel
+      </button>
         <DataTable
         responsive 
         id="table-to-export"

@@ -15,6 +15,7 @@ export default function Incomereport() {
     const [total,settotal]=useState([]);
     const {ProductService} = useSelector((state)=>state.ProductService); 
     var { agent}=useSelector((state)=>state.agent);
+  
   const dispatch=useDispatch();
      const getAllLeadSourceOverview=async ()=>{
       try {
@@ -23,7 +24,7 @@ export default function Incomereport() {
         );
         setdata(responce?.data?.monthlyIncom);
       let  totalamount=0;
-        data.map((ddddd)=>{
+        data.map((ddddd)=>{ 
             totalamount +=parseInt(ddddd);
             settotal(totalamount);
         })
@@ -38,7 +39,12 @@ export default function Incomereport() {
     dispatch(getAllProductService());  
     getAllLeadSourceOverview();
     dispatch(getAllAgent());
-   })
+   },[]);
+
+   const getEmployeeReport=async()=>{
+         //e.preventDefault();
+        
+   }
 
   return (
     <div>
@@ -54,12 +60,12 @@ export default function Incomereport() {
                     <div className="col-sm-12 col-md-12 col-xs-12">
                         <div className="cards">
                         <div className="serach-lists" style={{ padding: 0 }}>
-                            <form action="" method="get">
+                            <form  onSubmit={getEmployeeReport()}>
                             <div className="row">
                                
                                 <div className="col-md-4">
                                 <div className="form-group">
-                                    <select className="form-control" name="product">
+                                    <select className="form-control"  name="product">
                                     <option value="">Select product</option>
                                    
                                     {
@@ -127,7 +133,7 @@ export default function Incomereport() {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                      <LineChart1/>
+                      <LineChart1 />
                          
                         </div>
                     </div>

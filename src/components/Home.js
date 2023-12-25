@@ -70,7 +70,7 @@ function Home() {
 
   return (
     <div>
-      <Notification/>
+      <Notification/>  
       <div className="content-wrapper">
       
         <section className="content py-5">

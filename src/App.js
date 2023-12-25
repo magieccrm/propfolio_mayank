@@ -31,27 +31,67 @@ import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/ForgotPassword';
 import MonthlyCalendar from './components/Pages/MonthlyCalendar';
 import Incomereport from './components/Pages/Incomereport';
-
+import ImportLead from './components/Pages/ImportLead';
+// import './ffffffff.js';
   function App() { 
   
     const [isLoading, setIsLoading] = useState(true);
     const [isLogined, setIsLogined]= useState(false); 
-    
+    const [user_id, setuser_id]= useState(); 
 
- 
+
+    const ddddd={
+      "user_id":"656b04cc37c356cf73e8dde1",
+    "datetime":"2023-12-18T16:44:00.000+00:00"
+    }
+
+    useEffect(() => {
+     
+      const fetchData = async (ddddd) => {
+        try {
+          // Perform your API call here
+          const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/getLetestnotificat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any additional headers if needed
+            },
+            // Replace 'your-data' with the actual data you want to send in the request body
+            body: JSON.stringify(ddddd), 
+          });
+  
+          const data = await response.json();
+          console.log('API Response:', data);
+        } catch (error) {
+          console.error('API Error:', error);
+        }
+      };
+    
+      // Call the API initially
+    //  fetchData(ddddd);
+  
+      // Set up an interval to call the API every minute (60,000 milliseconds)
+    //  const intervalId = setInterval(fetchData, 60000);
+  
+      // Clean up the interval when the component is unmounted
+    //  return () => clearInterval(intervalId);
+    }, []); 
+   
 
     useEffect(() => {
       const checkToken = async () => {
         try {
           const token = await localStorage.getItem('token');
+          const user_id = await localStorage.getItem('user_id');
+          setuser_id(user_id);
           setIsLogined(Boolean(token));  
         } catch (error) {
           console.error('Error reading token from localStorage:', error);
-        } finally {
+        } finally {  
            setIsLoading(false);  
         }
       };
-  
+   
       checkToken();
     }, []);
     
@@ -86,6 +126,7 @@ import Incomereport from './components/Pages/Incomereport';
          <Route path="/Addclient" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/MultipleForm" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/Incomereport" element={<Main  lo={isLogined}/>}></Route>
+         <Route path="/import-lead" element={<Main  lo={isLogined}/>}></Route>
          <Route path="/followupleads/:id"  element={<Main  lo={isLogined}/>} ></Route>
 
                   </Routes>
@@ -109,6 +150,7 @@ import Incomereport from './components/Pages/Incomereport';
           <Route path="/call_log_details/:id" element={<CallLogDetails/>}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
+         <Route path="/import-lead" element={<ImportLead />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
          <Route path="/Forwardleads" element={<Forwardleads />}></Route>
          <Route path="/Clients" element={<Clients />}></Route>
