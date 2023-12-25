@@ -13,7 +13,7 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
        return rejectWithValue(error);
     }
 })  
-
+   
 
 
 
