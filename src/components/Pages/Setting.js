@@ -15,7 +15,7 @@ import {
   addagent,
   getAllAgent,
   deleteAgent,
-  checkedAgent,
+  checkedAgent,EditAgentDetails
 } from "../../features/agentSlice";
 import {
   addLostReason,
@@ -54,23 +54,46 @@ function Setting() {
     }
   };
 
-  const handleChange = (_id) => {
-   // console.log(_id);
-  };
 
+  const [formData, setFormData] = useState({ _id: '', agent_name: '', agent_email: '',
+  agent_mobile: '', client_access: '', agent_status: '' }); 
   const agentSubmit = async (e) => {
     e.preventDefault();
-    const aaaaa = await dispatch(addagent(agents));
-    if (aaaaa.payload.success === true) {
-      toast.success("Agent add Successfully");
-    } else {
-      toast.warn("There are some problem");
+   
+
+    if (formData._id) {
+     const aaaaa = await dispatch(EditAgentDetails(formData));
+      if (aaaaa.payload.success === true) {
+        toast.success("Update Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
+     
+    }else{
+      const { _id, ...newAaa } =await formData;
+      const aaaaa = await dispatch(addagent(newAaa));
+      if (aaaaa.payload.success === true) {
+        toast.success("Agent add Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
     }
+
+   setFormData({  _id: '', agent_name: '', agent_email: '',
+   agent_mobile: '', client_access: '', agent_status: '' })
   };
 
-  // const updateAgentAccess=async(_id)=>{
-  //   checkedAgent(_id)
-  // }
+   
+
+    
+
+  const editagent=async(_id)=>{
+    const selectedData = agent?.agent.find((item) => item._id === _id);
+    setFormData(selectedData); 
+  }
+
+  
+
 
   const submitStatus = async (e) => {
     e.preventDefault();
@@ -1882,7 +1905,7 @@ function Setting() {
                       role="tabpanel"
                       aria-labelledby="v-pills-department-tab"
                     >
-                      <form onSubmit={agentSubmit}>
+                      <form     onSubmit={agentSubmit}>
                         <div className="col-sm-12 col-xs-12 pt-3">
                           <div className="service-con">
                             <div className="cards">
@@ -1892,10 +1915,11 @@ function Setting() {
                                   <div className="form-group">
                                     {/* <input type="hidden" name="aid" id="aid" autoComplete="off" /> */}
                                     <input
+                                 value={formData.agent_name}
                                       type="text"
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           agent_name: e.target.value,
                                         })
                                       }
@@ -1912,10 +1936,11 @@ function Setting() {
                                   <div className="form-group">
                                     <input
                                       type="email"
+                                      value={formData.agent_email}
                                       className="form-control"
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           agent_email: e.target.value,
                                         })
                                       }
@@ -1931,11 +1956,12 @@ function Setting() {
                                   <div className="form-group">
                                     <input
                                       type="number"
+                                      value={formData.agent_mobile}
                                       maxLength={10}
                                       className="form-control"
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           agent_mobile: e.target.value,
                                         })
                                       }
@@ -1953,9 +1979,10 @@ function Setting() {
                                       type="password"
                                       className="form-control"
                                       name="agent_password"
+                                      value={formData.agent_password}
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           agent_password: e.target.value,
                                         })
                                       }
@@ -1968,10 +1995,11 @@ function Setting() {
                                 <div className="col-md-3">
                                   <div className="form-group">
                                     <select
+                                      value={formData.agent_status}
                                       className="form-control"
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           agent_status: e.target.value,
                                         })
                                       }
@@ -1989,9 +2017,10 @@ function Setting() {
                                   <div className="form-group">
                                     <select
                                       className="form-control"
+                                      value={formData.client_access}
                                       onChange={(e) =>
-                                        setagent({
-                                          ...agents,
+                                        setFormData({
+                                          ...formData,
                                           client_access: e.target.value,
                                         })
                                       }
@@ -2010,8 +2039,10 @@ function Setting() {
                                       type="post"
                                       id="aaction"
                                     >
-                                      Add
+                                    {formData._id ? 'Edit' : 'Add'}
                                     </button>
+
+                                    
                                     <button
                                       type="button"
                                       className="btn btn-danger"
@@ -2105,6 +2136,16 @@ function Setting() {
                                                   }
                                                 >
                                                   Delete
+                                                </button>
+
+                                                <button
+                                                  type="button"
+                                                  className="btn btn-success btn-x"
+                                                  onClick={(e) =>
+                                                    editagent(agents._id)
+                                                  }
+                                                >
+                                                  Edit
                                                 </button>
                                               </td>
                                             </tr>
