@@ -197,8 +197,7 @@ export default function AllFollowupstable() {
 
     const exportData = [columnsForExport.map(col => col.title), ...dataForExport];
 
-    // Create a Blob from the data array and create an Excel file
-    const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
+      const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
       type: 'application/vnd.ms-excel',
     });
     const link = document.createElement('a');
@@ -208,6 +207,13 @@ export default function AllFollowupstable() {
     link.click();
     document.body.removeChild(link);
   };
+
+
+
+
+
+
+  
   //if (leads.length === 0) {
    /// return <Loader />;
    //return  <p>No leads found.</p>;
