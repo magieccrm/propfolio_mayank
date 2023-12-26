@@ -20,6 +20,26 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
     
    });
 
+
+   ///update agent api 
+
+   export const EditAgentDetails=createAsyncThunk("EditAgentDetails",async(data,{rejectWithValue})=>{
+
+    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/EditAgentDetails/${data._id}`,{
+        method:"PUT",
+        headers:{     
+            "Content-Type":"application/json",
+           }, 
+           body:JSON.stringify(data)
+    })  
+    const result=await responce.json();
+    if(result.success===true){    
+        return result;   
+   }else{  
+       return rejectWithValue(result.message); 
+   }  
+   })
+
    export const getAllAgent=createAsyncThunk("getAllAgent",async(data,{rejectWithValue})=>{
 
     const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_all_agent");
@@ -104,6 +124,26 @@ export const agentSource=createSlice({
            state.message=action.payload.message; 
 
        }, 
+
+       ////update agent details 
+       [EditAgentDetails.pending]:(state)=>{
+        state.loading=true; 
+       },
+       [EditAgentDetails.fulfilled]:(state,action) =>{
+        state.loading=false;     
+       console.log(action.payload._id)
+        state.agent.agent=state.agent.agent.map((ele)=>
+                  ele._id===action.payload._id?action.payload:ele
+                );
+     
+        },
+     [EditAgentDetails.rejected]:(state,action) =>{
+      state.loading=false;
+    
+   //   state.agent=action.payload; 
+      state.message=action.payload.message; 
+
+  }, 
 
 
 
