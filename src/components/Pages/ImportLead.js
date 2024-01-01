@@ -66,7 +66,7 @@ const handleUpload = async (e) => {
           <div className="row">
             <div className="col-sm-12">
               <div className="panel panel-bd">
-                <div className="panel-heading ">
+                <div className="panel-heading bg-white">
                   <div className="btn-group">Import Lead</div>
                 </div>
                 <div className="panel-body">

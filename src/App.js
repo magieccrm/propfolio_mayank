@@ -20,7 +20,7 @@ import Productservices from './components/Pages/Productservices';
 import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
-import { BrowserRouter, Routes, Route  } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useParams, Router  } from "react-router-dom";
 import Main from './components/Main';
 import Followupage from './components/Pages/Followupage';
 import Home1 from './components/Home1';
@@ -32,7 +32,13 @@ import ForgotPassword from './components/ForgotPassword';
 import MonthlyCalendar from './components/Pages/MonthlyCalendar';
 import Incomereport from './components/Pages/Incomereport';
 import ImportLead from './components/Pages/ImportLead';
+import Breadcrumb from './components/Pages/Breadcrumb';
 // import './ffffffff.js';
+import { BreadcrumbProvider } from './components/Pages/BreadcrumbContext';
+import Employeereporttt from './components/Pages/Employeereporttt';
+import Productservicereport from './components/Pages/Productservicereport';
+import LeadSouceReport from './components/Pages/LeadSouceReport';
+import Callreport from './components/Pages/Callreport';
   function App() { 
   
     const [isLoading, setIsLoading] = useState(true);
@@ -94,7 +100,12 @@ import ImportLead from './components/Pages/ImportLead';
    
       checkToken();
     }, []);
-    
+        
+    // const location = useLocation();
+//     const {pathname} = useLocation()
+//   const pathSegments = pathname.split('/').filter(Boolean); 
+//  console.log(pathname)
+
     if (!isLogined) {   
       return (           
         <BrowserRouter>   
@@ -136,17 +147,22 @@ import ImportLead from './components/Pages/ImportLead';
         
   return (           
 <BrowserRouter>   
+<BreadcrumbProvider>
      <div className="wrapper">
+     {isLogined && <Header  />}
     
-     {isLogined && <Header />}
      <Routes>  
-
-     {isLogined ?(<><Route path="/login" element={<Home1 />}></Route>  
+       {isLogined ?(<>
+        {/* <Route
+            path="*"
+            element={<Breadcrumb pathSegments={pathSegments} />}
+          /> */}
+       
+          <Route path="/login" element={<Home1 />}></Route>  
           <Route path="/home" element={<Home />}></Route>  
           <Route path="/" element={<Home />}></Route>  
-         <Route path="/employeesreport" element={<EmployeeReport />}></Route>
-         {/* Catch-all route for unknown URLs */}
-        <Route path="*" element={<NotFound />} />
+          <Route path="/employeesreport" element={<EmployeeReport />}></Route>
+          <Route path="*" element={<NotFound />} />
           <Route path="/call_log_details/:id" element={<CallLogDetails/>}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
@@ -161,7 +177,14 @@ import ImportLead from './components/Pages/ImportLead';
          <Route path="/Setting" element={<Setting />}></Route>
          <Route path="/Sms" element={<Sms />}></Route>
          <Route path="/Report" element={<Report />}></Route>
+
          <Route path="/Incomereport" element={<Incomereport/>}></Route>
+         <Route path="/Employeereport" element={<Employeereporttt/>}></Route>
+         <Route path="/Productservicereport" element={<Productservicereport/>}></Route>
+         <Route path="/Callreport" element={<Callreport/>}></Route>
+         <Route path="/leadsourcereport" element={<LeadSouceReport/>}></Route>
+
+
          <Route path="/Listinvoice" element={<Listinvoice />}></Route>
          <Route path="/Createinvoice" element={<Createinvoice />}></Route>
          <Route path="/Addclient" element={<Addclient />}></Route>
@@ -172,10 +195,11 @@ import ImportLead from './components/Pages/ImportLead';
          </>
          }
             </Routes>
-      
+          
         {isLogined && <SideNav />}
         {isLogined && <Footer />}
       </div>
+      </BreadcrumbProvider>
 </BrowserRouter>
   );
 }

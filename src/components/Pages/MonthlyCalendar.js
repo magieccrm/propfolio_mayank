@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
+import Modal from './Modal';
 
 const MyCalendar = () => {
      
@@ -22,20 +23,40 @@ const MyCalendar = () => {
    useEffect(()=>{
       getCalanderData();
    },[])
-
+   const [showModal, setShowModal] = useState(false);
+   const [selectedEvent, setSelectedEvent] = useState(null);
   const localizer = momentLocalizer(moment);
   const aaaaa=[];
   data.map((leads)=>{
         console.log(leads)
         aaaaa.push({'title':leads.massage_of_calander,'start':leads.followup_date,'end':leads.followup_date})
   })
-  console.log(aaaaa)
-  const events = aaaaa;
+  
 
   const handleEventSelect = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
    
-    alert(`${event.title}`);
+    // alert(`${event.title}`);
   };
+  const closeModal = () => {
+    // Close modal
+    setShowModal(false);
+  };
+
+
+  // const CustomToolbar = ({ label, onNavigate, onView }) => (
+  //   <div>
+  //     {/* Your custom toolbar content goes here */}
+  //     <span>{label}</span>
+  //     <button onClick={() => onNavigate('PREV')}>
+  //       &lt; {/* Left arrow */}
+  //     </button>
+  //     <button onClick={() => onNavigate('NEXT')}>
+  //       &gt; {/* Right arrow */}
+  //     </button>
+  //   </div>
+  // );
 
   return (
     <div>
@@ -44,9 +65,20 @@ const MyCalendar = () => {
       events={aaaaa}
       startAccessor="start"
       endAccessor="end"
+      views={['month', 'agenda']}
       style={{ height: 400 }}
       onSelectEvent={handleEventSelect} 
+      // components={{
+      //   toolbar: CustomToolbar,
+      // }}
+      
     />
+    {showModal && (
+        <Modal
+          event={selectedEvent}
+          onClose={closeModal}
+        />
+      )}
   </div>
   );
 };

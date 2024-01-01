@@ -1,5 +1,5 @@
 import React ,{ useState } from "react";
-import {  Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 // import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
 
 import companyLogo from "./avatar5.png";
@@ -37,9 +37,18 @@ function SideNav() {
       }
 ////// Hide And Show///////
 
+const [activeItem, setActiveItem] = useState('home');
+const nevigate=useNavigate();
+// Function to handle menu item clicks
+const handleItemClick = (itemName) => {
+  nevigate(`/${itemName}`); 
+  setActiveItem(itemName);
+};
+ 
+
   return (
     <div>
-      <side className="main-sidebar sidebar-dark-primary elevationes-4">
+      <side className="main-sidebar sidebar-dark-primary bg-menu-theme elevationes-4">
         {/* Sidebar */}
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}
@@ -65,7 +74,7 @@ function SideNav() {
 
               <li className="nav-item">
                 <ul className="nav nav-treeview">
-                  <li className="nav-item">
+                  <li className="nav-item"  >
                     <Link to="/home" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       Dashboard
@@ -125,13 +134,15 @@ function SideNav() {
                   </li>
                 </ul>
               </li>
-    {  localStorage.getItem("role")==='admin'?(<>
+    {  localStorage.getItem("role")==='admin'?(<>    
           
                <li className="nav-item">
-                <Link to="/home" className="nav-link">
+                <a   className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('home')}
+               >
                   <i className="nav-icon fas fa fa-home" />
                   Dashboard
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
               <Link to="#" className="nav-link" onClick={lead}>
@@ -141,19 +152,22 @@ function SideNav() {
                 </Link>
                 <ul className="nav nav-treeview" style={{display:lead1}}>
                   <li className="nav-item">
-                  <Link to="/Addlead" className="nav-link">
+                  <a  className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('Addlead')}>
                       <p>Add Lead</p>
-                    </Link>
+                    </a>
                   </li>
                   <li className="nav-item">
-                  <Link to="/leads" className="nav-link">
+                  <a  className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('leads')}>
                       <p>All Leads</p>
-                    </Link>
+                    </a>
                   </li>
                   <li className="nav-item">
-                  <Link to="/followupleads" className="nav-link">
+                  <a   className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('followupleads')}>
                       <p> Followup Leads</p>
-                    </Link>
+                    </a>
                   </li>
                 
                 </ul>
@@ -166,25 +180,18 @@ function SideNav() {
                   <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview" style={{display:callManageshow}}>
-                  <li className="nav-item">
-                  <Link to="/ManageEmployee" className="nav-link">
-                      <p>Employees</p>
-                    </Link>
-                  </li>
                   {/* <li className="nav-item">
-                  <Link to="/Manageexcludenos" className="nav-link">
-                      <p>Exclude Phone Number</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                  <Link to="/ManageUser" className="nav-link">
-                      <p> User</p>
-                    </Link>
+                  <a  className={activeItem === 'ManageEmployee' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('ManageEmployee')}>
+                      <p>Employees</p>
+                    </a>
                   </li> */}
+                 
                   <li className="nav-item">
-                  <Link to="/employeesreport" className="nav-link">
+                  <a  className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('employeesreport')}>
                       <p> Employees Report</p>   
-                    </Link>
+                    </a>
                   </li>
                   
                 </ul>
@@ -192,71 +199,35 @@ function SideNav() {
 
 
 
-              {/* <li className="nav-item">
-                <Link to=" " className="nav-link">
-                  <i className="nav-icon far fa fa-sitemap" />
-                  ToDo List
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/Clients" className="nav-link">
-                  <i className="nav-icon far fa-list-alt" />
-                  Clients
-                </Link>
-              </li> */}
+            
 
 
               <li className="nav-item">
-                <Link to="/productservices" className="nav-link">
+                <a   className={activeItem === 'productservices' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('productservices')}>
                   <i className="nav-icon far fa-credit-card" />
                   Product & Services
-                </Link>
+                </a>
               </li>
 
              
-              {/* <li className="nav-item">
-                <Link to="#" className="nav-link" onClick={openclose}>
-                  <i className="nav-icon far fa-credit-card"  />
-                  Invoice <i className="fas fa-angle-left right" />
-                </Link>
-                <ul className="nav nav-treeview " style={{display:line}}>
-              </li>    
               
               <li className="nav-item">
-                <Link to="#" className="nav-link sub-btn">
-                  <i className="nav-icon far fa-credit-card" />
-                  Invoice <i className="fas fa-angle-left right dropdown" />
-                </Link>
-                <ul className="nav nav-treeview sub-menu">
-                  <li className="nav-item">
-                    <Link to="/Listinvoice" className="nav-link">
-                      <p> List Invoice</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/Createinvoice" className="nav-link">
-                      <p>Create Open invoice</p>
-                    </Link>
-                  </li>
-                </ul>
-              </li> */}
-              <li className="nav-item">
-                <Link to="/Report" className="nav-link">
+                <a  className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('Report')}>
                   <i className="nav-icon far fa-file" />
                   Report
-                </Link>
+                </a>
               </li>
+              
               <li className="nav-item">
-                <Link to="/Sms" className="nav-link">
-                  <i className="nav-icon far fa-envelope" />
-                  Sms
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/Setting" className="nav-link">
+                <a  
+                className={activeItem === 'Setting' ? 'nav-link active' : 'nav-link'}
+                onClick={() => handleItemClick('Setting')}
+                >
                   <i className="nav-icon far fa fa-cog" />
                   Setting
-                </Link>
+                </a>
               </li>  
 
     </>):(<>
@@ -299,11 +270,11 @@ function SideNav() {
                   <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview" style={{display:callManageshow}}>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                   <Link to="/ManageEmployee" className="nav-link">
                       <p>Employees</p>
                     </Link>
-                  </li>
+                  </li> */}
                   {/* <li className="nav-item">
                   <Link to="/Manageexcludenos" className="nav-link">
                       <p>Exclude Phone Number</p>

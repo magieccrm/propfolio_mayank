@@ -21,11 +21,11 @@ function ManageEmployee() {
           <div className="panel panel-bd lobidrag lobipanel">
             <div className="panel-heading">
               <div className="btn-group">
-                <p>Manage Employees </p>
+                <h4>Manage Employees </h4>
               </div>
                  </div>
-<div classname="panel-body">
-  <div className="panel-bodyes">
+<div classname=" ">
+<div className="panel-bodyes bg-white">
      <div className="cards">
          <div className="table-responsive mob-bord">
             <table className="table table-bordered table-hover" id="example">
@@ -37,13 +37,10 @@ function ManageEmployee() {
                   <th>Employee Code</th>
                   <th>Registered Mobile</th>
                   
-                  <th>Model Name</th>
-                  <th>App Version</th>
-                  <th>Registered Date</th>
-                  <th>Last Call Time</th>
                  
-                  <th>Status</th>
-                  <th>Call Recording </th>
+                 
+                  <th>Registered Date</th>
+                 
                   
                 </tr>
               </thead>
@@ -68,14 +65,10 @@ function ManageEmployee() {
                       <td><Link to={`/call_log_details/${agents?._id}`}>{agents?._id}</Link></td>
                       <td><Link to={`/call_log_details/${agents?._id}`}>{agents.agent_mobile}</Link></td>
                      
-                      <td>Xiaomi 2201117TI</td>
-                      <td>1.17.7</td>
-                      <td>{agents.createdAt}</td>
-                      <td></td>
-                     
-                      <td>{lllll}</td>
-                      <td>Disable</td>
                       
+                     
+                      <td>{agents.createdAt}</td>
+                    
                       
                     </tr>
                     )

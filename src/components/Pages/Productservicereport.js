@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
 
-export default function Incomereport() {
+export default function Productservicereport() {
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -45,24 +45,23 @@ export default function Incomereport() {
 
   return (
     <div>
-      <div className="content-wrapper">
-        <section className="content">
-          <div className="container pl-0">
-            <div className="row pl-0 pr-0">
-              <div className="col-12 pl-0 pr-0">
-            <div className="panel-body pt-2">
-              <div className="panel panel-bd lobidrag lobipanel">
-              <div className="panel-heading">
-                <div className="btn-group bg-white ">
-                  <h4>Income Report</h4>
-                </div>
-                
+    <div className="content-wrapper">
+      <section className="content">
+        <div className="container pl-0">
+          <div className="row pl-0 pr-0">
+            <div className="col-12 pl-0 pr-0">
+          <div className="panel-body pt-2">
+            <div className="panel panel-bd lobidrag lobipanel">
+            <div className="panel-heading">
+              <div className="btn-group bg-white ">
+                <h4>Income Report</h4>
               </div>
               
+            </div>
                 <div className="pt-3">
-                  <div className="  bg-white">
+                    <div className="bg-white">
                   <div className="col-sm-12 col-md-12 col-xs-12">
-                    <div className="cards pt-3">
+                    <div className="cards pt-2">
                       <div className="serach-lists" style={{ padding: 0 }}>
                         <form onSubmit={getEmployeeReport()}>
                           <div className="row">
@@ -217,8 +216,10 @@ export default function Incomereport() {
                     </div>
                   </div>
                 </div>
-              </div></div>
-            </div></div>
+                </div>
+              </div>
+            </div>
+          </div>
           </div></div>
         </section>
       </div>

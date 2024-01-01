@@ -10,7 +10,7 @@ function Followupleads() {
         <div className="container">
         
      
-  <div className="panel-body">
+        <div className="pt-3">
  <div className="row export-data">
 <div className="col-md-5 col-xs-12 ">
   <div className="row">
@@ -74,9 +74,9 @@ function Followupleads() {
 </div>
 
 
- <div className="card-body">
-  <div className="">
-  <AllFollowupstable/>
+<div className="pt-3">
+  <div className="container pl-0">
+     <AllFollowupstable/>
   </div>
 
 </div>
