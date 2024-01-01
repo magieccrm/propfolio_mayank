@@ -24,6 +24,11 @@ export default function Followupage() {
 
   const _id = useParams();
   // console.log(_id.id)
+  const { lead, loading } = useSelector((state) => state.lead);
+
+  const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
+
+  const [data, setdata] = useState({followup_desc:foundObject?.massage_of_calander}); 
   useEffect(() => {
     dispatch(getAllStatus());
     dispatch(getAllLead());
@@ -46,16 +51,14 @@ export default function Followupage() {
     dispatch(getStatebycountry(data));
   };
 
-  const { lead, loading } = useSelector((state) => state.lead);
-
+  
   const { Statusdata } = useSelector((state) => state.StatusData);
 
-  const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
-
-  const [data, setdata] = useState({});
+  
   const [show, setshow] = useState("none");
-  const [showforlostlead, setshowforlostlead] = useState("none");
-
+  const [showforlostlead, setshowforlostlead] = useState("none"); 
+  console.log(foundObject)
+console.log(data)
   const setStatus = (e) => {
     if (e.target.value == "6539fa950b9756b61601287b") {
       setdata(e.target.value);
@@ -104,13 +107,13 @@ export default function Followupage() {
   return (
     <div>
       <div className="content-wrapper">
-        <section className="container">
+        <section className="container pl-0">
           {loading ? (
             <Loader />
           ) : (
-            <div className="container">
-              <div className="panel-body">
-                <div className="col-sm-12">
+            
+              <div className="panel-bodyess pt-3">
+                <div className="col-sm-12 pl-0">
                   <div className="panel panel-bd lobidrag lobipanel">
                     <div className="panel-heading">
                       <div className="row">
@@ -124,7 +127,7 @@ export default function Followupage() {
                         </div>
                       </div>
                     </div>
-                    <div className="panel-body">
+                    <div className="panel-body bg-white">
                       <div className="cards">
                         <div className="card-headers lead_fallow">
                           <div className=" mob-bord">
@@ -354,6 +357,7 @@ export default function Followupage() {
                                             })
                                           }
                                           name="followup_desc"
+                                          value={data?.followup_desc}
                                           id="followup_desc"
                                           placeholder="Enter description..."
                                           required=""
@@ -1053,24 +1057,7 @@ export default function Followupage() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="col-sm-6 col-xs-12 ">
-                                    <div className="card-headeres">
-                                      <div className="col-md-12 pd-0">
-                                        <div className="address-sec">
-                                          Clinic Detail{" "}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-sm-6 col-xs-12 ">
-                                    <div className="card-headeres">
-                                      <div className="col-md-12 pd-0">
-                                        <div className="address-sec">
-                                          Test 1{" "}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                               
                                   <div className="col-md-6" />
                                   <div className="col-md-6">
                                     <div className="col-md-12">
@@ -1245,7 +1232,7 @@ export default function Followupage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              
             </div>
           )}
         </section>

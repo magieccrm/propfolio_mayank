@@ -60,25 +60,27 @@ useEffect(()=>{
     <div>
       <div className="content-wrapper">
         {/* Main content */}
-        <section className="content py-5">
+        <section className="content py-2 pt-3">
           <div className="container">
-          
-       
+          <div className="row">
+          <div className="col-12 pl-0">
+           
           <div className="panel panel-bd lobidrag lobipanel">
-            <div className="panel-heading">
-              <div className="btn-group">
-                <p>Lead Information </p>
+            <div className="bg-white">
+              <div className="btn-group lead_information  pl-2">
+                 <h5>Lead Information </h5> 
               </div>
-              <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary"  onClick={showForm}  id="add-new"> Add New</button>
-    </div>  
-<div classname="panel-body">
-  <div className="panel-body">
-    <div className="col-sm-12 col-md-12 col-xs-12">
+              <button type="button" style={{float: 'right'}} className="btn   btn-primary dt-button"  onClick={showForm}  id="add-new"> Add New</button>
+            </div>  
+            
+            <div classname="panel-bodye pt-3">
+           <div className="panel-bodyes pt-3">
+            <div className="bg-white">
       <div className="cards">
-        <div className="card-headers">
+        <div className="card-headerse bg-white">
           <div className="table-responsive mob-bord">
             <table className="table table-bordered table-hover" id="example">
-              <thead>
+              <thead className="heading_table">
                 <tr>
                   <th className="list-check">
                     S.N.
@@ -89,7 +91,7 @@ useEffect(()=>{
                   <th>Action</th>
                 </tr> 
               </thead>
-              <tbody>
+              <tbody className="datas_table">
       {
          
          ProductService.product_service?.map((ProductService1,key)=>{
@@ -109,7 +111,7 @@ useEffect(()=>{
                   >
                     <i className="fa fa-trash" />
                   </button>  </td>
-
+                  
                 </tr>
                )
      })}
@@ -118,14 +120,13 @@ useEffect(()=>{
               
               </tbody>
             </table>
-            <button type="button"   className="btn btn-sm btn-danger">Delete</button>
+           
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div className="panel-body" id="add-new-service" style={{ display: line }}>
+             </div>
+        </div>
+            <div className="panel-body" id="add-new-service" style={{ display: line }}>
   <div className="col-sm-12 col-md-8 col-xs-12">
     <div>
       <form  onSubmit={productsubmit}>
@@ -231,12 +232,14 @@ useEffect(()=>{
       </form>
     </div>
   </div>
-</div>
+            </div>
 
-</div>
+         </div>
+          </div>
            
-    </div>
-           
+       </div>
+       </div>
+       </div>  
       </section>  
       </div>
      

@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import {  Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import {  toast } from 'react-toastify';
+import Breadcrumb from "./Pages/Breadcrumb";
 
 
 function Header() {  
@@ -52,7 +53,8 @@ function Header() {
             <div className="nav-link">Dashboard</div>
           </li>
         </ul>
-        {/* Right navbar links */}
+
+       <Breadcrumb/> 
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">

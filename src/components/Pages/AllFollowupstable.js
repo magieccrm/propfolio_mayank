@@ -7,6 +7,7 @@ import DataTable from "react-data-table-component";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { toast } from "react-toastify";
 
 
 export default function AllFollowupstable() {
@@ -91,10 +92,10 @@ export default function AllFollowupstable() {
     });
     setfilterleads(result);
   }, [search]);
-
-  const columns = [
+  const isAdmin = localStorage.getItem("role") === "admin";
+  const commonColumns  = [
     {
-      name: "Full Name",
+      name: "Name",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>{row?.full_name}</a>
       ),
@@ -106,27 +107,64 @@ export default function AllFollowupstable() {
       selector: (row) => row?.contact_no,
       sortable: true,
    },
-    {  
-      name: "Agent",
-      selector: (row) => row?.agent_details[0]?.agent_name,
-      sortable: true,
-    },
+   
+   
+  //  {
+  //    name: "Agent",
+  //    selector: (row) => row?.agent_details[0]?.agent_name,
+  //    sortable: true,
+  //  },
     {
       name: "Service",
       selector: (row) => row?.service_details[0]?.product_service_name,
       sortable: true,
     },
-    {
-      name: "Lead Source",
-      selector: (row) => row?.lead_source_details[0]?.lead_source_name,
-      sortable: true,
-     },
-    {  
-     name: "Followup date",
-      selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
-      sortable: true,  
-     },
+    // {
+    //   name: "Lead Source",
+    //   selector: (row) => row?.lead_source_details[0]?.lead_source_name,
+    //   sortable: true,
+    //  },
+    
   ]; 
+
+  const adminColumns = [
+      {
+      name: "Agent",
+      selector: (row) => row?.agent_details[0]?.agent_name,
+      sortable: true,
+      },
+      {  
+      name: "Followup date",
+       selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
+       sortable: true,  
+      },
+      {
+       name: "Action",     
+        cell: (row) => (
+         <a href={`/followupleads/${row?._id}`}><button className="btn btn-success">Edit</button></a>
+       ),
+       sortable: true,
+     },
+  ];
+
+  const userColumns = [
+    
+    {  
+    name: "Followup date",
+     selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
+     sortable: true,  
+    },
+    {
+     name: "Action",     
+      cell: (row) => (
+       <a href={`/followupleads/${row?._id}`}><button className="btn btn-success">Edit</button></a>
+     ),
+     sortable: true,
+   },
+];
+  
+  const columns = isAdmin ? [...commonColumns, ...adminColumns] : [...commonColumns, ...userColumns];
+  
 
   const getdatetimeformate=(datetime)=>{
     const dateObject = new Date(datetime);
@@ -207,8 +245,44 @@ export default function AllFollowupstable() {
     link.click();
     document.body.removeChild(link);
   };
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
-
+  const handleSelectedRowsChange = ({ selectedRows }) => {
+    const selectedIds = selectedRows.map((row) => row._id);
+    setSelectedRowIds(selectedIds);
+    
+  };
+  const DeleteSelected = async () => {
+    
+    const aaaaa={ids:selectedRowIds};
+       
+    fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(aaaaa),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response from server:", data);
+      if (data?.success == true) {  
+        toast.success(data?.message);
+        setTimeout(()=>{ 
+          window.location.reload(false);
+          }, 500); 
+       } else {
+        toast.warn(data?.message);
+      }
+     })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
+  };
 
 
 
@@ -246,6 +320,11 @@ export default function AllFollowupstable() {
         <button className="btn btn-sm btn-success" onClick={exportToExcel}>
         Export Excel
       </button>
+        {
+          isAdmin?(<button className="btn btn-sm btn-danger" onClick={DeleteSelected}>
+          Delete
+        </button>):(<></>)
+        }
         <DataTable
         responsive 
         id="table-to-export"
@@ -268,6 +347,8 @@ export default function AllFollowupstable() {
           />
         }
         customStyles={customStyles} 
+        selectedRows={selectedRowIds}
+        onSelectedRowsChange={handleSelectedRowsChange}
       />
         </>
         

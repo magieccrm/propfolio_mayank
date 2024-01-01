@@ -150,15 +150,17 @@ function Setting() {
       {/* Main content */}
       <section className="content py-2 pt-3">
         <div className="container">
+        <div className="row">
+          <div className="col-12 pl-0">
           <div className="panel panel-bd lobidrag lobipanel">
             <div className="panel-heading">
               <div className="btn-group">
                 <p>Settings</p>
               </div>
             </div>
-            <div className="container ind-module">
+            <div className="container ind-module bg-white">
               <div className="row mt-50">
-                <div className="col-12 col-sm-2 mt-20">
+                <div className="col-12 col-sm-2 pl-0 mt-20">
                   <ul className="nav flex-column nav-tabs tabs-left border-lefttab destop-View">
                     <li>
                       <a
@@ -173,7 +175,7 @@ function Setting() {
                         <i className="fa wiht fa-wrench" /> General Setting
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         id="v-pills-crm-tab"
                         data-toggle="pill"
@@ -185,8 +187,8 @@ function Setting() {
                         <i className="fa wiht fa-assistive-listening-systems" />{" "}
                         System Setting
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <a
                         id="cronjob-tab"
                         data-toggle="pill"
@@ -197,7 +199,7 @@ function Setting() {
                       >
                         <i className="fa wiht fa-wrench" /> Cron Jobs
                       </a>
-                    </li>
+                    </li> */}
                     <li>
                       <a
                         id="v-pills-purchase-tab"
@@ -211,7 +213,7 @@ function Setting() {
                         <i className="fa wiht fa-cloud " /> Security Setting
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         id="v-pills-manufacturing-tab"
                         data-toggle="pill"
@@ -222,8 +224,8 @@ function Setting() {
                       >
                         <i className="fa wiht fa-cog" /> Payment
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <a
                         id="v-pills-email-tab"
                         data-toggle="pill"
@@ -234,8 +236,8 @@ function Setting() {
                       >
                         <i className="fa wiht fa-envelope" /> Email Setting
                       </a>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <a
                         id="v-pills-smssetting-tab"
                         data-toggle="pill"
@@ -246,7 +248,7 @@ function Setting() {
                       >
                         <i className="fa wiht fa-comments" /> SMS Setting
                       </a>
-                    </li>
+                    </li> */}
                     {/* <li> 
                   <a id="v-pills-invoicesetting-tab" data-toggle="pill" href="#v-pills-invoicesetting" role="tab" aria-controls="v-pills-invoicesetting" aria-selected="false"><i className="fa wiht fa-credit-card" /> Invoice Setting</a>
                   </li> */}
@@ -845,7 +847,7 @@ function Setting() {
                             <p>Last Run : 02-10-2023 10:30:02 AM</p>
                             <button
                               id="inv_cron_run"
-                              className="btn btn-primary btn-sm"
+                              className="btn btn-primary  "
                             >
                               Run Manually
                             </button>
@@ -857,7 +859,7 @@ function Setting() {
                             <p>Last Run : 02-10-2023 11:27:01 PM</p>
                             <button
                               id="task_cron_run"
-                              className="btn btn-primary btn-sm"
+                              className="btn btn-primary  "
                             >
                               Run Manually
                             </button>
@@ -871,7 +873,7 @@ function Setting() {
                             <p>Last Run : 02-10-2023 11:10:07 PM</p>
                             <button
                               id="followup_cron_run"
-                              className="btn btn-primary btn-sm"
+                              className="btn btn-primary  "
                             >
                               Run Manually
                             </button>
@@ -2173,14 +2175,14 @@ function Setting() {
                         <div className="col-12 col-xl-9 col-lg-9 col-md-9">
                           <ul className="nav nav-tabs">
                             <li className="active" data-active="#Option">
-                              <a data-toggle="tab" href="#home">
+                              {/* <a data-toggle="tab" href="#home">
                                 Option
-                              </a>
+                              </a> */}
                             </li>
                             {/* <li data-active="#custome-field"><a data-toggle="tab" href="#custome-field">Custom Field</a></li> */}
                           </ul>
                         </div>
-                        <div className="col-12 col-xl-3 col-lg-3 col-md-3">
+                        {/* <div className="col-12 col-xl-3 col-lg-3 col-md-3">
                           <div className="custome_new">
                             <a
                               href="javascript:;"
@@ -2191,7 +2193,7 @@ function Setting() {
                               Add New Custom
                             </a>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="tab-content">
                         <div id="Option" className="tab-pane  in active">
@@ -2205,19 +2207,8 @@ function Setting() {
                               <div className="cards">
                                 <form onSubmit={submitleadsource}>
                                   <div className="row">
-                                    <div className="col-md-2 pd-top">
-                                      <button
-                                        type="button"
-                                        id="addleadsource"
-                                        className="btn btn-sm btn-success form-control"
-                                      >
-                                        Add New
-                                      </button>
-                                    </div>
-                                    <div className="col-md-2 pd-top">
-                                      <label>Lead Source</label>
-                                    </div>
-                                    <div className="col-md-6">
+                                   
+                                    <div className="col-md-8">
                                       <div className="form-group">
                                         <input
                                           type="text"
@@ -2235,7 +2226,7 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-md-2">
+                                    <div className="col-md-4">
                                       <div className="resets-button">
                                         <button
                                           type="submit"
@@ -2320,11 +2311,8 @@ function Setting() {
                               <div className="cards">
                                 <form onSubmit={submitStatus}>
                                   <div className="row">
-                                    <div className="col-md-2 pd-top"></div>
-                                    <div className="col-md-2 pd-top">
-                                      <label>Status</label>
-                                    </div>
-                                    <div className="col-md-6">
+                                  
+                                    <div className="col-md-8">
                                       <div className="form-group">
                                         <input
                                           type="text"
@@ -2343,7 +2331,7 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-md-2">
+                                    <div className="col-md-4">
                                       <div className="resets-button">
                                         <button
                                           type="submit"
@@ -2436,12 +2424,8 @@ function Setting() {
                               <div className="cards">
                                 <form onSubmit={LostReasonSave}>
                                   <div className="row">
-                                    <div className="col-md-2 pd-top"></div>
-                                    <div className="col-md-2 pd-top">
-                                      <label>Lost Reason</label>
-                                    </div>
-
-                                    <div className="col-md-6">
+                                    
+                                    <div className="col-md-8">
                                       <div className="form-group">
                                         <input
                                           type="text"
@@ -2459,7 +2443,7 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-md-2">
+                                    <div className="col-md-4">
                                       <div className="resets-button">
                                         <button
                                           type="submit"
@@ -2528,7 +2512,7 @@ function Setting() {
                               </div>
                             </div>
                           </div>
-                          <div className="panel panel-bd">
+                          <div className="panel panel-bd d-none">
                             <div className="panel panel-bd ">
                               <div className="panel-heading lead_source">
                                 <div className="btn-group"> Task Status</div>
@@ -3687,6 +3671,8 @@ function Setting() {
               </div>
             </div>
           </div>
+        </div>
+        </div>
         </div>
       </section>
     </div>

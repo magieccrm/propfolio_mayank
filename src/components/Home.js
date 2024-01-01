@@ -77,71 +77,86 @@ function Home() {
           <div className="container ">
           
             <div className="row">
-              {/* <div
-                className="col-xs-6 col-sm-6 col-md-6 col-lg-3"
-                style={{ display: "none" }}
-              >
-                <div className="panel panel-bd cardbox">
-                  <div className="panel-body bd-panel">
-                    <div className="statistic-box text-center">
-                      {" "}
-                      <i className="fa fa-credit-card fa-2x" />
-                      <h4> Invoice Awaiting Payment</h4>
-                      <h3>
-                        {" "}
-                        Rs. 535920.00 (
-                        <span className="count-number"> 59 </span>){" "}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div className="panel panel-bd cardbox2">
-                  <div className="panel-body bd-panel">
-                    <div className="statistic-box text-center">
-                      {" "}
-                      <i className="fa fa-money fa-2x" />
-                      <h4>Yearly Sales</h4>
-                      <h3>
+            
+
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4 pl-0">
+              <div className="panel panel-bd cardbox2">
+              <div className="panel-body bd-panel">
+              <div className="statistic-box">
+              <div className="d-flex gap-2 align-items-center">
+              <div className="badge rounded bg-label-primary p-1"><i className="fa fa-money"></i></div>
+              <h6 className="mb-0">Yearly Sales</h6>
+            </div>
+            <h4>
                         {" "}
                         Rs.  {Sale['0']?.TotalAmountWon} (<span className="count-number"> {Sale['0']?.Yearly_lead_count_for_won} </span>){" "}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
+                      </h4>
+              <div className="progresse w-75" style={{ height: 4 }}>
+                <div
+                  className="progress-bars"
+                  role="progressbar"
+                  style={{ width: "65%" }}
+                  aria-valuenow={65}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  />
+               </div>
+          
+            </div>
+            </div>
+        </div>
               </div>
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div className="panel panel-bd cardbox3">
-                  <div className="panel-body bd-panel">
-                    <div className="statistic-box text-center">
-                      {" "}
-                      <i className="fa fa-money fa-2x" />
-                      <h4>Monthly Sales</h4>
-                      <h3>
-                        {" "}
-                        Rs. {Sale['0']?.TotalAmountwonmanthely} (<span className="count-number"> {Sale['0']?.wonleadforthirtyday_count_lead} </span>){" "}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                <div className="panel panel-bd cardbox4">
-                  <div className="panel-body bd-panel">
-                    <div className="statistic-box text-center">
-                      {" "}
-                      <i className="fa fa-frown-o fa-2x" />
-                      <h4>Miss opportunity</h4>
-                      <h3>
-                        {" "}
+        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+              <div className="panel panel-bd cardbox2">
+              <div className="panel-body bd-panel">
+              <div className="statistic-box">
+              <div className="d-flex gap-2 align-items-center">
+              <div className="badge rounded bg-label-info p-1"><i className="fa fa-money"></i></div>
+              <h6 className="mb-0">Monthly Sales</h6>
+            </div>
+                <h4 className="my-2 pt-1">  Rs. {Sale['0']?.TotalAmountwonmanthely} (<span className="count-number"> {Sale['0']?.wonleadforthirtyday_count_lead} </span>){" "}
+                   </h4>
+              <div className="progresse w-75" style={{ height: 4 }}>
+                <div
+                  className="progress-bars bg-infos"
+                  role="progressbar"
+                  style={{ width: "65%" }}
+                  aria-valuenow={65}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  />
+               </div>
+          
+            </div>
+            </div>
+           </div>
+      </div>
+      <div className="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+              <div className="panel panel-bd cardbox2">
+              <div className="panel-body bd-panel">
+              <div className="statistic-box">
+              <div className="d-flex gap-2 align-items-center">
+              <div className="badge rounded bg-label-danger p-1"><i className="fa fa-frown-o"></i></div>
+              <h6 className="mb-0">Miss opportunity</h6>
+            </div>
+                <h5 className="my-2 pt-1"> {" "}
                         Rs. {Sale['0']?.TotalAmountLost}  (
-                        <span className="count-number"> {Sale['0']?.Yearly_lead_count_Lost} </span>){" "}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                        <span className="count-number"> {Sale['0']?.Yearly_lead_count_Lost} </span>){" "}</h5>
+              <div className="progresse w-75" style={{ height: 4 }}>
+                <div
+                  className="progress-bars bg-danger"
+                  role="progressbar"
+                  style={{ width: "65%" }}
+                  aria-valuenow={65}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  />
+               </div>
+          
+            </div>
+            </div>
+           </div>
+      </div>
               {/* <div
                 className="col-xs-6 col-sm-6 col-md-6 col-lg-3"
                 style={{ display: "none" }}
@@ -186,7 +201,7 @@ function Home() {
             {/* Main row */}
 
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 pl-0">
                 <div className="panel panel-bd lobidisable lobipanel lobipanel-sortable">
                   <div className="panel-heading ui-sortable-handle">
                     <div className="panel-title">
@@ -228,11 +243,11 @@ function Home() {
             </div>
             <div className="row">
               <div
-                className="col-xs-12 col-sm-12 col-md-8 col-lg-8  lobipanel-parent-sortable ui-sortable"
+                className="col-xs-12 col-sm-12 col-md-8 col-lg-8 pl-0  lobipanel-parent-sortable ui-sortable"
                 data-lobipanel-child-inner-id="JboVwpEyCD"
               >
                 <div
-                  className="panel panel-bd lobidrag lobipanel lobipanel-sortable"
+                  className="panel panel-bd lobidrag bg-white lobipanel lobipanel-sortable"
                   data-inner-id="JboVwpEyCD"
                   data-index={0}
                 >
@@ -249,8 +264,9 @@ function Home() {
                   </div>
                 </div>
               </div>
+             
               <div className="col-xs-12 col-sm-12 col-md-4">
-                <div className="panel panel-bd ">
+                <div className="panel panel-bd bg-white">
                   <div className="panel-heading">
                     <div className="panel-title">
                       <h4>
@@ -285,8 +301,8 @@ function Home() {
               </div>
             </div>
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-4">
-                <div className="panel panel-bd ">
+              <div className="col-xs-12 col-sm-12 col-md-4 pl-0">
+                <div className="panel panel-bd bg-white">
                   <div className="panel-heading">
                     <div className="panel-title">
                       <h4>
@@ -327,7 +343,7 @@ function Home() {
                 </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div className="panel panel-bd">
+                <div className="panel panel-bd bg-white">
                   <div className="panel-heading">
                     <div className="panel-title">
                       <h4>System Information</h4>
@@ -378,7 +394,7 @@ function Home() {
                 data-lobipanel-child-inner-id="gjY82eGUtA"
               >
                 <div
-                  className="panel panel-bd lobidrag lobipanel lobipanel-sortable"
+                  className="panel panel-bd lobidrag lobipanel bg-white lobipanel-sortable"
                   data-inner-id="gjY82eGUtA"
                   data-index={0}
                 >

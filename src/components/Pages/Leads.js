@@ -77,12 +77,12 @@ function Leads() {
       <div className="content-wrapper">
       
         <section className="content">
-          <div className="container">
+          <div className="container pl-0">
           
        
-    <div className="panel-body">
+    <div className="panel-body  pr-0">
    <div className="row export-data">
-  <div className="col-md-5 col-xs-12 ">
+  <div className="col-md-5 col-xs-12 pl-1">
     <div className="row">
       <div className="col-md-4 col-sm-4 col-xs-6">
         <div className="btn-group">
@@ -154,10 +154,8 @@ function Leads() {
 </div>
 
  
-   <div className="card-body">
-    <div className="">
-
-    
+ <div className="pt-3 row pl-0">
+    <div className="col-12">
     <Allleadstable   sendDataToParent={handleChildData}  dataFromParent={none}/> 
     </div>
   
