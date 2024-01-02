@@ -1735,6 +1735,19 @@ background-color: var(--pink);
   }
 /*-------------------------Multiple step form closed--------------*/
 
+  /* styles.css (or your preferred stylesheet) */
+.custom-datatable {
+  border-collapse: collapse;
+}
+
+.custom-header-cell:nth-child(even) {
+  background-color: #f0f0f0; /* Set the background color for even-indexed header cells */
+}
+
+.custom-datatable th,
+.custom-datatable td {
+  border-right: none;
+}
 
 @media (max-width: 768px) {
   .offset-4 {

@@ -24,8 +24,8 @@ function Report() {
     </Link>
   </div>
 
-  <div className="col-md-3 col-sm-6"> 
-    <Link to="/Employeereport">
+  <div className="col-md-3 col-sm-6 d-none"> 
+    <Link to="/Employeereport d-none">
       <div className="mt-icon-box-wraper  p-a30 center m-b30 box-shadow bg-colors">
         <div className="mt-icon-box-sm inline-icon text-primary  m-b20 radius   scale-in-center bg-moving">
           <span className="icon-cell text-secondry">
@@ -42,8 +42,8 @@ function Report() {
     </Link>
   </div>
 
-  <div className="col-md-3 col-sm-6"> 
-    <Link to="/Productservicereport">
+  <div className="col-md-3 col-sm-6 d-none"> 
+    <Link to="/Productservicereport ">
       <div className="mt-icon-box-wraper  p-a30 center m-b30 box-shadow bg-colors">
         <div className="mt-icon-box-sm inline-icon text-primary  m-b20 radius   scale-in-center bg-moving">
           <span className="icon-cell text-secondry">
@@ -60,7 +60,7 @@ function Report() {
     </Link>
   </div>
 
-  <div className="col-md-3 col-sm-6"> 
+  <div className="col-md-3 col-sm-6 d-none"> 
     <Link to="/Callreport">
       <div className="mt-icon-box-wraper  p-a30 center m-b30 box-shadow bg-colors">
         <div className="mt-icon-box-sm inline-icon text-primary  m-b20 radius   scale-in-center bg-moving">

@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllLead } from "../../features/leadSlice";
+import { getAllLead,getLeadById } from "../../features/leadSlice";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { getAllCountry } from "../../features/country_stateSlice";
@@ -12,6 +12,7 @@ import { addfollowup, getAllFollowup } from "../../features/followupSlice";
 import Loader from "../Loader";
 import { toast } from "react-toastify";
 import { getAllLostReason } from "../../features/lostreasonSlice";
+import axios from "axios";
 export default function Followupage() {
   const navigate = useNavigate();
   const { agent } = useSelector((state) => state.agent);
@@ -19,25 +20,33 @@ export default function Followupage() {
   const { StateByCountry } = useSelector((state) => state.getStateByCountry);
   const { followup } = useSelector((state) => state.followup);
   const { lostreason } = useSelector(
-    (state) => state.lostreasonSlice.LostReasondata
+    (state) => state.lostreasonSlice?.LostReasondata
   );
 
-  const _id = useParams();
-  // console.log(_id.id)
+ 
+  const [localDetails, setLocalDetails] = useState({});
+ const _id = useParams();
   const { lead, loading } = useSelector((state) => state.lead);
-
   const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
-
-  const [data, setdata] = useState({followup_desc:foundObject?.massage_of_calander}); 
+   const [data, setdata] = useState({followup_desc:foundObject?.massage_of_calander}); 
+   
+  
+   const AllDetails = useSelector((state) => state.lead?.lead1?.leads?.['0']);
+ //console.log('_id',_id?.id)
+   useEffect(() => {
+     setLocalDetails(AllDetails || {});
+   }, [AllDetails]);
   useEffect(() => {
     dispatch(getAllStatus());
     dispatch(getAllLead());
     dispatch(getAllAgent());
     dispatch(getAllCountry());
     dispatch(getAllLostReason());
-
+     
     if (_id.id) {
       dispatch(getAllFollowup(_id.id));
+      dispatch(getLeadById(_id.id));
+   
     }
   }, [_id.id]);
 
@@ -51,14 +60,53 @@ export default function Followupage() {
     dispatch(getStatebycountry(data));
   };
 
+
+  const UpdateAddDetails=async(e)=>{
+    e.preventDefault();
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const responce = await axios.put(
+        `https://crm-backend-1qcz.onrender.com/api/v1/UpdateLeadByLeadId/${_id?.id}`,
+        localDetails,
+        { headers }
+      );
+      setLocalDetails(responce?.data?.lead);
+      toast.success(responce?.data?.message);
+    } catch (error) {
+      toast.warn(error?.response?.data?.message);
+    }
+    
+  }
+
+  const UpdateAdditionnalInformation=async(e)=>{
+    e.preventDefault();
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const responce = await axios.put(
+        `https://crm-backend-1qcz.onrender.com/api/v1/UpdateLeadByLeadId/${_id?.id}`,
+        localDetails,
+        { headers }
+      );
+      setLocalDetails(responce?.data?.lead);
+      toast.success(responce?.data?.message);
+    } catch (error) {
+      toast.warn(error?.response?.data?.message);
+    }
+    
+  }
+
+
   
   const { Statusdata } = useSelector((state) => state.StatusData);
 
   
   const [show, setshow] = useState("none");
   const [showforlostlead, setshowforlostlead] = useState("none"); 
-  console.log(foundObject)
-console.log(data)
+
   const setStatus = (e) => {
     if (e.target.value == "6539fa950b9756b61601287b") {
       setdata(e.target.value);
@@ -152,8 +200,7 @@ console.log(data)
                                             "user_id"
                                           )}
                                         />
-
-                                        {foundObject?.full_name}
+                                      {localDetails.full_name || ''}
                                       </div>
                                     </div>
 
@@ -162,7 +209,7 @@ console.log(data)
                                         <lable>Email Id</lable>
                                       </div>
                                       <div className="col-md-8 col-xs-8">
-                                        {foundObject?.email_id}
+                                       {localDetails.email_id || ''}
                                       </div>
                                     </div>
 
@@ -171,7 +218,8 @@ console.log(data)
                                         <lable>Contact No.</lable>
                                       </div>
                                       <div className="col-md-8 col-xs-8">
-                                        {foundObject?.contact_no}
+                                        {/* {foundObject?.contact_no} */}
+                                        {localDetails.contact_no || ''}
                                       </div>
                                     </div>
                                     <div className="row bottoms-border">
@@ -306,13 +354,13 @@ console.log(data)
                                                 <option
                                                   selected={
                                                     foundObject?.status ===
-                                                    lostreason1._id
+                                                    lostreason1?._id
                                                       ? "selected"
                                                       : ""
                                                   }
-                                                  value={lostreason1._id}
+                                                  value={lostreason1?._id}
                                                 >
-                                                  {lostreason1.lost_reason_name}
+                                                  {lostreason1?.lost_reason_name}
                                                 </option>
                                               );
                                             }
@@ -519,27 +567,18 @@ console.log(data)
                         </ul>
                         <div className="cards-tab">
                           <div className="tab-content">
-                            {/*-------------------------------------------tab2-----------------------------*/}
+                            {/*-------------------------------------------tab2 All Details-----------------------------*/}
                             <div className="tab-pane fade" id="tab3">
-                              <form
-                                action=" "
-                                name="ldform"
-                                method="post"
-                                encType="multipart/form-data"
+                              <form 
+                                 onSubmit={UpdateAddDetails}  
                               >
                                 <div className="panel-body border-tbal">
                                   <div className="row">
-                                    <input
-                                      type="hidden"
-                                      name="lead_id1"
-                                      defaultValue={3868}
-                                      autoComplete="off"
-                                    />
+                                    
                                     <div className="col-md-6 col-xs-12">
                                       <div className="row">
                                         <div className="col-md-4 col-xs-12 pd-top">
                                           <div className="form-group">
-                                            {" "}
                                             <label htmlFor="full_name">
                                               Full Name
                                             </label>
@@ -552,7 +591,8 @@ console.log(data)
                                             id="full_name"
                                             placeholder="Full Name"
                                             className="form-control"
-                                            value={foundObject?.full_name}
+                                            value={localDetails.full_name || ''}
+                                         onChange={(e) => setLocalDetails({ ...localDetails, full_name: e.target.value })}
                                           />
                                         </div>
                                       </div>
@@ -571,7 +611,9 @@ console.log(data)
                                           <input
                                             type="email"
                                             name="email_id"
-                                            value={foundObject?.email_id}
+                                          //  value={foundObject?.email_id}
+                                            value={localDetails.email_id || ''}
+                                         onChange={(e) => setLocalDetails({ ...localDetails, email_id: e.target.value })}
                                             id="email_id"
                                             placeholder="Email Id"
                                             className="form-control"
@@ -593,7 +635,9 @@ console.log(data)
                                           <input
                                             type="text"
                                             name="company_name"
-                                            value={foundObject?.company_name}
+                                           // value={foundObject?.company_name}
+                                            value={localDetails.company_name || ''}
+                                         onChange={(e) => setLocalDetails({ ...localDetails, company_name: e.target.value })}
                                             id="company_name"
                                             placeholder="Company Name"
                                             className="form-control"
@@ -616,7 +660,9 @@ console.log(data)
                                           <input
                                             type="text"
                                             name="website"
-                                            value={foundObject?.website}
+                                            //value={foundObject?.website}
+                                            value={localDetails.website || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, website: e.target.value })}
                                             id="website"
                                             placeholder="Website"
                                             className="form-control"
@@ -625,7 +671,7 @@ console.log(data)
                                         </div>
                                       </div>
                                     </div>
-                                    <div className="col-md-6 col-xs-12">
+                                    <div className="col-md-6 col-xs-12 d-none">
                                       <div className="row">
                                         <div className="col-md-4 col-xs-12 pd-top">
                                           <div className="form-group">
@@ -639,7 +685,7 @@ console.log(data)
                                             name="service"
                                             id="service"
                                             className="form-control"
-                                            required
+                                            
                                           >
                                             <option value="">Select</option>
                                           </select>
@@ -650,7 +696,6 @@ console.log(data)
                                       <div className="row">
                                         <div className="col-md-4 col-xs-12 pd-top">
                                           <div className="form-group">
-                                            {" "}
                                             <label htmlFor="contact_no">
                                               Contact No
                                             </label>
@@ -660,7 +705,9 @@ console.log(data)
                                           <input
                                             type="text"
                                             name="contact_no"
-                                            value={foundObject?.contact_no}
+                                            //value={foundObject?.contact_no}
+                                            value={localDetails.contact_no || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, contact_no: e.target.value })}
                                             id="contact_no"
                                             placeholder="Contact No"
                                             className="form-control"
@@ -682,7 +729,9 @@ console.log(data)
                                           <input
                                             type="text"
                                             name="alternative_no"
-                                            value={foundObject?.alternative_no}
+                                            value={localDetails.alternative_no || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, alternative_no: e.target.value })}
+                                           // value={foundObject?.alternative_no}
                                             id="alternative_no"
                                             placeholder="Alternative No"
                                             className="form-control"
@@ -705,7 +754,9 @@ console.log(data)
                                           <input
                                             type="text"
                                             name="position"
-                                            value={foundObject?.position}
+                                            ///value={foundObject?.position}
+                                            value={localDetails.position || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, position: e.target.value })}
                                             id="position"
                                             placeholder="Position"
                                             className="form-control"
@@ -714,7 +765,7 @@ console.log(data)
                                         </div>
                                       </div>
                                     </div>
-                                    <div className="col-md-6 col-xs-12">
+                                    <div className="col-md-6 col-xs-12 d-none">
                                       <div class="row">
                                         <div className="col-md-4 col-xs-12 pd-top">
                                           <div className="form-group">
@@ -729,26 +780,12 @@ console.log(data)
                                             name="lead_source"
                                             id="lead_source"
                                             className="form-control"
-                                            value={18}
+                                          
+                                            value={localDetails.lead_source || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, lead_source: e.target.value })}
                                           >
                                             <option value="">Select</option>
-                                            <option value={15}>
-                                              Outbound call
-                                            </option>
-                                            <option value={17}>
-                                              Existing Client
-                                            </option>
-                                            <option
-                                              value={18}
-                                              selected="selected"
-                                            >
-                                              FaceBook lead
-                                            </option>
-                                            <option value={24}>Website</option>
-                                            <option value={25}>google</option>
-                                            <option value={26}>99acre</option>
-                                            <option value={27}>housing</option>
-                                            <option value={28}>Sulekha</option>
+                                                
                                           </select>
                                         </div>
                                       </div>
@@ -767,8 +804,9 @@ console.log(data)
                                           <input  
                                             type="text"
                                             name="lead_cost"
-                                            
-                                            value={foundObject?.lead_cost}
+                                            value={localDetails.lead_cost || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, lead_cost: e.target.value })}
+                                            //value={foundObject?.lead_cost}
                                             id="lead_cost"
                                             placeholder="Lead Cost"
                                             className="form-control"
@@ -798,20 +836,12 @@ console.log(data)
                                 </div>
                               </form>
                             </div>
-                            {/*-------------------------------------------tab2-----------------------------*/}
+                            {/*-------------------------------------------tab3  additionnal information-----------------------------*/}
                             <div className="tab-pane fade" id="tab4">
                               <form
-                                action=" "
-                                name="ldform"
-                                method="post"
-                                encType="multipart/form-data"
+                                onSubmit={UpdateAdditionnalInformation}  
                               >
-                                <input
-                                  type="hidden"
-                                  name="lead_id2"
-                                  defaultValue={3868}
-                                  autoComplete="off"
-                                />
+                               
                                 <div className="row">
                                   <div className="col-sm-6 col-xs-12 ">
                                     <div className="card-headeres">
@@ -832,8 +862,8 @@ console.log(data)
                                         <div className="col-md-8">
                                           <select
                                             name="country"
-                                            onChange={handleInputChange}
-                                            //  onChange={e => getStateByCountry(e.target.value)}
+                                            value={localDetails.country || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, country: e.target.value })}
                                             className="form-control"
                                             required
                                           >
@@ -867,6 +897,8 @@ console.log(data)
                                             cols={40}
                                             rows={3}
                                             id="full_address"
+                                           // value={localDetails.full_address || ''}
+                                           // onChange={(e) => setLocalDetails({ ...localDetails, full_address: e.target.value })}
                                             className="form-control"
                                             defaultValue={""}
                                           />
@@ -885,6 +917,8 @@ console.log(data)
                                               name="state"
                                               id="state"
                                               className="form-control"
+                                              value={localDetails.state || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, state: e.target.value })}
                                             >
                                               <option value="">
                                                 Select State
@@ -902,46 +936,7 @@ console.log(data)
                                           </div>
                                         </div>
                                       </div>
-                                      <div className="row">
-                                        <div className="col-md-4 pd-top">
-                                          <div className="form-group">
-                                            {" "}
-                                            <label htmlFor="city">City</label>
-                                          </div>
-                                        </div>
-                                        <div className="col-md-8">
-                                          <input
-                                            type="text"
-                                            name="city"
-                                            defaultValue=""
-                                            id="city"
-                                            placeholder="City"
-                                            className="form-control"
-                                            autoComplete="off"
-                                          />
-                                        </div>
-                                      </div>
-                                      <div className="row">
-                                        <div className="col-md-4 pd-top">
-                                          <div className="form-group">
-                                            {" "}
-                                            <label htmlFor="pincode">
-                                              Pincode
-                                            </label>
-                                          </div>
-                                        </div>
-                                        <div className="col-md-8">
-                                          <input
-                                            type="text"
-                                            name="pincode"
-                                            defaultValue=""
-                                            id="pincode"
-                                            placeholder="Pincode"
-                                            className="form-control"
-                                            autoComplete="off"
-                                          />
-                                        </div>
-                                      </div>
+                                     
                                     </div>
                                   </div>
                                   <div className="col-sm-6 col-xs-12 ">
@@ -968,13 +963,60 @@ console.log(data)
                                             name="description"
                                             cols={40}
                                             rows={3}
+                                            value={localDetails.description || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, description: e.target.value })}
                                             id="description"
                                             className="form-control"
                                             defaultValue={""}
                                           />
                                         </div>
                                       </div>
+
                                       <div className="row">
+                                        <div className="col-md-4 pd-top">
+                                          <div className="form-group">
+                                            {" "}
+                                            <label htmlFor="city">City</label>
+                                          </div>
+                                        </div>
+                                        <div className="col-md-8">
+                                          <input
+                                            type="text"
+                                            name="city"
+                                            value={localDetails.city || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, city: e.target.value })}
+                                            defaultValue=""
+                                            id="city"
+                                            placeholder="City"
+                                            className="form-control"
+                                            autoComplete="off"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="row">
+                                        <div className="col-md-4 pd-top">
+                                          <div className="form-group">
+                                            {" "}
+                                            <label htmlFor="pincode">
+                                              Pincode
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div className="col-md-8 cardese">
+                                          <input
+                                            type="text"
+                                            name="pincode"
+                                            value={localDetails.pincode || ''}
+                                            onChange={(e) => setLocalDetails({ ...localDetails, pincode: e.target.value })}
+                                            defaultValue=""
+                                            id="pincode"
+                                            placeholder="Pincode"
+                                            className="form-control"
+                                            autoComplete="off"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="row d-none">
                                         <div className="col-md-4 pd-top">
                                           <div className="form-group">
                                             <label htmlFor="assign_to_agent">
@@ -1013,7 +1055,7 @@ console.log(data)
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="row">
+                                      <div className="row d-none">
                                         <div className="col-md-4 pd-top">
                                           <div className="form-group">
                                             <label htmlFor="status">
@@ -1075,6 +1117,7 @@ console.log(data)
                                 </div>
                               </form>
                             </div>
+                              {/*-------------------------------------------tab4 att-----------------------------*/}
                             <div className="tab-pane fade" id="tab5">
                               <form
                                 id="uploadfile"
