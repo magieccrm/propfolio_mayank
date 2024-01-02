@@ -127,6 +127,23 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     // },
   ];
 
+  const getStatusBadgeClass = (statusName) => {
+    switch (statusName) {
+      case "Call Back & Hot Lead":{
+        return "bg-danger";
+      }
+        case "Meeting":{
+          return "bg-success";
+        }
+        case "Call Back":{
+          return "bg-warning text-dark";
+        }
+         
+      default:
+        return "bg-default"; // Default class for other statuses
+    }
+  };
+
   const adminColumns = [
     {
       name: "Agent",
@@ -136,6 +153,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     {
       name: "Status",
       selector: (row) => row?.status_details[0]?.status_name,
+     
       sortable: true,
     },
     {
@@ -147,9 +165,16 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       name: "Action",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
-          <button className="btn btn-success">Edit</button>
+          <button className="btn btn-success btn-sm">Edit</button>
+          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
+              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
+              row?.status_details[0]?.status_name=='Meeting'?'M':''
+              }
+      </span>
         </a>
+       
       ),
+     
       sortable: true,
     },
   ];
@@ -170,6 +195,11 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
           <button className="btn btn-success">Edit</button>
+          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
+              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
+              row?.status_details[0]?.status_name=='Meeting'?'M':''
+              }
+      </span>
         </a>
       ),
       sortable: true,
@@ -200,14 +230,32 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const customStyles = {
     cells: {
       style: {
-        border: "1px solid #ddd", // Set the cell border
+        border: "0px solid #ddd", // Set the cell border
         fontSize: "14px",
+        // background: "#f4f3fe",
       },
     },
     headCells: {
       style: {
-        border: "1px solid #111", // Set the header cell border
+        border: "0px solid #111", // Set the header cell border
         fontSize: "14px",
+        background: "#f0f0f0",
+        
+      },
+    },
+    rows: {
+      style: {
+        background: "#fdf1f1", // Set the default background color
+      },
+    },
+    highlightOnHover: {
+      style: {
+        background: "#f4f3fe", // Set the background color on hover
+      },
+    },
+    striped: {
+      style: {
+        background: "#f8f9fa", // Set the background color for striped rows
       },
     },
   };
@@ -434,18 +482,6 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
           Delete
         </button>):(<></>)
         }
-        
-     
-
-          {/* <ReactHTMLTableToExcel
-        id="test-table-xls-button"
-        className="btn btn-sm btn-info"
-        table="table-to-export"
-        filename="table"
-        sheet="Sheet 1"
-        buttonText="Export Excel"
-      /> */}
-
           <DataTable
             responsive
             id="table-to-export"
@@ -470,6 +506,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
             customStyles={customStyles}
             selectedRows={selectedRowIds}
             onSelectedRowsChange={handleSelectedRowsChange}
+            striped  
           />
         </>
       )}

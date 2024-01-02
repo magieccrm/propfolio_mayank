@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-//import { useDispatch } from "react-redux";
 import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-// import { Link } from "react-router-dom";
-// import XLSX from "xlsx";
-// import { CSVLink } from "react-csv";
 
 import jsPDF from "jspdf";
 export const AllCallLogtable = () => {
-    // const dispatch = useDispatch();
     const   _id = useParams();
     const [leads, setleads] = useState([]);
     const [search, setsearch] = useState("");

@@ -69,7 +69,7 @@ export const getLeadById=createAsyncThunk("getLeadById",async(_id,{rejectWithVal
         })
 
         const  result =await responce.json();
-        console.log(result)
+       // console.log(result)
         if(result.success===true){     
           return result;   
      }else{  
@@ -81,7 +81,7 @@ export const leadSource = createSlice({
   name: "lead",
   initialState: {
     lead: [],
-   // lead1: [],
+    lead1: [],
     loading: false,
     error: null,
     message: "",
@@ -119,18 +119,18 @@ export const leadSource = createSlice({
     /// getLeadById
 
 
-    // [getLeadById.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [getLeadById.fulfilled]: (state, action) => {
-    //   state.loading = false;
+    [getLeadById.pending]: (state) => {
+      state.loading = true;
+    },
+    [getLeadById.fulfilled]: (state, action) => {
+      state.loading = false;
 
-    //   state.lead1 = action.payload;
-    // },
-    // [getLeadById.rejected]: (state, action) => {
-    //   state.loading = false; 
-    //   state.lead1 = action.payload;
-    // },
+      state.lead1 = action.payload;
+    },
+    [getLeadById.rejected]: (state, action) => {
+      state.loading = false; 
+      state.lead1 = action.payload;
+    },
 
 
   },

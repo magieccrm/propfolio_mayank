@@ -137,7 +137,7 @@ const handleItemClick = (itemName) => {
     {  localStorage.getItem("role")==='admin'?(<>    
           
                <li className="nav-item">
-                <a   className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
+                <a href="javascript:void(0);"  className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('home')}
                >
                   <i className="nav-icon fas fa fa-home" />
@@ -152,19 +152,19 @@ const handleItemClick = (itemName) => {
                 </Link>
                 <ul className="nav nav-treeview" style={{display:lead1}}>
                   <li className="nav-item">
-                  <a  className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
+                  <a href="javascript:void(0);" className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('Addlead')}>
                       <p>Add Lead</p>
                     </a>
                   </li>
                   <li className="nav-item">
-                  <a  className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
+                  <a  href="javascript:void(0);" className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('leads')}>
                       <p>All Leads</p>
                     </a>
                   </li>
                   <li className="nav-item">
-                  <a   className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
+                  <a   href="javascript:void(0);" className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('followupleads')}>
                       <p> Followup Leads</p>
                     </a>
@@ -188,7 +188,7 @@ const handleItemClick = (itemName) => {
                   </li> */}
                  
                   <li className="nav-item">
-                  <a  className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
+                  <a   href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('employeesreport')}>
                       <p> Employees Report</p>   
                     </a>
@@ -203,7 +203,7 @@ const handleItemClick = (itemName) => {
 
 
               <li className="nav-item">
-                <a   className={activeItem === 'productservices' ? 'nav-link active' : 'nav-link'}
+                <a  href="javascript:void(0);"  className={activeItem === 'productservices' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('productservices')}>
                   <i className="nav-icon far fa-credit-card" />
                   Product & Services
@@ -213,7 +213,7 @@ const handleItemClick = (itemName) => {
              
               
               <li className="nav-item">
-                <a  className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
+                <a  href="javascript:void(0);" className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('Report')}>
                   <i className="nav-icon far fa-file" />
                   Report
@@ -221,7 +221,7 @@ const handleItemClick = (itemName) => {
               </li>
               
               <li className="nav-item">
-                <a  
+                <a  href="javascript:void(0);"
                 className={activeItem === 'Setting' ? 'nav-link active' : 'nav-link'}
                 onClick={() => handleItemClick('Setting')}
                 >
@@ -232,10 +232,13 @@ const handleItemClick = (itemName) => {
 
     </>):(<>
       <li className="nav-item">
-                <Link to="/home" className="nav-link">
+                <a   href="javascript:void(0);" className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('home')}
+                  
+                 >
                   <i className="nav-icon fas fa fa-home" />
                   Dashboard
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
               <Link to="#" className="nav-link" onClick={lead}>
@@ -245,19 +248,28 @@ const handleItemClick = (itemName) => {
                 </Link>
                 <ul className="nav nav-treeview" style={{display:lead1}}>
                   <li className="nav-item">
-                  <Link to="/Addlead" className="nav-link">
+                  <a  
+                   href="javascript:void(0);" className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
+                   onClick={() => handleItemClick('Addlead')}
+                 >
                       <p>Add Lead</p>
-                    </Link>
+                    </a>
                   </li>
                   <li className="nav-item">
-                  <Link to="/leads" className="nav-link">
+                  <a 
+                    href="javascript:void(0);" className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
+                    onClick={() => handleItemClick('leads')}
+                 >
                       <p>All Leads</p>
-                    </Link>
+                    </a>
                   </li>
                   <li className="nav-item">
-                  <Link to="/followupleads" className="nav-link">
+                  <a  
+                    href="javascript:void(0);" className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
+                    onClick={() => handleItemClick('followupleads')}
+                   >
                       <p> Followup Leads</p>
-                    </Link>
+                    </a>
                   </li>
                 
                 </ul>
@@ -287,9 +299,12 @@ const handleItemClick = (itemName) => {
                   </li> */}
 
                   <li className="nav-item">
-                  <Link to="/employeesreport" className="nav-link">
+                  <a  
+                   href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
+                   onClick={() => handleItemClick('employeesreport')}
+                  >
                       <p> Employees Report</p>   
-                    </Link>
+                    </a>
                   </li>
                   
                 </ul>
