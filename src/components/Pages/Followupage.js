@@ -25,14 +25,12 @@ export default function Followupage() {
 
  
   const [localDetails, setLocalDetails] = useState({});
- const _id = useParams();
+  const _id = useParams();
   const { lead, loading } = useSelector((state) => state.lead);
   const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
-   const [data, setdata] = useState({followup_desc:foundObject?.massage_of_calander}); 
-   
-  
-   const AllDetails = useSelector((state) => state.lead?.lead1?.leads?.['0']);
- //console.log('_id',_id?.id)
+  const AllDetails = useSelector((state) => state.lead?.lead1?.leads?.['0']);
+  const [data, setdata] = useState({followup_desc:localDetails?.massage_of_calander}); 
+  console.log('localDetails',localDetails) 
    useEffect(() => {
      setLocalDetails(AllDetails || {});
    }, [AllDetails]);
@@ -99,6 +97,26 @@ export default function Followupage() {
     
   }
 
+  // const [location, setLocation] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //    if ('geolocation' in navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //        setLocation({
+  //           latitude: position.coords.latitude,
+  //           longitude: position.coords.longitude,
+  //         });
+  //       },
+  //       (err) => {
+  //         setError(err.message);
+  //       }
+  //     );
+  //   } else {
+  //     setError('Geolocation is not supported by your browser.');
+  //   }
+  // }, []); 
 
   
   const { Statusdata } = useSelector((state) => state.StatusData);
@@ -404,8 +422,16 @@ export default function Followupage() {
                                               followup_desc: e.target.value,
                                             })
                                           }
-                                          name="followup_desc"
                                           value={data?.followup_desc}
+                                          // onChange={(e) =>
+                                          //   setLocalDetails({
+                                          //     ...localDetails,
+                                          //     followup_desc: e.target.value,
+                                          //   })
+                                          // }
+                                          name="followup_desc"
+                                        
+                                         //value={localDetails?.massage_of_calander}
                                           id="followup_desc"
                                           placeholder="Enter description..."
                                           required=""
@@ -1119,6 +1145,18 @@ export default function Followupage() {
                             </div>
                               {/*-------------------------------------------tab4 att-----------------------------*/}
                             <div className="tab-pane fade" id="tab5">
+                            {/* <div>
+      {location ? (
+        <div>
+          <p>Latitude: {location.latitude}</p>
+          <p>Longitude: {location.longitude}</p>
+        </div>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <p>Loading location...</p>
+      )}
+    </div> */}
                               <form
                                 id="uploadfile"
                                 name="uploadfile"
