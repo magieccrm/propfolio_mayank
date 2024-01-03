@@ -10,6 +10,7 @@ import { addlead } from "../../features/leadSlice";
 import { getAllAgent } from "../../features/agentSlice";
 import axios from "axios";
 
+
 export default function ImportLead() {
     const [leaddata, setleaddata] = useState({});
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -29,8 +30,17 @@ export default function ImportLead() {
     dispatch(getAllAgent());
   }, []);
 
+
+  const [file, setFile] = useState(null);
+  const [leadSource, setLeadSource] = useState('');
+  const [service, setService] = useState('');
+  const [status, setStatus] = useState('');
+  const [country, setCountry] = useState('');
+  const [assignToAgent, setAssignToAgent] = useState('');
+  const [state, setState] = useState('');
   const handleInputChange = (e) => {
-    setleaddata({ ...leaddata, country: e.target.value });
+    // setleaddata({ ...leaddata, country: e.target.value });
+    setCountry(e.target.value)
     getStateByCountry(e.target.value); 
   };  
 
@@ -38,24 +48,87 @@ export default function ImportLead() {
     dispatch(getStatebycountry(data));
   };
 
-  const [file, setFile] = useState(null);
+  
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const filesety = (e) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
   };
 
 
-const handleUpload = async (e) => {
+  const handleFileChange1 = (e) => {
+    setLeadSource(e.target.value);
+  };
+  const handleFileChange2 = (e) => {
+    setService(e.target.value);
+  };
+  const handleFileChange3 = (e) => {
+    setStatus(e.target.value);
+  };
+ 
+  const handleFileChange5 = (e) => {
+    setAssignToAgent(e.target.value);
+  };
+  const handleFileChange6 = (e) => {
+    setState(e.target.value);
+  };
+
+  
+
+
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+   if(!file){
+    return alert('File Is Required');
+   }
+   if(!leadSource){
+    return alert('lead Source Required');
+   }
+   if(!service){
+    return alert('Service Is Required');
+   }
+   if(!status){
+    return alert('Status Is Required');
+   }
+   if(!country){
+    return alert('Country Is Required');
+   }
+   if(!assignToAgent){
+    return alert('AssignToAgent Is Required');
+   }
+   if(!state){
+    return alert('State Is Required');
+   }
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('lead_source', leadSource);
+    formData.append('service', service);
+    formData.append('status', status);
+    formData.append('country', country);
+    formData.append('assign_to_agent', assignToAgent);
+    formData.append('state', state);
+  
+
+    // console.log(leadSource)
     try {
-      await axios.post('http://localhost:3001/api/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });  
-      console.log('File uploaded successfully');
+      const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/import', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      toast.success(data.message)
+      setTimeout(()=>{ 
+        window.location.reload(false);
+        }, 500); 
+      console.log('API Response:', data);
     } catch (error) {
-      console.error('Error uploading file:', error);
+
+      toast.warn(error.data.message)
+      console.error('Error:', error.message);
     }
   };
 
@@ -71,7 +144,7 @@ const handleUpload = async (e) => {
                 </div>
                 <div className="panel-body">
                   <form
-                   
+                  
                     encType="multipart/form-data"
                   >
                     <div className="col-sm-12 col-md-12 col-xs-12">
@@ -82,15 +155,15 @@ const handleUpload = async (e) => {
                               <div className="form-group">
                                 <lable className="imprt-lable">
                                   {" "}
-                                  Select File
+                                  Select File  (CSV File)
                                 </lable>
                               </div>
                             </div>
                             <div className="col-md-8">
                               <div className="form-group">
                                 <input
-                                  name="leadfile"
-                                  type="file" onChange={handleFileChange}
+                                  name="file"
+                                  type="file" onChange={filesety}
                                   className="file-set"
                                   autoComplete="off"
                                   required />
@@ -104,6 +177,7 @@ const handleUpload = async (e) => {
                                   className="form-control"
                                   name="lead_source"
                                   required 
+                                  onClick={handleFileChange1}
                                   >
                                   <option value="">Select Lead Source</option>
                                   {leadSourcedata?.leadSource?.map(
@@ -124,6 +198,7 @@ const handleUpload = async (e) => {
                                   className="form-control"
                                   name="service"
                                   required
+                                  onClick={handleFileChange2}
                                 >
                                   <option value="">Select Service</option>
                                   {ProductService?.product_service?.map(
@@ -140,7 +215,9 @@ const handleUpload = async (e) => {
                             </div>
                             <div className="col-md-6">
                               <div className="form-group">
-                                <select className="form-control" name="status" required >
+                                <select className="form-control" 
+                                 onClick={handleFileChange3}
+                                name="status" required >
                                   <option value="">Select Status</option>
                                   {Statusdata?.leadstatus?.map(
                                     (status, key) => {
@@ -174,6 +251,7 @@ const handleUpload = async (e) => {
                                 <select
                                   className="form-control"
                                   name="assign_to_agent"
+                                  onClick={handleFileChange5}
                                required >
                                   <option value="">
                                     Select Assign to agent
@@ -190,7 +268,9 @@ const handleUpload = async (e) => {
                             </div>
                             <div className="col-md-6">
                               <div className="form-group">
-                                <select className="form-control" name="state" required >
+                                <select className="form-control" 
+                                  onClick={handleFileChange6}
+                                name="state" required >
                                   <option value="">Select State</option>
                                   {StateByCountry?.state?.map((state1, key) => {
                               return (
@@ -207,7 +287,7 @@ const handleUpload = async (e) => {
                               className="col-md-6"
                               style={{ float: "right" }}
                             >
-                              <button className="btn btn-primary form-control"  onClick={handleUpload}>
+                              <button className="btn btn-primary form-control"  onClick={handleFormSubmit} >
                                 Next
                               </button>
                             </div>

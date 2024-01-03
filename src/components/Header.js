@@ -45,16 +45,17 @@ function Header() {
           </li>
           <li className="nav-item d-none d-sm-inline-block">
             <Link to="/home" className="nav-link">
-              <i class="fa fa-home" /> Home
+              <i class="fa fa-home" />
+               Home
             </Link>
           </li>
-          <li className="nav-item d-none d-sm-inline-block">
+          {/* <li className="nav-item d-none d-sm-inline-block">
             
             <div className="nav-link">Dashboard</div>
-          </li>
+          </li> */}
         </ul>
 
-       <Breadcrumb/> 
+        <Breadcrumb/> 
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">

@@ -360,6 +360,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     document.body.removeChild(link);
   };
 
+
   return (
     <div>
       <div className="row " style={{ display: dataFromParent }}>

@@ -30,6 +30,7 @@ export default function AllFollowupstable() {
       setfilterleads();
     }
   };
+  
 
   const getAllLead2 = async (assign_to_agent) => {
     try {
