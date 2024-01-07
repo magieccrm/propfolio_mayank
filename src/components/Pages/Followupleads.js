@@ -5,12 +5,9 @@ function Followupleads() {
   return (
     <div>
     <div className="content-wrapper">
-      {/* Main content */}
-      <section className="content">
+       <section className="content">
         <div className="container">
-        
-     
-        <div className="pt-3">
+         <div className="pt-3">
  <div className="row export-data">
 <div className="col-md-5 col-xs-12 ">
   <div className="row">

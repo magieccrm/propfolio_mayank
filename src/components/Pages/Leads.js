@@ -100,7 +100,9 @@ function Leads() {
       <div className="btn-group">
           <Link className="btn btnes exports" to="/import-lead"> <i className="fa fa-download" />&nbsp; Import </Link>
         </div>
+       
       </div>
+      
     </div>
   </div>
   <div className="col-md-7 col-xs-12 ">

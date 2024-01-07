@@ -305,7 +305,8 @@ export default function AllFollowupstable() {
     
   };
   const DeleteSelected = async () => {
-    
+    const confirmDelete = window.confirm('Are you sure you want to delete?');
+  if (confirmDelete) {
     const aaaaa={ids:selectedRowIds};
        
     fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
@@ -334,6 +335,11 @@ export default function AllFollowupstable() {
     .catch((error) => {
       console.error("Fetch error:", error);
     });
+    } else {
+      toast.success('Delete canceled');
+     console.log('Delete canceled');
+    }
+   
   };
 
 

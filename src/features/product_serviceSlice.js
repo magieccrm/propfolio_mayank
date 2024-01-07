@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 
+const apiBaseUrl = 'https://crm-backend1-awl0.onrender.com/api/v1';
 
 
 /////////add strtus
    export const addProductService=createAsyncThunk("addProductService",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_product_service/",{
+        const responce=await fetch(`${apiBaseUrl}/add_product_service/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",

@@ -129,16 +129,16 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
 
   const getStatusBadgeClass = (statusName) => {
     switch (statusName) {
-      case "Call Back & Hot Lead":{
+      case "Call Back & Hot Lead": {
         return "bg-danger";
       }
-        case "Meeting":{
-          return "bg-success";
-        }
-        case "Call Back":{
-          return "bg-warning text-dark";
-        }
-         
+      case "Meeting": {
+        return "bg-success";
+      }
+      case "Call Back": {
+        return "bg-warning text-dark";
+      }
+
       default:
         return "bg-default"; // Default class for other statuses
     }
@@ -153,7 +153,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     {
       name: "Status",
       selector: (row) => row?.status_details[0]?.status_name,
-     
+
       sortable: true,
     },
     {
@@ -166,15 +166,23 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
           <button className="btn btn-success btn-sm">Edit</button>
-          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
-              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
-              row?.status_details[0]?.status_name=='Meeting'?'M':''
-              }
-      </span>
+          <span
+            className={`badge ${getStatusBadgeClass(
+              row?.status_details[0]?.status_name
+            )}`}
+            style={{ marginLeft: "10px" }}
+          >
+            {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
+              ? "Hot"
+              : row?.status_details[0]?.status_name == "Call Back"
+              ? "C"
+              : row?.status_details[0]?.status_name == "Meeting"
+              ? "M"
+              : ""}
+          </span>
         </a>
-       
       ),
-     
+
       sortable: true,
     },
   ];
@@ -195,11 +203,20 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
           <button className="btn btn-success">Edit</button>
-          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
-              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
-              row?.status_details[0]?.status_name=='Meeting'?'M':''
-              }
-      </span>
+          <span
+            className={`badge ${getStatusBadgeClass(
+              row?.status_details[0]?.status_name
+            )}`}
+            style={{ marginLeft: "10px" }}
+          >
+            {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
+              ? "Hot"
+              : row?.status_details[0]?.status_name == "Call Back"
+              ? "C"
+              : row?.status_details[0]?.status_name == "Meeting"
+              ? "M"
+              : ""}
+          </span>
         </a>
       ),
       sortable: true,
@@ -240,7 +257,6 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         border: "0px solid #111", // Set the header cell border
         fontSize: "14px",
         background: "#f0f0f0",
-        
       },
     },
     rows: {
@@ -268,41 +284,48 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const [adSerch, setAdvanceSerch] = useState([]);
 
   const DeleteSelected = async () => {
-    
-    const aaaaa={ids:selectedRowIds};
-       
-    fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(aaaaa),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-    //  console.log("Response from server:", data);
-      if (data?.success == true) {  
-        toast.success(data?.message);
-        setTimeout(()=>{ 
-          window.location.reload(false);
-          }, 500); 
-       } else {
-        toast.warn(data?.message);
-      }
-     })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+
+    if (confirmDelete) {
+      const aaaaa = { ids: selectedRowIds };
+
+      fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(aaaaa),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+           if (data?.success == true) {
+            toast.success(data?.message);
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 500);
+          } else {
+            toast.warn(data?.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        });
+      console.log("Item deleted!");
+    } else {
+      toast.success("Delete canceled");
+      console.log("Delete canceled");
+    }
   };
 
   const AdvanceSerch = async (e) => {
     e.preventDefault();
     console.log(adSerch);
-    fetch("https://crm-backend-1qcz.onrender.com/api/v1/getAdvanceFillter", {
+    fetch("https://crm-backend1-awl0.onrender.com/api/v1/getAdvanceFillter", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -360,6 +383,11 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     document.body.removeChild(link);
   };
 
+  const Refresh = () => {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
+  };
 
   return (
     <div>
@@ -440,6 +468,16 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
                   </button>
                 </div>
               </div>
+              <div className="col-md-3">
+                <div className="form-group">
+                  <button
+                    onClick={Refresh}
+                    className="btn btnes btn-block btn-success form-control "
+                  >
+                    Refresh
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -469,7 +507,10 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         </table>
       ) : (
         <>
-          <button className="btn btn-sm btn-success ml-10" onClick={exportToPDF}>
+          <button
+            className="btn btn-sm btn-success ml-10"
+            onClick={exportToPDF}
+          >
             Export PDF
           </button>
 
@@ -477,12 +518,13 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
             Export Excel
           </button>
 
-        
-        {
-          isAdmin?(<button className="btn btn-sm btn-danger" onClick={DeleteSelected}>
-          Delete
-        </button>):(<></>)
-        }
+          {isAdmin ? (
+            <button className="btn btn-sm btn-danger" onClick={DeleteSelected}>
+              Delete
+            </button>
+          ) : (
+            <></>
+          )}
           <DataTable
             responsive
             id="table-to-export"
@@ -507,12 +549,10 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
             customStyles={customStyles}
             selectedRows={selectedRowIds}
             onSelectedRowsChange={handleSelectedRowsChange}
-            striped  
+            striped
           />
         </>
       )}
-
-      
     </div>
   );
 };

@@ -53,7 +53,7 @@ useEffect(()=>{
    } 
    /// add form show 
 
-  
+   
 
         
   return (
@@ -86,27 +86,41 @@ useEffect(()=>{
                     S.N.
                   </th>
                   <th>Product Name</th>
-                  <th>Billing Cycle</th>
+                  {/* <th>Billing Cycle</th> */}
                   <th>Price</th>
                   <th>Action</th>
                 </tr> 
               </thead>
               <tbody className="datas_table">
       {
-         
+          
          ProductService.product_service?.map((ProductService1,key)=>{
+
+          const handleDelete = () => {
+            const confirmDelete = window.confirm('Are you sure you want to delete this product/service?');
+            
+            if (confirmDelete) {
+              // Dispatch the deleteProductService action with the product/service ID
+              dispatch(deleteProductService(ProductService1?._id));
+              toast.success('Delete Successfully');
+            } else {
+              toast.success('Delete Canceled');
+              console.log('Delete canceled');
+            }
+          };
                return(
 <tr>
                   <td className="list-check">
                    {key+1}</td> 
                   <td>{ProductService1?.product_service_name}</td>
-                  <td>{ProductService1?.billing_cycle}</td>
+                  {/* <td>{ProductService1?.billing_cycle}</td> */}
                   <td>Rs.  {ProductService1?.payment}</td> 
                   <td>
                     {/* <a href=" " className="btn btn-info btn-xs"> <i className="fa fa-pencil-square-o"></i></a> */}
                     <button
                     type="button"
-                    onClick={e=>{dispatch(deleteProductService(ProductService1._id))}}  
+                    onClick={handleDelete}
+                    // onClick={e=>{dispatch(deleteProductService(ProductService1._id))}}  
                     className="btn btn-danger btn-xs"
                   >
                     <i className="fa fa-trash" />
@@ -168,7 +182,7 @@ useEffect(()=>{
                 </div>
               </div>
               <div className="col-md-4 pd-top">
-                <lable>Payment</lable>
+                <lable>Price</lable>
               </div>
               <div className="col-md-8">
                 <div className="form-group">
@@ -183,14 +197,14 @@ useEffect(()=>{
                   />
                 </div>
               </div>
-              <div className="col-md-4 pd-top">
+              <div className="col-md-4 pd-top d-none">
                 <lable>Recurring Payment</lable>
               </div>
-              <div className="col-md-8">
+              <div className="col-md-8 d-none">
                 <div className="form-group">
                   <input
                     type="number"
-                    required
+                    // required
                     onChange={newdata} 
                     className="form-control"
                     placeholder="Recurring Payment"
@@ -199,12 +213,14 @@ useEffect(()=>{
                   />
                 </div>
               </div>
-              <div className="col-md-4 pd-top">
+              <div className="col-md-4 pd-top d-none">
                 <lable>Billing Cycle</lable>
               </div>
-              <div className="col-md-8">
+              <div className="col-md-8 d-none">
                 <div className="form-group">
-                  <select className="form-control" name="billing_cycle" onChange={newdata} required>
+                  <select className="form-control" name="billing_cycle" onChange={newdata} 
+                  // required
+                  >
                     <option value="">Billing cycle</option>
                     <option value="onetime">One Time</option>
                     <option value="monthly">Monthly</option>

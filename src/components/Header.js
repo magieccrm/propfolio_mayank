@@ -46,7 +46,7 @@ function Header() {
           <li className="nav-item d-none d-sm-inline-block">
             <Link to="/home" className="nav-link">
               <i class="fa fa-home" />
-               Home
+               {/* Home */}
             </Link>
           </li>
           {/* <li className="nav-item d-none d-sm-inline-block">
@@ -124,7 +124,7 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
+            {/* <Link
               className="nav-link"
               data-widget="control-sidebar"
               data-controlsidebar-slide="true"
@@ -132,7 +132,7 @@ function Header() {
               role="button"
             >
               <i className="fas fa-th-large" />
-            </Link>
+            </Link> */}
           </li>
         </ul>
       </nav>

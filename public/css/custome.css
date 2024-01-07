@@ -550,8 +550,8 @@ h6, .h6 {
   margin-top: -6px;
 }
 .dropdown-menu-lg {
-  max-width: 150px;
-  min-width: 150px;
+  max-width: 200px;
+  min-width: 200px;
   padding: 0;
 }
 .nav-sidebar .nav-link p{
@@ -919,7 +919,7 @@ table.dataTable thead th, table.dataTable thead td {
 }
 .btn-sm {
   padding: 5px 5px;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.5;
   border-radius: 3px;
 }
@@ -941,13 +941,17 @@ table.dataTable tbody th, table.dataTable tbody td {
 }
 .btn-xs {
   margin-left: 6px;
-  font-size: 8px;
+  font-size: 12px;
+  width: 23px;
 }
 .ind-module .col-sm-9{
   padding-right: 0px;
   padding-left: 0px;
 }
- 
+.bg-black {
+  background-color: transparent;
+  color: #000!important;
+}
 .form-control{
   width:100%
 }
@@ -1397,7 +1401,7 @@ select.list-dt:focus {
  
 .btn-sm {
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.5;
   border-radius: 3px;
 }
