@@ -154,7 +154,9 @@ export default function AllFollowupstable() {
       },
       {  
       name: "Followup date",
-       selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
+       selector: (row) => (row?.followup_date)?(row?.followup_date):(''),
+     //  + 
+      //  row?.status_details['0']?.status_name,
        sortable: true,  
       },
       {
@@ -176,7 +178,8 @@ export default function AllFollowupstable() {
     
     {  
     name: "Followup date",
-     selector: (row) => (row?.followup_date)+ row?.status_details['0']?.status_name,
+     selector: (row) => (row?.followup_date)?(row?.followup_date):(''),
+     //+ (row?.status_details['0']?.status_name),
      sortable: true,  
     },
     {

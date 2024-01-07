@@ -112,7 +112,7 @@ export default function ImportLead() {
     formData.append('state', state);
   
 
-    // console.log(leadSource)
+    console.log(leadSource)
     try {
       const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/import', {
         method: 'POST',
