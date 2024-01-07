@@ -188,7 +188,7 @@ export default function Followupage() {
     formData.append('location', JSON.stringify(location)); 
     formData.append('leadattechment', file);
   
-    console.log('formData', formData);
+    console.log('formData', file);
     
     try {
       const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/file_uplode', {
@@ -198,9 +198,9 @@ export default function Followupage() {
       console.log('API Response:', response);
       const data = await response.json();
       toast.success(data.message)
-      setTimeout(()=>{ 
-        window.location.reload(false);
-        }, 500); 
+      // setTimeout(()=>{ 
+      //   window.location.reload(false);
+      //   }, 500); 
       console.log('API Response:', data);
     } catch (error) {
 
@@ -209,6 +209,16 @@ export default function Followupage() {
     }
   };
   ////////end attechment //////
+ const datafomate=(date)=>{
+  const dateTime = new Date(date);
+
+  // Get the date and time components
+  const formattedDate = dateTime.toLocaleDateString();
+  const formattedTime = dateTime.toLocaleTimeString();
+
+  return `${formattedDate} ${formattedTime}`;
+ }
+
 
   return (
     <div>
@@ -1393,14 +1403,14 @@ export default function Followupage() {
                                                   ?.agent_name
                                               }
                                             </td>
-                                            <td>{follow?.created}</td>
+                                            <td>{   datafomate(follow?.created)}</td>
                                             <td>
                                               {
                                                 follow?.status_details[0]
                                                   ?.status_name
                                               }
                                             </td>
-                                            <td>{follow?.followup_date}</td>
+                                            <td>{datafomate(follow?.followup_date)}</td>
                                             <td>{follow?.followup_desc}</td>
                                           </tr>
                                         );

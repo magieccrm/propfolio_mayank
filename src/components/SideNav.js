@@ -176,16 +176,16 @@ const handleItemClick = (itemName) => {
               <li className="nav-item">
               <Link to="#" className="nav-link" onClick={callManage}>
                   <i className="nav-icon fas fa fa fa-cog" />
-                  Call  Manage  
+                  Call Manage  
                   <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview" style={{display:callManageshow}}>
-                  {/* <li className="nav-item">
-                  <a  className={activeItem === 'ManageEmployee' ? 'nav-link active' : 'nav-link'}
+                <li className="nav-item">
+                  <a    href="javascript:void(0);"  className={activeItem === 'ManageEmployee' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('ManageEmployee')}>
                       <p>Employees</p>
                     </a>
-                  </li> */}
+                  </li>
                  
                   <li className="nav-item">
                   <a   href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
@@ -282,11 +282,12 @@ const handleItemClick = (itemName) => {
                   <i className="fas fa-angle-left right" />
                 </Link>
                 <ul className="nav nav-treeview" style={{display:callManageshow}}>
-                  {/* <li className="nav-item">
-                  <Link to="/ManageEmployee" className="nav-link">
+                  <li className="nav-item">
+                  <a  href="javascript:void(0);" className={activeItem === 'ManageEmployee' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('ManageEmployee')}>
                       <p>Employees</p>
-                    </Link>
-                  </li> */}
+                    </a>
+                  </li> 
                   {/* <li className="nav-item">
                   <Link to="/Manageexcludenos" className="nav-link">
                       <p>Exclude Phone Number</p>

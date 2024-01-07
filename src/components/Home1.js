@@ -29,7 +29,7 @@ function Home1() {
   const getSale = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/YearlySaleApi"
+        "https://crm-backend1-awl0.onrender.com/api/v1/YearlySaleApi"
       );
       setSale(responce?.data?.details);
       

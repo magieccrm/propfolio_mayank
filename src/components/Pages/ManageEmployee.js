@@ -2,13 +2,64 @@ import React , { Fragment,useState ,useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllAgent } from "../../features/agentSlice";
 import { Link } from "react-router-dom";
+import axios from "axios";
 function ManageEmployee() {
   var {message, agent,loading}=useSelector((state)=>state.agent);
   const dispatch=useDispatch();
-  useEffect(()=>{
     
+   const [Detail,setDetail]=useState([]);
+   const getHigstNoOfCall=async()=>{
+  
+    try {
+      const responce = await axios.get(
+        `https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogById/`
+      );
+      setDetail(responce?.data?.array);
+    
+    } catch (error) {
+      console.log(error);
+      setDetail(error.responce?.data?.array);
+    }
+  
+   }
+   const [adSerch, setAdvanceSerch] = useState([]);
+  useEffect(()=>{
+
+    getHigstNoOfCall();
+   
     dispatch(getAllAgent())
  },[])  ;
+ const Refresh = () => {
+  setTimeout(() => {
+    window.location.reload(false);
+  }, 500);
+};
+
+const AdvanceSerch = async (e) => {
+  e.preventDefault();
+  console.log(adSerch);
+  fetch("https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogByDateWise/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(adSerch),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response from server:", data);
+      setDetail(data?.array);
+      
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
+};
 
   return (
     <div>
@@ -22,6 +73,60 @@ function ManageEmployee() {
             <div className="panel-heading">
               <div className="btn-group">
                 <h4>Manage Employees </h4>
+                <div className="col-md-12 advS">
+          <form onSubmit={AdvanceSerch}>
+            <div className="row">
+             <div className="col-md-3">
+                <div className="form-group">
+                  <input
+                    type="date"
+                    placeholder="Date To"
+                    className="form-control"
+                    onChange={(e) =>
+                      setAdvanceSerch({ ...adSerch, start_date: e.target.value })
+                    }
+                    name="startDate"
+                  />
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="form-group">
+                  <input
+                    type="date"
+                    placeholder="Date Till"
+                    onChange={(e) =>
+                      setAdvanceSerch({ ...adSerch, end_date: e.target.value })
+                    }
+                    className="form-control"
+                    name="endDate"
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-3">
+                <div className="form-group">
+                  <button
+                    type="submit"
+                    className="btn btnes btn-block btn-success form-control "
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="form-group">
+                  <button
+                    onClick={Refresh}
+                    className="btn btnes btn-block btn-success form-control "
+                  >
+                    Refresh
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
               </div>
                  </div>
 <div classname=" ">
@@ -31,43 +136,43 @@ function ManageEmployee() {
             <table className="table table-bordered table-hover" id="example">
               <thead>
                 <tr>
-                 
-                  <th>Sr. No.</th>
-                  <th>Operated By</th>
-                  <th>Employee Code</th>
-                  <th>Registered Mobile</th>
-                  
-                 
-                 
-                  <th>Registered Date</th>
-                 
-                  
-                </tr>
+                 <th>Sr. No.</th>
+                  <th>User</th>
+                  <th>Higstest No Of Call</th>
+                  <th>Total Duration</th>
+                   <th>Average Call Duration</th>
+                  </tr>
               </thead>
               <tbody>
                
 
                 {
-                  agent?.agent?.map((agents,key)=>{
-                
-                    if(agents.agent_status=='0'){
-                      var  lllll="Disable";
-                  }else{
-                     lllll="Enable";
-                  }
+                  Detail?.map((Details,key)=>{
+                  
+
+                  
+
+           const converttime=(ffgfgf)=>{
+            const second=ffgfgf;
+            const hours = Math.floor(second / 3600);
+               const minutes = Math.floor((second % 3600) / 60);
+               const remainingSeconds = second % 60;
+              const timeconverted= hours+'h '+minutes+'m '+remainingSeconds+'s';
+              return timeconverted;
+           }
 
                     return(
                       <tr>
                       
                       <td> {key+1}</td> 
                       
-                      <td><Link to={`/call_log_details/${agents?._id}`}>{agents?.agent_name}</Link></td>
-                      <td><Link to={`/call_log_details/${agents?._id}`}>{agents?._id}</Link></td>
-                      <td><Link to={`/call_log_details/${agents?._id}`}>{agents.agent_mobile}</Link></td>
+                      <td><Link to={`/call_log_details/${Details?.user_id}`}>{Details?.username}</Link></td>
+                      <td><Link to={`/call_log_details/${Details?.user_id}`}>{Details.HigstNoOfCall}</Link></td>
+                      <td><Link to={`/call_log_details/${Details?.user_id}`}>{converttime(Details.TotalTime)}</Link></td>
                      
                       
                      
-                      <td>{agents.createdAt}</td>
+                      <td>{converttime(Details.AvrageTime)}</td>
                     
                       
                     </tr>

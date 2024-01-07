@@ -11,8 +11,7 @@ import { getAllLeadSource } from "../features/leadSource";
 import axios from "axios";
 import MyCalendar from "../components/Pages/MonthlyCalendar"
 import Notification from "./Notification";
-
-
+ 
 function Home() {
 
   const  [Sale, setSale]=useState([]);
@@ -21,6 +20,8 @@ function Home() {
   var { agent } = useSelector((state) => state.agent);
   const {leadSourcedata} = useSelector((state)=>state.leadSource);
   const dispatch = useDispatch();
+
+
 
 
 
@@ -33,7 +34,7 @@ function Home() {
   const getSale = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/YearlySaleApi"
+        "https://crm-backend1-awl0.onrender.com/api/v1/YearlySaleApi"
       );
       setSale(responce?.data?.details);
       
@@ -66,7 +67,9 @@ function Home() {
     };
    
 
- 
+   
+
+    
 
   return (
     <div>
@@ -210,7 +213,7 @@ function Home() {
                         <div className="card-body p-0">
                           <div id="calendar">
                                <MyCalendar/>
-
+                             
                           </div>
                         </div>
                       </div>

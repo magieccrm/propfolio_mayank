@@ -16,7 +16,7 @@ function Addlead() {
   const formRef = React.useRef(null);
   const [required, setRequired] = useState({ required: true });
 
-  const [leaddata, setleaddata] = useState({});
+  const [leaddata, setleaddata] = useState({contact_no: ''});
   const { ProductService } = useSelector((state) => state.ProductService);
   const { leadSourcedata } = useSelector((state) => state.leadSource);
   const { Statusdata } = useSelector((state) => state.StatusData);
@@ -36,8 +36,33 @@ function Addlead() {
 
   //// For Show Product And Service
 
+  const handleContactNoChange = (e) => {
+    const inputValue = e.target.value;
+    
+    // Remove non-numeric characters
+    const numericValue = inputValue.replace(/\D/g, '');
+
+    // Restrict the length to 10 digits
+    const limitedValue = numericValue.slice(0, 10);
+
+    // Update state with the sanitized value
+    setleaddata({
+      ...leaddata,
+      contact_no: limitedValue,
+    });
+  };
   const submitLead = async (e) => {
     e.preventDefault();
+    const length=leaddata?.contact_no?.length;
+    const length1=leaddata?.alternative_no?.length;
+    
+    if(length<10){
+      return  toast.success("PlZ Enter 10 Digit Contact No");
+    }
+    if(length1<10 && length1>=1){
+      return  toast.success("PlZ Enter 10 Digit Alternative No");
+    }
+
     const buttonValue = e.nativeEvent.submitter.value;
    
 
@@ -93,7 +118,7 @@ function Addlead() {
             <div className="panel panel-bd lobidrag lobipanel">
               <div className="panel-heading">
                 <div className="btn-group bg-white ">
-                  <h4>Lead Information </h4>
+                  <h4>Add Lead </h4>
                 </div>
                 {/* <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome"> Add Custom Field</button> */}
               </div>
@@ -201,12 +226,14 @@ function Addlead() {
                               type="number"
                               pattern="[0-9]{10}"
                               name="contact_no"
-                              onChange={(e) =>
-                                setleaddata({
-                                  ...leaddata,
-                                  contact_no: e.target.value,
-                                })
-                              }
+                              onChange={handleContactNoChange}
+                              value={leaddata.contact_no}
+                              // onChange={(e) =>
+                              //   setleaddata({
+                              //     ...leaddata,
+                              //     contact_no: e.target.value,
+                              //   })
+                              // }
                               placeholder="Contact No"
                               className="form-control"
                               required="required"
@@ -420,6 +447,28 @@ function Addlead() {
                                   <div className="address-sec"> Address </div>
                                 </div>
 
+                                
+                                <div className="col-md-4 pd-top mobile-hids">
+                                  <label htmlFor="full_address">
+                                    Full Address{" "}
+                                  </label>
+                                </div>
+                                <div className="col-md-8 mob-left-right col-xs-12  form-group">
+                                  <textarea
+                                    name="full_address"
+                                    cols={40}
+                                    rows={3}
+                                    onChange={(e) =>
+                                      setleaddata({
+                                        ...leaddata,
+                                        full_address: e.target.value,
+                                      })
+                                    }
+                                    className="form-control"
+                                  />
+                                  <span className="text-danger ferror"> </span>{" "}
+                                </div>
+
                                 <div className="col-md-4 pd-top mobile-hids">
                                   <label htmlFor="country">Country </label>
                                 </div>
@@ -444,26 +493,7 @@ function Addlead() {
                                   </select>
                                   <span className="text-danger ferror"> </span>{" "}
                                 </div>
-                                <div className="col-md-4 pd-top mobile-hids">
-                                  <label htmlFor="full_address">
-                                    Full Address{" "}
-                                  </label>
-                                </div>
-                                <div className="col-md-8 mob-left-right col-xs-12  form-group">
-                                  <textarea
-                                    name="full_address"
-                                    cols={40}
-                                    rows={3}
-                                    onChange={(e) =>
-                                      setleaddata({
-                                        ...leaddata,
-                                        full_address: e.target.value,
-                                      })
-                                    }
-                                    className="form-control"
-                                  />
-                                  <span className="text-danger ferror"> </span>{" "}
-                                </div>
+
                                 <div className="col-md-4 pd-top mobile-hids">
                                   <label htmlFor="state">State </label>
                                 </div>
@@ -682,14 +712,14 @@ function Addlead() {
                           type="submit"
                           value="save"
                           name="save"
-                          className="btn btnes btn-sm btn-primary pull-right fontsize"
+                          className="btn btnes  btn-primary pull-right"
                         />
                         <input
                           type="submit"  
                           value="AddAnother"
                           name="AddAnother"
                           style={{ marginRight: "10px" }}
-                          className="btn btnes btn-sm btn-primary pull-right fontsize"
+                          className="btn btnes  btn-primary pull-right"
                         />
                       </div>
                     </div>

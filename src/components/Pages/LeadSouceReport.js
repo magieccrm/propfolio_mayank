@@ -11,9 +11,7 @@ import { toast } from "react-toastify";
 
 export default function LeadSouceReport() {
   const [data, setdata] = useState({
-    //   leadsource_id:'',
-    // start_date:'',
-    // end_date:''
+
   });
 
   const { leadSourcedata } = useSelector((state) => state.leadSource);

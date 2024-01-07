@@ -4,11 +4,12 @@ import {
   isRejectedWithValue,
 } from "@reduxjs/toolkit";
 
+const apiBaseUrl = 'https://crm-backend1-awl0.onrender.com/api/v1';
+
 export const addlead = createAsyncThunk(
   "addlead",
   async (data, { rejectWithValue }) => {
-    const responce = await fetch(
-      "https://crm-backend-1qcz.onrender.com/api/v1/add_lead/",
+    const responce = await fetch(`${apiBaseUrl}/add_lead/`,
       {
         method: "POST",
         headers: {
