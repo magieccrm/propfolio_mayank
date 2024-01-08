@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 /////////add strtus
    export const addStatus=createAsyncThunk("addStatus",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_lead_status/",{
+        const responce=await fetch("https://crm-backend1-awl0.onrender.com/api/v1/add_lead_status/",{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -23,6 +23,28 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
     }  
     
    });
+
+
+   ///update agent api 
+
+   export const EditStatusDetails=createAsyncThunk("EditAgentDetails",async(data,{rejectWithValue})=>{
+
+    const responce=await fetch(`https://crm-backend1-awl0.onrender.com/api/v1/update_lead_status/${data._id}`,{
+        method:"PUT",
+        headers:{     
+            "Content-Type":"application/json",
+           }, 
+           body:JSON.stringify(data)
+    })  
+    const result=await responce.json();
+    console.log(result)
+    if(result.success===true){    
+        return result;   
+   }else{  
+       return rejectWithValue(result.message); 
+   }  
+   })
+
 
    ////////get app status 
    export const getAllStatus=createAsyncThunk("getAllStatus",async(dara,{rejectWithValue})=>{
@@ -75,14 +97,30 @@ export const leadStatus=createSlice({
        },
        [addStatus.fulfilled]:(state,action) =>{
            state.loading=false;
-             
-             state.Statusdata.leadstatus.push(action.payload.leadstatus);    
-         
-       },
+            state.Statusdata.leadstatus.push(action.payload.leadstatus);    
+        },
        [addStatus.rejected]:(state,action) =>{
            state.loading=false;
            state.Statusdata=action.payload; 
        }, 
+       
+        ////update Status details 
+        [EditStatusDetails.pending]:(state)=>{
+            state.loading=true; 
+           },
+           [EditStatusDetails.fulfilled]:(state,action) =>{
+            state.loading=false;     
+           console.log(action.payload._id)
+            state.Statusdata.leadstatus=state.Statusdata.leadstatus.map((ele)=>
+                      ele._id===action.payload._id?action.payload:ele
+                    );
+          },
+         [EditStatusDetails.rejected]:(state,action) =>{
+          state.loading=false;
+            state.message=action.payload.message; 
+         }, 
+
+
        /// get Alll lead Source
        [getAllStatus.pending]:(state) =>{
         state.loading=true; 
@@ -112,8 +150,6 @@ export const leadStatus=createSlice({
       state.loading=false;
       state.Statusdata=action.payload; 
       }, 
-      
-
 
        },
 })

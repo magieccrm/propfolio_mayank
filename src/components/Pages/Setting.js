@@ -10,6 +10,7 @@ import {
   addStatus,
   getAllStatus,
   deleteStatus,
+  EditStatusDetails,
 } from "../../features/statusSlice";
 import {
   addagent,
@@ -111,13 +112,32 @@ function Setting() {
 
   const submitStatus = async (e) => {
     e.preventDefault();
-    const aaaa = await dispatch(addStatus(status));
-    console.log(aaaa);
-    if (aaaa.payload.success === true) {
-      toast.success("Status add Successfully");
-    } else {
-      toast.warn("There are some problem");
+    if (formDatastatus._id) {
+      const aaaa = await dispatch(EditStatusDetails(formDatastatus));
+      if (aaaa.payload.success === true) {
+        toast.success("Status Edit Successfully");
+        setTimeout(()=>{ 
+          window.location.reload(false);
+          }, 500); 
+      } else {
+        toast.warn("There are some problem");
+      }
+    }else{
+      const { _id, ...newstaus } = await formDatastatus;
+      const aaaa = await dispatch(addStatus(newstaus));
+      console.log(aaaa);
+      if (aaaa.payload.success === true) {
+        toast.success("Status add Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
     }
+  
+    setformDatastatus({
+      _id: "",
+    status_name: "",
+    status_name1: "",
+    });
   };
 
   const LostReasonSave = async (e) => {
@@ -2475,12 +2495,13 @@ function Setting() {
                                           <div className="form-group">
                                             <input
                                               type="text"
+                                              value={formDatastatus?.status_name}
                                               name="status_name"
                                               id="lead_source"
                                               required
                                               onChange={(e) =>
-                                                setStatus({
-                                                  ...status,
+                                                setformDatastatus({
+                                                  ...formDatastatus,
                                                   status_name: e.target.value,
                                                 })
                                               }
@@ -2494,12 +2515,12 @@ function Setting() {
                                           <div className="form-group">
                                             <input
                                               type="text"
+                                              value={formDatastatus?.status_name1}
                                               name="status_name1"
                                               id="lead_source"
-                                              required
                                               onChange={(e) =>
-                                                setStatus({
-                                                  ...status,
+                                                setformDatastatus({  
+                                                  ...formDatastatus,
                                                   status_name1: e.target.value,
                                                 })
                                               }
@@ -2508,7 +2529,7 @@ function Setting() {
                                               autoComplete="off"
                                             />
                                           </div>
-                                        </div>
+                                        </div> 
                                         <div className="col-md-4">
                                           <div className="resets-button">
                                             <button
@@ -2544,6 +2565,7 @@ function Setting() {
                                             <tr>
                                               <th>S.N.</th>
                                               <th>Status Name</th>
+                                              <th>Display Status Name</th>
                                               <th> Action</th>
                                             </tr>
                                           </thead>
@@ -2585,6 +2607,11 @@ function Setting() {
                                                     <td>
                                                       <span data-take="lMTU=">
                                                         {state.status_name}
+                                                      </span>
+                                                    </td>
+                                                    <td>
+                                                      <span data-take="lMTU=">
+                                                        {state.status_name1}
                                                       </span>
                                                     </td>
                                                     <td>
