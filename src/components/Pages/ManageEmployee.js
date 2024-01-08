@@ -9,18 +9,15 @@ function ManageEmployee() {
     
    const [Detail,setDetail]=useState([]);
    const getHigstNoOfCall=async()=>{
-  
-    try {
+   try {
       const responce = await axios.get(
         `https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogById/`
       );
       setDetail(responce?.data?.array);
-    
-    } catch (error) {
+     } catch (error) {
       console.log(error);
       setDetail(error.responce?.data?.array);
     }
-  
    }
    const [adSerch, setAdvanceSerch] = useState([]);
   useEffect(()=>{
@@ -28,7 +25,7 @@ function ManageEmployee() {
     getHigstNoOfCall();
    
     dispatch(getAllAgent())
- },[])  ;
+ },[]);
  const Refresh = () => {
   setTimeout(() => {
     window.location.reload(false);
