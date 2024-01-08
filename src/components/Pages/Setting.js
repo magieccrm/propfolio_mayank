@@ -63,6 +63,12 @@ function Setting() {
     client_access: "",
     agent_status: "",
   });
+
+  const [formDatastatus, setformDatastatus] = useState({
+    _id: "",
+    status_name: "",
+    status_name1: "",
+  });
   const agentSubmit = async (e) => {
     e.preventDefault();
 
@@ -97,6 +103,11 @@ function Setting() {
     const selectedData = agent?.agent.find((item) => item._id === _id);
     setFormData(selectedData);
   };
+  const editstatus = async (_id) => {
+    const selectedData = Statusdata?.leadstatus.find((item) => item._id === _id);
+    setformDatastatus(selectedData);
+  };
+  console.log(formDatastatus)
 
   const submitStatus = async (e) => {
     e.preventDefault();
@@ -164,6 +175,35 @@ function Setting() {
       console.log("Delete canceled");
     }
   };
+
+  const datafomate=(date)=>{
+    const dateTime = new Date(date);
+   const formattedDate = dateTime.toLocaleDateString();
+     return `${formattedDate}`;
+   }
+
+   const datafomate1=(date)=>{
+    const originalDate = new Date(date);
+     originalDate.setFullYear(originalDate.getFullYear() + 1);
+     return `${originalDate.toLocaleDateString()}`;
+   }
+
+   const Plan=(data)=>{
+    
+      if(data==10){
+        return `Basic`;
+      }
+      if(data==30){
+        return `Premium`;
+      }
+      if(data==50){
+        return `Silver`;
+      }
+      if(data==500){
+        return `Gold`;
+      }
+   }
+
 
   return (
     <div className="content-wrapper">
@@ -304,6 +344,19 @@ function Setting() {
                           <a
                             id="v-pills-loginhistory-tab"
                             data-toggle="pill"
+                            href="#subscription"
+                            role="tab"
+                            aria-controls="v-pills-loginHis"
+                            aria-selected="false"
+                          >
+                            <i className="fa fa-sign" aria-hidden="true" />
+                             Subscription
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            id="v-pills-loginhistory-tab"
+                            data-toggle="pill"
                             href="#v-pills-loginhistory"
                             role="tab"
                             aria-controls="v-pills-loginHis"
@@ -334,7 +387,7 @@ function Setting() {
                                 <div className="cardses">
                                   <div className="row pt-3">
                                     <div className="col-md-5 pd-top">
-                                      <label>Company Name</label>
+                                      <label>Company Name  </label>
                                     </div>
                                     <div className="col-md-7">
                                       <div className="form-group">
@@ -2206,8 +2259,7 @@ function Setting() {
                                                       ></input>
                                                     </td>
                                                     <td className="sorting_1">
-                                                      {" "}
-                                                      {lllll}{" "}
+                                                     {lllll}{" "}
                                                     </td>
                                                     <td>
                                                       <button
@@ -2419,7 +2471,7 @@ function Setting() {
                                   <div className="cards">
                                     <form onSubmit={submitStatus}>
                                       <div className="row">
-                                        <div className="col-md-8">
+                                        <div className="col-md-4">
                                           <div className="form-group">
                                             <input
                                               type="text"
@@ -2439,13 +2491,33 @@ function Setting() {
                                           </div>
                                         </div>
                                         <div className="col-md-4">
+                                          <div className="form-group">
+                                            <input
+                                              type="text"
+                                              name="status_name1"
+                                              id="lead_source"
+                                              required
+                                              onChange={(e) =>
+                                                setStatus({
+                                                  ...status,
+                                                  status_name1: e.target.value,
+                                                })
+                                              }
+                                              className="form-control"
+                                              placeholder="Dispalay Status"
+                                              autoComplete="off"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="col-md-4">
                                           <div className="resets-button">
                                             <button
                                               type="submit"
                                               name="submit"
                                               className="btn btn-success form-control"
                                             >
-                                              Submit
+                                                 {formDatastatus._id ? "Edit" : "Add"}
+                                              
                                             </button>
                                           </div>
                                         </div>
@@ -2463,6 +2535,7 @@ function Setting() {
                                           defaultValue="lead_source"
                                           autoComplete="off"
                                         />
+                                        
                                         <table
                                           className="table table-bordered table-hover"
                                           id="lstable"
@@ -2515,14 +2588,16 @@ function Setting() {
                                                       </span>
                                                     </td>
                                                     <td>
-                                                      {/* <button
+                                                      <button
                     type="button"
-                    onclick="editLs('MTU=');"
+                    onClick={(e) =>
+                      editstatus(state._id)
+                    }
                     className="btn btn-info btn-xs"
                   >
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
 
-                  </button> */}
+                  </button>
                                                       <button
                                                         type="button"
                                                         onClick={
@@ -3000,7 +3075,7 @@ function Setting() {
                                                     <tr data-of="Ng==">
                                                       <td>
                                                         <span data-take="fNg==">
-                                                          Company Name
+                                                          Company Name 
                                                         </span>
                                                         <input
                                                           type="hidden"
@@ -3883,6 +3958,184 @@ function Setting() {
                             </table>
                           </div>
                         </div>
+                        <div
+                          className="tab-pane"
+                          id="subscription"
+                          role="tabpanel"
+                          aria-labelledby="v-pills-account-tab"
+                        >
+                          <form
+                            action=" "
+                            method="post"
+                            name="general_setting"
+                            id="general_setting"
+                          >
+                            <div className="row">
+                              <div className="col-sm-6 col-xs-12 pd-0t">
+                                <div className="cardses">
+                                  <div className="row pt-3">
+                                    <div className="col-md-5 pd-top">
+                                      <label>Client Name </label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                          type="text"
+                                          value={hostings['0']?.name}
+                                          name="company_name"
+                                          className="form-control"
+                                          defaultValue="MAGIEC ADVERTIZEMENT"
+                                          placeholder="Company Name"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-5 pd-top">
+                                      <label>Contact No.</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                         value={hostings['0']?.mobile}
+                                          type="text"
+                                          name="contact_person"
+                                          className="form-control"
+                                          defaultValue
+                                          placeholder="Contact Person"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-5 pd-top">
+                                      <label>Plan Sign Up Date</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                         value={datafomate(hostings['0']?.createdAt)}
+                                          type="text"
+                                          name="contact_person"
+                                          className="form-control"
+                                          defaultValue
+                                          placeholder="Contact Person"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="col-md-5 pd-top">
+                                      <label>Plan Name</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                         value={Plan(hostings['0']?.Package)}
+                                          type="text"
+                                          name="contact_person"
+                                          className="form-control"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                   
+
+                                 
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-sm-6 col-xs-12 pd-0t">
+                                <div className="cardses">
+                                  <div className="row  pt-3">
+                                    <div className="col-md-5 pd-top">
+                                      <label>Domain </label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                          type="text"
+                                          disabled
+                                          value={hostings['0']?.domain}
+                                          name="company_address"
+                                          className="form-control"
+                                          placeholder="Company Address"
+                                          rows={2}
+                                          required
+                                          defaultValue={
+                                            "14B9 4th Floor Dev Nagar Karol Bagh"
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-5 pd-top">
+                                      <label>Client Email</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                          type="text"
+                                          disabled
+                                          value={hostings['0']?.email}
+                                          name="company_zip_code"
+                                          className="form-control"
+                                       
+                                          placeholder="Pincode"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-5 pd-top">
+                                      <label>Plan Expire Date</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                       value={datafomate1(datafomate(hostings['0']?.createdAt))}
+                                          type="text"
+                                          name="company_zip_code"
+                                          className="form-control"
+                                          defaultValue={110005}
+                                          placeholder="Pincode"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-md-5 pd-top">
+                                      <label>Status</label>
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="form-group">
+                                        <input
+                                        disabled
+                                       value={hostings['0']?.states}
+                                          type="text"
+                                          name="company_zip_code"
+                                          className="form-control"
+                                          defaultValue={110005}
+                                          placeholder="Pincode"
+                                          required
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </div>
+                                   
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+
                       </div>
                     </div>
                   </div>
