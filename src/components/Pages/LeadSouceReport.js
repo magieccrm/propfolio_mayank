@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllLeadSource } from "../../features/leadSource";
 import DataTable from "react-data-table-component";
 import { toast } from "react-toastify";
+import Chart from 'react-apexcharts';
 
 export default function LeadSouceReport() {
   const [data, setdata] = useState({
@@ -41,7 +42,7 @@ export default function LeadSouceReport() {
     dispatch(getAllLeadSource());
   }, []);
   const [getLeadData, setLeadData] = useState([]);
-
+const [llll,setllll]=useState('block');
   const getLeadSourceData = async (e) => {
     e.preventDefault();
     const headers = {
@@ -55,6 +56,7 @@ export default function LeadSouceReport() {
       );
       setLeadData(responce?.data?.leadSource);
       toast(responce?.data?.message);
+      setllll('none')
     } catch (error) {
       setLeadData();
       toast(error?.response?.data?.message);
@@ -78,6 +80,29 @@ export default function LeadSouceReport() {
       sortable: true,
     },
   ];
+  const [leadsource , setleadsource]=useState([]);
+  const [leadsourcedata1 , setleadsourcedata]=useState([]);
+  const getAllLeadSourceOverview=async ()=>{
+    try {
+      const responce = await axios.get(
+        "https://crm-backend-1qcz.onrender.com/api/v1/lead_source_overview_api"
+      );
+      setleadsourcedata(responce?.data?.Lead_source_count);
+      setleadsource(responce?.data?.Lead_source_name);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+      getAllLeadSourceOverview()
+    },[]);
+      
+    const options = {
+      labels: leadsource,
+    };
+   
+
 
   return (
     <div>
@@ -180,8 +205,11 @@ export default function LeadSouceReport() {
                             </div>
                           </div>
                         </div>
-
-                        {/* addtable */}
+                        <div className="col-lg-6 mx-auto">
+                        <Chart  options={options} series={leadsourcedata1} type="pie"  
+                        style={{width:'500px',height:'500px', display:llll}} />  
+                        </div>
+                         {/* addtable */}
 
                         <DataTable
                           className="custom-datatable"

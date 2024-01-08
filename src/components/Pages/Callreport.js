@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
-
+import DataTable from "react-data-table-component";
 export default function Callreport() {
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
@@ -34,189 +34,236 @@ export default function Callreport() {
   };
 
   useEffect(() => {
-    dispatch(getAllProductService());
-    getAllLeadSourceOverview();
+    // dispatch(getAllProductService());
+    //  getAllLeadSourceOverview();
     dispatch(getAllAgent());
   }, []);
+  const [leads, setleads] = useState([]);
+  const [search, setsearch] = useState("");
+  const [filterleads, setfilterleads] = useState([]);
 
-  const getEmployeeReport = async () => {
-    //e.preventDefault();
+  const getEmployeeReport = async (e) => {
+    e.preventDefault();
+    console.log(search);
+    try {
+      const response = await axios.post(
+        "https://crm-backend1-awl0.onrender.com/api/v1/GetCallLogByIdAndDateRange",
+        search,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response?.data);
+      setleads(response?.data?.CallLogs);
+      setfilterleads(response?.data?.CallLogs);
+    } catch (error) {
+      console.error(error);
+      setfilterleads([]);
+    }
+  };
+  const columns = [
+    {
+      name: "Sr. No.",
+      selector: (row, index) => index + 1,
+      sortable: true,
+    },
+    {
+      name: "Client Name",
+      selector: (row) => row?.name,
+      sortable: true,
+    },
+    {
+      name: "Mobile No.",
+      selector: (row) => row?.phone_number,
+      sortable: true,
+    },
+    {
+      name: "Call Date Time",
+      selector: (row) => row?.datetime,
+      sortable: true,
+    },
+    {
+      name: "Duration",
+      selector: (row) => row?.duration,
+      sortable: true,
+    },
+    {
+      name: "Call Type",
+      selector: (row) => (row?.type !== "UNKNOWN" ? row?.type : "REJECTED"),
+      sortable: true,
+      style: (row) => ({
+        color: (row.type = "UNKNOWN"
+          ? "red"
+          : (row.type = "INCOMING"
+              ? "green"
+              : (row.type = "OUTGOING" ? "yellow" : "red"))),
+      }),
+    },
+  ];
+
+  const customStyles = {
+    cells: {
+      style: {
+        border: "0px solid #ddd", // Set the cell border
+        fontSize: "14px",
+        // background: "#f4f3fe",
+      },
+    },
+    headCells: {
+      style: {
+        border: "0px solid #111", // Set the header cell border
+        fontSize: "14px",
+        background: "#f0f0f0",
+      },
+    },
+    rows: {
+      style: {
+        background: "#fdf1f1", // Set the default background color
+      },
+    },
+    highlightOnHover: {
+      style: {
+        background: "#f4f3fe", // Set the background color on hover
+      },
+    },
+    striped: {
+      style: {
+        background: "#f8f9fa", // Set the background color for striped rows
+      },
+    },
   };
 
   return (
     <div>
-    <div className="content-wrapper">
-      <section className="content">
-      <div className="container pl-0">
-          <div className="row pl-0 pr-0">
-            <div className="col-12 pl-0 pr-0">
-          <div className="panel-body pt-2">
-            <div className="panel-headinges panel panel-bd lobidrag lobipanel">
-            <div className="custom-card-header  bg-white">
-              <h4>Income Report</h4>
-            </div>
-                <div className="pt-3">
-                <div className="bg-white">
-                  <div className="col-sm-12 col-md-12 col-xs-12">
-                    <div className="cards pt-2">
-                      <div className="serach-lists" style={{ padding: 0 }}>
-                        <form onSubmit={getEmployeeReport()}>
-                          <div className="row">
-                            <div className="col-md-4">
-                              <div className="form-group">
-                                <select className="form-control" name="product">
-                                  <option value="">Select product</option>
-
-                                  {ProductService?.product_service?.map(
-                                    (ProductService1) => {
-                                      return (
-                                        <option value={ProductService1?._id}>
-                                          {
-                                            ProductService1?.product_service_name
-                                          }
+      <div className="content-wrapper">
+        <section className="content">
+          <div className="container pl-0">
+            <div className="row pl-0 pr-0">
+              <div className="col-12 pl-0 pr-0">
+                <div className="panel-body pt-2">
+                  <div className="panel-headinges panel panel-bd lobidrag lobipanel">
+                    <div className="custom-card-header  bg-white">
+                      <h4>Income Report</h4>
+                    </div>
+                    <div className="pt-3">
+                      <div className="bg-white">
+                        <div className="col-sm-12 col-md-12 col-xs-12">
+                          <div className="cards pt-2">
+                            <div
+                              className="serach-lists"
+                              style={{ padding: 0 }}
+                            >
+                              <form onSubmit={getEmployeeReport}>
+                                <div className="row">
+                                  <div className="col-md-4">
+                                    <div className="form-group">
+                                      <select
+                                        className="form-control"
+                                        name="user_id"
+                                        required
+                                        onChange={(e) =>
+                                          setsearch({
+                                            ...search,
+                                            user_id: e.target.value,
+                                          })
+                                        }
+                                      >
+                                        <option value="">
+                                          Select Employee
                                         </option>
-                                      );
-                                    }
-                                  )}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-4">
-                              <div className="form-group">
-                                <select
-                                  className="form-control"
-                                  name="employee"
-                                >
-                                  <option value="">Select Employee</option>
 
-                                  {agent?.agent?.map((agents, key) => {
-                                    return (
-                                      <option value={agents._id}>
-                                        {agents.agent_name}
-                                      </option>
-                                    );
-                                  })}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-3">
-                              <div className="form-group">
-                                <input
-                                  name="start_date"
-                                  placeholder="Choose Date From"
-                                  type="date"
-                                  className="form-control"
-                                  autoComplete="off"
-                                  defaultValue=""
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-3">
-                              <div className="form-group">
-                                <input
-                                  name="end_date"
-                                  placeholder="Choose Date To"
-                                  type="date"
-                                  className="form-control"
-                                  autoComplete="off"
-                                  defaultValue=""
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-2 col-sm-12">
-                              <div className="form-group">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success form-control"
-                                >
-                                  Submit
-                                </button>
-                              </div>
+                                        {agent?.agent?.map((agents, key) => {
+                                          return (
+                                            <option value={agents._id}>
+                                              {agents.agent_name}
+                                            </option>
+                                          );
+                                        })}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <div className="form-group">
+                                      <input
+                                        name="startDate"
+                                        onChange={(e) =>
+                                          setsearch({
+                                            ...search,
+                                            startDate: e.target.value,
+                                          })
+                                        }
+                                        placeholder="Choose Date From"
+                                        type="date"
+                                        className="form-control"
+                                        autoComplete="off"
+                                        defaultValue=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <div className="form-group">
+                                      <input
+                                        name="endDate"
+                                        onChange={(e) =>
+                                          setsearch({
+                                            ...search,
+                                            endDate: e.target.value,
+                                          })
+                                        }
+                                        placeholder="Choose Date To"
+                                        type="date"
+                                        className="form-control"
+                                        autoComplete="off"
+                                        defaultValue=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="col-md-2 col-sm-12">
+                                    <div className="form-group">
+                                      <button
+                                        type="submit"
+                                        className="btn btn-success form-control"
+                                      >
+                                        Submit
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
                             </div>
                           </div>
-                        </form>
+                        </div>
+                        <div className="row">
+                          <div className="col-12"></div>
+                        </div>
+                        <div className="card-headers">
+                          <div className="table-responsive mob-bord">
+                            <DataTable
+                              responsive
+                              id="table-to-export"
+                              columns={columns}
+                              data={filterleads}
+                              pagination
+                              fixedHeader
+                              fixedHeaderScrollHeight="550px"
+                              //selectableRows
+                              selectableRowsHighlight
+                              highlightOnHover
+                              subHeader
+                              customStyles={customStyles}
+                              striped
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-12">
-                      <LineChart1 />
-                    </div>
-                  </div>
-                  <div className="card-headers">
-                    <div className="table-responsive mob-bord">
-                      <table
-                        className="table table-bordered table-hover"
-                        id="irtable"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Month</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Jan</td>
-                            <td>Rs. {data["0"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Feb</td>
-                            <td>Rs. {data["1"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Mar</td>
-                            <td>Rs. {data["2"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Apr</td>
-                            <td>Rs. {data["3"]}</td>
-                          </tr>
-                          <tr>
-                            <td>May</td>
-                            <td>Rs. {data["4"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Jun</td>
-                            <td>Rs. {data["5"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Jul</td>
-                            <td>Rs. {data["6"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Aug</td>
-                            <td>Rs. {data["7"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Sept</td>
-                            <td>Rs. {data["8"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Oct</td>
-                            <td>Rs. {data["9"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Nov</td>
-                            <td>Rs. {data["10"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Dec</td>
-                            <td>Rs. {data["11"]}</td>
-                          </tr>
-                          <tr style={{ background: "#000", color: "#fff" }}>
-                            <td>Total</td>
-                            <td>Rs. {total}</td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          </div></div>
           </div>
         </section>
       </div>

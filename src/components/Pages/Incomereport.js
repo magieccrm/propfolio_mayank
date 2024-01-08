@@ -65,7 +65,7 @@ export default function Incomereport() {
                     <div className="cards pt-3">
                       <div className="serach-lists" style={{ padding: 0 }}>
                         <form onSubmit={getEmployeeReport()}>
-                          <div className="row d-none">
+                          <div className="row">
                             <div className="col-md-4">
                               <div className="form-group">
                                 <select className="form-control" name="product">

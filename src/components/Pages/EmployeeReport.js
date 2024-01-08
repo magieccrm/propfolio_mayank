@@ -314,10 +314,13 @@ export default function EmployeeReport() {
                                         Never Attended
                                       </span>
                                       <strong>
-                                        {EmployeeReport[0]?.details[0]
+                                        {(EmployeeReport[0]?.details[0]
                                           ?.totalMissCall +
                                           EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall}
+                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
+                                              ?.totalMissCall +
+                                              EmployeeReport[0]?.details[0]
+                                                ?.totalRejectedCall):0}
                                       </strong>
                                     </div>
                                     <div className="dash_inn">
@@ -326,12 +329,17 @@ export default function EmployeeReport() {
                                         Not Pickup by Client
                                       </span>
                                       <strong>
-                                        {EmployeeReport[0]?.details[0]
-                                          ?.totalIncommingCall -
-                                          EmployeeReport[0]?.details[0]
-                                            ?.totalMissCall -
-                                          EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall}
+                                        {(EmployeeReport[0]?.details[0]
+                                          ?.totalOutgoingCall -
+                                          // EmployeeReport[0]?.details[0]
+                                          //   ?.totalMissCall 
+                                            - EmployeeReport[0]?.details[0]
+                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
+                                              ?.totalOutgoingCall -
+                                              // EmployeeReport[0]?.details[0]
+                                              //   ?.totalMissCall 
+                                                - EmployeeReport[0]?.details[0]
+                                                ?.totalRejectedCall):0}
                                       </strong>
                                     </div>
                                     <div className="dash_inn">
@@ -340,12 +348,17 @@ export default function EmployeeReport() {
                                         Connected Calls{" "}
                                       </span>
                                       <strong>
-                                        {EmployeeReport[0]?.details[0]
+                                        {(EmployeeReport[0]?.details[0]
                                           ?.totalCall -
                                           EmployeeReport[0]?.details[0]
                                             ?.totalMissCall -
                                           EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall}
+                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
+                                              ?.totalCall -
+                                              EmployeeReport[0]?.details[0]
+                                                ?.totalMissCall -
+                                              EmployeeReport[0]?.details[0]
+                                                ?.totalRejectedCall):0}
                                       </strong>
                                     </div>
                                     <div className="dash_inn">

@@ -58,6 +58,15 @@ export const AllCallLogForReport = ({props}) => {
     }, [search]);
   
 
+    const converttime=(ffgfgf)=>{
+      const second=ffgfgf;
+      const hours = Math.floor(second / 3600);
+         const minutes = Math.floor((second % 3600) / 60);
+         const remainingSeconds = second % 60;
+        const timeconverted= hours+'h '+minutes+'m '+remainingSeconds+'s';
+        return timeconverted;
+     }
+
     const columns = [
       {
         name: "Sr. No.",
@@ -86,7 +95,7 @@ export const AllCallLogForReport = ({props}) => {
        },
       {
         name: "Duration",
-        selector: (row) => row?.duration,
+        selector: (row) => converttime(row?.duration),
         sortable: true,
        },
        {
