@@ -82,22 +82,22 @@ function Leads() {
        
     <div className="panel-body  pr-0">
    <div className="row export-data">
-  <div className="col-md-5 col-xs-12 pl-1">
+  <div className="col-md-5 col-xs-12 pl-1 pt-2">
     <div className="row">
       <div className="col-md-4 col-sm-4 col-xs-6">
-        <div className="btn-group">
+        <div className="btn-group btn-groupese">
           <Link className="btn btnes exports" to="/Addlead"> <i className="fa fa-plus" />&nbsp;  Add Lead </Link>
         </div>
       </div>
       <div className="col-md-4 col-sm-4 mobil-nns col-xs-4">
-      <div className="btn-group">
+      <div className="btn-group btn-groupese">
           <button className="btn btnes exports" onClick={advanceserch}>
           <i class="fa fa-search" aria-hidden="true"></i>
           &nbsp;  Advance </button>
         </div>
       </div>
       <div className="col-md-4 col-sm-4 col-xs-6">
-      <div className="btn-group">
+      <div className="btn-group btn-groupese">
           <Link className="btn btnes exports" to="/import-lead"> <i className="fa fa-download" />&nbsp; Import </Link>
         </div>
        
@@ -106,7 +106,7 @@ function Leads() {
     </div>
   </div>
   <div className="col-md-7 col-xs-12 ">
-    <div className="ipades " >
+    <div className="ipades pt-2" >
       <form  onSubmit={BulkAction}>
         <div className="row">
           <div className="col-md-3 col-sm-3 col-xs-12">
@@ -143,8 +143,8 @@ function Leads() {
                                   })}
             </select>
           </div>
-          <div className="col-md-2 col-sm-2 col-xs-12">
-            <input type="submit" className="btn btnes btn-primary form-control " defaultValue="Submit"  />
+          <div className="col-md-2 col-sm-2 col-xs-12 pl-0">
+            <input type="submit" className="button-57" defaultValue="Submit"  />
           </div>
         </div>
       </form>
@@ -157,7 +157,7 @@ function Leads() {
 
  
  <div className="pt-3 row pl-0">
-    <div className="col-12">
+    <div className="col-12 pl-0">
     <Allleadstable   sendDataToParent={handleChildData}  dataFromParent={none}/> 
     </div>
   

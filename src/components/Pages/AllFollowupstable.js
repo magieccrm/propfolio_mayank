@@ -162,7 +162,7 @@ export default function AllFollowupstable() {
       {
        name: "Action",     
         cell: (row) => (
-         <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm">Edit</button>
+         <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
               {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
               row?.status_details[0]?.status_name=='Meeting'?'M':''
@@ -185,7 +185,7 @@ export default function AllFollowupstable() {
     {
      name: "Action",     
       cell: (row) => (
-       <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm">Edit</button>
+       <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
         <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
               {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
               row?.status_details[0]?.status_name=='Meeting'?'M':''
@@ -374,12 +374,12 @@ export default function AllFollowupstable() {
      </table>
       ) : (
         <>
-        <button className="btn btn-sm btn-success" onClick={exportToPDF}>Export PDF</button>
-        <button className="btn btn-sm btn-success" onClick={exportToExcel}>
+        <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
+        <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
         Export Excel
       </button>
         {
-          isAdmin?(<button className="btn btn-sm btn-danger" onClick={DeleteSelected}>
+          isAdmin?(<button className="btn shadow_btn btn-sm btn-danger" onClick={DeleteSelected}>
           Delete
         </button>):(<></>)
         }

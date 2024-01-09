@@ -116,10 +116,7 @@ function Setting() {
       const aaaa = await dispatch(EditStatusDetails(formDatastatus));
       if (aaaa.payload.success === true) {
         toast.success("Status Edit Successfully");
-        setTimeout(()=>{ 
-          window.location.reload(false);
-          }, 500); 
-      } else {
+       } else {
         toast.warn("There are some problem");
       }
     }else{
@@ -178,7 +175,7 @@ function Setting() {
 
   const handlesourceDelete = async (countryId) => {
     const confirmDelete1 = window.confirm(
-      "Are you sure you want to delete this product/service?"
+      "Are you sure you want to delete this lead source?"
     );
 
     if (confirmDelete1) {
@@ -632,7 +629,7 @@ function Setting() {
                                           type="submit"
                                           name="submit"
                                           defaultValue="Submit"
-                                          className="btn btn-success form-control"
+                                          className="button-57"
                                           autoComplete="off"
                                         />
                                       </div>
@@ -922,7 +919,7 @@ function Setting() {
                                           type="submit"
                                           name="submit"
                                           defaultValue="Submit"
-                                          className="btn btn-success form-control"
+                                          className="button-57 bg_colores "
                                           autoComplete="off"
                                         />
                                       </div>
@@ -1060,7 +1057,7 @@ function Setting() {
                                       <button
                                         type="submit"
                                         name="submit"
-                                        className="btn btn-success"
+                                        className="button-57 bg_colores "
                                       >
                                         Submit
                                       </button>
@@ -1467,7 +1464,7 @@ function Setting() {
                                           type="submit"
                                           name="submit"
                                           defaultValue="Submit"
-                                          className="btn btn-success form-control"
+                                          className="button-57 bg_colores "
                                           autoComplete="off"
                                         />
                                       </div>
@@ -1638,7 +1635,7 @@ function Setting() {
                                           type="submit"
                                           name="submit"
                                           defaultValue="Submit"
-                                          className="btn btn-success form-control"
+                                          className="button-57"
                                         >
                                           Submit
                                         </button>
@@ -1805,7 +1802,7 @@ function Setting() {
                                             type="submit"
                                             name="submit"
                                             defaultValue="Submit"
-                                            className="btn btn-success form-control"
+                                            className="button-57 bg_colores "
                                             autoComplete="off"
                                           />
                                         </div>
@@ -2173,7 +2170,7 @@ function Setting() {
                                       <div className="col-md-2">
                                         <div className="form-group">
                                           <button
-                                            className="btn btn-primary form-control"
+                                            className="button-57"
                                             type="post"
                                             id="aaction"
                                           >
@@ -2284,12 +2281,12 @@ function Setting() {
                                                     <td>
                                                       <button
                                                         type="button"
-                                                        className="btn btn-danger btn-xl"
+                                                        className="btn btn-danger btn-xl mr-2"
                                                         onClick={(e) =>
                                                           removeSite(agents._id)
                                                         }
                                                       >
-                                                        Delete
+                                                       <i class="fa fa-trash" aria-hidden="true"></i>
                                                       </button>
 
                                                       <button
@@ -2299,7 +2296,7 @@ function Setting() {
                                                           editagent(agents._id)
                                                         }
                                                       >
-                                                        Edit
+                                                      <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                                       </button>
                                                     </td>
                                                   </tr>
@@ -2384,7 +2381,7 @@ function Setting() {
                                           <div className="resets-button">
                                             <button
                                               type="submit"
-                                              className="btn btn-success form-control"
+                                              className="button-57"
                                             >
                                               Submit
                                             </button>
@@ -2535,7 +2532,7 @@ function Setting() {
                                             <button
                                               type="submit"
                                               name="submit"
-                                              className="btn btn-success form-control"
+                                              className="button-57 bg_colores "
                                             >
                                                  {formDatastatus._id ? "Edit" : "Add"}
                                               
@@ -2576,7 +2573,7 @@ function Setting() {
                                                   () => {
                                                     const confirmDelete =
                                                       window.confirm(
-                                                        "Are you sure you want to delete this product/service?"
+                                                        "Are you sure you want to delete this lead Status?"
                                                       );
 
                                                     if (confirmDelete) {
@@ -2685,7 +2682,7 @@ function Setting() {
                                             <button
                                               type="submit"
                                               name="submit"
-                                              className="btn btn-success form-control"
+                                              className="button-57"
                                             >
                                               Submit
                                             </button>
@@ -2853,7 +2850,7 @@ function Setting() {
                                             <button
                                               type="submit"
                                               name="submit"
-                                              className="btn btn-success form-control"
+                                              className="button-57"
                                               autoComplete="off"
                                               placeholder="Submit"
                                             >

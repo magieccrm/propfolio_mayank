@@ -67,14 +67,14 @@ useEffect(()=>{
            
           <div className="panel panel-bd lobidrag lobipanel">
             <div className="bg-white">
-              <div className="btn-group lead_information  pl-2">
+            <div className="btn-group lead_information  pl-2">
                  <h5>Lead Information </h5> 
               </div>
               <button type="button" style={{float: 'right'}} className="btn   btn-primary dt-button"  onClick={showForm}  id="add-new"> Add New</button>
             </div>  
             
-            <div classname="panel-bodye pt-3">
-           <div className="panel-bodyes pt-3">
+            
+           <div className="panel-bodyes ">
             <div className="bg-white">
       <div className="cards">
         <div className="card-headerse bg-white">
@@ -250,7 +250,7 @@ useEffect(()=>{
   </div>
             </div>
 
-         </div>
+         
           </div>
            
        </div>

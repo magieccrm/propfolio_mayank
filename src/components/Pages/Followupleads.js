@@ -8,26 +8,26 @@ function Followupleads() {
        <section className="content">
         <div className="container">
          <div className="pt-3">
- <div className="row export-data">
-<div className="col-md-5 col-xs-12 ">
-  <div className="row">
-    <div className="col-md-4 col-sm-4 col-xs-6">
-      <div className="btn-group">
-        <Link className="btn btnes exports" to="/Addlead"> <i className="fa fa-plus" />&nbsp;  Add Lead </Link>
-      </div>
-    </div>
-    <div className="col-md-4 col-sm-4 mobil-nns col-xs-4">
-      {/* <div className="btn-group">
-        <a className="btn btnes exports" href=" "> <i className="fa fa-download" aria-hidden="true" />&nbsp;  Import </a>
-      </div> */}
-    </div>
-    <div className="col-md-4 col-sm-4 col-xs-6">
-      {/* <div className="btn-group">
-        <a type="button" id="advS" className="btn btnes exports"><i className="fa fa-search" aria-hidden="true" />&nbsp;  Advance</a>
-      </div> */}
-    </div>
-  </div>
-</div>
+          <div className="row export-data">
+            <div className="col-md-5 col-xs-12 ">
+              <div className="row">
+                <div className="col-md-4 col-sm-4 col-xs-6">
+                  <div className="btn-group">
+                    <Link className="btn btnes exports" to="/Addlead"> <i className="fa fa-plus" />&nbsp;  Add Lead </Link>
+                  </div>
+                </div>
+                <div className="col-md-4 col-sm-4 mobil-nns col-xs-4">
+                  {/* <div className="btn-group">
+                    <a className="btn btnes exports" href=" "> <i className="fa fa-download" aria-hidden="true" />&nbsp;  Import </a>
+                  </div> */}
+                </div>
+                <div className="col-md-4 col-sm-4 col-xs-6">
+                  {/* <div className="btn-group">
+                    <a type="button" id="advS" className="btn btnes exports"><i className="fa fa-search" aria-hidden="true" />&nbsp;  Advance</a>
+                  </div> */}
+                </div>
+              </div>
+            </div>
 {/* <div className="col-md-7 col-xs-12 d-none">
   <div className="ipades " >
     <form id="bulkForm" method="POST">
@@ -68,7 +68,7 @@ function Followupleads() {
     </form>
   </div>
 </div> */}
-</div>
+         </div>
 
 
 <div className="pt-3">

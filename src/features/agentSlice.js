@@ -130,6 +130,7 @@ export const agentSource=createSlice({
         state.loading=true; 
        },
        [EditAgentDetails.fulfilled]:(state,action) =>{
+        
         state.loading=false;     
        console.log(action.payload._id)
         state.agent.agent=state.agent.agent.map((ele)=>

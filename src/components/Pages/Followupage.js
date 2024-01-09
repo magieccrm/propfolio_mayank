@@ -145,6 +145,10 @@ export default function Followupage() {
     }
   };
 
+  // useEffect(()=>{
+
+  // },[]);
+
   /////////for attechment //////
   const [file, setFile] = useState(null);
   const [filename, setfilename] = useState("");
@@ -156,10 +160,21 @@ export default function Followupage() {
     setfilename(e.target.value);
     
   };
+
+  const allowedFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
   const filesety = async(e) => {
     const selectedFile = e.target.files && e.target.files[0];
+    // if (selectedFile) {
+    //   console.log('selectedFile',selectedFile);
+    //  await setFile(selectedFile);
+    // }
     if (selectedFile) {
-     await setFile(selectedFile);
+      if (allowedFileTypes.includes(selectedFile.type)) {
+       setFile(selectedFile);
+      } else {
+       toast.error('Invalid file type');
+      }
     }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -191,7 +206,7 @@ export default function Followupage() {
     console.log('formData', file);
     
     try {
-      const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/file_uplode', {
+      const response = await fetch('http://localhost:4000/api/v1/file_uplode', {
         method: 'POST',
         body:formData
       });
@@ -201,12 +216,15 @@ export default function Followupage() {
       // setTimeout(()=>{ 
       //   window.location.reload(false);
       //   }, 500); 
-      console.log('API Response:', data);
+      //console.log('API Response:', data);
     } catch (error) {
-
-      toast.warn(error.data.message)
-      console.error('Error:', error.message);
+         toast.warn(error.data.message)
+      //console.error('Error:', error.message);
     }
+    // setFile('');
+    // setfilename('');
+    // setLocation('')
+   
   };
   ////////end attechment //////
  const datafomate=(date)=>{
@@ -1367,8 +1385,9 @@ export default function Followupage() {
                                         <th>Action</th>
                                       </tr>
                                     </thead>
+
                                     <tbody id="lead_docs"></tbody>
-                                  </table>
+                                    </table>
                                 </div>
                               </div>
                             </div>

@@ -37,7 +37,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
            body:JSON.stringify(data)
     })  
     const result=await responce.json();
-    console.log(result)
+   
     if(result.success===true){    
         return result;   
    }else{  
@@ -110,9 +110,9 @@ export const leadStatus=createSlice({
            },
            [EditStatusDetails.fulfilled]:(state,action) =>{
             state.loading=false;     
-           console.log(action.payload._id)
+           console.log('action.payload._id',action?.payload?.leadstatus1?._id)
             state.Statusdata.leadstatus=state.Statusdata.leadstatus.map((ele)=>
-                      ele._id===action.payload._id?action.payload:ele
+                      ele._id===action?.payload?.leadstatus1?._id?action.payload?.leadstatus1:ele
                     );
           },
          [EditStatusDetails.rejected]:(state,action) =>{

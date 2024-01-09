@@ -416,7 +416,9 @@ function Addlead() {
                       <div className="row"></div>
                     </div>
                     <div className="col-md-12 mob-left-right col-xs-12">
-                      <button
+                   <div className="row">
+                   <div className="col-md-12 mob-left-right col-xs-12">
+                   <button
                         type="button"
                         className="d-flex align-items-center w-100 bg-blue justify-content-between btn btn-link collapsed"
                         data-toggle="collapse"
@@ -430,7 +432,9 @@ function Addlead() {
                           <i className="fas fa-plus bg-black  fa-stack-1x fa-inverse" />
                         </span>
                       </button>
-
+                      </div>
+                   </div>
+                      
                       <div
                         id="collapseOne"
                         className="collapse"
@@ -709,14 +713,14 @@ function Addlead() {
                           type="submit"
                           value="save"
                           name="save"
-                          className="btn btnes  btn-primary pull-right"
+                          className="button-57 pull-right"
                         />
                         <input
                           type="submit"  
                           value="AddAnother"
                           name="AddAnother"
                           style={{ marginRight: "10px" }}
-                          className="btn btnes  btn-primary pull-right"
+                          className="button-57 pull-right"
                         />
                       </div>
                     </div>

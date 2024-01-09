@@ -54,9 +54,11 @@ export default function EmployeeReport() {
         <section className="content pt-4">
           <div className="container">
             <div className="custom-card">
-              <div className="btn-group bg-white ">
-                <h4>Employee Reports</h4>
+            <div className="panel-heading">
+              <div className="btn-groupes">
+                <h4>Employee Reports </h4>
               </div>
+                 </div>
               
               <div className="custom-card-body p-0">
                 <div className="date-filter-block">
