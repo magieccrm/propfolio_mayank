@@ -145,6 +145,10 @@ export default function Followupage() {
     }
   };
 
+  // useEffect(()=>{
+
+  // },[]);
+
   /////////for attechment //////
   const [file, setFile] = useState(null);
   const [filename, setfilename] = useState("");
@@ -212,12 +216,15 @@ export default function Followupage() {
       // setTimeout(()=>{ 
       //   window.location.reload(false);
       //   }, 500); 
-      console.log('API Response:', data);
+      //console.log('API Response:', data);
     } catch (error) {
-
-      toast.warn(error.data.message)
-      console.error('Error:', error.message);
+         toast.warn(error.data.message)
+      //console.error('Error:', error.message);
     }
+    // setFile('');
+    // setfilename('');
+    // setLocation('')
+   
   };
   ////////end attechment //////
  const datafomate=(date)=>{
@@ -1378,8 +1385,9 @@ export default function Followupage() {
                                         <th>Action</th>
                                       </tr>
                                     </thead>
+
                                     <tbody id="lead_docs"></tbody>
-                                  </table>
+                                    </table>
                                 </div>
                               </div>
                             </div>

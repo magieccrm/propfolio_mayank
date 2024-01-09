@@ -68,12 +68,13 @@ const AdvanceSerch = async (e) => {
        
           <div className="panel panel-bd lobidrag lobipanel">
             <div className="panel-heading">
-              <div className="btn-group">
-                <h4>Manage Employees </h4>
-                <div className="col-md-12 advS">
+              <div className="btn-groupes">
+               
+                 <div className="col-md-12 advS">
           <form onSubmit={AdvanceSerch}>
             <div className="row">
-             <div className="col-md-3">
+             <h4 className="pt_2">Manage Employees </h4>
+             <div className="col-md-2">
                 <div className="form-group">
                   <input
                     type="date"
@@ -86,7 +87,7 @@ const AdvanceSerch = async (e) => {
                   />
                 </div>
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <div className="form-group">
                   <input
                     type="date"
@@ -100,21 +101,21 @@ const AdvanceSerch = async (e) => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <div className="form-group">
                   <button
                     type="submit"
-                    className="btn btnes btn-block btn-success form-control "
+                    className="button-57 refersh_btn"
                   >
                     Submit
                   </button>
                 </div>
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <div className="form-group">
                   <button
                     onClick={Refresh}
-                    className="btn btnes btn-block btn-success form-control "
+                    className="button-57 bg_colores "
                   >
                     Refresh
                   </button>

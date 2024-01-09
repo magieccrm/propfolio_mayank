@@ -194,7 +194,7 @@ export default function Productservicereport() {
                               <div className="form-group">
                                 <button
                                   type="submit"
-                                  className="btn btn-success form-control"
+                                  className="button-57 bg_colores "
                                 >
                                   Submit
                                 </button>
@@ -204,7 +204,7 @@ export default function Productservicereport() {
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </div>   
                   <div className="row">
                   <div className="col-lg-6 mx-auto">
                         <Chart  options={options} series={leadsourcedata1} type="pie"  

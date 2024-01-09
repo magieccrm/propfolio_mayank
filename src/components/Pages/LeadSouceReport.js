@@ -194,7 +194,7 @@ const [llll,setllll]=useState('block');
                                     <div className="form-group">
                                       <button
                                         type="submit"
-                                        className="btn btn-success form-control"
+                                        className="button-57 bg_colores "
                                       >
                                         Submit
                                       </button>

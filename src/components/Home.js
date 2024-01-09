@@ -78,7 +78,60 @@ function Home() {
       
         <section className="content py-5">
           <div className="container ">
-          
+          <div className="row">
+            <div className="col-xs-6 col-sm-6 col-md-6 pl-0  dashboard-fixeds col-lg-4">
+             <div className="button-30 border-leftes mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Totale Leads</h5>
+                   <p>123456</p>
+               </div>
+             </div>
+             
+            </div>
+            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
+            
+             <div className="button-30 border-lefts mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Fresh</h5>
+                   <p>3456</p>
+               </div>
+             </div>
+              
+            </div>
+            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
+              <div className="button-30 border-lefts1 mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Totale Leads</h5>
+                   <p>123456</p>
+               </div>
+             </div>
+            </div>
+            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
+             <div className="button-30 border-lefts2 mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Totale Leads</h5>
+                   <p>123456</p>
+               </div>
+             </div>
+             </div>
+            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
+              <div className="button-30 border-lefts3 mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Totale Leads</h5>
+                   <p>123456</p>
+               </div>
+             </div>
+            </div>
+            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4">
+              <div className="button-30 border-lefts4 mb-4" role="button">
+               <div className="heading_lead py-2 pt-2"> 
+                   <h5>Totale Leads</h5>
+                   <p>123456</p>
+               </div>
+             </div>
+            </div>
+             
+              </div>
             <div className="row">
             
 
@@ -269,68 +322,175 @@ function Home() {
               </div>
              
               <div className="col-xs-12 col-sm-12 col-md-4">
-                <div className="panel panel-bd bg-white">
-                  <div className="panel-heading">
-                    <div className="panel-title">
-                      <h4>
-                        Best Employee List
-                        <form
-                          method="post"
-                          name="empForm"
-                          id="empForm"
-                          style={{ float: "right" }}
-                        >
-                          {/* <select name="duration" id="empDur" onchange="bestEmp();">
-                                <option value="month">Month</option>
-                                <option value="year">Year</option>
-                                <option value="alltime">All Time</option>
-                              </select> */}
-                        </form>
-                      </h4>
-                    </div>
+              <div className="panel panel-bd  bg-white">
+                <div className="panel-heading">
+                  <div className="panel-title   d-flex justify-content-between">
+                       <div className="card-title mb-0">
+                      <h5 className="mb-0"> Best Employee List</h5>
+                    
+                        </div>
+                        <div className="value_serve">
+                     <div className="dropdown">
+                     <button className="btn p-0" type="button" id="sourceVisits">
+                       <i className="fa fa-ellipsis-v fa-sm text-muted"></i>
+                     </button>
+                     <div className="dropdown-menu dropdown-menu-end">
+                       <a className="dropdown-item" href="javascript:void(0);">Refresh</a>
+                       <a className="dropdown-item" href="javascript:void(0);">Download</a>
+                       <a className="dropdown-item" href="javascript:void(0);">View All</a>
+                     </div>
+                   </div>
+                         </div>
                   </div>
-                  <div className="panel-body personal">
-                    <ul className="emply" id="bemplist">
-                      {agent?.agent?.map((agent1, key) => {
-                        return (
-                          <li>
-                            {key + 1}. {agent1.agent_name}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  
+
+                </div> 
+                
+                <div className="panel-body personal">
+                <div className="card-bodyes  ">
+                 <ul className="p-0 m-0">
+                 {agent?.agent?.map((agent1, key) => {
+                   return (
+                      <li className="mb-1 d-flex justify-content-between align-items-center">
+                      <div className="bg-label-success rounded">
+                      <img src="img/user_img.jpg" alt="User" className="rounded-circle me-3" width="28" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap">
+                      <h6 className="mb-0 ms-3">   {agent1.agent_name}</h6>
+                        <div className="d-flex">
+                         
+                        </div>
+                      </div>
+                      </li>
+                       
+                      
+                      );
+                    })}
+                  </ul>
+                 </div>
+                  
                 </div>
               </div>
+            </div>
+
             </div>
-            <div className="row">
+            <div className="row pt-3">
               <div className="col-xs-12 col-sm-12 col-md-4 pl-0">
                 <div className="panel panel-bd bg-white">
                   <div className="panel-heading">
-                    <div className="panel-title">
-                      <h4>
-                        Best Value Services
-                        <form
-                          method="post"
-                          name="bserviceForm"
-                          id="bserviceForm"
-                          style={{ float: "right" }}
-                        >
-                          <select
-                            name="duration"
-                            id="sDur"
-                            onchange="bestVS();"
-                          >
-                            <option value="month">Month</option>
-                            <option value="year">Year</option>
-                            <option value="alltime">All Time</option>
-                          </select>
-                        </form>
-                      </h4>
-                    </div>
+                    <div className="panel-title d-flex">
+                      <h5>Best Value Services</h5>
+                       <div className="value_serve">
+                       <div className="dropdown">
+                       <button className="btn p-0" type="button" id="sourceVisits">
+                         <i className="fa fa-ellipsis-v fa-sm text-muted"></i>
+                       </button>
+                       <div className="dropdown-menu dropdown-menu-end">
+                         <a className="dropdown-item" href="javascript:void(0);">Refresh</a>
+                         <a className="dropdown-item" href="javascript:void(0);">Download</a>
+                         <a className="dropdown-item" href="javascript:void(0);">View All</a>
+                       </div>
+                     </div>
+                        </div>
+                      </div>
+                     <ul className="p-0 m-0 pt-3">
+                          <li className="d-flex align-items-center mb-4">
+                          <div class="badge bg-label-primary me-3 rounded p-2">
+                               <i class="fa fa-wallet fa-sm"></i>
+                          </div>
+                            <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div className="me-2">
+                                <div className="d-flex align-items-center">
+                                  <h6 className="mb-0 me-1">E-Commerce</h6>
+                                </div>
+                                 
+                              </div>
+                              <div className="user-progress">
+                                <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
+                                Rs. 15000.00 
+                                  
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                          <li className="d-flex align-items-center mb-4">
+                          <div class="badge bg-label-primary me-3 rounded p-2">
+                            <i class="fa fa-wallet fa-sm"></i>
+                           </div>
+                            <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div className="me-2">
+                                <div className="d-flex align-items-center">
+                                  <h6 className="mb-0 me-1">Real-Estate</h6>
+                                </div>
+                                
+                              </div>
+                              <div className="user-progress">
+                                <p className="text-danger fw-medium mb-0 d-flex justify-content-center gap-1">
+                                 Rs. 15000.00 
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                           
+                          <li className="d-flex align-items-center mb-4">
+                          <div class="badge bg-label-primary me-3 rounded p-2">
+                             <i class="fa fa-wallet fa-sm"></i>
+                         </div>
+                            <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div className="me-2">
+                                <div className="d-flex align-items-center">
+                                  <h6 className="mb-0 me-1">WhatsApp</h6>
+                                </div>
+                                
+                              </div>
+                              <div className="user-progress">
+                                <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
+                                   Rs. 15000.00 
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                           <li className="d-flex align-items-center mb-4">
+                           <div class="badge bg-label-primary me-3 rounded p-2">
+                              <i class="fa fa-wallet fa-sm"></i>
+                          </div>
+                            <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div className="me-2">
+                                <div className="d-flex align-items-center">
+                                  <h6 className="mb-0 me-1">Web Maintenance Qtly</h6>
+                                </div>
+                                 
+                              </div>
+                              <div className="user-progress">
+                                <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
+                                  Rs. 15000.00 
+                                </p>
+                              </div>
+                            </div>
+                           </li>
+                           <li className="d-flex align-items-center mb-4">
+                           <div class="badge bg-label-primary me-3 rounded p-2">
+                           <i class="fa fa-wallet fa-sm"></i>
+                            </div>
+                            <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div className="me-2">
+                                <div className="d-flex align-items-center">
+                                  <h6 className="mb-0 me-1">Website Maintenance</h6>
+                                </div>
+                                
+                              </div>
+                              <div className="user-progress">
+                                <p className="text-success fotns_sizee fw-medium mb-0 d-flex align-items-center gap-1">
+                                   Rs. 15000.00 
+                                </p>
+                              </div>
+                            </div>
+                        </li>
+
+                        </ul>
                   </div>
-                  <div className="panel-body personal Best Value Services Best Value Services">
-                    <ul className="emply" id="bvslist">
+                  <div className="panel-body personal Best Value d-none Services Best Value Services">
+                    <ul className="emply bg-white" id="bvslist">
                       <li>1. E-Commerce (Rs. 15000.00)</li>
                       <li>2. (Rs. 0)</li>
                       <li>3. Real-Estate (Rs. 0)</li>
@@ -349,7 +509,7 @@ function Home() {
                 <div className="panel panel-bd bg-white">
                   <div className="panel-heading">
                     <div className="panel-title">
-                      <h4>System Information</h4>
+                      <h5>System Information</h5>
                     </div>
                   </div>
                   <div className="panel-body">
@@ -357,36 +517,27 @@ function Home() {
                       <tbody>
                         <tr>
                           <td>Current Version</td>
-                          <th>1.0.0</th>
+                          <th>18.2.0</th>
                         </tr>
                         <tr>
                           <td>Latest Version</td>
-                          <th>1.0.0</th>
+                          <th>18.4.0</th>
                         </tr>
                         <tr>
-                          <td>PHP Version</td>
-                          <th>7.4.33</th>
+                          <td>React Version</td>
+                          <th>18.2.0</th>
+                        </tr>
+                        <tr>
+                          <td>Node Version</td>
+                          <th>18.2.0</th>
                         </tr>
                         <tr>
                           <td>SignUp Date</td>
                           <th>01-01-2021 11:44:29 AM</th>
                         </tr>
-                        <tr>
-                          <td>Expiry Date</td>
-                          <th />
-                        </tr>
-                        <tr>
-                          <td>Invoice Cron Run</td>
-                          <th className="small">23-09-2023 10:30:02 AM</th>
-                        </tr>
-                        <tr>
-                          <td>Task Cron Run</td>
-                          <th className="small">23-09-2023 03:49:01 PM</th>
-                        </tr>
-                        <tr>
-                          <td>Followup Cron Run</td>
-                          <th className="small">23-09-2023 03:50:07 PM</th>
-                        </tr>
+                        
+                        
+                        
                       </tbody>
                     </table>
                   </div>
@@ -397,7 +548,7 @@ function Home() {
                 data-lobipanel-child-inner-id="gjY82eGUtA"
               >
                 <div
-                  className="panel panel-bd lobidrag lobipanel bg-white lobipanel-sortable"
+                  className="panel panel-bd bg-white lobidrag lobipanel lobipanel-sortable"
                   data-inner-id="gjY82eGUtA"
                   data-index={0}
                 >
@@ -406,57 +557,104 @@ function Home() {
                       className="panel-title"
                       style={{ maxWidth: "calc(100% - 0px)" }}
                     >
-                      <h4>Lastest Version Features</h4>
+                      <h5>Lastest Version Features</h5>
                     </div>
                   </div>
-                  <div className="panel-body">
-                    <table className="table">
-                      <tbody>
-                        <tr>
-                          <th>1. </th>
-                          <td>Send proposal and quotation from system</td>
-                        </tr>
-                        <tr>
-                          <th>2. </th>
-                          <td>
-                            Multiple role admin, marketing manager, sales
-                            executive
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>3. </th>
-                          <td>Activity log</td>
-                        </tr>
-                        <tr>
-                          <th>4. </th>
-                          <td>Add lead from custom form/campaign</td>
-                        </tr>
-                        <tr>
-                          <th>5. </th>
-                          <td>Internal message/chatting system</td>
-                        </tr>
-                        <tr>
-                          <th>6. </th>
-                          <td>ChatBot</td>
-                        </tr>
-                        <tr>
-                          <th>7. </th>
-                          <td>Internal video meeting</td>
-                        </tr>
-                        <tr>
-                          <th colSpan={3} style={{ textAlign: "center" }}>
-                            {" "}
-                            <Link target="_blank" to="">
-                              View All
-                            </Link>{" "}
-                          </th>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <div className="card-body">
+                  <ul className="list-unstyled mb-0">
+                  <li className="mb-3 pb-1">
+                    <div className="d-flex align-items-start">
+                      <div className="badge bg-label-secondary p-2 me-3 rounded">
+                        <i className="fa fa-globe fa-sm" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap gap-2">
+                        <div className="me-2">
+                          <h6 className="mb-0">Geo Tracking</h6>
+                          {/* <small className="text-muted">Direct link click</small> */}
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0">1.2k</p>
+                          <div className="ms-3 badge bg-label-success">+4.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="mb-3 pb-1">
+                    <div className="d-flex align-items-start">
+                      <div className="badge bg-label-secondary p-2 me-3 rounded">
+                        <i className="fa fa-globe fa-sm" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap gap-2">
+                        <div className="me-2">
+                          <h6 className="mb-0">SMS Integration</h6>
+                       
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0">31.5k</p>
+                          <div className="ms-3 badge bg-label-success">+8.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="mb-3 pb-1">
+                    <div className="d-flex align-items-start">
+                      <div className="badge bg-label-secondary p-2 me-3 rounded">
+                        <i className="fa fa-envelope fa-sm" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap gap-2">
+                        <div className="me-2">
+                        <h6 className="mb-0">WhatsApp Integration</h6>
+                      
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0">893</p>
+                          <div className="ms-3 badge bg-label-success">+2.4%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="mb-3 pb-1">
+                    <div className="d-flex align-items-start">
+                      <div className="badge bg-label-secondary p-2 me-3 rounded">
+                        <i className="fa fa-globe  fa-sm" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap gap-2">
+                        <div className="me-2">
+                          <h6 className="mb-0">Calling Through System</h6>
+                          
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0">342</p>
+                          <div className="ms-3 badge bg-label-danger">-0.4%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="mb-3 pb-1">
+                    <div className="d-flex align-items-start">
+                      <div className="badge bg-label-secondary p-2 me-3 rounded">
+                        <i className="fa fa-globe  fa-sm" />
+                      </div>
+                      <div className="d-flex justify-content-between w-100 flex-wrap gap-2">
+                        <div className="me-2">
+                          <h6 className="mb-0">IOS App</h6>
+                          
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0">342</p>
+                          <div className="ms-3 badge bg-label-danger">-0.4%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                   
+                   
+                </ul>
+                </div>
                 </div>
               </div>
-            </div>
+            </div>
 
             {/* /.row (main row) */}
           </div>

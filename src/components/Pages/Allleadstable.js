@@ -106,25 +106,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       selector: (row) => row?.contact_no,
       sortable: true,
     },
-    // {
-    //   name: "Agent",
-    //   selector: (row) => row?.agent_details[0]?.agent_name,
-    //   sortable: true,
-    // },
-
-    // {
-    //   name: "Lead Source",
-    //   selector: (row) => row?.lead_source_details[0]?.lead_source_name,
-    //   sortable: true,
-    // },
-
-    // {
-    //   name: "Action",
-    //   cell: (row) => (
-    //     <a href={`/followupleads/${row?._id}`}><button className="btn btn-success">Edit</button></a>
-    //   ),
-    //   sortable: true,
-    // },
+   
   ];
 
   const getStatusBadgeClass = (statusName) => {
@@ -165,7 +147,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       name: "Action",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
-          <button className="btn btn-success btn-sm">Edit</button>
+          <button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
           <span
             className={`badge ${getStatusBadgeClass(
               row?.status_details[0]?.status_name
@@ -202,7 +184,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       name: "Action",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
-          <button className="btn btn-success">Edit</button>
+          <button className="btn btn-success"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
           <span
             className={`badge ${getStatusBadgeClass(
               row?.status_details[0]?.status_name
@@ -508,18 +490,18 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       ) : (
         <>
           <button
-            className="btn btn-sm btn-success ml-10"
+            className="btn btn-sm  shadow_btn btn-success ml-10"
             onClick={exportToPDF}
           >
             Export PDF
           </button>
 
-          <button className="btn btn-sm btn-success" onClick={exportToExcel}>
+          <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
             Export Excel
           </button>
 
           {isAdmin ? (
-            <button className="btn btn-sm btn-danger" onClick={DeleteSelected}>
+            <button className="btn shadow_btn btn-sm btn-danger" onClick={DeleteSelected}>
               Delete
             </button>
           ) : (
