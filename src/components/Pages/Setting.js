@@ -116,10 +116,7 @@ function Setting() {
       const aaaa = await dispatch(EditStatusDetails(formDatastatus));
       if (aaaa.payload.success === true) {
         toast.success("Status Edit Successfully");
-        setTimeout(()=>{ 
-          window.location.reload(false);
-          }, 500); 
-      } else {
+       } else {
         toast.warn("There are some problem");
       }
     }else{
@@ -178,7 +175,7 @@ function Setting() {
 
   const handlesourceDelete = async (countryId) => {
     const confirmDelete1 = window.confirm(
-      "Are you sure you want to delete this product/service?"
+      "Are you sure you want to delete this lead source?"
     );
 
     if (confirmDelete1) {
@@ -2576,7 +2573,7 @@ function Setting() {
                                                   () => {
                                                     const confirmDelete =
                                                       window.confirm(
-                                                        "Are you sure you want to delete this product/service?"
+                                                        "Are you sure you want to delete this lead Status?"
                                                       );
 
                                                     if (confirmDelete) {

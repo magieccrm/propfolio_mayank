@@ -156,10 +156,21 @@ export default function Followupage() {
     setfilename(e.target.value);
     
   };
+
+  const allowedFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
   const filesety = async(e) => {
     const selectedFile = e.target.files && e.target.files[0];
+    // if (selectedFile) {
+    //   console.log('selectedFile',selectedFile);
+    //  await setFile(selectedFile);
+    // }
     if (selectedFile) {
-     await setFile(selectedFile);
+      if (allowedFileTypes.includes(selectedFile.type)) {
+       setFile(selectedFile);
+      } else {
+       toast.error('Invalid file type');
+      }
     }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -191,7 +202,7 @@ export default function Followupage() {
     console.log('formData', file);
     
     try {
-      const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/file_uplode', {
+      const response = await fetch('http://localhost:4000/api/v1/file_uplode', {
         method: 'POST',
         body:formData
       });
