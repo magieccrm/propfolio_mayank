@@ -94,9 +94,7 @@ export default function Followupage() {
     }
   };
 
-  // useEffect(() => {
-
-  // }, []);
+  
 
   const { Statusdata } = useSelector((state) => state.StatusData);
 
@@ -196,47 +194,59 @@ export default function Followupage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-   
     const formData = new FormData();
     formData.append('lead_id', _id.id);
     formData.append('attechment_name', filename);
     formData.append('location', JSON.stringify(location)); 
     formData.append('leadattechment', file);
-  
     console.log('formData', file);
-    
     try {
-      const response = await fetch('http://localhost:4000/api/v1/file_uplode', {
+      const response = await fetch('https://crm-backend1-awl0.onrender.com/api/v1/file_uplode', {   
         method: 'POST',
         body:formData
       });
       console.log('API Response:', response);
       const data = await response.json();
       toast.success(data.message)
-      // setTimeout(()=>{ 
-      //   window.location.reload(false);
-      //   }, 500); 
-      //console.log('API Response:', data);
-    } catch (error) {
+      await  getAttechmenthistory(_id?.id);
+     } catch (error) {
          toast.warn(error.data.message)
-      //console.error('Error:', error.message);
-    }
-    // setFile('');
-    // setfilename('');
-    // setLocation('')
-   
-  };
+    }  
+    };
   ////////end attechment //////
  const datafomate=(date)=>{
   const dateTime = new Date(date);
-
-  // Get the date and time components
   const formattedDate = dateTime.toLocaleDateString();
   const formattedTime = dateTime.toLocaleTimeString();
-
   return `${formattedDate} ${formattedTime}`;
  }
+ /////////// form Attechment History
+  const [attechmenthistory,setattechmenthistory]=useState();
+  const getAttechmenthistory=async(id)=>{
+           const responce= await axios.get(`https://crm-backend1-awl0.onrender.com/api/v1/leadattechmenthistory/${id}`);
+           setattechmenthistory(responce?.data?.lead);
+  }
 
+
+
+ useEffect(()=>{
+       getAttechmenthistory(_id?.id);
+ },[_id?.id])
+ //////////// Delete Attechment History
+ const removeSite=async(id)=>{  
+  const confirmDelete1 = window.confirm(
+    "Are you sure you want to delete this lead attechment history?"
+  );
+  if (confirmDelete1) {
+    const responce= await axios.delete(`https://crm-backend1-awl0.onrender.com/api/v1/deleteLeadAttechmentHistory/${id}`);
+    toast.success(responce?.data?.message);
+    const updatedAttechmentHistory =await attechmenthistory?.filter((ele) => ele._id !== responce?.data?.lead['0']?._id);
+    setattechmenthistory(updatedAttechmentHistory);   
+  } else {
+    toast.success("Delete Canceled");
+    console.log("Delete canceled");
+  }
+ }
 
   return (
     <div>
@@ -1379,14 +1389,36 @@ export default function Followupage() {
                                     <thead>
                                       <tr>
                                         <th className="list-serila">Serial</th>
-                                        <th>Image</th>
+                                        <th>File</th>
                                         <th>Name</th>
-                                        <th>Date </th>
+                                        <th>Location </th>
+                                        <th>Created </th>
                                         <th>Action</th>
                                       </tr>
                                     </thead>
+                           
+                           {
+                              
+                              attechmenthistory?.map((attechmenthistory1,index)=>{
+                              return(<tbody id="lead_docs">
+                              <td>{index+1}</td>
+                               <td>{}</td>
+                               <td>{attechmenthistory1.attechment_name}</td>
+                               <td>{attechmenthistory1.location}</td>
+                               <td>{datafomate(attechmenthistory1.created)}</td>
+                               <td><button          type="button"
+                                                        className="btn btn-danger btn-xl mr-2"
+                                                        onClick={(e) =>
+                                                          removeSite(attechmenthistory1._id)
+                                                        }
+                                                      >
+                                                       <i class="fa fa-trash" aria-hidden="true"></i>
+                                                      </button></td>
 
-                                    <tbody id="lead_docs"></tbody>
+                           </tbody>);
+                              })
+                           }
+                                    
                                     </table>
                                 </div>
                               </div>

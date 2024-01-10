@@ -26,6 +26,7 @@ import {
   LostReason,
 } from "../../features/lostreasonSlice";
 import Loader from "../Loader";
+import axios from "axios";
 function Setting() {
   const removeSite = async (_id) => {
     dispatch(deleteAgent(_id));
@@ -220,6 +221,65 @@ function Setting() {
         return `Gold`;
       }
    }
+  const [companydetails,setcompanydetails]=useState({
+    company_name: "",
+    contact_person: "",
+    company_email: "",
+    company_mobile: "",
+    website_name: "",
+    company_pan:"",
+    company_address: "",
+    company_zip_code: "",
+    company_city: "",
+    company_state: "",
+    company_country: "",
+    company_gst:"",
+   });
+   const CompanyDetailSubmit=async(e)=>{
+    e.preventDefault();
+     fetch("https://crm-backend1-awl0.onrender.com/api/v1/CompanyDetails/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(companydetails),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+         toast.success(data?.message);
+        console.log("Response from server:", data);
+        setcompanydetails(data?.setting);
+        
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+    }
+
+    const GetCompanyDetails = async () => {
+          try {
+            const responce=await axios.get(`https://crm-backend1-awl0.onrender.com/api/v1/GetCompanyDetails`);
+            if(responce?.data?.success===true){ 
+              console.log(responce.data.setting?.['0'])
+              setcompanydetails(responce?.data?.setting?.['0']);
+             }
+            if(responce?.data?.success===false){
+        setcompanydetails(responce?.data?.setting);
+            }
+           } catch (error) {
+            
+          }
+    }
+
+    useEffect(()=>{
+        GetCompanyDetails();
+
+    },[])
 
 
   return (
@@ -394,10 +454,7 @@ function Setting() {
                           aria-labelledby="v-pills-account-tab"
                         >
                           <form
-                            action=" "
-                            method="post"
-                            name="general_setting"
-                            id="general_setting"
+                             onSubmit={CompanyDetailSubmit}
                           >
                             <div className="row">
                               <div className="col-sm-6 col-xs-12 pd-0t">
@@ -409,12 +466,12 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
+                                        value={companydetails?.company_name}
+                                        onChange={(e)=>setcompanydetails({...companydetails,company_name:e.target.value})} 
                                           type="text"
                                           name="company_name"
                                           className="form-control"
-                                          defaultValue="MAGIEC ADVERTIZEMENT"
                                           placeholder="Company Name"
-                                          required
                                           autoComplete="off"
                                         />
                                       </div>
@@ -425,13 +482,13 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
+                                        value={companydetails?.contact_person}
+                                        onChange={(e)=>setcompanydetails({...companydetails,contact_person:e.target.value})}  
                                           type="text"
                                           name="contact_person"
                                           className="form-control"
-                                          defaultValue
-                                          placeholder="Contact Person"
-                                          required
-                                          autoComplete="off"
+                                           placeholder="Contact Person"
+                                           autoComplete="off"
                                         />
                                       </div>
                                     </div>
@@ -442,9 +499,10 @@ function Setting() {
                                       <div className="form-group">
                                         <input
                                           type="text"
+                                          value={companydetails?.company_email}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_email:e.target.value})}                        
                                           name="company_email"
                                           className="form-control"
-                                          defaultValue="billing@magiec.in"
                                           placeholder="Email ID"
                                           required
                                           autoComplete="off"
@@ -457,12 +515,12 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                          type="text"
+                                          type="number"
+                                          value={companydetails?.company_mobile}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_mobile:e.target.value})}                             
                                           name="company_mobile"
                                           className="form-control"
-                                          defaultValue={8178265705}
                                           placeholder="Contact No"
-                                          required
                                           autoComplete="off"
                                         />
                                       </div>
@@ -474,11 +532,12 @@ function Setting() {
                                       <div className="form-group">
                                         <input
                                           type="text"
+                                          value={companydetails?.website_name}
+                                          onChange={(e)=>setcompanydetails({...companydetails,website_name:e.target.value})}  
                                           name="website_name"
                                           className="form-control"
-                                          defaultValue="magiec.in"
                                           placeholder="Website Name"
-                                          required
+                                         
                                           autoComplete="off"
                                         />
                                       </div>
@@ -490,31 +549,16 @@ function Setting() {
                                       <div className="form-group">
                                         <input
                                           type="text"
+                                          value={companydetails?.company_pan}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_pan:e.target.value})}  
                                           name="company_pan"
                                           className="form-control"
-                                          defaultValue="ALZPK4008J"
                                           placeholder="PAN Number"
-                                          required
                                           autoComplete="off"
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-md-5 pd-top">
-                                      <label>Company CIN</label>
-                                    </div>
-                                    <div className="col-md-7">
-                                      <div className="form-group">
-                                        <input
-                                          type="text"
-                                          name="company_cin"
-                                          className="form-control"
-                                          defaultValue
-                                          placeholder="CIN Number"
-                                          required
-                                          autoComplete="off"
-                                        />
-                                      </div>
-                                    </div>
+                                   
                                   </div>
                                 </div>
                               </div>
@@ -528,14 +572,14 @@ function Setting() {
                                       <div className="form-group">
                                         <textarea
                                           type="text"
+                                          value={companydetails?.company_address}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_address:e.target.value})}                 
                                           name="company_address"
                                           className="form-control"
                                           placeholder="Company Address"
-                                          rows={2}
-                                          required
-                                          defaultValue={
-                                            "14B9 4th Floor Dev Nagar Karol Bagh"
-                                          }
+                                          rows={1}
+                                         
+                                         
                                         />
                                       </div>
                                     </div>
@@ -547,10 +591,10 @@ function Setting() {
                                         <input
                                           type="text"
                                           name="company_zip_code"
+                                          value={companydetails?.company_zip_code}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_zip_code:e.target.value})}      
                                           className="form-control"
-                                          defaultValue={110005}
                                           placeholder="Pincode"
-                                          required
                                           autoComplete="off"
                                         />
                                       </div>
@@ -562,11 +606,11 @@ function Setting() {
                                       <div className="form-group">
                                         <input
                                           type="text"
+                                          value={companydetails?.company_city}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_city:e.target.value})}      
                                           name="company_city"
                                           className="form-control"
-                                          defaultValue="New Delhi"
-                                          placeholder="City"
-                                          required
+                                         placeholder="City"
                                           autoComplete="off"
                                         />
                                       </div>
@@ -576,18 +620,15 @@ function Setting() {
                                     </div>
                                     <div className="col-md-7">
                                       <div className="form-group">
-                                        <select
-                                          className="form-control"
+                                        <input
+                                          type="text"
                                           name="company_state"
-                                        >
-                                          <option value>State</option>
-                                          <option value={1}>
-                                            Andhra Pradesh
-                                          </option>
-                                          <option value={2}>
-                                            Arunachal Pradesh
-                                          </option>
-                                        </select>
+                                          value={companydetails?.company_state}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_state:e.target.value})}      
+                                          className="form-control"
+                                           placeholder="City"
+                                          autoComplete="off"
+                                        />
                                       </div>
                                     </div>
                                     <div className="col-md-5 pd-top">
@@ -595,15 +636,16 @@ function Setting() {
                                     </div>
                                     <div className="col-md-7">
                                       <div className="form-group">
-                                        <select
-                                          className="form-control"
+                                   
+                                        <input
+                                          type="text"
+                                          value={companydetails?.company_country}
+                                          onChange={(e)=>setcompanydetails({...companydetails,company_country:e.target.value})}      
                                           name="company_country"
-                                        >
-                                          <option value>Country</option>
-                                          <option value={1}>
-                                            Afghanistan{" "}
-                                          </option>
-                                        </select>
+                                          className="form-control"
+                                           placeholder="company_country"
+                                          autoComplete="off"
+                                        />
                                       </div>
                                     </div>
                                     <div className="col-md-5 pd-top">
@@ -613,11 +655,11 @@ function Setting() {
                                       <div className="form-group">
                                         <input
                                           type="text"
+                                          value={companydetails?.company_gst}
+                                onChange={(e)=>setcompanydetails({...companydetails,company_gst:e.target.value})}
                                           name="company_gst"
                                           className="form-control"
-                                          defaultValue="07ALZPK4008J1ZO"
                                           placeholder="Company GST NO"
-                                          required
                                           autoComplete="off"
                                         />
                                       </div>
@@ -997,7 +1039,7 @@ function Setting() {
                               <div className="cardses">
                                 <div className="row mt-tp">
                                   <div className="col-md-4 pd-top">
-                                    <label>2 Step Verification</label>
+                                    {/* <label>2 Step Verification</label> */}
                                   </div>
                                   <div className="col-md-1">
                                     <div className="form-group">
@@ -1012,7 +1054,7 @@ function Setting() {
                                   </div>
                                   <div className="col-md-7 pd-top">
                                     <div className="row">
-                                      <div className="col-md-6">
+                                      {/* <div className="col-md-6 ">
                                         <div className="form-group">
                                           <button
                                             type="button"
@@ -1021,8 +1063,8 @@ function Setting() {
                                             Export Database
                                           </button>
                                         </div>
-                                      </div>
-                                      <div className="col-md-6">
+                                      </div> */}
+                                      <div className="col-md-12">
                                         <div className="form-group">
                                           <button
                                             type="button"
@@ -1037,7 +1079,7 @@ function Setting() {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-sm-5 col-xs-12">
+                            {/* <div className="col-sm-5 col-xs-12">
                               <div className="cardses">
                                 <div className="row mt-tp">
                                   <div className="col-md-6 pd-top">
@@ -1065,11 +1107,11 @@ function Setting() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                           <table
-                            className="table-bordered table dataTable no-footer"
-                            role="grid"
+                            className="table-bordered table dataTable no-footer d-none"
+                            role="grid" 
                           >
                             <thead>
                               <tr role="row">
@@ -4028,7 +4070,7 @@ function Setting() {
                                           name="contact_person"
                                           className="form-control"
                                           defaultValue
-                                          placeholder="Contact Person"
+                                          placeholder="Mobile"
                                           required
                                           autoComplete="off"
                                         />
@@ -4046,7 +4088,7 @@ function Setting() {
                                           name="contact_person"
                                           className="form-control"
                                           defaultValue
-                                          placeholder="Contact Person"
+                                          placeholder="createdAt"
                                           required
                                           autoComplete="off"
                                         />
