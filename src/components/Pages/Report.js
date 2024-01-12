@@ -17,7 +17,7 @@ function Report() {
         </div>
         <div className="icon-content">
           <h4 className="mt-tilte text-uppercase font-weight-600 m-b20">
-            Custom Income Report
+            Employees Income Report
           </h4>
         </div>
       </div>

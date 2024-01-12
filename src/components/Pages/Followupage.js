@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -94,8 +94,6 @@ export default function Followupage() {
     }
   };
 
-  
-
   const { Statusdata } = useSelector((state) => state.StatusData);
 
   const [show, setshow] = useState("none");
@@ -154,14 +152,12 @@ export default function Followupage() {
   const [error, setError] = useState(null);
 
   const handleFileChange2 = (e) => {
-   
     setfilename(e.target.value);
-    
   };
 
-  const allowedFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+  const allowedFileTypes = ["image/jpeg", "image/png", "application/pdf"];
 
-  const filesety = async(e) => {
+  const filesety = async (e) => {
     const selectedFile = e.target.files && e.target.files[0];
     // if (selectedFile) {
     //   console.log('selectedFile',selectedFile);
@@ -169,9 +165,9 @@ export default function Followupage() {
     // }
     if (selectedFile) {
       if (allowedFileTypes.includes(selectedFile.type)) {
-       setFile(selectedFile);
+        setFile(selectedFile);
       } else {
-       toast.error('Invalid file type');
+        toast.error("Invalid file type");
       }
     }
     if ("geolocation" in navigator) {
@@ -187,7 +183,7 @@ export default function Followupage() {
         }
       );
     } else {
-      alert('Geolocation is not supported by your browser.')
+      alert("Geolocation is not supported by your browser.");
       setError("Geolocation is not supported by your browser.");
     }
   };
@@ -195,58 +191,65 @@ export default function Followupage() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('lead_id', _id.id);
-    formData.append('attechment_name', filename);
-    formData.append('location', JSON.stringify(location)); 
-    formData.append('leadattechment', file);
-    console.log('formData', file);
+    formData.append("lead_id", _id.id);
+    formData.append("attechment_name", filename);
+    formData.append("location", JSON.stringify(location));
+    formData.append("leadattechment", file);
+    console.log("formData", file);
     try {
-      const response = await fetch('https://crm-backend1-awl0.onrender.com/api/v1/file_uplode', {   
-        method: 'POST',
-        body:formData
-      });
-      console.log('API Response:', response);
+      const response = await fetch(
+        "https://crm-backend1-awl0.onrender.com/api/v1/file_uplode",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      console.log("API Response:", response);
       const data = await response.json();
-      toast.success(data.message)
-      await  getAttechmenthistory(_id?.id);
-     } catch (error) {
-         toast.warn(error.data.message)
-    }  
-    };
+      toast.success(data.message);
+      await getAttechmenthistory(_id?.id);
+    } catch (error) {
+      toast.warn(error.data.message);
+    }
+  };
   ////////end attechment //////
- const datafomate=(date)=>{
-  const dateTime = new Date(date);
-  const formattedDate = dateTime.toLocaleDateString();
-  const formattedTime = dateTime.toLocaleTimeString();
-  return `${formattedDate} ${formattedTime}`;
- }
- /////////// form Attechment History
-  const [attechmenthistory,setattechmenthistory]=useState();
-  const getAttechmenthistory=async(id)=>{
-           const responce= await axios.get(`https://crm-backend1-awl0.onrender.com/api/v1/leadattechmenthistory/${id}`);
-           setattechmenthistory(responce?.data?.lead);
-  }
+  const datafomate = (date) => {
+    const dateTime = new Date(date);
+    const formattedDate = dateTime.toLocaleDateString();
+    const formattedTime = dateTime.toLocaleTimeString();
+    return `${formattedDate} ${formattedTime}`;
+  };
+  /////////// form Attechment History
+  const [attechmenthistory, setattechmenthistory] = useState();
+  const getAttechmenthistory = async (id) => {
+    const responce = await axios.get(
+      `https://crm-backend1-awl0.onrender.com/api/v1/leadattechmenthistory/${id}`
+    );
+    setattechmenthistory(responce?.data?.lead);
+  };
 
-
-
- useEffect(()=>{
-       getAttechmenthistory(_id?.id);
- },[_id?.id])
- //////////// Delete Attechment History
- const removeSite=async(id)=>{  
-  const confirmDelete1 = window.confirm(
-    "Are you sure you want to delete this lead attechment history?"
-  );
-  if (confirmDelete1) {
-    const responce= await axios.delete(`https://crm-backend1-awl0.onrender.com/api/v1/deleteLeadAttechmentHistory/${id}`);
-    toast.success(responce?.data?.message);
-    const updatedAttechmentHistory =await attechmenthistory?.filter((ele) => ele._id !== responce?.data?.lead['0']?._id);
-    setattechmenthistory(updatedAttechmentHistory);   
-  } else {
-    toast.success("Delete Canceled");
-    console.log("Delete canceled");
-  }
- }
+  useEffect(() => {
+    getAttechmenthistory(_id?.id);
+  }, [_id?.id]);
+  //////////// Delete Attechment History
+  const removeSite = async (id) => {
+    const confirmDelete1 = window.confirm(
+      "Are you sure you want to delete this lead attechment history?"
+    );
+    if (confirmDelete1) {
+      const responce = await axios.delete(
+        `https://crm-backend1-awl0.onrender.com/api/v1/deleteLeadAttechmentHistory/${id}`
+      );
+      toast.success(responce?.data?.message);
+      const updatedAttechmentHistory = await attechmenthistory?.filter(
+        (ele) => ele._id !== responce?.data?.lead["0"]?._id
+      );
+      setattechmenthistory(updatedAttechmentHistory);
+    } else {
+      toast.success("Delete Canceled");
+      console.log("Delete canceled");
+    }
+  };
 
   return (
     <div>
@@ -1275,7 +1278,6 @@ export default function Followupage() {
                               onSubmit={handleFormSubmit}
                               encType="multipart/form-data"
                             >
-                             
                               <div className="panel-body border-tbal">
                                 <div className="row">
                                   <div className="col-md-1">
@@ -1287,36 +1289,40 @@ export default function Followupage() {
                                   </div>
                                   <div className="col-md-2">
                                     <div className="form-group">
-                                    <input
-                                  name="file"
-                                  type="file" onChange={filesety}
-                                  className="file-set"
-                                  autoComplete="off"
-                                  required />
+                                      <input
+                                        name="file"
+                                        type="file"
+                                        onChange={filesety}
+                                        className="file-set"
+                                        autoComplete="off"
+                                        required
+                                      />
                                     </div>
                                   </div>
                                   <div className="col-md-4">
                                     <div className="form-group">
                                       {location ? (
                                         <>
-                                        <input
-                                          type="text"
-                                          name="location"
-                                          id="file_name"
-                                          disabled
-                                          value={
-                                            location.latitude +
-                                            "," +
-                                            location.longitude
-                                          }
-                                          className="form-control"
-                                          placeholder="Current Location"
-                                          autoComplete="off"
-                                          
-                                        />
-                                        <p>Copy this Lat./Log And Put In SearchBar In Google map</p>
+                                          <input
+                                            type="text"
+                                            name="location"
+                                            id="file_name"
+                                            disabled
+                                            value={
+                                              location.latitude +
+                                              "," +
+                                              location.longitude
+                                            }
+                                            className="form-control"
+                                            placeholder="Current Location"
+                                            autoComplete="off"
+                                          />
+                                          <p>
+                                            Copy this Lat./Log And Put In
+                                            SearchBar In Google map
+                                          </p>
                                         </>
-                                         ) : error ? (
+                                      ) : error ? (
                                         <p>Error: {error}</p>
                                       ) : (
                                         <>
@@ -1329,7 +1335,6 @@ export default function Followupage() {
                                             placeholder="Current Location"
                                             autoComplete="off"
                                           />
-                                          
                                         </>
                                       )}
                                     </div>
@@ -1350,7 +1355,7 @@ export default function Followupage() {
                                   </div>
                                   <div className="col-md-2">
                                     <div className="form-group">
-                                      <button  
+                                      <button
                                         type="submit"
                                         className="btn btnss btn-success"
                                       >
@@ -1360,7 +1365,7 @@ export default function Followupage() {
                                   </div>
                                 </div>
                                 {/* Progress bar */}
-                                <div className="row d-none" >
+                                <div className="row d-none">
                                   <div className="col-12 col-6 col-xl-6 col-md-6">
                                     <div className="progress">
                                       <div className="progress-bar" />
@@ -1390,36 +1395,67 @@ export default function Followupage() {
                                       <tr>
                                         <th className="list-serila">Serial</th>
                                         <th>File</th>
-                                        <th>Name</th>
+                                        <th>File Name</th>
                                         <th>Location </th>
                                         <th>Created </th>
                                         <th>Action</th>
                                       </tr>
                                     </thead>
-                           
-                           {
-                              
-                              attechmenthistory?.map((attechmenthistory1,index)=>{
-                              return(<tbody id="lead_docs">
-                              <td>{index+1}</td>
-                               <td>{}</td>
-                               <td>{attechmenthistory1.attechment_name}</td>
-                               <td>{attechmenthistory1.location}</td>
-                               <td>{datafomate(attechmenthistory1.created)}</td>
-                               <td><button          type="button"
-                                                        className="btn btn-danger btn-xl mr-2"
-                                                        onClick={(e) =>
-                                                          removeSite(attechmenthistory1._id)
-                                                        }
-                                                      >
-                                                       <i class="fa fa-trash" aria-hidden="true"></i>
-                                                      </button></td>
 
-                           </tbody>);
-                              })
-                           }
-                                    
-                                    </table>
+                                    {attechmenthistory?.map(
+                                      (attechmenthistory1, index) => {
+                                        return (
+                                          <tbody id="lead_docs">
+                                            <td>{index + 1}</td>
+                                            <td>
+                                              <a
+                                                href={
+                                                  attechmenthistory1.leadattechment
+                                                }
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                              >
+                                                <img
+                                                  src="img/sssss.png"
+                                                 // alt="Description"
+                                                  width="100"
+                                                />
+                                              </a>
+                                            </td>
+                                            <td>
+                                              {
+                                                attechmenthistory1.attechment_name
+                                              }
+                                            </td>
+                                            <td>
+                                              {attechmenthistory1.location}
+                                            </td>
+                                            <td>
+                                              {datafomate(
+                                                attechmenthistory1.created
+                                              )}
+                                            </td>
+                                            <td>
+                                              <button
+                                                type="button"
+                                                className="btn btn-danger btn-xl mr-2"
+                                                onClick={(e) =>
+                                                  removeSite(
+                                                    attechmenthistory1._id
+                                                  )
+                                                }
+                                              >
+                                                <i
+                                                  class="fa fa-trash"
+                                                  aria-hidden="true"
+                                                ></i>
+                                              </button>
+                                            </td>
+                                          </tbody>
+                                        );
+                                      }
+                                    )}
+                                  </table>
                                 </div>
                               </div>
                             </div>
@@ -1454,14 +1490,20 @@ export default function Followupage() {
                                                   ?.agent_name
                                               }
                                             </td>
-                                            <td>{   datafomate(follow?.created)}</td>
+                                            <td>
+                                              {datafomate(follow?.created)}
+                                            </td>
                                             <td>
                                               {
                                                 follow?.status_details[0]
                                                   ?.status_name
                                               }
                                             </td>
-                                            <td>{datafomate(follow?.followup_date)}</td>
+                                            <td>
+                                              {datafomate(
+                                                follow?.followup_date
+                                              )}
+                                            </td>
                                             <td>{follow?.followup_desc}</td>
                                           </tr>
                                         );

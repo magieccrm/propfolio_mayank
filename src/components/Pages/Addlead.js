@@ -10,13 +10,13 @@ import { addlead } from "../../features/leadSlice";
 import { getAllAgent } from "../../features/agentSlice";
 import Loader from "../Loader";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Addlead() {
   const formRef = React.useRef(null);
   const [required, setRequired] = useState({ required: true });
 
-  const [leaddata, setleaddata] = useState({contact_no: ''});
+  const [leaddata, setleaddata] = useState({ contact_no: "" });
   const { ProductService } = useSelector((state) => state.ProductService);
   const { leadSourcedata } = useSelector((state) => state.leadSource);
   const { Statusdata } = useSelector((state) => state.StatusData);
@@ -25,19 +25,19 @@ function Addlead() {
   const { message, loading } = useSelector((state) => state.lead);
   const { agent } = useSelector((state) => state.agent);
   const user_id = localStorage.getItem("user_id");
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const handleInputChange = (e) => {
     setleaddata({ ...leaddata, country: e.target.value });
     getStateByCountry(e.target.value);
   };
   const navigate = useNavigate();
- //// For Show Product And Service
+  //// For Show Product And Service
 
   const handleContactNoChange = (e) => {
     const inputValue = e.target.value;
-    
+
     // Remove non-numeric characters
-    const numericValue = inputValue.replace(/\D/g, '');
+    const numericValue = inputValue.replace(/\D/g, "");
 
     // Restrict the length to 10 digits
     const limitedValue = numericValue.slice(0, 10);
@@ -50,18 +50,17 @@ function Addlead() {
   };
   const submitLead = async (e) => {
     e.preventDefault();
-    const length=leaddata?.contact_no?.length;
-    const length1=leaddata?.alternative_no?.length;
-    
-    if(length<10){
-      return  toast.success("PlZ Enter 10 Digit Contact No");
+    const length = leaddata?.contact_no?.length;
+    const length1 = leaddata?.alternative_no?.length;
+
+    if (length < 10) {
+      return toast.success("PlZ Enter 10 Digit Contact No");
     }
-    if(length1<10 && length1>=1){
-      return  toast.success("PlZ Enter 10 Digit Alternative No");
+    if (length1 < 10 && length1 >= 1) {
+      return toast.success("PlZ Enter 10 Digit Alternative No");
     }
 
     const buttonValue = e.nativeEvent.submitter.value;
-   
 
     if (localStorage.getItem("role") === "user") {
       const updatedLeadData = await {
@@ -73,8 +72,7 @@ function Addlead() {
         toast.success(aaaa.payload.message);
         if (buttonValue === "save") {
           navigate("/leads");
-        } 
-
+        }
       } else {
         toast.warn(aaaa.payload?.message);
       }
@@ -84,7 +82,7 @@ function Addlead() {
         toast.success(aaaa.payload.message);
         if (buttonValue === "save") {
           navigate("/leads");
-        } 
+        }
       } else {
         toast.warn(aaaa.payload?.message);
       }
@@ -106,6 +104,8 @@ function Addlead() {
     return <Loader />;
   }
 
+ 
+
   return (
     <div>
       <div className="content-wrapper">
@@ -117,7 +117,21 @@ function Addlead() {
                 <div className="btn-group bg-white ">
                   <h4>Add Lead </h4>
                 </div>
-                {/* <button type="button" style={{float: 'right'}} className="btn btn-sm btn-primary" data-toggle="modal" data-target="#custome"> Add Custom Field</button> */}
+
+                <button
+                  type="button"
+                  style={{ float: "right" }}
+                  className="btn btn-sm btn-primary"
+                  data-toggle="modal"
+                  data-target="#custome"
+                >
+                  {" "}
+                  <Link className="btn btnes exports" to="/import-lead">
+                    {" "}
+                    <i className="fa fa-download" />
+                    &nbsp; Import{" "}
+                  </Link>
+                </button>
               </div>
 
               <div className="panel-body bg-white mt-4">
@@ -301,7 +315,7 @@ function Addlead() {
                         </div>
                         <div className="col-md-8 mob-left-right col-xs-12  form-group">
                           <input
-                            type="datetime-local"
+                           type="datetime-local"
                             name="followup_date"
                             onChange={(e) =>
                               setleaddata({
@@ -416,25 +430,25 @@ function Addlead() {
                       <div className="row"></div>
                     </div>
                     <div className="col-md-12 mob-left-right col-xs-12">
-                   <div className="row">
-                   <div className="col-md-12 mob-left-right col-xs-12">
-                   <button
-                        type="button"
-                        className="d-flex align-items-center w-100 bg-blue justify-content-between btn btn-link collapsed"
-                        data-toggle="collapse"
-                        data-target="#collapseOne"
-                        aria-expanded="false"
-                        aria-controls="collapseOne"
-                      >
-                        Additional Information
-                        <span className="fa-stack fa-sm">
-                          <i className="fas fa-circle fa-stack-2x" />
-                          <i className="fas fa-plus bg-black  fa-stack-1x fa-inverse" />
-                        </span>
-                      </button>
+                      <div className="row">
+                        <div className="col-md-12 mob-left-right col-xs-12">
+                          <button
+                            type="button"
+                            className="d-flex align-items-center w-100 bg-blue justify-content-between btn btn-link collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="false"
+                            aria-controls="collapseOne"
+                          >
+                            Additional Information
+                            <span className="fa-stack fa-sm">
+                              <i className="fas fa-circle fa-stack-2x" />
+                              <i className="fas fa-plus bg-black  fa-stack-1x fa-inverse" />
+                            </span>
+                          </button>
+                        </div>
                       </div>
-                   </div>
-                      
+
                       <div
                         id="collapseOne"
                         className="collapse"
@@ -448,7 +462,6 @@ function Addlead() {
                                   <div className="address-sec"> Address </div>
                                 </div>
 
-                                
                                 <div className="col-md-4 pd-top mobile-hids">
                                   <label htmlFor="full_address">
                                     Full Address{" "}
@@ -716,7 +729,7 @@ function Addlead() {
                           className="button-57 pull-right"
                         />
                         <input
-                          type="submit"  
+                          type="submit"
                           value="AddAnother"
                           name="AddAnother"
                           style={{ marginRight: "10px" }}

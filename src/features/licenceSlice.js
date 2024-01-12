@@ -4,7 +4,7 @@ import axios from "axios";
 // show all data
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
-    const response= await axios.post("https://task-mernss.onrender.com/api/v1/getByDomain", { domain:host });
+    const response= await axios.post("https://licencecrm.onrender.com/api/v1/getByDomain", { domain:host });
    
     try {
          return response.data.hosting; 
@@ -46,7 +46,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
 
 export const licenceactive=createAsyncThunk("licenceactive",async(data,{rejectWithValue})=>{
      
-    const response=await fetch(`https://task-mernss.onrender.com/api/v1/editHosting/${data._id}`,{
+    const response=await fetch(`https://licencecrm.onrender.com/api/v1/editHosting/${data._id}`,{
            method:"PUT",
            headers:{ 
             "Content-Type":"application/json",

@@ -85,7 +85,7 @@ const message=useSelector((state)=>state.app);
       </form>
       
       <p className="mb-1">
-        <Link to="/forgotpassword">I forgot my password</Link>
+        {/* <Link to="/forgotpassword">I forgot my password</Link> */}
       </p>
       
     </div>
