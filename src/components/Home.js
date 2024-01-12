@@ -55,8 +55,22 @@ function Home() {
       console.log(error);
     }
   }
+  const [leadcountdata,setleadcountdata]=useState({});
+  const getLeadCountData=async()=>{
+    try {
+      const responce = await axios.get(
+        "https://crm-backend1-awl0.onrender.com/api/v1/DashboardLeadCount"
+      );
+      setleadcountdata(responce?.data?.Count);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(leadcountdata)
   useEffect(()=>{
       getSale()  
+      getLeadCountData();
       getAllLeadSourceOverview()
     },[]);
 
@@ -79,59 +93,26 @@ function Home() {
         <section className="content py-5">
           <div className="container ">
           <div className="row">
-            <div className="col-xs-6 col-sm-6 col-md-6 pl-0  dashboard-fixeds col-lg-4">
-             <div className="button-30 border-leftes mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Totale Leads</h5>
-                   <p>123456</p>
-               </div>
-             </div>
-             
-            </div>
-            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
+          {
+  Array.isArray(leadcountdata) ? (
+    leadcountdata.map((leadcountdata1, index) => (
+      <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
+        <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
+          <div className="heading_lead py-2 pt-2">
+            <h5>{leadcountdata1?.name}</h5>
+            <p>{leadcountdata1?.Value}</p>
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p>Loading or No Data</p>
+  )
+}
             
-             <div className="button-30 border-lefts mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Fresh</h5>
-                   <p>3456</p>
-               </div>
-             </div>
-              
-            </div>
-            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
-              <div className="button-30 border-lefts1 mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Totale Leads</h5>
-                   <p>123456</p>
-               </div>
-             </div>
-            </div>
-            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
-             <div className="button-30 border-lefts2 mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Totale Leads</h5>
-                   <p>123456</p>
-               </div>
-             </div>
-             </div>
-            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4 ">
-              <div className="button-30 border-lefts3 mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Totale Leads</h5>
-                   <p>123456</p>
-               </div>
-             </div>
-            </div>
-            <div className="col-xs-6 col-sm-6 col-md-6  dashboard-fixeds col-lg-4">
-              <div className="button-30 border-lefts4 mb-4" role="button">
-               <div className="heading_lead py-2 pt-2"> 
-                   <h5>Totale Leads</h5>
-                   <p>123456</p>
-               </div>
-             </div>
-            </div>
+          
              
-              </div>
+            </div>
             <div className="row">
             
 
@@ -407,7 +388,7 @@ function Home() {
                               </div>
                               <div className="user-progress">
                                 <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
-                                Rs. 15000.00 
+                                {/* Rs. 15000.00  */}
                                   
                                 </p>
                               </div>
@@ -426,7 +407,7 @@ function Home() {
                               </div>
                               <div className="user-progress">
                                 <p className="text-danger fw-medium mb-0 d-flex justify-content-center gap-1">
-                                 Rs. 15000.00 
+                                 {/* Rs. 15000.00  */}
                                 </p>
                               </div>
                             </div>
@@ -445,7 +426,7 @@ function Home() {
                               </div>
                               <div className="user-progress">
                                 <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
-                                   Rs. 15000.00 
+                                   {/* Rs. 15000.00  */}
                                 </p>
                               </div>
                             </div>
@@ -463,7 +444,7 @@ function Home() {
                               </div>
                               <div className="user-progress">
                                 <p className="text-success fw-medium mb-0 d-flex justify-content-center gap-1">
-                                  Rs. 15000.00 
+                                  {/* Rs. 15000.00  */}
                                 </p>
                               </div>
                             </div>
@@ -481,7 +462,7 @@ function Home() {
                               </div>
                               <div className="user-progress">
                                 <p className="text-success fotns_sizee fw-medium mb-0 d-flex align-items-center gap-1">
-                                   Rs. 15000.00 
+                                   {/* Rs. 15000.00  */}
                                 </p>
                               </div>
                             </div>
@@ -557,7 +538,7 @@ function Home() {
                       className="panel-title"
                       style={{ maxWidth: "calc(100% - 0px)" }}
                     >
-                      <h5>Lastest Version Features</h5>
+                      <h5>Next Version Features</h5>
                     </div>
                   </div>
                   <div className="card-body">
@@ -573,8 +554,8 @@ function Home() {
                           {/* <small className="text-muted">Direct link click</small> */}
                         </div>
                         <div className="d-flex align-items-center">
-                          <p className="mb-0">1.2k</p>
-                          <div className="ms-3 badge bg-label-success">+4.2%</div>
+                          {/* <p className="mb-0">1.2k</p>
+                          <div className="ms-3 badge bg-label-success">+4.2%</div> */}
                         </div>
                       </div>
                     </div>
@@ -590,8 +571,8 @@ function Home() {
                        
                         </div>
                         <div className="d-flex align-items-center">
-                          <p className="mb-0">31.5k</p>
-                          <div className="ms-3 badge bg-label-success">+8.2%</div>
+                          {/* <p className="mb-0">31.5k</p>
+                          <div className="ms-3 badge bg-label-success">+8.2%</div> */}
                         </div>
                       </div>
                     </div>
@@ -607,8 +588,8 @@ function Home() {
                       
                         </div>
                         <div className="d-flex align-items-center">
-                          <p className="mb-0">893</p>
-                          <div className="ms-3 badge bg-label-success">+2.4%</div>
+                          {/* <p className="mb-0">893</p>
+                          <div className="ms-3 badge bg-label-success">+2.4%</div> */}
                         </div>
                       </div>
                     </div>
@@ -624,8 +605,8 @@ function Home() {
                           
                         </div>
                         <div className="d-flex align-items-center">
-                          <p className="mb-0">342</p>
-                          <div className="ms-3 badge bg-label-danger">-0.4%</div>
+                          {/* <p className="mb-0">342</p>
+                          <div className="ms-3 badge bg-label-danger">-0.4%</div> */}
                         </div>
                       </div>
                     </div>
@@ -642,8 +623,8 @@ function Home() {
                           
                         </div>
                         <div className="d-flex align-items-center">
-                          <p className="mb-0">342</p>
-                          <div className="ms-3 badge bg-label-danger">-0.4%</div>
+                          {/* <p className="mb-0">342</p>
+                          <div className="ms-3 badge bg-label-danger">-0.4%</div> */}
                         </div>
                       </div>
                     </div>

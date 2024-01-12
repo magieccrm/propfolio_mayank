@@ -9,6 +9,7 @@ import { getAllStatus } from "../../features/statusSlice";
 import { addlead } from "../../features/leadSlice";
 import { getAllAgent } from "../../features/agentSlice";
 import axios from "axios";
+import { Button } from "bootstrap";
 
 
 export default function ImportLead() {
@@ -48,13 +49,20 @@ export default function ImportLead() {
     dispatch(getStatebycountry(data));
   };
 
-  
-
+  const allowedFileTypes = ["text/csv"];
   const filesety = (e) => {
     const selectedFile = e.target.files && e.target.files[0];
+
     if (selectedFile) {
-      setFile(selectedFile);
+      if (allowedFileTypes.includes(selectedFile.type)) {
+        setFile(selectedFile);
+      } else {
+        toast.error("Invalid file type");
+      }
     }
+    // if (selectedFile) {
+    //   setFile(selectedFile);
+    // }
   };
 
 
@@ -110,11 +118,8 @@ export default function ImportLead() {
     formData.append('country', country);
     formData.append('assign_to_agent', assignToAgent);
     formData.append('state', state);
-  
-
-    console.log(leadSource)
-    try {
-      const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/import', {
+   try {
+      const response = await fetch('https://crm-backend1-awl0.onrender.com/api/v1/import', {
         method: 'POST',
         body: formData,
       });
@@ -122,7 +127,7 @@ export default function ImportLead() {
       const data = await response.json();
       toast.success(data.message)
       setTimeout(()=>{ 
-        window.location.reload(false);
+      //  window.location.reload(false);
         }, 500); 
       console.log('API Response:', data);
     } catch (error) {
@@ -131,6 +136,18 @@ export default function ImportLead() {
       console.error('Error:', error.message);
     }
   };
+
+  const handleDownload = () => {
+   const fileUrl = 'Excel/dddddd.csv';
+   const link = document.createElement('a');
+    link.href = fileUrl;
+    link.target = '_blank';
+    link.download = 'filename.csv'; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
 
   return (
     <div>
@@ -151,15 +168,14 @@ export default function ImportLead() {
                       <div className="cards">
                         <div className="card-headers">
                           <div className="importa-leading">
-                            <div className="col-md-4">
+                          <div className="row"><div className="col-md-4">
                               <div className="form-group">
                                 <lable className="imprt-lable">
-                                  {" "}
                                   Select File  (CSV File)
                                 </lable>
                               </div>
                             </div>
-                            <div className="col-md-8">
+                            <div className="col-md-4">
                               <div className="form-group">
                                 <input
                                   name="file"
@@ -169,6 +185,15 @@ export default function ImportLead() {
                                   required />
                               </div>
                             </div>
+                            <div className="col-md-4">
+                              <div className="form-group">
+                                <button type="button" onClick={handleDownload} className="btn btn-danger button-57">
+                                 Download Sample File
+                                </button>
+                              </div>
+                            </div></div>
+                            
+
                           </div>
                           <div className="row">
                             <div className="col-md-6">
@@ -300,6 +325,8 @@ export default function ImportLead() {
                 </div>
               </div>
             </div>
+
+           
           </div>
         </section>
       </div>

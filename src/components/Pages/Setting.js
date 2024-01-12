@@ -4,6 +4,7 @@ import {
   addleadSource,
   getAllLeadSource,
   DeleteLeadSource,
+  EditLeadSourceDetails,
 } from "../../features/leadSource";
 import { toast } from "react-toastify";
 import {
@@ -23,7 +24,7 @@ import {
   addLostReason,
   getAllLostReason,
   deleteLostReason,
-  LostReason,
+  EditLostReason,
 } from "../../features/lostreasonSlice";
 import Loader from "../Loader";
 import axios from "axios";
@@ -43,17 +44,26 @@ function Setting() {
   const dispatch = useDispatch();
   const [data, setData] = useState({});
   const [agents, setagent] = useState({});
-  const [status, setStatus] = useState({});
+  //const [status, setStatus] = useState({});
   const [lostreasonset, setlostreasonset] = useState({});
   const [none, setblock] = useState("contents");
 
   const submitleadsource = async (e) => {
     e.preventDefault();
-    const aaaa = await dispatch(addleadSource(data));
-    if (aaaa.payload.success === true) {
-      toast.success(aaaa.payload.message);
+    if (data._id) {
+      const aaaaa = await dispatch(EditLeadSourceDetails(data));
+      if (aaaaa.payload.success === true) {
+        toast.success("Update Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
     } else {
-      toast.warn(aaaa.payload.message);
+      const aaaa = await dispatch(addleadSource(data));
+      if (aaaa.payload.success === true) {
+        toast.success(aaaa.payload.message);
+      } else {
+        toast.warn(aaaa.payload.message);
+      }
     }
   };
 
@@ -73,7 +83,6 @@ function Setting() {
   });
   const agentSubmit = async (e) => {
     e.preventDefault();
-
     if (formData._id) {
       const aaaaa = await dispatch(EditAgentDetails(formData));
       if (aaaaa.payload.success === true) {
@@ -90,7 +99,6 @@ function Setting() {
         toast.warn("There are some problem");
       }
     }
-
     setFormData({
       _id: "",
       agent_name: "",
@@ -102,14 +110,25 @@ function Setting() {
   };
 
   const editagent = async (_id) => {
-    const selectedData = agent?.agent.find((item) => item._id === _id);
+    const selectedData = await agent?.agent.find((item) => item._id === _id);
     setFormData(selectedData);
   };
   const editstatus = async (_id) => {
-    const selectedData = Statusdata?.leadstatus.find((item) => item._id === _id);
+    const selectedData = await Statusdata?.leadstatus.find(
+      (item) => item._id === _id
+    );
     setformDatastatus(selectedData);
   };
-  console.log(formDatastatus)
+  const editleadsource = async (_id) => {
+    const selectedData = await leadSourcedata.leadSource.find(
+      (item) => item._id === _id
+    );
+    setData(selectedData);
+  };
+  const editLeadReason = async (_id) => {
+    const selectedData = await lostreason.find((item) => item._id === _id);
+    setlostreasonset(selectedData); 
+  };
 
   const submitStatus = async (e) => {
     e.preventDefault();
@@ -117,10 +136,10 @@ function Setting() {
       const aaaa = await dispatch(EditStatusDetails(formDatastatus));
       if (aaaa.payload.success === true) {
         toast.success("Status Edit Successfully");
-       } else {
+      } else {
         toast.warn("There are some problem");
       }
-    }else{
+    } else {
       const { _id, ...newstaus } = await formDatastatus;
       const aaaa = await dispatch(addStatus(newstaus));
       console.log(aaaa);
@@ -130,22 +149,31 @@ function Setting() {
         toast.warn("There are some problem");
       }
     }
-  
+
     setformDatastatus({
       _id: "",
-    status_name: "",
-    status_name1: "",
+      status_name: "",
+      status_name1: "",
     });
   };
 
   const LostReasonSave = async (e) => {
     e.preventDefault();
-    const aaaa = await dispatch(addLostReason(lostreasonset));
-    //console.log(aaaa)
-    if (aaaa.payload.success === true) {
-      toast.success("Lost Reason add Successfully");
+      console.log('lostreasonset',lostreasonset)
+    if (lostreasonset._id) {
+      const aaaa = await dispatch(EditLostReason(lostreasonset));
+      if (aaaa.payload.success === true) {
+        toast.success("Lost Reason Update Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
     } else {
-      toast.warn("There are some problem");
+      const aaaa = await dispatch(addLostReason(lostreasonset));
+      if (aaaa.payload.success === true) {
+        toast.success("Lost Reason add Successfully");
+      } else {
+        toast.warn("There are some problem");
+      }
     }
   };
 
@@ -194,50 +222,49 @@ function Setting() {
     }
   };
 
-  const datafomate=(date)=>{
+  const datafomate = (date) => {
     const dateTime = new Date(date);
-   const formattedDate = dateTime.toLocaleDateString();
-     return `${formattedDate}`;
-   }
+    const formattedDate = dateTime.toLocaleDateString();
+    return `${formattedDate}`;
+  };
 
-   const datafomate1=(date)=>{
+  const datafomate1 = (date) => {
     const originalDate = new Date(date);
-     originalDate.setFullYear(originalDate.getFullYear() + 1);
-     return `${originalDate.toLocaleDateString()}`;
-   }
+    originalDate.setFullYear(originalDate.getFullYear() + 1);
+    return `${originalDate.toLocaleDateString()}`;
+  };
 
-   const Plan=(data)=>{
-    
-      if(data==10){
-        return `Basic`;
-      }
-      if(data==30){
-        return `Premium`;
-      }
-      if(data==50){
-        return `Silver`;
-      }
-      if(data==500){
-        return `Gold`;
-      }
-   }
-  const [companydetails,setcompanydetails]=useState({
+  const Plan = (data) => {
+    if (data == 10) {
+      return `Basic`;
+    }
+    if (data == 30) {
+      return `Premium`;
+    }
+    if (data == 50) {
+      return `Silver`;
+    }
+    if (data == 500) {
+      return `Gold`;
+    }
+  };
+  const [companydetails, setcompanydetails] = useState({
     company_name: "",
     contact_person: "",
     company_email: "",
     company_mobile: "",
     website_name: "",
-    company_pan:"",
+    company_pan: "",
     company_address: "",
     company_zip_code: "",
     company_city: "",
     company_state: "",
     company_country: "",
-    company_gst:"",
-   });
-   const CompanyDetailSubmit=async(e)=>{
+    company_gst: "",
+  });
+  const CompanyDetailSubmit = async (e) => {
     e.preventDefault();
-     fetch("https://crm-backend1-awl0.onrender.com/api/v1/CompanyDetails/", {
+    fetch("https://crm-backend1-awl0.onrender.com/api/v1/CompanyDetails/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -251,36 +278,33 @@ function Setting() {
         return response.json();
       })
       .then((data) => {
-         toast.success(data?.message);
+        toast.success(data?.message);
         console.log("Response from server:", data);
         setcompanydetails(data?.setting);
-        
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
-    }
+  };
 
-    const GetCompanyDetails = async () => {
-          try {
-            const responce=await axios.get(`https://crm-backend1-awl0.onrender.com/api/v1/GetCompanyDetails`);
-            if(responce?.data?.success===true){ 
-              console.log(responce.data.setting?.['0'])
-              setcompanydetails(responce?.data?.setting?.['0']);
-             }
-            if(responce?.data?.success===false){
+  const GetCompanyDetails = async () => {
+    try {
+      const responce = await axios.get(
+        `https://crm-backend1-awl0.onrender.com/api/v1/GetCompanyDetails`
+      );
+      if (responce?.data?.success === true) {
+        console.log(responce.data.setting?.["0"]);
+        setcompanydetails(responce?.data?.setting?.["0"]);
+      }
+      if (responce?.data?.success === false) {
         setcompanydetails(responce?.data?.setting);
-            }
-           } catch (error) {
-            
-          }
-    }
+      }
+    } catch (error) {}
+  };
 
-    useEffect(()=>{
-        GetCompanyDetails();
-
-    },[])
-
+  useEffect(() => {
+    GetCompanyDetails();
+  }, []);
 
   return (
     <div className="content-wrapper">
@@ -427,7 +451,7 @@ function Setting() {
                             aria-selected="false"
                           >
                             <i className="fa fa-sign" aria-hidden="true" />
-                             Subscription
+                            Subscription
                           </a>
                         </li>
                         <li>
@@ -453,21 +477,24 @@ function Setting() {
                           role="tabpanel"
                           aria-labelledby="v-pills-account-tab"
                         >
-                          <form
-                             onSubmit={CompanyDetailSubmit}
-                          >
+                          <form onSubmit={CompanyDetailSubmit}>
                             <div className="row">
                               <div className="col-sm-6 col-xs-12 pd-0t">
                                 <div className="cardses">
                                   <div className="row pt-3">
                                     <div className="col-md-5 pd-top">
-                                      <label>Company Name  </label>
+                                      <label>Company Name </label>
                                     </div>
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        value={companydetails?.company_name}
-                                        onChange={(e)=>setcompanydetails({...companydetails,company_name:e.target.value})} 
+                                          value={companydetails?.company_name}
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_name: e.target.value,
+                                            })
+                                          }
                                           type="text"
                                           name="company_name"
                                           className="form-control"
@@ -482,13 +509,18 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        value={companydetails?.contact_person}
-                                        onChange={(e)=>setcompanydetails({...companydetails,contact_person:e.target.value})}  
+                                          value={companydetails?.contact_person}
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              contact_person: e.target.value,
+                                            })
+                                          }
                                           type="text"
                                           name="contact_person"
                                           className="form-control"
-                                           placeholder="Contact Person"
-                                           autoComplete="off"
+                                          placeholder="Contact Person"
+                                          autoComplete="off"
                                         />
                                       </div>
                                     </div>
@@ -500,7 +532,12 @@ function Setting() {
                                         <input
                                           type="text"
                                           value={companydetails?.company_email}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_email:e.target.value})}                        
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_email: e.target.value,
+                                            })
+                                          }
                                           name="company_email"
                                           className="form-control"
                                           placeholder="Email ID"
@@ -517,7 +554,12 @@ function Setting() {
                                         <input
                                           type="number"
                                           value={companydetails?.company_mobile}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_mobile:e.target.value})}                             
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_mobile: e.target.value,
+                                            })
+                                          }
                                           name="company_mobile"
                                           className="form-control"
                                           placeholder="Contact No"
@@ -533,11 +575,15 @@ function Setting() {
                                         <input
                                           type="text"
                                           value={companydetails?.website_name}
-                                          onChange={(e)=>setcompanydetails({...companydetails,website_name:e.target.value})}  
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              website_name: e.target.value,
+                                            })
+                                          }
                                           name="website_name"
                                           className="form-control"
                                           placeholder="Website Name"
-                                         
                                           autoComplete="off"
                                         />
                                       </div>
@@ -550,7 +596,12 @@ function Setting() {
                                         <input
                                           type="text"
                                           value={companydetails?.company_pan}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_pan:e.target.value})}  
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_pan: e.target.value,
+                                            })
+                                          }
                                           name="company_pan"
                                           className="form-control"
                                           placeholder="PAN Number"
@@ -558,7 +609,6 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                   
                                   </div>
                                 </div>
                               </div>
@@ -572,14 +622,19 @@ function Setting() {
                                       <div className="form-group">
                                         <textarea
                                           type="text"
-                                          value={companydetails?.company_address}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_address:e.target.value})}                 
+                                          value={
+                                            companydetails?.company_address
+                                          }
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_address: e.target.value,
+                                            })
+                                          }
                                           name="company_address"
                                           className="form-control"
                                           placeholder="Company Address"
                                           rows={1}
-                                         
-                                         
                                         />
                                       </div>
                                     </div>
@@ -591,8 +646,15 @@ function Setting() {
                                         <input
                                           type="text"
                                           name="company_zip_code"
-                                          value={companydetails?.company_zip_code}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_zip_code:e.target.value})}      
+                                          value={
+                                            companydetails?.company_zip_code
+                                          }
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_zip_code: e.target.value,
+                                            })
+                                          }
                                           className="form-control"
                                           placeholder="Pincode"
                                           autoComplete="off"
@@ -607,10 +669,15 @@ function Setting() {
                                         <input
                                           type="text"
                                           value={companydetails?.company_city}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_city:e.target.value})}      
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_city: e.target.value,
+                                            })
+                                          }
                                           name="company_city"
                                           className="form-control"
-                                         placeholder="City"
+                                          placeholder="City"
                                           autoComplete="off"
                                         />
                                       </div>
@@ -624,9 +691,14 @@ function Setting() {
                                           type="text"
                                           name="company_state"
                                           value={companydetails?.company_state}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_state:e.target.value})}      
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_state: e.target.value,
+                                            })
+                                          }
                                           className="form-control"
-                                           placeholder="City"
+                                          placeholder="City"
                                           autoComplete="off"
                                         />
                                       </div>
@@ -636,14 +708,20 @@ function Setting() {
                                     </div>
                                     <div className="col-md-7">
                                       <div className="form-group">
-                                   
                                         <input
                                           type="text"
-                                          value={companydetails?.company_country}
-                                          onChange={(e)=>setcompanydetails({...companydetails,company_country:e.target.value})}      
+                                          value={
+                                            companydetails?.company_country
+                                          }
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_country: e.target.value,
+                                            })
+                                          }
                                           name="company_country"
                                           className="form-control"
-                                           placeholder="company_country"
+                                          placeholder="company_country"
                                           autoComplete="off"
                                         />
                                       </div>
@@ -656,7 +734,12 @@ function Setting() {
                                         <input
                                           type="text"
                                           value={companydetails?.company_gst}
-                                onChange={(e)=>setcompanydetails({...companydetails,company_gst:e.target.value})}
+                                          onChange={(e) =>
+                                            setcompanydetails({
+                                              ...companydetails,
+                                              company_gst: e.target.value,
+                                            })
+                                          }
                                           name="company_gst"
                                           className="form-control"
                                           placeholder="Company GST NO"
@@ -1111,7 +1194,7 @@ function Setting() {
                           </div>
                           <table
                             className="table-bordered table dataTable no-footer d-none"
-                            role="grid" 
+                            role="grid"
                           >
                             <thead>
                               <tr role="row">
@@ -2318,7 +2401,7 @@ function Setting() {
                                                       ></input>
                                                     </td>
                                                     <td className="sorting_1">
-                                                     {lllll}{" "}
+                                                      {lllll}{" "}
                                                     </td>
                                                     <td>
                                                       <button
@@ -2328,7 +2411,10 @@ function Setting() {
                                                           removeSite(agents._id)
                                                         }
                                                       >
-                                                       <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        <i
+                                                          class="fa fa-trash"
+                                                          aria-hidden="true"
+                                                        ></i>
                                                       </button>
 
                                                       <button
@@ -2338,7 +2424,10 @@ function Setting() {
                                                           editagent(agents._id)
                                                         }
                                                       >
-                                                      <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                                        <i
+                                                          class="fa fa-pencil-square"
+                                                          aria-hidden="true"
+                                                        ></i>
                                                       </button>
                                                     </td>
                                                   </tr>
@@ -2406,6 +2495,7 @@ function Setting() {
                                               type="text"
                                               name="lead_source_name"
                                               required
+                                              value={data.lead_source_name}
                                               onChange={(e) =>
                                                 setData({
                                                   ...data,
@@ -2425,7 +2515,7 @@ function Setting() {
                                               type="submit"
                                               className="button-57"
                                             >
-                                              Submit
+                                              {data._id ? "Edit" : "Submit"}
                                             </button>
                                           </div>
                                         </div>
@@ -2457,18 +2547,6 @@ function Setting() {
                                           <tbody id="lead_source_list">
                                             {leadSourcedata.leadSource?.map(
                                               (country1, index) => {
-                                                // const handlesourceDelete = () => {
-                                                //   const confirmDelete1 = window.confirm('Are you sure you want to delete this product/service?');
-
-                                                //   if (confirmDelete1) {
-                                                //     dispatch(deleteLeadSource(country1?._id));
-                                                //     toast.success('Delete Successfully');
-                                                //   } else {
-                                                //     toast.success('Delete Canceled');
-                                                //     console.log('Delete canceled');
-                                                //   }
-                                                // };
-
                                                 var sr = index + 1;
                                                 return (
                                                   <tr data-fire="lMTU=">
@@ -2508,6 +2586,20 @@ function Setting() {
                                                       >
                                                         <i className="fa fa-trash" />
                                                       </button>
+                                                      <button
+                                                        type="button"
+                                                        onClick={(e) =>
+                                                          editleadsource(
+                                                            country1._id
+                                                          )
+                                                        }
+                                                        className="btn btn-info btn-xs"
+                                                      >
+                                                        <i
+                                                          className="fa fa-pencil-square-o"
+                                                          aria-hidden="true"
+                                                        ></i>
+                                                      </button>
                                                     </td>
                                                   </tr>
                                                 );
@@ -2534,7 +2626,9 @@ function Setting() {
                                           <div className="form-group">
                                             <input
                                               type="text"
-                                              value={formDatastatus?.status_name}
+                                              value={
+                                                formDatastatus?.status_name
+                                              }
                                               name="status_name"
                                               id="lead_source"
                                               required
@@ -2554,11 +2648,13 @@ function Setting() {
                                           <div className="form-group">
                                             <input
                                               type="text"
-                                              value={formDatastatus?.status_name1}
+                                              value={
+                                                formDatastatus?.status_name1
+                                              }
                                               name="status_name1"
                                               id="lead_source"
                                               onChange={(e) =>
-                                                setformDatastatus({  
+                                                setformDatastatus({
                                                   ...formDatastatus,
                                                   status_name1: e.target.value,
                                                 })
@@ -2568,7 +2664,7 @@ function Setting() {
                                               autoComplete="off"
                                             />
                                           </div>
-                                        </div> 
+                                        </div>
                                         <div className="col-md-4">
                                           <div className="resets-button">
                                             <button
@@ -2576,8 +2672,9 @@ function Setting() {
                                               name="submit"
                                               className="button-57 bg_colores "
                                             >
-                                                 {formDatastatus._id ? "Edit" : "Add"}
-                                              
+                                              {formDatastatus._id
+                                                ? "Edit"
+                                                : "Add"}
                                             </button>
                                           </div>
                                         </div>
@@ -2595,7 +2692,7 @@ function Setting() {
                                           defaultValue="lead_source"
                                           autoComplete="off"
                                         />
-                                        
+
                                         <table
                                           className="table table-bordered table-hover"
                                           id="lstable"
@@ -2611,6 +2708,34 @@ function Setting() {
                                           <tbody id="lead_source_list">
                                             {Statusdata.leadstatus?.map(
                                               (state, key) => {
+                                                const getStatusBadgeClass = (
+                                                  statusName
+                                                ) => {
+                                                  switch (statusName) {
+                                                    case "6561c3a433093ed343745a2f": {
+                                                      return "d-none";
+                                                    }
+                                                    case "6561c41433093ed343745a36": {
+                                                      return "d-none";
+                                                    }
+                                                    case "659e5d41ae693b63bf17d801": {
+                                                      return "d-none";
+                                                    }
+                                                    case "659e5d63ae693b63bf17d803": {
+                                                      return "d-none";
+                                                    }
+                                                    case "6539fa950b9756b61601287b": {
+                                                      return "d-none";
+                                                    }
+                                                    case "6561c44233093ed343745a3e": {
+                                                      return "d-none";
+                                                    }
+
+                                                    default:
+                                                      return ""; // Default class for other statuses
+                                                  }
+                                                };
+
                                                 const handleStatusDelete =
                                                   () => {
                                                     const confirmDelete =
@@ -2655,26 +2780,25 @@ function Setting() {
                                                     </td>
                                                     <td>
                                                       <button
-                    type="button"
-                    onClick={(e) =>
-                      editstatus(state._id)
-                    }
-                    className="btn btn-info btn-xs"
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-
-                  </button>
+                                                        type="button"
+                                                        onClick={(e) =>
+                                                          editstatus(state._id)
+                                                        }
+                                                        className="btn btn-info btn-xs"
+                                                      >
+                                                        <i
+                                                          className="fa fa-pencil-square-o"
+                                                          aria-hidden="true"
+                                                        ></i>
+                                                      </button>
                                                       <button
                                                         type="button"
                                                         onClick={
                                                           handleStatusDelete
                                                         }
-                                                        // onClick={(e) => {
-                                                        //   dispatch(
-                                                        //     deleteStatus(state._id)
-                                                        //   );
-                                                        // }}
-                                                        className="btn btn-danger btn-xs"
+                                                        className={`btn btn-danger btn-xs ${getStatusBadgeClass(
+                                                          state._id
+                                                        )}`}
                                                       >
                                                         <i className="fa fa-trash" />
                                                       </button>
@@ -2704,9 +2828,12 @@ function Setting() {
                                           <div className="form-group">
                                             <input
                                               type="text"
+                                              value={
+                                                lostreasonset?.lost_reason_name
+                                              }
                                               onChange={(e) =>
                                                 setlostreasonset({
-                                                  ...status,
+                                                  ...lostreasonset,
                                                   lost_reason_name:
                                                     e.target.value,
                                                 })
@@ -2726,7 +2853,9 @@ function Setting() {
                                               name="submit"
                                               className="button-57"
                                             >
-                                              Submit
+                                              {lostreasonset._id
+                                                ? "Edit"
+                                                : "Submit"}
                                             </button>
                                           </div>
                                         </div>
@@ -2756,7 +2885,7 @@ function Setting() {
                                                   async () => {
                                                     const confirmDelete1 =
                                                       window.confirm(
-                                                        "Are you sure you want to delete this product/service?"
+                                                        "Are you sure you want to delete this Lead Reason?"
                                                       );
 
                                                     if (confirmDelete1) {
@@ -2808,16 +2937,23 @@ function Setting() {
                                                         onClick={
                                                           handleReasonDelete
                                                         }
-                                                        // onClick={(e) => {
-                                                        //   dispatch(
-                                                        //     deleteLostReason(
-                                                        //       lostreason1._id
-                                                        //     )
-                                                        //   );
-                                                        // }}
-                                                        className="btn btn-danger btn-xs"
+                                                              className="btn btn-danger btn-xs"
                                                       >
                                                         <i className="fa fa-trash" />
+                                                      </button>
+                                                      <button
+                                                        type="button"
+                                                        onClick={(e) =>
+                                                          editLeadReason(
+                                                            lostreason1._id
+                                                          )
+                                                        }
+                                                        className="btn btn-info btn-xs"
+                                                      >
+                                                        <i
+                                                          className="fa fa-pencil-square-o"
+                                                          aria-hidden="true"
+                                                        ></i>
                                                       </button>
                                                     </td>
                                                   </tr>
@@ -3141,7 +3277,7 @@ function Setting() {
                                                     <tr data-of="Ng==">
                                                       <td>
                                                         <span data-take="fNg==">
-                                                          Company Name 
+                                                          Company Name
                                                         </span>
                                                         <input
                                                           type="hidden"
@@ -4046,9 +4182,9 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
+                                          disabled
                                           type="text"
-                                          value={hostings['0']?.name}
+                                          value={hostings["0"]?.name}
                                           name="company_name"
                                           className="form-control"
                                           defaultValue="MAGIEC ADVERTIZEMENT"
@@ -4064,8 +4200,8 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
-                                         value={hostings['0']?.mobile}
+                                          disabled
+                                          value={hostings["0"]?.mobile}
                                           type="text"
                                           name="contact_person"
                                           className="form-control"
@@ -4082,8 +4218,10 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
-                                         value={datafomate(hostings['0']?.createdAt)}
+                                          disabled
+                                          value={datafomate(
+                                            hostings["0"]?.createdAt
+                                          )}
                                           type="text"
                                           name="contact_person"
                                           className="form-control"
@@ -4101,8 +4239,8 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
-                                         value={Plan(hostings['0']?.Package)}
+                                          disabled
+                                          value={Plan(hostings["0"]?.Package)}
                                           type="text"
                                           name="contact_person"
                                           className="form-control"
@@ -4111,9 +4249,6 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                   
-
-                                 
                                   </div>
                                 </div>
                               </div>
@@ -4128,7 +4263,7 @@ function Setting() {
                                         <input
                                           type="text"
                                           disabled
-                                          value={hostings['0']?.domain}
+                                          value={hostings["0"]?.domain}
                                           name="company_address"
                                           className="form-control"
                                           placeholder="Company Address"
@@ -4148,10 +4283,9 @@ function Setting() {
                                         <input
                                           type="text"
                                           disabled
-                                          value={hostings['0']?.email}
+                                          value={hostings["0"]?.email}
                                           name="company_zip_code"
                                           className="form-control"
-                                       
                                           placeholder="Pincode"
                                           required
                                           autoComplete="off"
@@ -4164,8 +4298,10 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
-                                       value={datafomate1(datafomate(hostings['0']?.createdAt))}
+                                          disabled
+                                          value={datafomate1(
+                                            datafomate(hostings["0"]?.createdAt)
+                                          )}
                                           type="text"
                                           name="company_zip_code"
                                           className="form-control"
@@ -4182,8 +4318,8 @@ function Setting() {
                                     <div className="col-md-7">
                                       <div className="form-group">
                                         <input
-                                        disabled
-                                       value={hostings['0']?.states}
+                                          disabled
+                                          value={hostings["0"]?.states}
                                           type="text"
                                           name="company_zip_code"
                                           className="form-control"
@@ -4194,14 +4330,12 @@ function Setting() {
                                         />
                                       </div>
                                     </div>
-                                   
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </form>
                         </div>
-
                       </div>
                     </div>
                   </div>

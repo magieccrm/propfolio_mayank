@@ -5,7 +5,6 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
 /////////add strtus
    export const addLostReason=createAsyncThunk("addLostReason",async(data,{rejectWithValue})=>{
-           
         const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_lead_reason/",{
             method:"POST",
             headers:{     
@@ -14,15 +13,31 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
                body:JSON.stringify(data)
         })  
         const result=await responce.json();
-        
       if(result.success===true){  
-           
          return result;
     }else{  
         return rejectWithValue(result.message);
     }  
     
    });
+
+   ///////////// Lostreason Update 
+   export const EditLostReason=createAsyncThunk("EditLostReason",async(data,{rejectWithValue})=>{
+
+    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/update_lead_reason/${data._id}`,{
+        method:"PUT",
+        headers:{     
+            "Content-Type":"application/json",
+           }, 
+           body:JSON.stringify(data)
+    })  
+    const result=await responce.json();
+    if(result.success===true){    
+        return result;   
+   }else{  
+       return rejectWithValue(result.message); 
+   }  
+   })
 
    ////////get app status 
    export const getAllLostReason=createAsyncThunk("getAllLostReason",async(dara,{rejectWithValue})=>{
@@ -83,6 +98,21 @@ export const LostReason=createSlice({
            state.loading=false;
            state.LostReasondata=action.payload; 
        }, 
+
+       ////update Lost Reason details 
+       [EditLostReason.pending]:(state)=>{
+        state.loading=true; 
+       },
+       [EditLostReason.fulfilled]:(state,action) =>{
+         state.loading=false;     
+         state.LostReasondata.lostreason=state.LostReasondata?.lostreason.map((ele)=>
+                  ele._id===action.payload?.lostreason1._id?action.payload?.lostreason1:ele
+                );
+       },
+      [EditLostReason.rejected]:(state,action) =>{
+      state.loading=false;
+      state.message=action.payload.message; 
+        }, 
        /// get Alll lead Source
        [getAllLostReason.pending]:(state) =>{
         state.loading=true; 

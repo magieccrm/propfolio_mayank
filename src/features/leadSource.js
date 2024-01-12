@@ -24,11 +24,30 @@ import { async } from "q";
     
    });
 
+
+    ///update Lead source api 
+
+    export const EditLeadSourceDetails=createAsyncThunk("EditLeadSourceDetails",async(data,{rejectWithValue})=>{
+   const responce=await fetch(`https://crm-backend1-awl0.onrender.com/api/v1/update_lead_source/${data._id}`,{
+            method:"PUT",
+            headers:{     
+                "Content-Type":"application/json",
+               }, 
+               body:JSON.stringify(data)
+        })  
+        const result=await responce.json();
+        if(result.success===true){    
+            return result;   
+       }else{  
+           return rejectWithValue(result.message); 
+       }  
+       })
+
    export const getAllLeadSource=createAsyncThunk("getAllLeadSource",async(data,{rejectWithValue})=>{
 
     const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_lead_source");
     const result=await responce.json();
-   
+  
     if(result.success===true){    
         return result;   
    }else{  
@@ -82,6 +101,27 @@ export const leadSource=createSlice({
            state.loading=false;
            state.leadSourcedata=action.payload; 
        }, 
+       ////////Update Lead Source 
+       [EditLeadSourceDetails.pending]:(state)=>{
+        state.loading=true; 
+       },
+       [EditLeadSourceDetails.fulfilled]:(state,action) =>{
+        console.log('hfskdjghfj',action.payload)
+        state.loading=false;     
+        state.leadSourcedata.leadSource=state.leadSourcedata.leadSource.map((ele)=>
+                  ele._id===action.payload.leadSource._id?action.payload.leadSource:ele
+                );
+        },
+     [EditLeadSourceDetails.rejected]:(state,action) =>{
+      state.loading=false;
+      state.message=action.payload.message; 
+       }, 
+
+
+
+
+
+
        /// get Alll lead Source
        [getAllLeadSource.pending]:(state) =>{
            state.loading=true; 

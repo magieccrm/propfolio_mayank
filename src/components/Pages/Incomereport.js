@@ -7,41 +7,106 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
+import DataTable from "react-data-table-component";
+import toast from "react-hot-toast";
 
 export default function Incomereport() {
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
   var { agent } = useSelector((state) => state.agent);
-
+  const [leadsource , setleadsource]=useState([]);
+  const [leadsourcedata1 , setleadsourcedata]=useState([]);
   const dispatch = useDispatch();
-  const getAllLeadSourceOverview = async () => {
+  const [llll,setllll]=useState('block');
+  const [llll1,setllll1]=useState('none');
+  const getAllLeadSourceOverview1=async ()=>{
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/Income_Graph_Overview"
+        "https://crm-backend1-awl0.onrender.com/api/v1/EmployeesReportDetail"
       );
-      setdata(responce?.data?.monthlyIncom);
-      let totalamount = 0;
-      data.map((ddddd) => {
-        totalamount += parseInt(ddddd);
-        settotal(totalamount);
-      });
-
-      console.log(responce?.data?.monthlyIncom);
+      setleadsourcedata(responce?.data?.value);
+      setleadsource(responce?.data?.name);
+      
     } catch (error) {
       console.log(error);
     }
+  }
+  useEffect(()=>{
+      getAllLeadSourceOverview1();
+      dispatch(getAllProductService());
+      dispatch(getAllAgent());
+    },[]);
+    const options = {
+      labels: leadsource,
+    };
+
+  
+
+    const [getLeadData, setLeadData] = useState([]);
+  const getEmployeeReport = async (e) => {
+    e.preventDefault();
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const responce = await axios.post(
+        `https://crm-backend1-awl0.onrender.com/api/v1/EmployeesReportDetailByFilter`,
+        data,
+        { headers }
+      );
+      setLeadData(responce?.data?.lead);
+      toast(responce?.data?.message);
+      setllll('none')
+      setllll1('block')
+    } catch (error) {
+      setLeadData();
+      toast(error?.response?.data?.message);
+    }
+  };
+  const columns = [
+    {
+      name: "Sr. No.",
+      selector: (row, index) => index + 1,
+      sortable: true,
+    },
+    {
+      name: "Client Name",
+      selector: (row) => row?.full_name,
+      sortable: true,
+    },
+    {
+      name: "Lead Price",
+      selector: (row) => row?.followup_won_amount,
+      sortable: true,
+    },
+  ];
+  const customStyles = {
+    cells: {
+      style: {
+        border: "1px solid #ddd", // Set the cell border
+        fontSize: "14px",
+      },
+    },
+    headCells: {
+      style: {
+        border: "1px solid #111", // Set the header cell border
+        fontSize: "14px",
+      },
+    },
+    rows: {
+      style: {
+        borderRight: "none", // Remove vertical borders
+      },
+    },
   };
 
-  useEffect(() => {
-    dispatch(getAllProductService());
-    getAllLeadSourceOverview();
-    dispatch(getAllAgent());
-  }, []);
-
-  const getEmployeeReport = async () => {
-    //e.preventDefault();
+  const Refresh = () => {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
   };
+
 
   return (
     <div>
@@ -62,13 +127,20 @@ export default function Incomereport() {
                 <div className="pt-3">
                   <div className="  bg-white">
                   <div className="col-sm-12 col-md-12 col-xs-12">
-                    <div className="cards pt-3 d-none">
+                    <div className="cards pt-3 ">
                       <div className="serach-lists" style={{ padding: 0 }}>
-                        <form onSubmit={getEmployeeReport()}>
+                        <form onSubmit={getEmployeeReport}>
                           <div className="row">
                             <div className="col-md-4">
                               <div className="form-group">
-                                <select className="form-control" name="product">
+                                <select className="form-control"
+                                   onChange={(e) =>
+                                    setdata({
+                                      ...data,
+                                      service: e.target.value,
+                                    })
+                                  }
+                                name="service">
                                   <option value="">Select product</option>
 
                                   {ProductService?.product_service?.map(
@@ -89,7 +161,13 @@ export default function Incomereport() {
                               <div className="form-group">
                                 <select
                                   className="form-control"
-                                  name="employee"
+                                  name="agent"
+                                  onChange={(e) =>
+                                    setdata({
+                                      ...data,
+                                      agent: e.target.value,
+                                    })
+                                  }
                                 >
                                   <option value="">Select Employee</option>
 
@@ -106,7 +184,13 @@ export default function Incomereport() {
                             <div className="col-md-3">
                               <div className="form-group">
                                 <input
-                                  name="start_date"
+                                  name="startDate"
+                                  onChange={(e) =>
+                                    setdata({
+                                      ...data,
+                                      startDate: e.target.value,
+                                    })
+                                  }
                                   placeholder="Choose Date From"
                                   type="date"
                                   className="form-control"
@@ -118,7 +202,13 @@ export default function Incomereport() {
                             <div className="col-md-3">
                               <div className="form-group">
                                 <input
-                                  name="end_date"
+                                  onChange={(e) =>
+                                    setdata({
+                                      ...data,
+                                      endDate: e.target.value,
+                                    })
+                                  }
+                                  name="endDate"
                                   placeholder="Choose Date To"
                                   type="date"
                                   className="form-control"
@@ -131,9 +221,19 @@ export default function Incomereport() {
                               <div className="form-group">
                                 <button
                                   type="submit"
-                                  className="btn btn-success form-control"
+                                  className="btn btn-success button-57 form-control"
                                 >
                                   Submit
+                                </button>
+                              </div>
+                            </div>
+                            <div className="col-md-2 col-sm-12"  style={{ display:llll1}} >
+                              <div className="form-group">
+                                <button onClick={Refresh}
+                                  type="button"
+                                  className="btn btn-success button-57 form-control"
+                                >
+                                  Refresh
                                 </button>
                               </div>
                             </div>
@@ -144,77 +244,27 @@ export default function Incomereport() {
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <LineChart1 />
+                    <div className="col-lg-6 mx-auto">
+                        <Chart  options={options} series={leadsourcedata1} type="pie"  
+                        style={{width:'500px',height:'500px', display:llll}} />  
+                        </div>
                     </div>
                   </div>
                   <div className="card-headers">
-                    <div className="table-responsive mob-bord">
-                      <table
-                        className="table table-bordered table-hover"
-                        id="irtable"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Month</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Jan</td>
-                            <td>Rs. {data["0"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Feb</td>
-                            <td>Rs. {data["1"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Mar</td>
-                            <td>Rs. {data["2"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Apr</td>
-                            <td>Rs. {data["3"]}</td>
-                          </tr>
-                          <tr>
-                            <td>May</td>
-                            <td>Rs. {data["4"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Jun</td>
-                            <td>Rs. {data["5"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Jul</td>
-                            <td>Rs. {data["6"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Aug</td>
-                            <td>Rs. {data["7"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Sept</td>
-                            <td>Rs. {data["8"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Oct</td>
-                            <td>Rs. {data["9"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Nov</td>
-                            <td>Rs. {data["10"]}</td>
-                          </tr>
-                          <tr>
-                            <td>Dec</td>
-                            <td>Rs. {data["11"]}</td>
-                          </tr>
-                          <tr style={{ background: "#000", color: "#fff" }}>
-                            <td>Total</td>
-                            <td>Rs. {total}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <DataTable
+                          className="custom-datatable"
+                          responsive
+                          id="table-to-export"
+                          columns={columns}
+                          data={getLeadData}
+                          pagination
+                          fixedHeader
+                          fixedHeaderScrollHeight="550px"
+                          selectableRowsHighlight
+                          highlightOnHover
+                          subHeader
+                          customStyles={customStyles}
+                        />
                   </div>
                 </div>
               </div></div>

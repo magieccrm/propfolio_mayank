@@ -100,11 +100,7 @@ export const AllCallLogtable = () => {
           color: row.type="UNKNOWN"?'red':row.type="INCOMING"?'green':row.type="OUTGOING"?'yellow':'red', 
         })  
        },  
-       {
-        name: "RawType",
-        selector: (row) => row?.rawtype,
-        sortable: true,
-       },
+      
     ];
   
     

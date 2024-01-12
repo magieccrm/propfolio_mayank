@@ -10,23 +10,21 @@ import { getAllAgent } from "../../features/agentSlice";
 import DataTable from "react-data-table-component";
 export default function Callreport() {
   const [data, setdata] = useState([]);
+  const [data1, setdata1] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
   var { agent } = useSelector((state) => state.agent);
-
+  const [llll,setllll]=useState('block');
+  const [llll1,setllll1]=useState('none');
   const dispatch = useDispatch();
-  const getAllLeadSourceOverview = async () => {
+  const getAllCallDetails = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/Income_Graph_Overview"
+        "https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogById/"
       );
-      setdata(responce?.data?.monthlyIncom);
-      let totalamount = 0;
-      data.map((ddddd) => {
-        totalamount += parseInt(ddddd);
-        settotal(totalamount);
-      });
-
+      setdata(responce?.data?.username);
+      setdata1(responce?.data?.value);
+     
       console.log(responce?.data?.monthlyIncom);
     } catch (error) {
       console.log(error);
@@ -34,10 +32,9 @@ export default function Callreport() {
   };
 
   useEffect(() => {
-    // dispatch(getAllProductService());
-    //  getAllLeadSourceOverview();
+      getAllCallDetails();
     dispatch(getAllAgent());
-  }, []);
+  }, [getAllCallDetails]);
   const [leads, setleads] = useState([]);
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
@@ -59,6 +56,8 @@ export default function Callreport() {
       console.log(response?.data);
       setleads(response?.data?.CallLogs);
       setfilterleads(response?.data?.CallLogs);
+      setllll('none')
+      setllll1('block')
     } catch (error) {
       console.error(error);
       setfilterleads([]);
@@ -103,7 +102,9 @@ export default function Callreport() {
       }),
     },
   ];
-
+  const options = {
+    labels: data,
+  };
   const customStyles = {
     cells: {
       style: {
@@ -135,7 +136,12 @@ export default function Callreport() {
       },
     },
   };
-
+  const Refresh = () => {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
+  };
+ 
   return (
     <div>
       <div className="content-wrapper">
@@ -231,13 +237,28 @@ export default function Callreport() {
                                       </button>
                                     </div>
                                   </div>
+                                  <div className="col-md-2 col-sm-12"  style={{ display:llll1}} >
+                              <div className="form-group">
+                                <button onClick={Refresh}
+                                  type="button"
+                                  className="btn btn-success button-57 form-control"
+                                >
+                                  Refresh
+                                </button>
+                              </div>
+                            </div>
                                 </div>
                               </form>
                             </div>
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-12"></div>
+                          <div className="col-12">
+                          <div className="col-lg-6 mx-auto">
+                          <Chart  options={options} series={data1} type="pie"  
+                    style={{width:'500px',height:'500px', display:llll}} />  
+</div>
+                          </div>
                         </div>
                         <div className="card-headers">
                           <div className="table-responsive mob-bord">
