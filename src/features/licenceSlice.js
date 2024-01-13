@@ -4,7 +4,7 @@ import axios from "axios";
 // show all data
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
-    const response= await axios.post("https://licencecrm.onrender.com/api/v1/getByDomain", { domain:host });
+    const response= await axios.post("https://www.bizavtar.com/api/v1/getByDomain", { domain:host });
    
     try {
          return response.data.hosting; 
