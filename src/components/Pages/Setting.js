@@ -34,7 +34,7 @@ function Setting() {
     // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
   };
 
-  const { leadSourcedata } = useSelector((state) => state.leadSource);
+  const { leadSourcedata } = useSelector((state) => state?.leadSource);
   var { Statusdata, loading } = useSelector((state) => state.StatusData);
   var { message, agent, loading } = useSelector((state) => state.agent);
   const { hostings } = useSelector((state) => state?.licenceSlice);
@@ -120,7 +120,7 @@ function Setting() {
     setformDatastatus(selectedData);
   };
   const editleadsource = async (_id) => {
-    const selectedData = await leadSourcedata.leadSource.find(
+    const selectedData = await leadSourcedata?.leadSource?.find(
       (item) => item._id === _id
     );
     setData(selectedData);
@@ -2545,7 +2545,7 @@ function Setting() {
                                             </tr>
                                           </thead>
                                           <tbody id="lead_source_list">
-                                            {leadSourcedata.leadSource?.map(
+                                            {leadSourcedata?.leadSource?.map(
                                               (country1, index) => {
                                                 var sr = index + 1;
                                                 return (

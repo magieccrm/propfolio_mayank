@@ -52,35 +52,21 @@ import Callreport from './components/Pages/Callreport';
     }
 
     useEffect(() => {
-     
       const fetchData = async (ddddd) => {
         try {
-          // Perform your API call here
           const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/getLetestnotificat', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              // Add any additional headers if needed
             },
-            // Replace 'your-data' with the actual data you want to send in the request body
             body: JSON.stringify(ddddd), 
           });
-  
           const data = await response.json();
           console.log('API Response:', data);
         } catch (error) {
           console.error('API Error:', error);
         }
       };
-    
-      // Call the API initially
-    //  fetchData(ddddd);
-  
-      // Set up an interval to call the API every minute (60,000 milliseconds)
-    //  const intervalId = setInterval(fetchData, 60000);
-  
-      // Clean up the interval when the component is unmounted
-    //  return () => clearInterval(intervalId);
     }, []); 
    
 
@@ -100,13 +86,7 @@ import Callreport from './components/Pages/Callreport';
    
       checkToken();
     }, []);
-        
-    // const location = useLocation();
-//     const {pathname} = useLocation()
-//   const pathSegments = pathname.split('/').filter(Boolean); 
-//  console.log(pathname)
-
-    if (!isLogined) {   
+        if (!isLogined) {   
       return (           
         <BrowserRouter>   
      
