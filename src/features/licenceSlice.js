@@ -4,7 +4,7 @@ import axios from "axios";
 // show all data
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
-    const response= await axios.post("https://www.bizavtar.com/api/v1/getByDomain", { domain:host });
+    const response= await axios.post("https://crmlicence.bizavtar.com/api/v1/getByDomain", { domain:host });
    
     try {
          return response.data.hosting; 
@@ -18,7 +18,7 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
 
 
 export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
-    const response=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/agent_login",{
+    const response=await fetch("https://backend.bizavtar.com/api/v1/agent_login",{
            method:"POST", 
            headers:{    
             "Content-Type":"application/json",
@@ -26,9 +26,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
            body:JSON.stringify(data)
     });
     const result=await response.json();
-         
-
-         if(result.success===true){
+           if(result.success===true){
             localStorage.setItem('token',result?.token);
             localStorage.setItem('user_id',result?.agent?._id);
             localStorage.setItem('agent_name',result?.agent?.agent_name);
@@ -46,7 +44,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
 
 export const licenceactive=createAsyncThunk("licenceactive",async(data,{rejectWithValue})=>{
      
-    const response=await fetch(`https://licencecrm.onrender.com/api/v1/editHosting/${data._id}`,{
+    const response=await fetch(`https://crmlicence.bizavtar.com/api/v1/editHosting/${data._id}`,{
            method:"PUT",
            headers:{ 
             "Content-Type":"application/json",
