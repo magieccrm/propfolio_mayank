@@ -4,12 +4,13 @@ import {
   isRejectedWithValue,
 } from "@reduxjs/toolkit";
 
-const apiBaseUrl = 'https://crm-backend1-awl0.onrender.com/api/v1';
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export const addlead = createAsyncThunk(
   "addlead",
   async (data, { rejectWithValue }) => {
-    const responce = await fetch(`${apiBaseUrl}/add_lead/`,
+    const responce = await fetch(`${apiUrl}/add_lead/`,
       {
         method: "POST",
         headers: {
@@ -32,7 +33,7 @@ export const getAllLead = createAsyncThunk(
   "getAllLead",
   async (data, { rejectWithValue }) => {
     const responce = await fetch(
-      "https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead"
+      `${apiUrl}/get_all_lead`
     );
     const result = await responce.json();
 
@@ -48,7 +49,7 @@ export const getLeadById1 = createAsyncThunk(
   "getLeadById1",
   async (_id, { rejectWithValue }) => {
      
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/get_lead_by_id/${_id}`,{
+    const responce=await fetch(`${apiUrl}/get_lead_by_id/${_id}`,{
         method:"GET",
 })
     const result = await responce.json();
@@ -65,7 +66,7 @@ export const getLeadById1 = createAsyncThunk(
 
 export const getLeadById=createAsyncThunk("getLeadById",async(_id,{rejectWithValue})=>{
         
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/get_lead_by_id/${_id}`,{
+    const responce=await fetch(`${apiUrl}/get_lead_by_id/${_id}`,{
                       method:"get",
         })
 

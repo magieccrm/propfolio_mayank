@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 /////////add strtus
    export const addLostReason=createAsyncThunk("addLostReason",async(data,{rejectWithValue})=>{
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_lead_reason/",{
+        const responce=await fetch(`${apiUrl}/add_lead_reason/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -24,7 +24,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    ///////////// Lostreason Update 
    export const EditLostReason=createAsyncThunk("EditLostReason",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/update_lead_reason/${data._id}`,{
+    const responce=await fetch(`${apiUrl}/update_lead_reason/${data._id}`,{
         method:"PUT",
         headers:{     
             "Content-Type":"application/json",
@@ -42,7 +42,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    ////////get app status 
    export const getAllLostReason=createAsyncThunk("getAllLostReason",async(dara,{rejectWithValue})=>{
         
-       const resource=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_lead_reason/")
+       const resource=await fetch(`${apiUrl}/all_lead_reason/`)
        const result=await resource.json();
     if(result.success===true){    
         return result;    
@@ -55,7 +55,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const deleteLostReason=createAsyncThunk("deleteLostReason",async(_id,{rejectWithValue})=>{
          
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_lead_reason/${_id}`,{
+    const responce=await fetch(`${apiUrl}/delete_lead_reason/${_id}`,{
                       method:"DELETE",
         })
 

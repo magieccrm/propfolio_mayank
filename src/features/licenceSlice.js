@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
+
 // show all data
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
-    const response= await axios.post("https://crmlicence.bizavtar.com/api/v1/getByDomain", { domain:host });
+    const response= await axios.post(`${apiUrl1}/getByDomain`, { domain:host });
    
     try {
          return response.data.hosting; 
@@ -18,7 +21,7 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
 
 
 export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
-    const response=await fetch("https://backend.bizavtar.com/api/v1/agent_login",{
+    const response=await fetch(`${apiUrl}/agent_login`,{
            method:"POST", 
            headers:{    
             "Content-Type":"application/json",
@@ -44,7 +47,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
 
 export const licenceactive=createAsyncThunk("licenceactive",async(data,{rejectWithValue})=>{
      
-    const response=await fetch(`https://crmlicence.bizavtar.com/api/v1/editHosting/${data._id}`,{
+    const response=await fetch(`${apiUrl1}/editHosting/${data._id}`,{
            method:"PUT",
            headers:{ 
             "Content-Type":"application/json",

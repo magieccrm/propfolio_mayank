@@ -4,7 +4,7 @@ import Header from  "./components/Header";
 import SideNav  from  "./components/SideNav";
 import Home from  "./components/Home";
 import Footer from  "./components/Footer";
-import Login from './components/Login';
+
 import Addlead from './components/Pages/Addlead';
 import Leads from './components/Pages/Leads';
 import Followupleads from './components/Pages/Followupleads';
@@ -20,7 +20,7 @@ import Productservices from './components/Pages/Productservices';
 import ManageEmployee from './components/Pages/ManageEmployee';
 import Manageexcludenos from './components/Pages/Manageexcludenos';
 import ManageUser from './components/Pages/ManageUser';
-import { BrowserRouter, Routes, Route, useLocation, useParams, Router  } from "react-router-dom";
+import { BrowserRouter, Routes, Route  } from "react-router-dom";
 import Main from './components/Main';
 import Followupage from './components/Pages/Followupage';
 import Home1 from './components/Home1';
@@ -29,10 +29,10 @@ import CallLogDetails from './components/Pages/CallLogDetails';
 import MultipleForm from './components/Licence/MultipleForm';
 import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/ForgotPassword';
-import MonthlyCalendar from './components/Pages/MonthlyCalendar';
+// import MonthlyCalendar from './components/Pages/MonthlyCalendar';
 import Incomereport from './components/Pages/Incomereport';
 import ImportLead from './components/Pages/ImportLead';
-import Breadcrumb from './components/Pages/Breadcrumb';
+// import Breadcrumb from './components/Pages/Breadcrumb';
 // import './ffffffff.js';
 import { BreadcrumbProvider } from './components/Pages/BreadcrumbContext';
 import Employeereporttt from './components/Pages/Employeereporttt';
@@ -46,28 +46,28 @@ import Callreport from './components/Pages/Callreport';
     const [user_id, setuser_id]= useState(); 
 
 
-    const ddddd={
-      "user_id":"656b04cc37c356cf73e8dde1",
-    "datetime":"2023-12-18T16:44:00.000+00:00"
-    }
+    // const ddddd={
+    //   "user_id":"656b04cc37c356cf73e8dde1",
+    // "datetime":"2023-12-18T16:44:00.000+00:00"
+    // }
 
-    useEffect(() => {
-      const fetchData = async (ddddd) => {
-        try {
-          const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/getLetestnotificat', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(ddddd), 
-          });
-          const data = await response.json();
-          console.log('API Response:', data);
-        } catch (error) {
-          console.error('API Error:', error);
-        }
-      };
-    }, []); 
+    // useEffect(() => {
+    //   const fetchData = async (ddddd) => {
+    //     try {
+    //       const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/getLetestnotificat', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(ddddd), 
+    //       });
+    //       const data = await response.json();
+    //       console.log('API Response:', data);
+    //     } catch (error) {
+    //       console.error('API Error:', error);
+    //     }
+    //   };
+    // }, []); 
    
 
     useEffect(() => {

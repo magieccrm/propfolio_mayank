@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+
+const apiUrl = process.env.REACT_APP_API_URL;
+// const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
+
    export const addagent=createAsyncThunk("addagent",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_agent/",{
+        const responce=await fetch(`${apiUrl}/add_agent/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -25,7 +29,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const EditAgentDetails=createAsyncThunk("EditAgentDetails",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/EditAgentDetails/${data._id}`,{
+    const responce=await fetch(`${apiUrl}/EditAgentDetails/${data._id}`,{
         method:"PUT",
         headers:{     
             "Content-Type":"application/json",
@@ -42,7 +46,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const getAllAgent=createAsyncThunk("getAllAgent",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_all_agent");
+    const responce=await fetch(`${apiUrl}/get_all_agent`);
     const result=await responce.json();
    
     if(result.success===true){    
@@ -54,7 +58,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const deleteAgent=createAsyncThunk("deleteAgent",async(_id,{rejectWithValue})=>{
             
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/agent_delete/${_id}`,{
+    const responce=await fetch(`${apiUrl}/agent_delete/${_id}`,{
         method:"DELETE",
 })
 

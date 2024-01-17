@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 
 
    export const getStatebycountry=createAsyncThunk("getStatebycountry",async(data,{rejectWithValue})=>{
   
-    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_state_by_country",{
+    const responce=await fetch(`${apiUrl}/get_state_by_country`,{
         method:"POST", 
         headers:{   
          "Content-Type":"application/json",
