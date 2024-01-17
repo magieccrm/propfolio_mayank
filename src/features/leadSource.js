@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 import { async } from "q";
 
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
    export const addleadSource=createAsyncThunk("addleadSource",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/add_lead_source/",{
+        const responce=await fetch(`${apiUrl}/add_lead_source/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -28,7 +28,7 @@ import { async } from "q";
     ///update Lead source api 
 
     export const EditLeadSourceDetails=createAsyncThunk("EditLeadSourceDetails",async(data,{rejectWithValue})=>{
-   const responce=await fetch(`https://crm-backend1-awl0.onrender.com/api/v1/update_lead_source/${data._id}`,{
+   const responce=await fetch(`${apiUrl}/update_lead_source/${data._id}`,{
             method:"PUT",
             headers:{     
                 "Content-Type":"application/json",
@@ -45,7 +45,7 @@ import { async } from "q";
 
    export const getAllLeadSource=createAsyncThunk("getAllLeadSource",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_lead_source");
+    const responce=await fetch(`${apiUrl}/all_lead_source`);
     const result=await responce.json();
   
     if(result.success===true){    
@@ -57,7 +57,7 @@ import { async } from "q";
 
    export const DeleteLeadSource=createAsyncThunk("DeleteLeadSource",async(_id,{rejectWithValue})=>{
         
-      const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_lead_source/${_id}`,{
+      const responce=await fetch(`${apiUrl}/delete_lead_source/${_id}`,{
                         method:"DELETE",
           })
 

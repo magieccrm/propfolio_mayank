@@ -26,7 +26,7 @@ function requestPermission() {
           "BKx3jub1v0latbywC6SDuU6FEjBFNhvlc6f8ivdtw9EHiXB5dIVqbvhmTBgwRbiOPN1zxeAB_68c8TR5dS73NsY",
       }).then((currentToken) => {
         if (currentToken) {
-          console.log("currentTokenss: ", currentToken);
+          // console.log("currentTokenss: ", currentToken);
         } else {
           console.log("Can not get token");
         }

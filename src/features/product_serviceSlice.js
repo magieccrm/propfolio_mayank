@@ -4,13 +4,13 @@ import {
   isRejectedWithValue,
 } from "@reduxjs/toolkit";
 
-const apiBaseUrl = "https://crm-backend1-awl0.onrender.com/api/v1";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 /////////add strtus
 export const addProductService = createAsyncThunk(
   "addProductService",
   async (data, { rejectWithValue }) => {
-    const responce = await fetch(`${apiBaseUrl}/add_product_service/`, {
+    const responce = await fetch(`${apiUrl}/add_product_service/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const UpdateProductService = createAsyncThunk(
   "UpdateProductService",
   async (data, { rejectWithValue }) => {
     const responce = await fetch(
-      `${apiBaseUrl}/update_product_service/${data?._id}`,
+      `${apiUrl}/update_product_service/${data?._id}`,
       {
         method: "put",
         headers: {
@@ -55,7 +55,7 @@ export const getAllProductService = createAsyncThunk(
   "getAllProductService",
   async (dara, { rejectWithValue }) => {
     const resource = await fetch(
-      "https://crm-backend-1qcz.onrender.com/api/v1/all_product_service/"
+      `${apiUrl}/all_product_service/`
     );
     const result = await resource.json();
     // console.log(result.success)
@@ -73,7 +73,7 @@ export const deleteProductService = createAsyncThunk(
   "deleteProductService",
   async (_id, { rejectWithValue }) => {
     const responce = await fetch(
-      `https://crm-backend-1qcz.onrender.com/api/v1/delete_product_service/${_id}`,
+      `${apiUrl}/delete_product_service/${_id}`,
       {
         method: "DELETE",
       }

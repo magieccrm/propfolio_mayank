@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
+// const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
 
 
    export const getEmployeeReport=createAsyncThunk("getEmployeeReport",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/get_call_log_by_id_date/",{
+        const responce=await fetch(`${apiUrl}/get_call_log_by_id_date/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -25,7 +26,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    });
 
    export const getAllFollowup=createAsyncThunk("getAllFollowup",async(_id,{rejectWithValue})=>{
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/all_followup_lead_by_id/${_id}`);
+    const responce=await fetch(`${apiUrl}/all_followup_lead_by_id/${_id}`);
     const result=await responce.json(); 
    
     if(result.success===true){    
@@ -37,7 +38,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const DeleteLeadSource=createAsyncThunk("DeleteLeadSource",async(_id,{rejectWithValue})=>{
         
-      const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_lead_source/${_id}`,{
+      const responce=await fetch(`${apiUrl}/delete_lead_source/${_id}`,{
                         method:"DELETE",
           })
 

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 
 /////////add strtus
    export const addStatus=createAsyncThunk("addStatus",async(data,{rejectWithValue})=>{
            
-        const responce=await fetch("https://crm-backend1-awl0.onrender.com/api/v1/add_lead_status/",{
+        const responce=await fetch(`${apiUrl}/add_lead_status/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
@@ -29,7 +29,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const EditStatusDetails=createAsyncThunk("EditAgentDetails",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch(`https://crm-backend1-awl0.onrender.com/api/v1/update_lead_status/${data._id}`,{
+    const responce=await fetch(`${apiUrl}/update_lead_status/${data._id}`,{
         method:"PUT",
         headers:{     
             "Content-Type":"application/json",
@@ -49,7 +49,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
    ////////get app status 
    export const getAllStatus=createAsyncThunk("getAllStatus",async(dara,{rejectWithValue})=>{
         
-       const resource=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/all_lead_status/")
+       const resource=await fetch(`${apiUrl}/all_lead_status/`)
        const result=await resource.json();
     if(result.success===true){    
         return result;    
@@ -62,7 +62,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
    export const deleteStatus=createAsyncThunk("deleteStatus",async(_id,{rejectWithValue})=>{
          
-    const responce=await fetch(`https://crm-backend-1qcz.onrender.com/api/v1/delete_lead_status/${_id}`,{
+    const responce=await fetch(`${apiUrl}/delete_lead_status/${_id}`,{
                       method:"DELETE",
         })
 
