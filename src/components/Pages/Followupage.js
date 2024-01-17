@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { getAllLostReason } from "../../features/lostreasonSlice";
 import axios from "axios";
 export default function Followupage() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const navigate = useNavigate();
   const { agent } = useSelector((state) => state.agent);
   const { CountryState } = useSelector((state) => state.Country_State);
@@ -65,7 +66,7 @@ export default function Followupage() {
     };
     try {
       const responce = await axios.put(
-        `https://crm-backend-1qcz.onrender.com/api/v1/UpdateLeadByLeadId/${_id?.id}`,
+        `${apiUrl}/UpdateLeadByLeadId/${_id?.id}`,
         localDetails,
         { headers }
       );
@@ -83,7 +84,7 @@ export default function Followupage() {
     };
     try {
       const responce = await axios.put(
-        `https://crm-backend-1qcz.onrender.com/api/v1/UpdateLeadByLeadId/${_id?.id}`,
+        `${apiUrl}/UpdateLeadByLeadId/${_id?.id}`,
         localDetails,
         { headers }
       );
@@ -198,7 +199,7 @@ export default function Followupage() {
     console.log("formData", file);
     try {
       const response = await fetch(
-        "https://crm-backend1-awl0.onrender.com/api/v1/file_uplode",
+        `${apiUrl}/file_uplode`,
         {
           method: "POST",
           body: formData,
@@ -223,7 +224,7 @@ export default function Followupage() {
   const [attechmenthistory, setattechmenthistory] = useState();
   const getAttechmenthistory = async (id) => {
     const responce = await axios.get(
-      `https://crm-backend1-awl0.onrender.com/api/v1/leadattechmenthistory/${id}`
+      `${apiUrl}/leadattechmenthistory/${id}`
     );
     setattechmenthistory(responce?.data?.lead);
   };
@@ -238,7 +239,7 @@ export default function Followupage() {
     );
     if (confirmDelete1) {
       const responce = await axios.delete(
-        `https://crm-backend1-awl0.onrender.com/api/v1/deleteLeadAttechmentHistory/${id}`
+        `${apiUrl}/deleteLeadAttechmentHistory/${id}`
       );
       toast.success(responce?.data?.message);
       const updatedAttechmentHistory = await attechmenthistory?.filter(

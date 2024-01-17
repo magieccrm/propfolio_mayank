@@ -10,6 +10,7 @@ import { getAllAgent } from "../../features/agentSlice";
 import DataTable from "react-data-table-component";
 import { toast } from "react-toastify";
 export default function Productservicereport() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -32,7 +33,7 @@ export default function Productservicereport() {
     };
     try {
       const responce = await axios.post(
-        `https://crm-backend1-awl0.onrender.com/api/v1/GetProductReportDateWise`,
+        `${apiUrl}/GetProductReportDateWise`,
         data,
         { headers }
       );
@@ -67,7 +68,7 @@ export default function Productservicereport() {
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        "https://crm-backend1-awl0.onrender.com/api/v1/LeadProductServiceOverviewApi"
+        `${apiUrl}/LeadProductServiceOverviewApi`
       );
       setleadsourcedata(responce?.data?.product_count);
       setleadsource(responce?.data?.product_name);

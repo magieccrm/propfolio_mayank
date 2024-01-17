@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 
 const BarChart = ({lo}) => {
-  // Sample data for two time intervals
+    
   const data = {
     labels: ['Incoming Call', 'Outgoing Call', 'Missed Call', 'Rejected Call'],
     series: [

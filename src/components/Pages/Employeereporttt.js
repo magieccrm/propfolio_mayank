@@ -9,6 +9,7 @@ import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
 
 export default function Employeereporttt() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -18,7 +19,7 @@ export default function Employeereporttt() {
   const getAllLeadSourceOverview = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/Income_Graph_Overview"
+        `${apiUrl}/Income_Graph_Overview`
       );
       setdata(responce?.data?.monthlyIncom);
       let totalamount = 0;

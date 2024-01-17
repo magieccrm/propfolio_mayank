@@ -17,10 +17,11 @@ export default function Callreport() {
   const [llll,setllll]=useState('block');
   const [llll1,setllll1]=useState('none');
   const dispatch = useDispatch();
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const getAllCallDetails = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogById/"
+        `${apiUrl}/GetAllUserCallLogById/`
       );
       setdata(responce?.data?.username);
       setdata1(responce?.data?.value);
@@ -44,7 +45,7 @@ export default function Callreport() {
     console.log(search);
     try {
       const response = await axios.post(
-        "https://crm-backend1-awl0.onrender.com/api/v1/GetCallLogByIdAndDateRange",
+        `${apiUrl}/GetCallLogByIdAndDateRange`,
         search,
         {
           headers: {

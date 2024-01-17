@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-//import { useDispatch } from "react-redux";
+
 import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-// import { Link } from "react-router-dom";
-// import XLSX from "xlsx";
-// import { CSVLink } from "react-csv";
 
 import jsPDF from "jspdf";
 export const AllCallLogForReport = ({props}) => {
-    console.log("props",props)
-    // const dispatch = useDispatch();
+  const apiUrl = process.env.REACT_APP_API_URL;
+   
     const   _id = useParams();
     const [leads, setleads] = useState([]);
     const [search, setsearch] = useState("");
@@ -19,10 +16,10 @@ export const AllCallLogForReport = ({props}) => {
     const getAllCallLog = async (id) => {
       try {
         const responce = await axios.get(
-          `https://crm-backend-1qcz.onrender.com/api/v1/get_call_log_by_id/${id}`
+          `${apiUrl}/get_call_log_by_id/${id}`
         );
        console.log(responce?.data);  
-        setleads(responce?.data?.call_log);
+        setleads(responce?.data?.call_log); 
         setfilterleads(responce?.data?.call_log);
       } catch (error) {
         console.log(error);
@@ -38,7 +35,7 @@ export const AllCallLogForReport = ({props}) => {
     }, [props]);
   
     useEffect(() => {
-      const result = leads.filter((lead) => {
+      const result = leads.filter((lead) => {    
         return (
           lead.name.toLowerCase().match(search.toLowerCase()) ||
           lead?.user_id

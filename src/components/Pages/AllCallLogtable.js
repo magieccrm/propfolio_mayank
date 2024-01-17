@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 
 import jsPDF from "jspdf";
 export const AllCallLogtable = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
     const   _id = useParams();
     const [leads, setleads] = useState([]);
     const [search, setsearch] = useState("");
@@ -13,7 +14,7 @@ export const AllCallLogtable = () => {
     const getAllCallLog = async (id) => {
       try {
         const responce = await axios.get(
-          `https://crm-backend-1qcz.onrender.com/api/v1/get_call_log_by_id/${id}`
+          `${apiUrl}/get_call_log_by_id/${id}`
         );
        console.log(responce?.data);  
         setleads(responce?.data?.call_log);

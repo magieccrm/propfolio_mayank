@@ -13,6 +13,7 @@ import { Button } from "bootstrap";
 
 
 export default function ImportLead() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
     const [leaddata, setleaddata] = useState({});
   const { ProductService } = useSelector((state) => state.ProductService);
   const { leadSourcedata } = useSelector((state) => state.leadSource);
@@ -60,9 +61,7 @@ export default function ImportLead() {
         toast.error("Invalid file type");
       }
     }
-    // if (selectedFile) {
-    //   setFile(selectedFile);
-    // }
+  
   };
 
 
@@ -119,7 +118,7 @@ export default function ImportLead() {
     formData.append('assign_to_agent', assignToAgent);
     formData.append('state', state);
    try {
-      const response = await fetch('https://crm-backend1-awl0.onrender.com/api/v1/import', {
+      const response = await fetch(`${apiUrl}/import`, {
         method: 'POST',
         body: formData,
       });
