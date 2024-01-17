@@ -11,8 +11,7 @@ import { toast } from "react-toastify";
 
 
 export default function AllFollowupstable() {
-
-    
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
@@ -20,7 +19,7 @@ export default function AllFollowupstable() {
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_All_Lead_Followup"
+        `${apiUrl}/get_All_Lead_Followup`
       );
       
       setleads(responce?.data?.lead);
@@ -35,9 +34,8 @@ export default function AllFollowupstable() {
   const getAllLead2 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_Leadby_agentid_status",
-          
-          {
+        `${apiUrl}/get_Leadby_agentid_status`,
+          {  
              assign_to_agent, 
           } 
         

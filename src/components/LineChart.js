@@ -6,13 +6,13 @@ import Chart from 'react-apexcharts'
 import { useDispatch } from 'react-redux';
 
 const ChartComponent = () => {
-
+  const apiUrl = process.env.REACT_APP_API_URL;
      const [data,setdata]=useState([]);
 
      const getAllLeadSourceOverview=async ()=>{
       try {
         const responce = await axios.get(
-          "https://crm-backend-1qcz.onrender.com/api/v1/Income_Graph_Overview"
+          `${apiUrl}/Income_Graph_Overview`
         );
         setdata(responce?.data?.monthlyIncom);
     

@@ -11,6 +11,7 @@ import DataTable from "react-data-table-component";
 import toast from "react-hot-toast";
 
 export default function Incomereport() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -23,7 +24,7 @@ export default function Incomereport() {
   const getAllLeadSourceOverview1=async ()=>{
     try {
       const responce = await axios.get(
-        "https://crm-backend1-awl0.onrender.com/api/v1/EmployeesReportDetail"
+        `${apiUrl}/EmployeesReportDetail`
       );
       setleadsourcedata(responce?.data?.value);
       setleadsource(responce?.data?.name);
@@ -51,7 +52,7 @@ export default function Incomereport() {
     };
     try {
       const responce = await axios.post(
-        `https://crm-backend1-awl0.onrender.com/api/v1/EmployeesReportDetailByFilter`,
+        `${apiUrl}/EmployeesReportDetailByFilter`,
         data,
         { headers }
       );

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import Chart from 'react-apexcharts';
 
 export default function LeadSouceReport() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const [data, setdata] = useState({
 
   });
@@ -50,7 +51,7 @@ const [llll,setllll]=useState('block');
     };
     try {
       const responce = await axios.post(
-        `https://crm-backend-1qcz.onrender.com/api/v1/LeadSourceReport`,
+        `${apiUrl}/LeadSourceReport`,
         data,
         { headers }
       );
@@ -85,7 +86,7 @@ const [llll,setllll]=useState('block');
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/lead_source_overview_api"
+        `${apiUrl}/lead_source_overview_api`
       );
       setleadsourcedata(responce?.data?.Lead_source_count);
       setleadsource(responce?.data?.Lead_source_name);

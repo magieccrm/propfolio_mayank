@@ -29,6 +29,7 @@ import {
 import Loader from "../Loader";
 import axios from "axios";
 function Setting() {
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const removeSite = async (_id) => {
     dispatch(deleteAgent(_id));
     // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
@@ -264,7 +265,7 @@ function Setting() {
   });
   const CompanyDetailSubmit = async (e) => {
     e.preventDefault();
-    fetch("https://crm-backend1-awl0.onrender.com/api/v1/CompanyDetails/", {
+    fetch(`${apiUrl}/CompanyDetails/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -290,7 +291,7 @@ function Setting() {
   const GetCompanyDetails = async () => {
     try {
       const responce = await axios.get(
-        `https://crm-backend1-awl0.onrender.com/api/v1/GetCompanyDetails`
+        `${apiUrl}/GetCompanyDetails`
       );
       if (responce?.data?.success === true) {
         console.log(responce.data.setting?.["0"]);

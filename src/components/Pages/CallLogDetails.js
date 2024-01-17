@@ -10,8 +10,7 @@ export default function CallLogDetails() {
     const dispatch=useDispatch();
     
     useEffect(()=>{
-      
-    //  dispatch(getAllAgent())
+       //  dispatch(getAllAgent())
    },[])  ;
   return (
     <div>

@@ -9,7 +9,7 @@ import { getAllStatus } from "../../features/statusSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
 function Leads() {
-   
+  const apiUrl = process.env.REACT_APP_API_URL;    
   const dispatch=useDispatch(); 
   const {lead,loading} = useSelector((state)=>state.lead); 
   const { agent } = useSelector((state) => state.agent);
@@ -33,7 +33,7 @@ function Leads() {
 
   try {
     const response = await axios.put(
-      `https://crm-backend-1qcz.onrender.com/api/v1/BulkLeadUpdate/`,
+      `${apiUrl}/BulkLeadUpdate/`,
       updatedData
     );
    

@@ -13,7 +13,7 @@ const firebaseConfig = {
 
 
 
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -26,7 +26,7 @@ const saveTokenToServer = async(token) => {
  
      
   
-  const responce=await fetch("https://crm-backend-1qcz.onrender.com/api/v1/update_and_save_notification_for_web/",{
+  const responce=await fetch(`${apiUrl}/update_and_save_notification_for_web/`,{
     method:"POST",
     headers:{     
         "Content-Type":"application/json",

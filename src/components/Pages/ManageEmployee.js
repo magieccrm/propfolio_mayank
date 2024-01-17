@@ -6,12 +6,12 @@ import axios from "axios";
 function ManageEmployee() {
   var {message, agent,loading}=useSelector((state)=>state.agent);
   const dispatch=useDispatch();
-    
+  const apiUrl = process.env.REACT_APP_API_URL;    
    const [Detail,setDetail]=useState([]);
    const getHigstNoOfCall=async()=>{
    try {
       const responce = await axios.get(
-        `https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogById/`
+        `${apiUrl}/GetAllUserCallLogById/`
       );
       setDetail(responce?.data?.array);
      } catch (error) {
@@ -35,7 +35,7 @@ function ManageEmployee() {
 const AdvanceSerch = async (e) => {
   e.preventDefault();
   console.log(adSerch);
-  fetch("https://crm-backend1-awl0.onrender.com/api/v1/GetAllUserCallLogByDateWise/", {
+  fetch(`${apiUrl}/GetAllUserCallLogByDateWise/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

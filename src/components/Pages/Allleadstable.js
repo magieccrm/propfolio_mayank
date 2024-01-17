@@ -19,7 +19,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const { agent } = useSelector((state) => state.agent);
   const { Statusdata } = useSelector((state) => state.StatusData);
-
+  const apiUrl = process.env.REACT_APP_API_URL;    
   useEffect(() => {
     dispatch(getAllAgent());
     dispatch(getAllStatus());
@@ -27,7 +27,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_all_lead"
+        `${apiUrl}/get_all_lead`
       );
 
       setleads(responce?.data?.lead);
@@ -41,8 +41,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const getAllLead2 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
-        "https://crm-backend-1qcz.onrender.com/api/v1/get_Leadby_agentid_with_status",
-
+        `${apiUrl}/get_Leadby_agentid_with_status`,
         {
           assign_to_agent,
         }
@@ -271,7 +270,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     if (confirmDelete) {
       const aaaaa = { ids: selectedRowIds };
 
-      fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
+      fetch(`${apiUrl}/BulkDeleteLead`, {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
@@ -307,7 +306,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const AdvanceSerch = async (e) => {
     e.preventDefault();
     console.log(adSerch);
-    fetch("https://crm-backend1-awl0.onrender.com/api/v1/getAdvanceFillter", {
+    fetch(`${apiUrl}/getAdvanceFillter`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

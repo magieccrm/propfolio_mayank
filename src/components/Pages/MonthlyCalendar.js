@@ -6,12 +6,12 @@ import axios from 'axios';
 import Modal from './Modal';
 
 const MyCalendar = () => {
-     
+  const apiUrl = process.env.REACT_APP_API_URL;    
       const [data,setdata]=useState([]);
        const getCalanderData=async()=>{
         try {
             const responce = await axios.get(
-              "https://crm-backend-1qcz.onrender.com/api/v1/get_calander_data"
+              `${apiUrl}/get_calander_data`
             );
             setdata(responce?.data?.lead);
             } catch (error) {

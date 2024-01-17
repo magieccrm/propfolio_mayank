@@ -13,7 +13,7 @@ import MyCalendar from "../components/Pages/MonthlyCalendar"
 
 
 function Home1() {
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const  [Sale, setSale]=useState([]);
   const [leadsource , setleadsource]=useState([]);
   const [leadsourcedata1 , setleadsourcedata]=useState([]);
@@ -29,7 +29,7 @@ function Home1() {
   const getSale = async () => {
     try {
       const responce = await axios.get(
-        "https://crm-backend1-awl0.onrender.com/api/v1/YearlySaleApi"
+        `${apiUrl}/YearlySaleApi`
       );
       setSale(responce?.data?.details);
       
@@ -41,7 +41,7 @@ function Home1() {
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        "https://crm-backend-1qcz.onrender.com/api/v1/lead_source_overview_api"
+        `${apiUrl}/lead_source_overview_api`
       );
       setleadsourcedata(responce?.data?.Lead_source_count);
       setleadsource(responce?.data?.Lead_source_name);
