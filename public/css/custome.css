@@ -2057,7 +2057,26 @@ background-color: var(--pink);
     margin-right: 0px;
     margin-left: 0px;
   }
+  .Employreport.row {
+    margin-right: -15px!important;
+    margin-left: -15px!important;
+    padding: 0rem!important;
+  }
+  .tabless_padding {
+    padding: 0rem!important;
+  }
+  .tabless_padding .col-md-12{
+    padding: 0rem!important;
+  }
+  .chartbars{
+    padding: 0rem!important;
+  }
+  .chartbars .col-md-6{
+    padding-right: 0px;
+     padding-left:0px;
+  }
 }
+
 
 
 @media only screen and (min-width: 767px) and (max-width: 1024px){

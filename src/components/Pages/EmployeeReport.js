@@ -199,7 +199,7 @@ export default function EmployeeReport() {
                         </a>
                       </li>
                     </ul>
-                    <div className="cards-tab">
+                    <div className="cards-tab ">
                       <div className="tab-content">
                         {/*-------------------------------------------tab1-----------------------------*/}
                         <div
@@ -207,7 +207,7 @@ export default function EmployeeReport() {
                           //  style={{display:isVisible  }}
                           id="tab1"
                         >
-                          <div className="row ng-star-inserted card-body ng-star-inserted">
+                          <div className="row Employreport ng-star-inserted card-body ng-star-inserted">
                             <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 ng-star-inserted">
                               <div className="row pad_10">
                                 <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8">
@@ -399,7 +399,7 @@ export default function EmployeeReport() {
                         </div>
                         {/*-------------------------------------------tab2-----------------------------*/}
                         <div className="tab-pane fade" id="tab3">
-                          <div className="card-body ng-star-inserted">
+                          <div className="card-body chartbars ng-star-inserted">
                             <div className="row">
                               <div className="col-md-6">
                                 <div
@@ -661,7 +661,7 @@ export default function EmployeeReport() {
 
                         {/*-------------------------------------------tab3-----------------------------*/}
                         <div className="tab-pane fade" id="tab4">
-                          <div className="card-body ng-star-inserted">
+                          <div className="card-body tabless_padding ng-star-inserted">
                             <div className="row">
                               <div className="col-md-12">
                                 <AllCallLogForReport props={Employee_Report?.user_id}/>
