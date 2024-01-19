@@ -133,6 +133,7 @@ export const AllCallLogForReport = ({props}) => {
        return(
         <div>
         {leads.length === 0 ? (
+          <div className="table-responsive">
          <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
          <thead>
            <tr>
@@ -153,6 +154,7 @@ export const AllCallLogForReport = ({props}) => {
         
          </tbody>
        </table>
+       </div>
         ) : (
           <>
           {/* <button className="btn btn-sm btn-info" onClick={exportToPDF}>Export PDF</button> */}
