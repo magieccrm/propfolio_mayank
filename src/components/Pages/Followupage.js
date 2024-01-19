@@ -1405,21 +1405,29 @@ export default function Followupage() {
 
                                     {attechmenthistory?.map(
                                       (attechmenthistory1, index) => {
+                                  
+                                        const url=attechmenthistory1.leadattechment;
+                                       const prefixToRemove = '/var/www/html/backend/public';
+                                        
+                                        const modifiedUrl = url.replace(prefixToRemove, '');
+                                        const mainurl='https://backend.bizavtar.com/'+modifiedUrl;
+                                        
                                         return (
                                           <tbody id="lead_docs">
                                             <td>{index + 1}</td>
                                             <td>
                                               <a
                                                 href={
-                                                  attechmenthistory1.leadattechment
+                                                  mainurl
                                                 }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                               >
                                                 <img
-                                                  src="img/sssss.png"
+                                                  src={mainurl}
                                                  // alt="Description"
-                                                  width="100"
+                                                  width="50"
+                                                  height={50}
                                                 />
                                               </a>
                                             </td>
