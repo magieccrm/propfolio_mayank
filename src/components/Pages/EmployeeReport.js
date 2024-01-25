@@ -221,7 +221,7 @@ export default function EmployeeReport() {
                                       <tr>
                                         <td className="incomig-text">
                                           <i className="las la-undo incomig-icon" />
-                                          Incoming{" "}
+                                          Incoming
                                         </td>
                                         <td>
                                           <Link
@@ -245,8 +245,8 @@ export default function EmployeeReport() {
                                           <i
                                             _ngcontent-vim-c104=""
                                             className="las la-undo outgoing-icon"
-                                          />{" "}
-                                          Outgoing{" "}
+                                          />
+                                          Outgoing
                                         </td>
                                         <td>
                                           <Link
@@ -267,8 +267,8 @@ export default function EmployeeReport() {
                                       </tr>
                                       <tr>
                                         <td className="missed-text">
-                                          <i className="las la-undo missed-icon" />{" "}
-                                          Missed{" "}
+                                          <i className="las la-undo missed-icon" />
+                                          Missed
                                         </td>
                                         <td>
                                           {
@@ -284,8 +284,14 @@ export default function EmployeeReport() {
                                         </td>
                                         <td>
                                           {
-                                            EmployeeReport[0]?.details[0]
-                                              ?.totalRejectedCall
+                                             
+                                           EmployeeReport[0]?.details[0]
+                                              ?.totalCall-EmployeeReport[0]?.details[0]
+                                                ?.totalIncommingCall-EmployeeReport[0]?.details[0]
+                                                  ?.totalOutgoingCall-EmployeeReport[0]?.details[0]
+                                                    ?.totalMissCall
+                                          //  EmployeeReport[0]?.details[0]
+                                          //     ?.totalRejectedCall
                                           }
                                         </td>
                                         <td>-</td>
@@ -316,13 +322,20 @@ export default function EmployeeReport() {
                                         Never Attended
                                       </span>
                                       <strong>
-                                        {(EmployeeReport[0]?.details[0]
+                                        {/* {(EmployeeReport[0]?.details[0]
                                           ?.totalMissCall +
                                           EmployeeReport[0]?.details[0]
                                             ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
                                               ?.totalMissCall +
                                               EmployeeReport[0]?.details[0]
-                                                ?.totalRejectedCall):0}
+                                                ?.totalRejectedCall):0} */}
+                                                {
+                                                  EmployeeReport[0]?.details[0]
+                                                  ?.totalCall-EmployeeReport[0]?.details[0]
+                                                    ?.totalIncommingCall-EmployeeReport[0]?.details[0]
+                                                      ?.totalOutgoingCall-EmployeeReport[0]?.details[0]
+                                                        ?.totalMissCall
+                                                }
                                       </strong>
                                     </div>
                                     <div className="dash_inn">

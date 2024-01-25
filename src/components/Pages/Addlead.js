@@ -102,7 +102,7 @@ function Addlead() {
   };
   if (loading) {
     return <Loader />;
-  }
+  } 
 
  
 

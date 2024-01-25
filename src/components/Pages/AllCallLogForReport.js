@@ -48,7 +48,7 @@ export const AllCallLogForReport = ({props}) => {
             .toString().toLowerCase().includes(search.toLowerCase()) ||
           lead?.datetime
             .toLowerCase()
-            .match(search.toLowerCase())
+            .match(search.toLowerCase()) 
         );
       });
       setfilterleads(result);
@@ -98,6 +98,7 @@ export const AllCallLogForReport = ({props}) => {
        {
         name: "Call Type",
         selector: (row) => row?.type!=="UNKNOWN"?row?.type:"REJECTED",
+        // selector: (row) => row?.type,
         sortable: true,
         style: (row)=> ({
           color: row.type="UNKNOWN"?'red':row.type="INCOMING"?'green':row.type="OUTGOING"?'yellow':'red', 
