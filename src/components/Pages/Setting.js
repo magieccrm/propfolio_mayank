@@ -2713,22 +2713,22 @@ function Setting() {
                                                   statusName
                                                 ) => {
                                                   switch (statusName) {
-                                                    case "6561c3a433093ed343745a2f": {
+                                                    case "65a904164473619190494480": {
                                                       return "d-none";
                                                     }
-                                                    case "6561c41433093ed343745a36": {
+                                                    case "65a903f8447361919049447c": {
                                                       return "d-none";
                                                     }
-                                                    case "659e5d41ae693b63bf17d801": {
+                                                    case "65a903ca4473619190494478": {
                                                       return "d-none";
                                                     }
-                                                    case "659e5d63ae693b63bf17d803": {
+                                                    case "65a903e9447361919049447a": {
                                                       return "d-none";
                                                     }
-                                                    case "6539fa950b9756b61601287b": {
+                                                    case "65a904ed4473619190494484": {
                                                       return "d-none";
                                                     }
-                                                    case "6561c44233093ed343745a3e": {
+                                                    case "65a904e04473619190494482": {
                                                       return "d-none";
                                                     }
 

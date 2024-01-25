@@ -45,7 +45,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         {
           assign_to_agent,
         }
-      );
+      ); 
       if (responce?.data?.success === true) {
         setstatus(responce?.data?.success);
         setleads(responce?.data?.lead);
