@@ -6,25 +6,33 @@ import axios from "axios";
 function ManageEmployee() {
   var {message, agent,loading}=useSelector((state)=>state.agent);
   const dispatch=useDispatch();
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL; 
+  const DBuUrl = process.env.REACT_APP_DB_URL;    
    const [Detail,setDetail]=useState([]);
    const getHigstNoOfCall=async()=>{
    try {
       const responce = await axios.get(
-        `${apiUrl}/GetAllUserCallLogById/`
+        `${apiUrl}/GetAllUserCallLogById/`,{
+             headers:{
+              "Content-Type": "application/json",
+               "mongodb-url":DBuUrl,
+             }
+        }
       );
       setDetail(responce?.data?.array);
      } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getHigstNoOfCall();
+      }
       console.log(error);
       setDetail(error.responce?.data?.array);
     }
    }
    const [adSerch, setAdvanceSerch] = useState([]);
   useEffect(()=>{
-
-    getHigstNoOfCall();
-   
-    dispatch(getAllAgent())
+     getHigstNoOfCall();
+     // dispatch(getAllAgent())
  },[]);
  const Refresh = () => {
   setTimeout(() => {
@@ -39,6 +47,7 @@ const AdvanceSerch = async (e) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "mongodb-url":DBuUrl,
     },
     body: JSON.stringify(adSerch),
   })

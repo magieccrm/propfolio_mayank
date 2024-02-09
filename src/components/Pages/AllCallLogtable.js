@@ -7,6 +7,7 @@ import DataTable from "react-data-table-component";
 import jsPDF from "jspdf";
 export const AllCallLogtable = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL; 
     const   _id = useParams();
     const [leads, setleads] = useState([]);
     const [search, setsearch] = useState("");
@@ -14,12 +15,22 @@ export const AllCallLogtable = () => {
     const getAllCallLog = async (id) => {
       try {
         const responce = await axios.get(
-          `${apiUrl}/get_call_log_by_id/${id}`
+          `${apiUrl}/get_call_log_by_id/${id}`,{
+            headers:{
+              "Content-Type": "application/json",
+              "mongodb-url":DBuUrl,
+            }
+            
+          }
         );
        console.log(responce?.data);  
         setleads(responce?.data?.call_log);
         setfilterleads(responce?.data?.call_log);
       } catch (error) {
+        const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getAllCallLog();
+      }
         console.log(error);
         setfilterleads();
       }

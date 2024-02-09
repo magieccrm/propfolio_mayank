@@ -2,13 +2,14 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const DBuUrl = process.env.REACT_APP_DB_URL; 
 /////////add strtus
    export const addLostReason=createAsyncThunk("addLostReason",async(data,{rejectWithValue})=>{
         const responce=await fetch(`${apiUrl}/add_lead_reason/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data)
         })  
@@ -27,7 +28,8 @@ const apiUrl = process.env.REACT_APP_API_URL;
     const responce=await fetch(`${apiUrl}/update_lead_reason/${data._id}`,{
         method:"PUT",
         headers:{     
-            "Content-Type":"application/json",
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
            }, 
            body:JSON.stringify(data)
     })  
@@ -42,7 +44,12 @@ const apiUrl = process.env.REACT_APP_API_URL;
    ////////get app status 
    export const getAllLostReason=createAsyncThunk("getAllLostReason",async(dara,{rejectWithValue})=>{
         
-       const resource=await fetch(`${apiUrl}/all_lead_reason/`)
+       const resource=await fetch(`${apiUrl}/all_lead_reason/`,{
+        headers:{     
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+           }, 
+       })
        const result=await resource.json();
     if(result.success===true){    
         return result;    

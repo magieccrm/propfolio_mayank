@@ -11,11 +11,13 @@ import { getAllAgent } from "../../features/agentSlice";
 import Loader from "../Loader";
 import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Addlead() {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
   const formRef = React.useRef(null);
   const [required, setRequired] = useState({ required: true });
-
   const [leaddata, setleaddata] = useState({ contact_no: "" });
   const { ProductService } = useSelector((state) => state.ProductService);
   const { leadSourcedata } = useSelector((state) => state.leadSource);
@@ -89,12 +91,36 @@ function Addlead() {
     }
   };
 
+
+
   useEffect(() => {
-    dispatch(getAllProductService());
-    dispatch(getAllLeadSource());
-    dispatch(getAllStatus());
-    dispatch(getAllCountry());
-    dispatch(getAllAgent());
+    const fetchData = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        dispatch(getAllProductService());
+        dispatch(getAllLeadSource());
+        // dispatch(getAllStatus());
+        // dispatch(getAllCountry());
+        // dispatch(getAllAgent());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    const fetchData1 = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        // dispatch(getAllProductService());
+        // dispatch(getAllLeadSource());
+        dispatch(getAllStatus());
+        dispatch(getAllCountry());
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        dispatch(getAllAgent());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData1();
+    fetchData();
   }, []);
 
   const getStateByCountry = (data) => {
@@ -102,9 +128,9 @@ function Addlead() {
   };
   if (loading) {
     return <Loader />;
-  } 
+  }
 
- 
+
 
   return (
     <div>
@@ -315,7 +341,7 @@ function Addlead() {
                         </div>
                         <div className="col-md-8 mob-left-right col-xs-12  form-group">
                           <input
-                           type="datetime-local"
+                            type="datetime-local"
                             name="followup_date"
                             onChange={(e) =>
                               setleaddata({

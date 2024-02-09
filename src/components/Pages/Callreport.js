@@ -18,16 +18,27 @@ export default function Callreport() {
   const [llll1,setllll1]=useState('none');
   const dispatch = useDispatch();
   const apiUrl = process.env.REACT_APP_API_URL;    
+  const DBuUrl = process.env.REACT_APP_DB_URL;   
   const getAllCallDetails = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/GetAllUserCallLogById/`
+        `${apiUrl}/GetAllUserCallLogById`,{
+          headers:{
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          }
+        }
       );
       setdata(responce?.data?.username);
       setdata1(responce?.data?.value);
      
       console.log(responce?.data?.monthlyIncom);
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      console.log('ddd',message)
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getAllCallDetails();
+      }
       console.log(error);
     }
   };
@@ -35,7 +46,7 @@ export default function Callreport() {
   useEffect(() => {
       getAllCallDetails();
     dispatch(getAllAgent());
-  }, [getAllCallDetails]);
+  }, []);
   const [leads, setleads] = useState([]);
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
@@ -48,9 +59,10 @@ export default function Callreport() {
         `${apiUrl}/GetCallLogByIdAndDateRange`,
         search,
         {
-          headers: {
+          headers:{
             "Content-Type": "application/json",
-          },
+            "mongodb-url":DBuUrl,
+          }
         }
       );
 

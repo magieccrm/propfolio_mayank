@@ -6,6 +6,7 @@ import {
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
+const DBuUrl = process.env.REACT_APP_DB_URL;
 
 export const addlead = createAsyncThunk(
   "addlead",
@@ -15,6 +16,7 @@ export const addlead = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
         },
         body: JSON.stringify(data),
       }
@@ -33,7 +35,12 @@ export const getAllLead = createAsyncThunk(
   "getAllLead",
   async (data, { rejectWithValue }) => {
     const responce = await fetch(
-      `${apiUrl}/get_all_lead`
+      `${apiUrl}/get_all_lead`,{
+        headers:{
+          "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
+        }
+      }
     );
     const result = await responce.json();
 
@@ -51,6 +58,10 @@ export const getLeadById1 = createAsyncThunk(
      
     const responce=await fetch(`${apiUrl}/get_lead_by_id/${_id}`,{
         method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
+        }
 })
     const result = await responce.json();
      // console.log(result)
@@ -68,6 +79,10 @@ export const getLeadById=createAsyncThunk("getLeadById",async(_id,{rejectWithVal
         
     const responce=await fetch(`${apiUrl}/get_lead_by_id/${_id}`,{
                       method:"get",
+                      headers:{
+                        "Content-Type": "application/json",
+                        "mongodb-url":DBuUrl,
+                      },
         })
 
         const  result =await responce.json();

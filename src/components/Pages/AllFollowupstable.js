@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 
 
 export default function AllFollowupstable() {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL; 
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
@@ -19,12 +20,21 @@ export default function AllFollowupstable() {
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/get_All_Lead_Followup`
+        `${apiUrl}/get_All_Lead_Followup`,{
+          headers: {
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
       
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations' || message=='Internal Server Error'){
+        getAllLead1();
+      }
       console.log(error);
       setfilterleads();
     }
@@ -37,6 +47,10 @@ export default function AllFollowupstable() {
         `${apiUrl}/get_Leadby_agentid_status`,
           {  
              assign_to_agent, 
+             headers: {
+              "Content-Type": "application/json",
+              "mongodb-url":DBuUrl,
+            },
           } 
         
       );
@@ -56,6 +70,10 @@ export default function AllFollowupstable() {
      
       
     } catch (error) { 
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getAllLead2(assign_to_agent);
+      }
       console.log(error);
       setfilterleads();
     }
@@ -307,10 +325,11 @@ export default function AllFollowupstable() {
   if (confirmDelete) {
     const aaaaa={ids:selectedRowIds};
        
-    fetch("https://crm-backend-1qcz.onrender.com/api/v1/BulkDeleteLead", {
+    fetch(`${apiUrl}/BulkDeleteLead`, {
       method: "delete",
       headers: {
         "Content-Type": "application/json",
+        "mongodb-url":DBuUrl,
       },
       body: JSON.stringify(aaaaa),
     }).then((response) => {

@@ -29,7 +29,8 @@ import {
 import Loader from "../Loader";
 import axios from "axios";
 function Setting() {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL; 
+  const DBuUrl = process.env.REACT_APP_DB_URL;    
   const removeSite = async (_id) => {
     dispatch(deleteAgent(_id));
     // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
@@ -127,7 +128,7 @@ function Setting() {
     setData(selectedData);
   };
   const editLeadReason = async (_id) => {
-    const selectedData = await lostreason.find((item) => item._id === _id);
+    const selectedData = await lostreason?.find((item) => item._id === _id);
     setlostreasonset(selectedData); 
   };
 
@@ -267,14 +268,15 @@ function Setting() {
     e.preventDefault();
     fetch(`${apiUrl}/CompanyDetails/`, {
       method: "POST",
-      headers: {
+      headers:{     
         "Content-Type": "application/json",
-      },
+        "mongodb-url":DBuUrl,
+       }, 
       body: JSON.stringify(companydetails),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response?.status}`);
         }
         return response.json();
       })
@@ -284,6 +286,10 @@ function Setting() {
         setcompanydetails(data?.setting);
       })
       .catch((error) => {
+        const message=error?.response?.data?.message;
+        if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+          CompanyDetailSubmit();
+        }
         console.error("Fetch error:", error);
       });
   };
@@ -291,16 +297,30 @@ function Setting() {
   const GetCompanyDetails = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/GetCompanyDetails`
+        `${apiUrl}/GetCompanyDetails`,{
+          headers:{     
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+           }, 
+        }
       );
       if (responce?.data?.success === true) {
         console.log(responce.data.setting?.["0"]);
         setcompanydetails(responce?.data?.setting?.["0"]);
       }
       if (responce?.data?.success === false) {
+        const message=await responce?.data?.message;
+        if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+          GetCompanyDetails();
+        }
         setcompanydetails(responce?.data?.setting);
       }
-    } catch (error) {}
+    } catch (error) {
+      const message=error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        GetCompanyDetails();
+      }
+    }
   };
 
   useEffect(() => {
@@ -2173,7 +2193,7 @@ function Setting() {
                                         <div className="form-group">
                                           {/* <input type="hidden" name="aid" id="aid" autoComplete="off" /> */}
                                           <input
-                                            value={formData.agent_name}
+                                            value={formData?.agent_name}
                                             type="text"
                                             onChange={(e) =>
                                               setFormData({
@@ -2194,7 +2214,7 @@ function Setting() {
                                         <div className="form-group">
                                           <input
                                             type="email"
-                                            value={formData.agent_email}
+                                            value={formData?.agent_email}
                                             className="form-control"
                                             onChange={(e) =>
                                               setFormData({
@@ -2214,7 +2234,7 @@ function Setting() {
                                         <div className="form-group">
                                           <input
                                             type="number"
-                                            value={formData.agent_mobile}
+                                            value={formData?.agent_mobile}
                                             maxLength={10}
                                             className="form-control"
                                             onChange={(e) =>
@@ -2237,7 +2257,7 @@ function Setting() {
                                             type="password"
                                             className="form-control"
                                             name="agent_password"
-                                            value={formData.agent_password}
+                                            value={formData?.agent_password}
                                             onChange={(e) =>
                                               setFormData({
                                                 ...formData,
@@ -2253,7 +2273,7 @@ function Setting() {
                                       <div className="col-md-3">
                                         <div className="form-group">
                                           <select
-                                            value={formData.agent_status}
+                                            value={formData?.agent_status}
                                             className="form-control"
                                             onChange={(e) =>
                                               setFormData({
@@ -2707,7 +2727,7 @@ function Setting() {
                                             </tr>
                                           </thead>
                                           <tbody id="lead_source_list">
-                                            {Statusdata.leadstatus?.map(
+                                            {Statusdata?.leadstatus?.map(
                                               (state, key) => {
                                                 const getStatusBadgeClass = (
                                                   statusName

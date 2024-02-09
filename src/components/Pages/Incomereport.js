@@ -11,7 +11,8 @@ import DataTable from "react-data-table-component";
 import toast from "react-hot-toast";
 
 export default function Incomereport() {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;  
+  const DBuUrl = process.env.REACT_APP_DB_URL;  
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -24,12 +25,21 @@ export default function Incomereport() {
   const getAllLeadSourceOverview1=async ()=>{
     try {
       const responce = await axios.get(
-        `${apiUrl}/EmployeesReportDetail`
+        `${apiUrl}/EmployeesReportDetail`,{
+           headers:{
+              "Content-Type": "application/json",
+                "mongodb-url":DBuUrl,
+            }
+         }
       );
       setleadsourcedata(responce?.data?.value);
       setleadsource(responce?.data?.name);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getAllLeadSourceOverview1();
+      }
       console.log(error);
     }
   }
@@ -49,6 +59,7 @@ export default function Incomereport() {
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
+      "mongodb-url":DBuUrl,
     };
     try {
       const responce = await axios.post(

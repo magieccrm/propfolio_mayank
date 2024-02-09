@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel'; // Import the library
 
 export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
+
   const dispatch = useDispatch();
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
@@ -19,20 +20,41 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const { agent } = useSelector((state) => state.agent);
   const { Statusdata } = useSelector((state) => state.StatusData);
-  const apiUrl = process.env.REACT_APP_API_URL;    
-  useEffect(() => {
-    dispatch(getAllAgent());
-    dispatch(getAllStatus());
-  }, []);
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;    
+   useEffect(() => {
+    const fetchData = async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          dispatch(getAllAgent());
+          dispatch(getAllStatus());
+       
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
+      };
+
+    fetchData();
+}, []);
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/get_all_lead`
+        `${apiUrl}/get_all_lead`,{
+          headers: {
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
 
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
+      return (responce?.data?.message);
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getAllLead1();
+      }
       console.log(error);
       setfilterleads();
     }
@@ -44,7 +66,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         `${apiUrl}/get_Leadby_agentid_with_status`,
         {
           assign_to_agent,
-        }
+        },
       ); 
       if (responce?.data?.success === true) {
         setstatus(responce?.data?.success);
@@ -57,6 +79,10 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         setfilterleads(responce?.data?.lead);
       }
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getAllLead2();
+      }
       console.log(error);
       setfilterleads();
     }
@@ -64,12 +90,12 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
 
   useEffect(() => {
     if (localStorage.getItem("role") === "admin") {
-      getAllLead1();
-    } else {
+    getAllLead1();
+      } else {
       getAllLead2(localStorage.getItem("user_id"));
     }
-  }, [localStorage.getItem("user_id")]);
-
+  }, [localStorage.getItem("user_id"),apiUrl,DBuUrl]);
+  
   useEffect(() => {
     const result = leads.filter((lead) => {
       return (
@@ -274,6 +300,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
         },
         body: JSON.stringify(aaaaa),
       })
@@ -310,6 +337,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "mongodb-url":DBuUrl,
       },
       body: JSON.stringify(adSerch),
     })

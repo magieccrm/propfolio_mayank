@@ -6,15 +6,25 @@ import axios from 'axios';
 import Modal from './Modal';
 
 const MyCalendar = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;  
+  const DBuUrl = process.env.REACT_APP_DB_URL;  
       const [data,setdata]=useState([]);
        const getCalanderData=async()=>{
         try {
             const responce = await axios.get(
-              `${apiUrl}/get_calander_data`
+              `${apiUrl}/get_calander_data`,{
+                headers:{
+                  "Content-Type":"application/json",
+                  "mongodb-url":DBuUrl,
+                }
+              }
             );
             setdata(responce?.data?.lead);
             } catch (error) {
+              const message=await error?.response?.data?.message;
+       if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getCalanderData();
+      } 
             console.log(error);
           }
 
