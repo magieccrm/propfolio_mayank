@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/too
 
 const apiUrl = process.env.REACT_APP_API_URL;
 // const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
+const DBuUrl = process.env.REACT_APP_DB_URL;
 
 
    export const getEmployeeReport=createAsyncThunk("getEmployeeReport",async(data,{rejectWithValue})=>{
@@ -11,6 +12,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data) 
         })  
@@ -26,7 +28,12 @@ const apiUrl = process.env.REACT_APP_API_URL;
    });
 
    export const getAllFollowup=createAsyncThunk("getAllFollowup",async(_id,{rejectWithValue})=>{
-    const responce=await fetch(`${apiUrl}/all_followup_lead_by_id/${_id}`);
+    const responce=await fetch(`${apiUrl}/all_followup_lead_by_id/${_id}`,{
+        headers:{     
+            "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
+           } 
+    });
     const result=await responce.json(); 
    
     if(result.success===true){    
@@ -40,6 +47,10 @@ const apiUrl = process.env.REACT_APP_API_URL;
         
       const responce=await fetch(`${apiUrl}/delete_lead_source/${_id}`,{
                         method:"DELETE",
+                        headers:{     
+                            "Content-Type":"application/json",
+                            "mongodb-url":DBuUrl,
+                           } 
           })
 
           const  result =await responce.json();
@@ -77,8 +88,6 @@ export const EmployeeReport=createSlice({
        },
        [getEmployeeReport.fulfilled]:(state,action) =>{
            state.loading=false;
-           //state.EmplstateoyeeReport.push([]); 
-         //  state.EmployeeReport.splice(0, EmployeeReport.length);
               state.EmployeeReport.unshift(action.payload);  
         
        },

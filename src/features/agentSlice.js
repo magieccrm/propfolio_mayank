@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-// const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
+const DBuUrl = process.env.REACT_APP_DB_URL;
 
    export const addagent=createAsyncThunk("addagent",async(data,{rejectWithValue})=>{
            
@@ -9,6 +9,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data)
         })  
@@ -33,6 +34,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
         method:"PUT",
         headers:{     
             "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
            }, 
            body:JSON.stringify(data)
     })  
@@ -46,13 +48,31 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
    export const getAllAgent=createAsyncThunk("getAllAgent",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch(`${apiUrl}/get_all_agent`);
+    const responce=await fetch(`${apiUrl}/get_all_agent`,{
+        headers:{       
+            "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
+           }, 
+      });
     const result=await responce.json();
-   
     if(result.success===true){    
         return result;   
-   }else{  
-       return rejectWithValue(result.message); 
+   }else{ 
+    if(result.message=='Client must be connected before running operations'){
+        const responce=await fetch(`${apiUrl}/get_all_agent`,{
+            headers:{       
+                "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
+               }, 
+          });
+        const result=await responce.json();
+        if(result.success===true){    
+            return result;   
+       }
+    }else{
+        return rejectWithValue(result.message); 
+    } 
+      
    }  
    })
 
@@ -60,6 +80,10 @@ const apiUrl = process.env.REACT_APP_API_URL;
             
     const responce=await fetch(`${apiUrl}/agent_delete/${_id}`,{
         method:"DELETE",
+        headers:{     
+            "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
+           }, 
 })
 
 const  result =await responce.json(); 
@@ -77,6 +101,7 @@ return rejectWithValue(result.message);
         method:"PUT",
         headers:{ 
             "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
            },
         
 })
@@ -108,6 +133,7 @@ export const agentSource=createSlice({
        loading:false,  
        error:null,
        message:'', 
+       headersproblem:'',
     },
     extraReducers:{
       // create add leadsource
@@ -116,7 +142,8 @@ export const agentSource=createSlice({
            state.loading=true; 
        }, 
        [addagent.fulfilled]:(state,action) =>{
-             state.loading=false;    
+             state.loading=false;  
+             console.log('action.payload',action.payload)  
             state.agent.agent.push(action.payload.agent);   
             //   state.message=action.payload.message; 
             state.message=action.payload.message; 

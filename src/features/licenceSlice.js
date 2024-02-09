@@ -3,7 +3,7 @@ import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const apiUrl1 = process.env.REACT_APP_LIENCE_URL;
-
+const DBuUrl = process.env.REACT_APP_DB_URL;
 // show all data
 export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host,{rejectWithValue})=>{
     
@@ -25,6 +25,7 @@ export const login1= createAsyncThunk("login1",async(data,{rejectWithValue})=>{
            method:"POST", 
            headers:{    
             "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
            }, 
            body:JSON.stringify(data)
     });
@@ -51,7 +52,7 @@ export const licenceactive=createAsyncThunk("licenceactive",async(data,{rejectWi
            method:"PUT",
            headers:{ 
             "Content-Type":"application/json",
-           },
+            },
            body:JSON.stringify(data)  
     });
     const result=await response.json();

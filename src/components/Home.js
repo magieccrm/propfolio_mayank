@@ -14,7 +14,8 @@ import Notification from "./Notification";
 
 function Home() {
   const apiUrl = process.env.REACT_APP_API_URL;
-  const  [Sale, setSale]=useState([]);
+  const DBuUrl = process.env.REACT_APP_DB_URL; 
+  const [Sale, setSale]=useState([]);
   const [leadsource , setleadsource]=useState([]);
   const [leadsourcedata1 , setleadsourcedata]=useState([]);
   var { agent } = useSelector((state) => state.agent);
@@ -26,19 +27,39 @@ function Home() {
 
 
   useEffect(() => {
-    dispatch(getAllAgent());
-    dispatch(getAllLeadSource())
+    const fetchData1 = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        dispatch(getAllAgent());
+        dispatch(getAllLeadSource())
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData1();
+
+
+    
    
   }, []);
 
   const getSale = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/YearlySaleApi`
+        `${apiUrl}/YearlySaleApi`,{
+          headers:{
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
       setSale(responce?.data?.details);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getSale();
+      }
       console.log(error);
     }
   };
@@ -46,12 +67,22 @@ function Home() {
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        `${apiUrl}/lead_source_overview_api`
+        `${apiUrl}/lead_source_overview_api`,
+        {
+          headers:{
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
       setleadsourcedata(responce?.data?.Lead_source_count);
       setleadsource(responce?.data?.Lead_source_name);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getAllLeadSourceOverview();
+      }
       console.log(error);
     }
   }
@@ -59,15 +90,24 @@ function Home() {
   const getLeadCountData=async()=>{
     try {
       const responce = await axios.get(
-        `${apiUrl}/DashboardLeadCount`
+        `${apiUrl}/DashboardLeadCount`,{
+          headers:{
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
       setleadcountdata(responce?.data?.Count);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      console.log('djvjk',message);
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getLeadCountData();
+      }
       console.log(error);
     }
   }
-  console.log(leadcountdata)
   useEffect(()=>{
       getSale()  
       getLeadCountData();

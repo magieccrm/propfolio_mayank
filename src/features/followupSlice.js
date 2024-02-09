@@ -1,15 +1,16 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const DBuUrl = process.env.REACT_APP_DB_URL;
 
 
    export const addfollowup=createAsyncThunk("addfollowup",async(data,{rejectWithValue})=>{
            
         const responce=await fetch(`${apiUrl}/add_followup_lead/`,{
             method:"POST",
-            headers:{     
-                "Content-Type":"application/json",
+            headers:{ 
+                "Content-Type":"application/json",    
+                 "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data) 
         })  
@@ -28,7 +29,12 @@ const apiUrl = process.env.REACT_APP_API_URL;
    
 
    export const getAllFollowup=createAsyncThunk("getAllFollowup",async(_id,{rejectWithValue})=>{
-    const responce=await fetch(`${apiUrl}/all_followup_lead_by_id/${_id}`);
+    const responce=await fetch(`${apiUrl}/all_followup_lead_by_id/${_id}`,{
+        headers:{     
+            "Content-Type":"application/json",
+            "mongodb-url":DBuUrl,
+           }, 
+      });
     const result=await responce.json(); 
    
     if(result.success===true){    
@@ -42,6 +48,10 @@ const apiUrl = process.env.REACT_APP_API_URL;
         
       const responce=await fetch(`${apiUrl}/delete_lead_source/${_id}`,{
                         method:"DELETE",
+                        headers:{     
+                            "Content-Type":"application/json",
+                            "mongodb-url":DBuUrl,
+                           }, 
           })
 
           const  result =await responce.json();

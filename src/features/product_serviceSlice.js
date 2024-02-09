@@ -5,15 +5,16 @@ import {
 } from "@reduxjs/toolkit";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const DBuUrl = process.env.REACT_APP_DB_URL;
 /////////add strtus
 export const addProductService = createAsyncThunk(
   "addProductService",
   async (data, { rejectWithValue }) => {
     const responce = await fetch(`${apiUrl}/add_product_service/`, {
       method: "POST",
-      headers: {
+      headers:{
         "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
       },
       body: JSON.stringify(data),
     });
@@ -34,10 +35,11 @@ export const UpdateProductService = createAsyncThunk(
       `${apiUrl}/update_product_service/${data?._id}`,
       {
         method: "put",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+          headers:{
+            "Content-Type": "application/json",
+              "mongodb-url":DBuUrl,
+          },
+      body: JSON.stringify(data),
       }
     );
     const result = await responce.json();
@@ -55,14 +57,32 @@ export const getAllProductService = createAsyncThunk(
   "getAllProductService",
   async (dara, { rejectWithValue }) => {
     const resource = await fetch(
-      `${apiUrl}/all_product_service/`
+      `${apiUrl}/all_product_service/`,{
+        headers:{     
+          "Content-Type":"application/json",
+           "mongodb-url":DBuUrl,
+         }, 
+      }
     );
     const result = await resource.json();
-    // console.log(result.success)
     if (result.success === true) {
       return result;
     } else {
-      return rejectWithValue(result.message);
+      if(result.message=='Client must be connected before running operations'){
+        const responce=await fetch(`${apiUrl}/all_product_service`,{
+            headers:{       
+                "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
+               }, 
+          });
+        const result=await responce.json();
+        if(result.success===true){    
+            return result;   
+       }
+    }else{
+        return rejectWithValue(result.message); 
+    } 
+      // return rejectWithValue(result.message);
     }
   }
 );
@@ -76,6 +96,10 @@ export const deleteProductService = createAsyncThunk(
       `${apiUrl}/delete_product_service/${_id}`,
       {
         method: "DELETE",
+        headers:{
+          "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+        }
       }
     );
 

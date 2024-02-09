@@ -3,13 +3,14 @@ import { async } from "q";
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const DBuUrl = process.env.REACT_APP_DB_URL;
    export const addleadSource=createAsyncThunk("addleadSource",async(data,{rejectWithValue})=>{
            
         const responce=await fetch(`${apiUrl}/add_lead_source/`,{
             method:"POST",
             headers:{     
                 "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data)
         })  
@@ -32,6 +33,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
             method:"PUT",
             headers:{     
                 "Content-Type":"application/json",
+                "mongodb-url":DBuUrl,
                }, 
                body:JSON.stringify(data)
         })  
@@ -45,13 +47,32 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
    export const getAllLeadSource=createAsyncThunk("getAllLeadSource",async(data,{rejectWithValue})=>{
 
-    const responce=await fetch(`${apiUrl}/all_lead_source`);
+    const responce=await fetch(`${apiUrl}/all_lead_source`,{
+        headers:{       
+        "Content-Type":"application/json",
+        "mongodb-url":DBuUrl,
+       },
+     });
     const result=await responce.json();
   
     if(result.success===true){    
         return result;   
    }else{  
-       return rejectWithValue(result.message);
+    // if(result.message=='Client must be connected before running operations'){
+    //     const responce=await fetch(`${apiUrl}/all_lead_source`,{
+    //         headers:{       
+    //             "Content-Type":"application/json",
+    //             "mongodb-url":DBuUrl,
+    //            }, 
+    //       });
+    //     const result=await responce.json();
+    //     if(result.success===true){    
+    //         return result;   
+    //    }
+    // }else{
+    //     return rejectWithValue(result.message); 
+    // }
+    return rejectWithValue(result.message);  
    }  
    })
 
@@ -59,6 +80,10 @@ const apiUrl = process.env.REACT_APP_API_URL;
         
       const responce=await fetch(`${apiUrl}/delete_lead_source/${_id}`,{
                         method:"DELETE",
+                        headers:{     
+                            "Content-Type": "application/json",
+                            "mongodb-url":DBuUrl,
+                           }, 
           })
 
           const  result =await responce.json();

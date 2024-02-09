@@ -12,6 +12,7 @@ import Chart from 'react-apexcharts';
 
 export default function LeadSouceReport() {
   const apiUrl = process.env.REACT_APP_API_URL;    
+  const DBuUrl = process.env.REACT_APP_DB_URL; 
   const [data, setdata] = useState({
 
   });
@@ -48,6 +49,7 @@ const [llll,setllll]=useState('block');
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
+      "mongodb-url":DBuUrl,
     };
     try {
       const responce = await axios.post(
@@ -86,12 +88,21 @@ const [llll,setllll]=useState('block');
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        `${apiUrl}/lead_source_overview_api`
+        `${apiUrl}/lead_source_overview_api`,{
+          headers:{
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          }
+        }
       );
       setleadsourcedata(responce?.data?.Lead_source_count);
       setleadsource(responce?.data?.Lead_source_name);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getAllLeadSourceOverview();
+      }
       console.log(error);
     }
   }

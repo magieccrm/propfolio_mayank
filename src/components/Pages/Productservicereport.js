@@ -10,7 +10,8 @@ import { getAllAgent } from "../../features/agentSlice";
 import DataTable from "react-data-table-component";
 import { toast } from "react-toastify";
 export default function Productservicereport() {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;  
+  const DBuUrl = process.env.REACT_APP_DB_URL;      
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
@@ -30,17 +31,22 @@ export default function Productservicereport() {
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
+      "mongodb-url":DBuUrl,
     };
     try {
       const responce = await axios.post(
         `${apiUrl}/GetProductReportDateWise`,
-        data,
+        data,   
         { headers }
       );
       setLeadData(responce?.data?.leadSource);
       toast(responce?.data?.message);
       setllll('none')
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getEmployeeReport();
+      }
       setLeadData();
       toast(error?.response?.data?.message);
     }
@@ -68,12 +74,21 @@ export default function Productservicereport() {
   const getAllLeadSourceOverview=async ()=>{
     try {
       const responce = await axios.get(
-        `${apiUrl}/LeadProductServiceOverviewApi`
+        `${apiUrl}/LeadProductServiceOverviewApi`,{
+         headers:{
+          "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
+        },
+        }
       );
       setleadsourcedata(responce?.data?.product_count);
       setleadsource(responce?.data?.product_name);
       
     } catch (error) {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        getAllLeadSourceOverview();
+      }
       console.log(error);
     }
   }
