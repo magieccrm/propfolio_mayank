@@ -39,8 +39,9 @@ import Employeereporttt from './components/Pages/Employeereporttt';
 import Productservicereport from './components/Pages/Productservicereport';
 import LeadSouceReport from './components/Pages/LeadSouceReport';
 import Callreport from './components/Pages/Callreport';
+import BulkWhatsAppSMS from './components/Pages/BulkWhatsAppSMS';
+import TransactionalSMS from './components/Pages/TransactionalSMS';
   function App() { 
-  
     const [isLoading, setIsLoading] = useState(true);
     const [isLogined, setIsLogined]= useState(false); 
     const [user_id, setuser_id]= useState(); 
@@ -163,6 +164,9 @@ import Callreport from './components/Pages/Callreport';
          <Route path="/Productservicereport" element={<Productservicereport/>}></Route>
          <Route path="/Callreport" element={<Callreport/>}></Route>
          <Route path="/leadsourcereport" element={<LeadSouceReport/>}></Route>
+
+         <Route path="/transactionalSms" element={<TransactionalSMS/>}></Route>
+         <Route path="/BulkWhatsAppSMS" element={<BulkWhatsAppSMS/>}></Route>
 
 
          <Route path="/Listinvoice" element={<Listinvoice />}></Route>

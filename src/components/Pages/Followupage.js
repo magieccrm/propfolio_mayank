@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 import { getAllLostReason } from "../../features/lostreasonSlice";
 import axios from "axios";
 export default function Followupage() {
-  const apiUrl = process.env.REACT_APP_API_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
   const navigate = useNavigate();
   const { agent } = useSelector((state) => state.agent);
   const { CountryState } = useSelector((state) => state.Country_State);
@@ -37,6 +38,21 @@ export default function Followupage() {
     setLocalDetails(AllDetails || {});
   }, [AllDetails]);
   useEffect(() => {
+    const getalltransactional = async () => {
+      try {
+          const response = await axios.get('http://localhost:3000/api/v1/getallsmsrecord', {
+              headers: {
+                  "Content-Type": "application/json",
+                  "mongodb-url": DBuUrl,
+              },
+          });
+           setsmsdata(response?.data?.transactional['0']);
+      } catch (error) { 
+          console.log(error);
+      }
+
+  }
+    getalltransactional();
     dispatch(getAllStatus());
     dispatch(getAllLead());
     dispatch(getAllAgent());
@@ -101,12 +117,12 @@ export default function Followupage() {
   const [showforlostlead, setshowforlostlead] = useState("none");
 
   const setStatus = (e) => {
-    if (e.target.value == "6539fa950b9756b61601287b") {
+    if (e.target.value == "65a904e04473619190494482") {
       setdata(e.target.value);
 
       setshow("block");
       setshowforlostlead("none");
-    } else if (e.target.value == "6561c44233093ed343745a3e") {
+    } else if (e.target.value == "65a904ed4473619190494484") {
       setdata(e.target.value);
       setshow("none");
       setshowforlostlead("block");
@@ -252,6 +268,29 @@ export default function Followupage() {
     }
   };
 
+  // for sms
+  const  [smsdata, setsmsdata] = useState();
+  const sendSMS = async (e) => {
+    e.preventDefault();
+    const url=await smsdata?.endpointurl;
+    try {
+        const response = await axios.get(`${url}`, {
+            params: {
+                user: smsdata?.user,
+                pass: smsdata?.pass,
+                sender: smsdata?.sender,
+                phone: localDetails?.contact_no,
+                text: 'API Test - SMSFresh',
+                priority: 'ndnd',
+                stype: 'normal'
+            }
+        });
+         console.log('jhfkjd',response);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
   return (
     <div>
       <div className="content-wrapper">
@@ -366,7 +405,7 @@ export default function Followupage() {
                                             <option
                                               selected={
                                                 foundObject?.assign_to_agent ===
-                                                agents._id
+                                                  agents._id
                                                   ? "selected"
                                                   : ""
                                               }
@@ -402,7 +441,7 @@ export default function Followupage() {
                                               <option
                                                 selected={
                                                   foundObject?.status ===
-                                                  status._id
+                                                    status._id
                                                     ? "selected"
                                                     : ""
                                                 }
@@ -446,7 +485,7 @@ export default function Followupage() {
                                             <option
                                               selected={
                                                 foundObject?.status ===
-                                                lostreason1?._id
+                                                  lostreason1?._id
                                                   ? "selected"
                                                   : ""
                                               }
@@ -610,6 +649,45 @@ export default function Followupage() {
                               </div>
                             </div>
                           </form>
+                          {/* for sms start*/}
+                          <form onSubmit={sendSMS}>
+                          <div className="mai-falows">
+                            <div className="row">
+                              <div className="col-md-12">
+
+                              <div className="row bottoms-border">
+                                <div className="col-md-2 col-xs-2">
+                                  <lable>Send Message</lable>
+                                </div>
+                                <div className="col-md-7 col-xs-7">
+                                  <textarea  className="form-control"
+                                    type="test"
+                                    name=""
+                                    
+                                  />
+                                  <input className="form-control" 
+                                  name="endpointurl"  value={smsdata?.endpointurl} 
+                                  type="hidden"/>
+                                  <input className="form-control" 
+                                name="sender" value={smsdata?.sender} 
+                                  type="hidden"/>
+                                  <input className="form-control" 
+                                  name="user" value={smsdata?.user}
+                                  type="hidden"/>
+                                  <input className="form-control" 
+                                  name="pass" value={smsdata?.pass}
+                                  type="hidden"/>
+                                  
+                                </div>
+                                <div className="col-md-3 col-xs-3">
+                                  <button type="submit" className="btn btenss form-control btn-success">Send Sms</button>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          </form>
+                          {/* for sms end */}
                         </div>
                       </div>
                       {/* Nav tabs */}
@@ -1200,7 +1278,7 @@ export default function Followupage() {
                                               <option
                                                 selected={
                                                   foundObject?.assign_to_agent ===
-                                                  agents._id
+                                                    agents._id
                                                     ? "selected"
                                                     : ""
                                                 }
@@ -1238,7 +1316,7 @@ export default function Followupage() {
                                                   <option
                                                     selected={
                                                       foundObject?.status ===
-                                                      status._id
+                                                        status._id
                                                         ? "selected"
                                                         : ""
                                                     }
@@ -1405,13 +1483,13 @@ export default function Followupage() {
 
                                     {attechmenthistory?.map(
                                       (attechmenthistory1, index) => {
-                                  
-                                        const url=attechmenthistory1.leadattechment;
-                                       const prefixToRemove = '/var/www/html/backend/public';
-                                        
+
+                                        const url = attechmenthistory1.leadattechment;
+                                        const prefixToRemove = '/var/www/html/backend/public';
+
                                         const modifiedUrl = url.replace(prefixToRemove, '');
-                                        const mainurl='https://backend.bizavtar.com/'+modifiedUrl;
-                                        
+                                        const mainurl = 'https://backend.bizavtar.com/' + modifiedUrl;
+
                                         return (
                                           <tbody id="lead_docs">
                                             <td>{index + 1}</td>
@@ -1425,7 +1503,7 @@ export default function Followupage() {
                                               >
                                                 <img
                                                   src={mainurl}
-                                                 // alt="Description"
+                                                  // alt="Description"
                                                   width="50"
                                                   height={50}
                                                 />

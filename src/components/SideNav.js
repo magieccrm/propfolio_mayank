@@ -1,23 +1,18 @@
 import React ,{ useState } from "react";
 import {  Link, useNavigate } from "react-router-dom";
-// import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem } from 'mdb-react-ui-kit';
-
 import companyLogo from "./avatar5.png";
-
 function SideNav() {
-
-
   ////// Hide And Show/////
   const [line, setline] = useState("none");
   const [lead1, setlead] = useState("none");
   const [callManageshow, setcallManageshow] = useState("none");
+  const [sms, setsms] = useState("none");
       const openclose=()=>{
         if(line==='none'){
           setline("block")
         }else{
           setline("none")
         }
-
       }
       const lead=()=>{
         if(lead1==='none'){
@@ -25,16 +20,21 @@ function SideNav() {
         }else{
           setlead("none")
         }
-
-      }
+     }
       const callManage=()=>{
         if(callManageshow==='none'){  
           setcallManageshow("block") 
         }else{
           setcallManageshow("none")
         }
-
-      }
+       }
+       const smsManage=()=>{
+        if(sms==='none'){  
+          setsms("block") 
+        }else{
+          setsms("none")
+        }
+       }
 ////// Hide And Show///////
 
 const [activeItem, setActiveItem] = useState('home');
@@ -196,6 +196,32 @@ const handleItemClick = (itemName) => {
                   
                 </ul>
               </li>
+
+                {/* manage sms start */}
+              <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={smsManage}>
+                  <i className="nav-icon fas fa fa fa-cog" />
+                  Sms Manage  
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:sms}}>
+                <li className="nav-item">
+                  <a href="javascript:void(0);"  className={activeItem === 'transactionalSms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('transactionalSms')}>
+                      <p>Transactional SMS</p>
+                    </a>
+                  </li>
+                 
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'BulkWhatsAppSMS' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('BulkWhatsAppSMS')}>
+                      <p> Bulk WhatsApp SMS</p>   
+                    </a>
+                  </li>
+                  
+                </ul>
+              </li>
+                {/* manage sms end */}
 
 
 

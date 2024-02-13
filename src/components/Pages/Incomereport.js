@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
+import { getAllStatus } from "../../features/statusSlice";
 import DataTable from "react-data-table-component";
 import toast from "react-hot-toast";
 
@@ -16,6 +17,7 @@ export default function Incomereport() {
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
+  const { Statusdata } = useSelector((state) => state.StatusData);
   var { agent } = useSelector((state) => state.agent);
   const [leadsource , setleadsource]=useState([]);
   const [leadsourcedata1 , setleadsourcedata]=useState([]);
@@ -47,6 +49,7 @@ export default function Incomereport() {
       getAllLeadSourceOverview1();
       dispatch(getAllProductService());
       dispatch(getAllAgent());
+      dispatch(getAllStatus());
     },[]);
     const options = {
       labels: leadsource,
@@ -166,6 +169,25 @@ export default function Incomereport() {
                                       );
                                     }
                                   )}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="col-md-4">
+                              <div className="form-group">
+                                <select className="form-control"
+                                   onChange={(e) =>
+                                    setdata({
+                                      ...data,
+                                      status: e.target.value,
+                                    })
+                                  }
+                                name="status">
+                                  <option value="">Select Status</option>
+                                  {Statusdata?.leadstatus?.map((status, key) => {
+                      return (
+                        <option value={status._id}>{status.status_name}</option>
+                      );
+                    })}
                                 </select>
                               </div>
                             </div>

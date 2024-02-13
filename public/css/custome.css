@@ -8,6 +8,24 @@ body {
   font-family: 'Karla', sans-serif;
   font-family: Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  width: 100%;
+  padding-right: 15px !important;
+  padding-left: 0px !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+.map-maxwidth{
+  max-width: 550px;
+  display: block;
+  margin: -58px auto;
+
+}
+.map-maxwidth canvas{
+  height: 550px!important;
+  width: 550px!important;
+
+}
 /* .main-sidebar{
   position: fixed!important;
   top: 0;
