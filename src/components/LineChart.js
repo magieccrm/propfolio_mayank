@@ -25,19 +25,19 @@ const ChartComponent = () => {
 
    useEffect(() => {
     getAllLeadSourceOverview();
-    // handleResize(); // Call the function on initial render to set the correct chart width
-    // window.addEventListener('resize', handleResize); // Listen for window resize events
-    // return () => {
-    //   window.removeEventListener('resize', handleResize); // Remove the event listener on component unmount
-    // };
+    handleResize(); // Call the function on initial render to set the correct chart width
+    window.addEventListener('resize', handleResize); // Listen for window resize events
+    return () => {
+      window.removeEventListener('resize', handleResize); // Remove the event listener on component unmount
+    };
   }, []);
 
-  // const handleResize = () => {
-  //   if (chartRef.current && chartRef.current.chart && chartRef.current.parentElement) {
-  //     const containerWidth = chartRef.current.parentElement.offsetWidth;
-  //     chartRef.current.chart.width = containerWidth > 768 ? 1200 : containerWidth;
-  //   }
-  // };
+  const handleResize = () => {
+    if (chartRef.current && chartRef.current.chart && chartRef.current.parentElement) {
+      const containerWidth = chartRef.current.parentElement.offsetWidth;
+      chartRef.current.chart.width = containerWidth > 768 ? 1200 : containerWidth;
+    }
+  };
   const data1 = {
     labels: ["January",
     "February",
@@ -64,9 +64,9 @@ const ChartComponent = () => {
   return (
     <React.Fragment>
      <div className="map-maxwidth">
-      {/* <Chart
+      <Chart
           type="bar"
-          width={800} // Initial width, will be adjusted dynamically
+          width={1200} // Initial width, will be adjusted dynamically
           height={400}
           series={[
             {
@@ -138,15 +138,15 @@ const ChartComponent = () => {
               },
             },
           }}
-        ></Chart> */}
-        <Doughnut data={data1} options={{
+        ></Chart>
+        {/* <Doughnut data={data1} options={{
             plugins: {
               legend: {
                 display: true,
                 position: 'right',
               },
             },
-          }} />
+          }} /> */}
 
         </div>
         
