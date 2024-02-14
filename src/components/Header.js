@@ -1,37 +1,59 @@
-import React,{useEffect, useState} from "react";
-import {  Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Breadcrumb from "./Pages/Breadcrumb";
+import axios from "axios";
 
 
-function Header() {  
+function Header() {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
   const navigate = useNavigate();
-  
-  const Logout = async() => {
-  
-     localStorage.removeItem('token');
-     localStorage.removeItem('user_id');
-     localStorage.removeItem('agent_name');
-     localStorage.removeItem('agent_email');
-     localStorage.removeItem('agent_mobile');
-     localStorage.removeItem('role');
+  const Logout = async () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('agent_name');
+    localStorage.removeItem('agent_email');
+    localStorage.removeItem('agent_mobile');
+    localStorage.removeItem('role');
+    await navigate('/login')
+    setTimeout(() => {
+      toast.warn('Logout Successfully');
+      window.location.reload(false);
+    }, 500);
+  };
+  const [leadcountdata, setleadcountdata] = useState({});
+  const getLeadCountData = async () => {
+    try {
+      const responce = await axios.get(
+        `${apiUrl}/DashboardLeadCount`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
+      );
+      setleadcountdata(responce?.data?.Count);
+    } catch (error) {
+      const message = await error?.response?.data?.message;
+     
+      if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
+        getLeadCountData();
+      }
+      console.log(error);
+    }
+  }
+  console.log(leadcountdata);
+  useEffect(() => {
+    getLeadCountData();  
+  }, []);
 
-    
-       await  navigate('/login')       
-  setTimeout(()=>{   
-
-     toast.warn('Logout Successfully'); 
-     window.location.reload(false);
-    
-}, 500);   
-            };
-  
-  return (    
+  return (
     <div>
-    
+
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-    
+
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link
@@ -46,7 +68,7 @@ function Header() {
           <li className="nav-item d-none d-sm-inline-block">
             <Link to="/home" className="nav-link">
               <i class="fa fa-home" />
-               {/* Home */}
+              {/* Home */}
             </Link>
           </li>
           {/* <li className="nav-item d-none d-sm-inline-block">
@@ -55,38 +77,50 @@ function Header() {
           </li> */}
         </ul>
 
-        <Breadcrumb/> 
+        <Breadcrumb />
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">
-            <Link className="nav-link" data-toggle="dropdown" to="#">
-              <i className="far fa-bell pe-7s-bell" />
-              <span className="badge badge-warning navbar-badge">15</span>
-            </Link>
+          <Link className="nav-link" data-toggle="dropdown" to="#">
+    <i className="far fa-bell pe-7s-bell" />
+    {Array.isArray(leadcountdata) && (
+      <span className="badge badge-warning navbar-badge">
+        {leadcountdata.reduce(
+          (total, item) =>
+            item.name !== "Total Lead" && item.name !== "Total Agent"
+              ? total + item.Value
+              : total,
+          0
+        )}
+      </span>
+    )}
+  </Link>
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span className="dropdown-item dropdown-header">
-                15 Notifications
-              </span>
-              <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item">
-                <i className="fas fa-envelope mr-2" /> 4 new messages
-                <span className="float-right text-muted text-sm">3 mins</span>
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item">
-                <i className="fas fa-users mr-2" /> 8 friend requests
-                <span className="float-right text-muted text-sm">12 hours</span>
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item">
-                <i className="fas fa-file mr-2" /> 3 new reports
-                <span className="float-right text-muted text-sm">2 days</span>
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item dropdown-footer">
-                See All Notifications
-              </Link>
-            </div>
+  {
+    Array.isArray(leadcountdata) && leadcountdata.map((leadcountdata1, index) => (
+      leadcountdata1?.name === 'Total Lead' ? (
+        null
+      ) : leadcountdata1?.name === 'Total Agent' ? (
+        null
+      ) : (
+        leadcountdata1?.Value !== 0 ? (
+        
+          <React.Fragment key={index}>
+            <Link to="/followupleads" className="dropdown-item">
+              <i className="fas fa-envelope mr-2" /> {leadcountdata1?.Value} new {leadcountdata1?.name}
+             </Link>
+          </React.Fragment>
+        ) : null
+      )
+    ))
+  }
+  {/* Calculate and render the total */}
+  {/* <div className="dropdown-divider" />
+  <div className="dropdown-item">
+    Total: {leadcountdata.reduce((total, item) => item.name !== 'Total Lead' && item.name !== 'Total Agent' ? total + item.Value : total, 0)}
+  </div> */}
+</div>
+
           </li>
           {/* Messages Dropdown Menu */}
           <li className="nav-item dropdown">
@@ -108,7 +142,7 @@ function Header() {
               <div className="dropdown-divider" />
               <Link to="/login" className="dropdown-item" onClick={Logout}>
                 {/* Message Start */}
-                <i className="nav-icon far fa fa-cog"  /> logout user
+                <i className="nav-icon far fa fa-cog" /> logout user
                 {/* Message End */}
               </Link>
             </div>

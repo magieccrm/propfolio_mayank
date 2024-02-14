@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 import LineChart from "./LineChart";
+import LineChart1 from "./LineChart1";
 import { getAllAgent } from "../features/agentSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -148,7 +149,7 @@ function Home() {
                        <Link to="/followupleads">    <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
                           <div className="heading_lead py-2 pt-2">
                             <h5>{leadcountdata1?.name}</h5>
-                            <p>{leadcountdata1?.Value}:{leadcountdata1?.Value1}</p>
+                            <p>{leadcountdata1?.Value} - {leadcountdata1?.Value1}</p>
                           </div>
                         </div></Link>
                       </div>
@@ -329,7 +330,7 @@ function Home() {
               </div>
             </div>
             <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-7 col-lg-7 pl-0  lobipanel-parent-sortable ui-sortable"
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 pl-0  lobipanel-parent-sortable ui-sortable"
                 data-lobipanel-child-inner-id="JboVwpEyCD"
               >
                 <div
@@ -340,17 +341,17 @@ function Home() {
                   <div className="panel-heading ui-sortable-handle">
                     <div
                       className="panel-title"
-                      // style={{ maxWidth: "calc(100% - 0px)" }}
-                    >
+                     >
                       <h4>Income Graph</h4>
                     </div>
                   </div>
                   <div className="panel-bodyes personales">
-                    <LineChart />
+                    <LineChart1 />
                   </div>
                 </div>
               </div>
-
+              </div>
+              <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                 <div className="panel panel-bd  bg-white">
                   <div className="panel-heading">

@@ -40,18 +40,18 @@ export default function Followupage() {
   useEffect(() => {
     const getalltransactional = async () => {
       try {
-          const response = await axios.get('http://localhost:3000/api/v1/getallsmsrecord', {
-              headers: {
-                  "Content-Type": "application/json",
-                  "mongodb-url": DBuUrl,
-              },
-          });
-           setsmsdata(response?.data?.transactional['0']);
-      } catch (error) { 
-          console.log(error);
+        const response = await axios.get('http://localhost:3000/api/v1/getallsmsrecord', {
+          headers: {
+            "Content-Type": "application/json",
+            "mongodb-url": DBuUrl,
+          },
+        });
+        setsmsdata(response?.data?.transactional['0']);
+      } catch (error) {
+        console.log(error);
       }
 
-  }
+    }
     getalltransactional();
     dispatch(getAllStatus());
     dispatch(getAllLead());
@@ -269,27 +269,27 @@ export default function Followupage() {
   };
 
   // for sms
-  const  [smsdata, setsmsdata] = useState();
+  const [smsdata, setsmsdata] = useState();
   const sendSMS = async (e) => {
     e.preventDefault();
-    const url=await smsdata?.endpointurl;
+    const url = await smsdata?.endpointurl;
     try {
-        const response = await axios.get(`${url}`, {
-            params: {
-                user: smsdata?.user,
-                pass: smsdata?.pass,
-                sender: smsdata?.sender,
-                phone: localDetails?.contact_no,
-                text: 'API Test - SMSFresh',
-                priority: 'ndnd',
-                stype: 'normal'
-            }
-        });
-         console.log('jhfkjd',response);
+      const response = await axios.get(`${url}`, {
+        params: {
+          user: smsdata?.user,
+          pass: smsdata?.pass,
+          sender: smsdata?.sender,
+          phone: localDetails?.contact_no,
+          text: 'API Test - SMSFresh',
+          priority: 'ndnd',
+          stype: 'normal'
+        }
+      });
+      console.log('jhfkjd', response);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-}
+  }
 
   return (
     <div>
@@ -651,41 +651,41 @@ export default function Followupage() {
                           </form>
                           {/* for sms start*/}
                           <form onSubmit={sendSMS}>
-                          <div className="mai-falows">
-                            <div className="row">
-                              <div className="col-md-12">
+                            <div className="mai-falows">
+                              <div className="row">
+                                <div className="col-md-12">
 
-                              <div className="row bottoms-border">
-                                <div className="col-md-2 col-xs-2">
-                                  <lable>Send Message</lable>
-                                </div>
-                                <div className="col-md-7 col-xs-7">
-                                  <textarea  className="form-control"
-                                    type="test"
-                                    name=""
-                                    
-                                  />
-                                  <input className="form-control" 
-                                  name="endpointurl"  value={smsdata?.endpointurl} 
-                                  type="hidden"/>
-                                  <input className="form-control" 
-                                name="sender" value={smsdata?.sender} 
-                                  type="hidden"/>
-                                  <input className="form-control" 
-                                  name="user" value={smsdata?.user}
-                                  type="hidden"/>
-                                  <input className="form-control" 
-                                  name="pass" value={smsdata?.pass}
-                                  type="hidden"/>
-                                  
-                                </div>
-                                <div className="col-md-3 col-xs-3">
-                                  <button type="submit" className="btn btenss form-control btn-success">Send Sms</button>
-                                </div>
+                                  <div className="row bottoms-border">
+                                    <div className="col-md-2 col-xs-2">
+                                      <lable>Send Message</lable>
+                                    </div>
+                                    <div className="col-md-7 col-xs-7">
+                                      <textarea className="form-control"
+                                        type="test"
+                                        name=""
+
+                                      />
+                                      <input className="form-control"
+                                        name="endpointurl" value={smsdata?.endpointurl}
+                                        type="hidden" />
+                                      <input className="form-control"
+                                        name="sender" value={smsdata?.sender}
+                                        type="hidden" />
+                                      <input className="form-control"
+                                        name="user" value={smsdata?.user}
+                                        type="hidden" />
+                                      <input className="form-control"
+                                        name="pass" value={smsdata?.pass}
+                                        type="hidden" />
+
+                                    </div>
+                                    <div className="col-md-3 col-xs-3">
+                                      <button type="submit" className="btn btenss form-control btn-success">Send Sms</button>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
                           </form>
                           {/* for sms end */}
                         </div>

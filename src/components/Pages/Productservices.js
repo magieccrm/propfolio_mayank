@@ -30,7 +30,7 @@ function Productservices() {
   };
   const productsubmit = async (e) => {
     e.preventDefault();
-    if (data._id) {
+    if (data?._id) {
       const aaaa = await dispatch(UpdateProductService(data));
       if (aaaa.payload.success === true) {
         toast.success(aaaa.payload.message);
@@ -50,7 +50,7 @@ function Productservices() {
 
   const editstatus = async (_id) => {
     const selectedData = ProductService?.product_service.find(
-      (item) => item._id === _id
+      (item) => item?._id === _id
     );
     setline("block");
     setData(selectedData);
@@ -60,10 +60,15 @@ function Productservices() {
 
   /// add form show
   const [line, setline] = useState("none");
-  const showForm = (e) => {
+  const showForm = async(e) => {
     if (line === "none") {
-      setline("block");
+      setData(null); // Set data to null
+      setData({product_service_name:'',set_up_fee:'',payment:''}); // Set data to null
+
+       setline("block");
     } else {
+      setData(null); // Set data to null
+      setData({product_service_name:'',set_up_fee:'',payment:''}); // Set data to null
       setline("none");
     }
   };
@@ -107,13 +112,12 @@ function Productservices() {
                                 <tr>
                                   <th className="list-check">S.N.</th>
                                   <th>Product Name</th>
-                                  {/* <th>Billing Cycle</th> */}
                                   <th>Price</th>
                                   <th>Action</th>
                                 </tr>
                               </thead>
                               <tbody className="datas_table">
-                                {ProductService.product_service?.map(
+                                {ProductService?.product_service?.map(
                                   (ProductService1, key) => {
                                     const handleDelete = () => {
                                       const confirmDelete = window.confirm(
@@ -158,7 +162,7 @@ function Productservices() {
                                           <button
                                             type="button"
                                             onClick={(e) =>
-                                              editstatus(ProductService1._id)
+                                              editstatus(ProductService1?._id)
                                             }
                                             className="btn btn-info btn-xs"
                                           >
@@ -287,7 +291,7 @@ function Productservices() {
                                       type="submit"
                                       className="btn btn-primary"
                                     >
-                                      {data._id ? "Edit" : "Submit"}
+                                      {data?._id ? "Edit" : "Submit"}
                                     </button>
                                   </div>
                                 </div>
