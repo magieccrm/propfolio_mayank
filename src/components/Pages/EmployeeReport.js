@@ -322,39 +322,28 @@ export default function EmployeeReport() {
                                         Never Attended
                                       </span>
                                       <strong>
-                                        {/* {(EmployeeReport[0]?.details[0]
-                                          ?.totalMissCall +
-                                          EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
-                                              ?.totalMissCall +
-                                              EmployeeReport[0]?.details[0]
-                                                ?.totalRejectedCall):0} */}
-                                                {
-                                                  EmployeeReport[0]?.details[0]
+                                             {
+                                                  (EmployeeReport[0]?.details[0]
                                                   ?.totalCall-EmployeeReport[0]?.details[0]
                                                     ?.totalIncommingCall-EmployeeReport[0]?.details[0]
                                                       ?.totalOutgoingCall-EmployeeReport[0]?.details[0]
-                                                        ?.totalMissCall
+                                                        ?.totalMissCall)?(EmployeeReport[0]?.details[0]
+                                                          ?.totalCall-EmployeeReport[0]?.details[0]
+                                                            ?.totalIncommingCall-EmployeeReport[0]?.details[0]
+                                                              ?.totalOutgoingCall-EmployeeReport[0]?.details[0]
+                                                                ?.totalMissCall):'0'
                                                 }
                                       </strong>
                                     </div>
                                     <div className="dash_inn">
                                       <span>
                                         <i className="las la-phone-slash never-attended-text" />{" "}
-                                        Not Pickup by Client
+                                        Not Connected Call
                                       </span>
                                       <strong>
-                                        {(EmployeeReport[0]?.details[0]
-                                          ?.totalOutgoingCall -
-                                          // EmployeeReport[0]?.details[0]
-                                          //   ?.totalMissCall 
-                                            - EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
-                                              ?.totalOutgoingCall -
-                                              // EmployeeReport[0]?.details[0]
-                                              //   ?.totalMissCall 
-                                                - EmployeeReport[0]?.details[0]
-                                                ?.totalRejectedCall):0}
+                                        {EmployeeReport[0]?.details[0]
+                                            ?.NotConnectedCall?EmployeeReport[0]?.details[0]
+                                            ?.NotConnectedCall:'0'}
                                       </strong>
                                     </div>
                                     <div className="dash_inn">
@@ -366,14 +355,10 @@ export default function EmployeeReport() {
                                         {(EmployeeReport[0]?.details[0]
                                           ?.totalCall -
                                           EmployeeReport[0]?.details[0]
-                                            ?.totalMissCall -
-                                          EmployeeReport[0]?.details[0]
-                                            ?.totalRejectedCall)?(EmployeeReport[0]?.details[0]
+                                            ?.NotConnectedCall)?(EmployeeReport[0]?.details[0]
                                               ?.totalCall -
                                               EmployeeReport[0]?.details[0]
-                                                ?.totalMissCall -
-                                              EmployeeReport[0]?.details[0]
-                                                ?.totalRejectedCall):0}
+                                                ?.NotConnectedCall):'0'}
                                       </strong>
                                     </div>
                                     <div className="dash_inn">
@@ -390,8 +375,9 @@ export default function EmployeeReport() {
                                       </span>
                                       <strong>
                                         {
-                                          EmployeeReport[0]?.details[0]
-                                            ?.totalworkinghoure
+                                          (EmployeeReport[0]?.details[0]
+                                            ?.totalworkinghoure)?(EmployeeReport[0]?.details[0]
+                                              ?.totalworkinghoure):'0'
                                         }
                                       </strong>
                                     </div>

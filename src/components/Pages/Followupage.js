@@ -27,6 +27,7 @@ export default function Followupage() {
 
   const [localDetails, setLocalDetails] = useState({});
   const _id = useParams();
+ console.log('_id',_id)
   const { lead, loading } = useSelector((state) => state.lead);
   const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
   const AllDetails = useSelector((state) => state.lead?.lead1?.leads?.["0"]);
@@ -68,8 +69,13 @@ export default function Followupage() {
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
+    setLocalDetails({
+          ...localDetails,
+          country: e.target.value,
+        })
     getStateByCountry(e.target.value);
   };
+ 
 
   const getStateByCountry = (data) => {
     dispatch(getStatebycountry(data));
@@ -176,10 +182,7 @@ export default function Followupage() {
 
   const filesety = async (e) => {
     const selectedFile = e.target.files && e.target.files[0];
-    // if (selectedFile) {
-    //   console.log('selectedFile',selectedFile);
-    //  await setFile(selectedFile);
-    // }
+   
     if (selectedFile) {
       if (allowedFileTypes.includes(selectedFile.type)) {
         setFile(selectedFile);
@@ -427,7 +430,6 @@ export default function Followupage() {
                                     </div>
                                     <div className="col-md-8 col-xs-8">
                                       <select
-                                        // onChange={e=>setdata({...data,followup_status_id:e.target.value})}
                                         onChange={setStatus}
                                         className="form-control"
                                         name="followup_status_id"
@@ -498,6 +500,23 @@ export default function Followupage() {
                                       </select>
                                     </div>
                                   </div>
+                                   
+                                  <div className="row status-bottom">
+                                    <div className="col-md-4 pd-top col-xs-4">
+                                      Won Amount Of Lead
+                                    </div>
+                                    <div className="col-md-8 col-xs-8">
+                                      <input
+                                        disabled
+                                        value={foundObject?.followup_won_amount}
+                                        className="form-control"
+                                        placeholder="Followup date"
+                                        required
+                                        autoComplete="off"
+                                      />
+                                    </div>
+                                  </div>
+                                  
                                   <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
                                       Followup
@@ -525,7 +544,7 @@ export default function Followupage() {
                                       <lable>Description</lable>
                                     </div>
                                     <div className="col-md-8 col-xs-8">
-                                      <textarea
+                                      <textarea required
                                         className="form-control text-areasss"
                                         rows={3}
                                         onChange={(e) =>
@@ -545,7 +564,7 @@ export default function Followupage() {
                                         //value={localDetails?.massage_of_calander}
                                         id="followup_desc"
                                         placeholder="Enter description..."
-                                        required=""
+                                       
                                       />
                                     </div>
                                   </div>
@@ -809,7 +828,7 @@ export default function Followupage() {
                                         <div className="form-group">
                                           <label htmlFor="company_name">
                                             Company Name
-                                          </label>
+                                          </label> 
                                         </div>
                                       </div>
                                       <div className="col-md-8 col-xs-12">
@@ -1054,6 +1073,7 @@ export default function Followupage() {
                             </form>
                           </div>
                           {/*-------------------------------------------tab3  additionnal information-----------------------------*/}
+               
                           <div className="tab-pane fade" id="tab4">
                             <form onSubmit={UpdateAdditionnalInformation}>
                               <div className="row">
@@ -1077,12 +1097,13 @@ export default function Followupage() {
                                         <select
                                           name="country"
                                           value={localDetails.country || ""}
-                                          onChange={(e) =>
-                                            setLocalDetails({
-                                              ...localDetails,
-                                              country: e.target.value,
-                                            })
-                                          }
+                                          // onChange={(e) =>
+                                          //   setLocalDetails({
+                                          //     ...localDetails,
+                                          //     country: e.target.value,
+                                          //   })
+                                          // }
+                                          onChange={handleInputChange}
                                           className="form-control"
                                           required
                                         >
@@ -1091,7 +1112,7 @@ export default function Followupage() {
                                             (country1, key) => {
                                               return (
                                                 <option
-                                                  value={country1.short_name}
+                                                  value={country1.isoCode}
                                                 >
                                                   {country1.name}{" "}
                                                 </option>
@@ -1150,7 +1171,7 @@ export default function Followupage() {
                                             {StateByCountry?.state?.map(
                                               (state1, key) => {
                                                 return (
-                                                  <option value={state1._id}>
+                                                  <option value={state1.name}>
                                                     {state1.name}
                                                   </option>
                                                 );

@@ -137,11 +137,11 @@ export default function ImportLead() {
   };
 
   const handleDownload = () => {
-   const fileUrl = 'Excel/dddddd.csv';
+   const fileUrl = 'Excel/sample.csv';
    const link = document.createElement('a');
     link.href = fileUrl;
     link.target = '_blank';
-    link.download = 'filename.csv'; 
+    link.download = 'sample.csv'; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

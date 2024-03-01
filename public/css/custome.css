@@ -232,7 +232,11 @@ background: rgba(183, 51, 106, 0.38);
 }
 
 
-
+.sidebar {
+  height: 100vh;
+  overflow: scroll;
+    overflow-y: scroll;
+}
 
 .nav-item a{
     color:#333;

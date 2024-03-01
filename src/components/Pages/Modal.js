@@ -1,18 +1,15 @@
-// Modal.js
 import React from 'react';
 
-const Modal = ({ event, onClose }) => {
-    console.log('Modal received props:', event, onClose);
+function Modal({ closeModal }) {
   return (
     <div className="modal">
-      {/* Your modal content goes here */}
-      <h2>Event Details</h2>
-      <p>Title: {event.title}</p>
-      <p>Start: {event.start.toLocaleString()}</p>
-      <p>End: {event.end.toLocaleString()}</p>
-      <button onClick={onClose}>Close</button>
+      <div className="modal-content">
+        <span className="close" onClick={closeModal}>&times;</span>
+        <h2>Modal Title</h2>
+        <p>This is the modal content.</p>
+      </div>
     </div>
   );
-};
+}
 
 export default Modal;

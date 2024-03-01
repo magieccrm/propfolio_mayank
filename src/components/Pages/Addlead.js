@@ -68,6 +68,7 @@ function Addlead() {
       const updatedLeadData = await {
         ...leaddata,
         assign_to_agent: localStorage.getItem("user_id"),
+        commented_id:localStorage.getItem("user_id"),
       };
       const aaaa = await dispatch(addlead(updatedLeadData));
       if (aaaa.payload.success == true) {
@@ -79,7 +80,11 @@ function Addlead() {
         toast.warn(aaaa.payload?.message);
       }
     } else {
-      const aaaa = await dispatch(addlead(leaddata));
+      const updatedLeadData = await {
+        ...leaddata,
+        commented_id:localStorage.getItem("user_id"),
+      };
+      const aaaa = await dispatch(addlead(updatedLeadData));
       if (aaaa.payload.success == true) {
         toast.success(aaaa.payload.message);
         if (buttonValue === "save") {
@@ -265,12 +270,7 @@ function Addlead() {
                               name="contact_no"
                               onChange={handleContactNoChange}
                               value={leaddata.contact_no}
-                              // onChange={(e) =>
-                              //   setleaddata({
-                              //     ...leaddata,
-                              //     contact_no: e.target.value,
-                              //   })
-                              // }
+                             
                               placeholder="Contact No"
                               className="form-control"
                               required="required"
@@ -524,7 +524,7 @@ function Addlead() {
                                     {CountryState?.country?.map(
                                       (country1, key) => {
                                         return (
-                                          <option value={country1.short_name}>
+                                          <option value={country1.isoCode}>
                                             {country1.name}{" "}
                                           </option>
                                         );
@@ -552,7 +552,7 @@ function Addlead() {
                                     {StateByCountry?.state?.map(
                                       (state1, key) => {
                                         return (
-                                          <option value={state1._id}>
+                                          <option value={state1.name}>
                                             {state1.name}
                                           </option>
                                         );
