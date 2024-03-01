@@ -198,55 +198,18 @@ const handleItemClick = (itemName) => {
               </li>
 
                 {/* manage sms start */}
-              <li className="nav-item">
-              <Link to="#" className="nav-link" onClick={smsManage}>
-                  <i className="nav-icon fas fa fa fa-cog" />
-                 SMS Panel 
-                  <i className="fas fa-angle-left right" />
-                </Link>
-                <ul className="nav nav-treeview" style={{display:sms}}>
-                <li className="nav-item">
-                  <a href="javascript:void(0);"  className={activeItem === 'transactionalSms' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('transactionalSms')}>
-                      <p>Transactional SMS</p>
-                    </a>
-                  </li>
-                 
-                  <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'BulkWhatsAppSMS' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('BulkWhatsAppSMS')}>
-                      <p> Bulk WhatsApp SMS</p>   
-                    </a>
-                  </li>
-                  
-                </ul>
-              </li>
+
+
+         
+
+
                 {/* manage sms end */}
 
                  {/* manage Wtsp start */}
-               <li className="nav-item">
-              <Link to="#" className="nav-link" onClick={smsManage}>
-                  <i className="nav-icon fas fa fa fa-cog" />
-                   WhatsApp Panel  
-                  <i className="fas fa-angle-left right" />
-                </Link>
-                <ul className="nav nav-treeview" style={{display:sms}}>
-                <li className="nav-item">
-                  <a href="javascript:void(0);"  className={activeItem === 'transactionalSms' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('transactionalSms')}>
-                      <p>Transactional SMS</p>
-                    </a>
-                  </li>
-                 
-                  <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'BulkWhatsAppSMS' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('BulkWhatsAppSMS')}>
-                      <p> Bulk WhatsApp SMS</p>   
-                    </a>
-                  </li>
-                  
-                </ul>
-              </li>
+
+
+             
+
                 {/* manage Wtsp end */}
 
 

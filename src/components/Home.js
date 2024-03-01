@@ -124,8 +124,8 @@ function Home() {
           <div className="container ">
             <div className="row">
               {
-                Array.isArray(leadcountdata) ? (
-                  leadcountdata.map((leadcountdata1, index) => (
+                Array?.isArray(leadcountdata) ? (
+                  leadcountdata?.map((leadcountdata1, index) => (
                     leadcountdata1?.name === 'Followup Lead' ? (
                    <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
                       <Link to="/leads">  <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
