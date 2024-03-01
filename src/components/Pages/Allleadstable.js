@@ -169,6 +169,18 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       sortable: true,
     },
     {
+      name: <div style={{ display: 'none' }}>
+      Last Comment
+    </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
+    },
+    {
       name: "Action",
       cell: (row) => (
         <a href={`/followupleads/${row?._id}`}>
@@ -204,6 +216,18 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       name: "Service",
       selector: (row) => row?.service_details[0]?.product_service_name,
       sortable: true,
+    },
+    {
+      name: <div style={{ display: 'none' }}>
+      Last Comment
+    </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
     },
     {
       name: "Action",
@@ -281,6 +305,12 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         background: "#f8f9fa", // Set the background color for striped rows
       },
     },
+     // Hide the Last Comment column
+  // rows: {
+  //   style: {
+  //     display: "none",
+  //   },
+  // },
   };
 
   const handleSelectedRowsChange = ({ selectedRows }) => {

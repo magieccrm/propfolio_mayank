@@ -29,11 +29,46 @@ import {
 import Loader from "../Loader";
 import axios from "axios";
 function Setting() {
-  const apiUrl = process.env.REACT_APP_API_URL; 
-  const DBuUrl = process.env.REACT_APP_DB_URL;    
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
+  const [idToDelete, setIdToDelete] = useState();
+  const [idToDelete1, setIdToDelete1] = useState();
+  
+  const LeadTransfer=async(e)=>{
+  e.preventDefault();
+  const dataleadtran=await {'totransfer':idToDelete1?.agent_id,'oftransfer':idToDelete}
+  console.log('dataleadtran',dataleadtran)
+  try {
+    
+    const response = await axios.put(
+      `${apiUrl}/LeadTransfer/`,
+      dataleadtran
+    );
+    if(response.data.success===true){
+      window.$('#exampleModal').modal('hide');
+      toast.success(response?.data?.message);
+       dispatch(deleteAgent(idToDelete));
+      
+      
+    
+    }
+    
+   
+  } catch (error) {
+   console.log(error);
+  }
+ }
   const removeSite = async (_id) => {
-    dispatch(deleteAgent(_id));
-    // setDataArray((data) => data.filter((dataEach) => dataEach.id !== id));
+    const confirmDelete1 = window.confirm(
+      "Are you sure you want to delete this agent?"
+    );
+    if (confirmDelete1) {
+      setIdToDelete(_id);
+      window.$('#exampleModal').modal('show');
+    } else {
+      toast.success("Delete Canceled");
+      console.log("Delete canceled");
+    }
   };
 
   const { leadSourcedata } = useSelector((state) => state?.leadSource);
@@ -129,7 +164,7 @@ function Setting() {
   };
   const editLeadReason = async (_id) => {
     const selectedData = await lostreason?.find((item) => item._id === _id);
-    setlostreasonset(selectedData); 
+    setlostreasonset(selectedData);
   };
 
   const submitStatus = async (e) => {
@@ -161,7 +196,7 @@ function Setting() {
 
   const LostReasonSave = async (e) => {
     e.preventDefault();
-      console.log('lostreasonset',lostreasonset)
+    console.log('lostreasonset', lostreasonset)
     if (lostreasonset._id) {
       const aaaa = await dispatch(EditLostReason(lostreasonset));
       if (aaaa.payload.success === true) {
@@ -268,10 +303,10 @@ function Setting() {
     e.preventDefault();
     fetch(`${apiUrl}/CompanyDetails/`, {
       method: "POST",
-      headers:{     
+      headers: {
         "Content-Type": "application/json",
-        "mongodb-url":DBuUrl,
-       }, 
+        "mongodb-url": DBuUrl,
+      },
       body: JSON.stringify(companydetails),
     })
       .then((response) => {
@@ -286,8 +321,8 @@ function Setting() {
         setcompanydetails(data?.setting);
       })
       .catch((error) => {
-        const message=error?.response?.data?.message;
-        if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        const message = error?.response?.data?.message;
+        if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
           CompanyDetailSubmit();
         }
         console.error("Fetch error:", error);
@@ -297,27 +332,27 @@ function Setting() {
   const GetCompanyDetails = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/GetCompanyDetails`,{
-          headers:{     
-            "Content-Type": "application/json",
-            "mongodb-url":DBuUrl,
-           }, 
-        }
+        `${apiUrl}/GetCompanyDetails`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
       );
       if (responce?.data?.success === true) {
         console.log(responce.data.setting?.["0"]);
         setcompanydetails(responce?.data?.setting?.["0"]);
       }
       if (responce?.data?.success === false) {
-        const message=await responce?.data?.message;
-        if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+        const message = await responce?.data?.message;
+        if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
           GetCompanyDetails();
         }
         setcompanydetails(responce?.data?.setting);
       }
     } catch (error) {
-      const message=error?.response?.data?.message;
-      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+      const message = error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
         GetCompanyDetails();
       }
     }
@@ -340,6 +375,7 @@ function Setting() {
                   <div className="btn-group">
                     <p>Settings</p>
                   </div>
+
                 </div>
                 <div className="container ind-module bg-white">
                   <div className="row mt-50">
@@ -2174,12 +2210,14 @@ function Setting() {
                             </div>
                           </div>
                         </div>
+
                         <div
                           className="tab-pane"
                           id="v-pills-department"
                           role="tabpanel"
                           aria-labelledby="v-pills-department-tab"
                         >
+
                           <form onSubmit={agentSubmit}>
                             <div className="col-sm-12 col-xs-12 pt-3">
                               <div className="service-con">
@@ -2290,7 +2328,7 @@ function Setting() {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="col-md-3">
+                                      {/* <div className="col-md-3">
                                         <div className="form-group">
                                           <select
                                             className="form-control"
@@ -2312,7 +2350,7 @@ function Setting() {
                                             </option>
                                           </select>
                                         </div>
-                                      </div>
+                                      </div> */}
                                       <div className="col-md-2">
                                         <div className="form-group">
                                           <button
@@ -2332,9 +2370,17 @@ function Setting() {
                                             Cancel
                                           </button>
                                         </div>
-                                      </div>{" "}
+                                      </div>
+                                      <div className="col-md-3">
+                                        <div className="form-group" style={{ marginTop: '10px' }}>
+                                          <b >Remaining User Count :</b> <b>{hostings["0"]?.Package - agent?.agent?.length}</b>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
+
+
+
                                   <div className="row">
                                     <div className="col-md-12">
                                       <div className="table-responsive mob-bord">
@@ -2397,11 +2443,11 @@ function Setting() {
                                                     </td>
                                                     <td className="sorting_1">
                                                       {" "}
-                                                      {agents.agent_name}
+                                                      {agents?.agent_name}
                                                     </td>
                                                     <td className="sorting_1">
                                                       {" "}
-                                                      {agents.agent_email}
+                                                      {agents?.agent_email}
                                                     </td>
                                                     <td className="sorting_1">
                                                       {" "}
@@ -2422,7 +2468,7 @@ function Setting() {
                                                       ></input>
                                                     </td>
                                                     <td className="sorting_1">
-                                                      {lllll}{" "}
+                                                      {lllll}
                                                     </td>
                                                     <td>
                                                       <button
@@ -2437,6 +2483,13 @@ function Setting() {
                                                           aria-hidden="true"
                                                         ></i>
                                                       </button>
+                                                      {/* <button type="button" class="btn btn-danger btn-xl mr-2" data-toggle="modal" data-target="#exampleModal">
+                                                        <i
+                                                          class="fa fa-trash"
+                                                          aria-hidden="true"
+                                                        ></i>
+                                                      </button> */}
+
 
                                                       <button
                                                         type="button"
@@ -2464,6 +2517,61 @@ function Setting() {
                               </div>
                             </div>
                           </form>
+                          {/* modal */}
+                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Transfer Your All Lead To Other Agent</h5>
+                                  <button type="button" class="close" onClick={() => {
+                                    window.$('#exampleModal').modal('hide');
+                                  }}
+                                    data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                <form onSubmit={LeadTransfer}>
+                                  <div className="row">
+                                   
+                                    <div className="col-md-12">
+                                      <div className="form-group">
+                                        <select
+                                          className="form-control"
+                                          onChange={(e) =>
+                                            setIdToDelete1({
+                                              ...idToDelete1,
+                                              agent_id: e.target.value,
+                                            })
+                                          }
+                                          name="agent_id"
+                                          id="aroll"
+                                        >
+                                          <option value>Select Agent</option>
+                                          {agent?.agent?.map(
+                                            (agents, key) => {
+                                              if (agents?._id == idToDelete) {
+                                              } else {
+                                                return (<option value={agents?._id}>{agents?.agent_name}</option>);
+                                              }
+                                             })}
+                                      </select>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-12">
+                                      <div className="form-group">
+                                        <button type="submit" class="btn btn-primary">Transfer</button>
+                                      </div>
+                                    </div>
+                                    
+                                  </div>
+                                  </form>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                          {/* modal */}
                         </div>
                         <div
                           className="tab-pane"
@@ -2958,7 +3066,7 @@ function Setting() {
                                                         onClick={
                                                           handleReasonDelete
                                                         }
-                                                              className="btn btn-danger btn-xs"
+                                                        className="btn btn-danger btn-xs"
                                                       >
                                                         <i className="fa fa-trash" />
                                                       </button>
