@@ -11,11 +11,9 @@ export default function Licenceform() {
    const [data,setData]=useState({});
   const saveData= async (e)=>{  
       e.preventDefault();   
-     
      const formData = {...data,  states: formRef.current.states.value};
-     const dddd={...formData, _id:message.hostings[0]?._id}
-     
-     const licencee=await dispatch(licenceactive(dddd))   
+     const dddd={...formData, _id:message?.hostings[0]?._id}
+      const licencee=await dispatch(licenceactive(dddd))   
      if(licencee.payload.success===true){
       toast.success("Activated Successfully!");
      // window.location.reload();
@@ -24,7 +22,7 @@ export default function Licenceform() {
     }, 500);
       //  navigate('/');   
   }else{  
-   toast.warn(licencee.payload); 
+   toast.warn(licencee?.payload); 
   }  
   
    }

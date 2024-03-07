@@ -29,11 +29,8 @@ import CallLogDetails from './components/Pages/CallLogDetails';
 import MultipleForm from './components/Licence/MultipleForm';
 import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/ForgotPassword';
-// import MonthlyCalendar from './components/Pages/MonthlyCalendar';
 import Incomereport from './components/Pages/Incomereport';
 import ImportLead from './components/Pages/ImportLead';
-// import Breadcrumb from './components/Pages/Breadcrumb';
-// import './ffffffff.js';
 import { BreadcrumbProvider } from './components/Pages/BreadcrumbContext';
 import Employeereporttt from './components/Pages/Employeereporttt';
 import Productservicereport from './components/Pages/Productservicereport';
@@ -41,35 +38,19 @@ import LeadSouceReport from './components/Pages/LeadSouceReport';
 import Callreport from './components/Pages/Callreport';
 import BulkWhatsAppSMS from './components/Pages/BulkWhatsAppSMS';
 import TransactionalSMS from './components/Pages/TransactionalSMS';
+import GroupSms from './components/Pages/GroupSms';
+import ActiveLeads from './components/Pages/ActiveLeads';
+import Allsmsleads from './components/Pages/Allsmsleads';
+import UploadData from './components/Pages/UploadData';
+import Buysms from './components/Pages/Buysms';
+import History from './components/Pages/History';
+import TodayLead from './components/Pages/TodayLead';
+import NewLead from './components/Pages/NewLead';
   function App() { 
     const [isLoading, setIsLoading] = useState(true);
     const [isLogined, setIsLogined]= useState(false); 
     const [user_id, setuser_id]= useState(); 
 
-
-    // const ddddd={
-    //   "user_id":"656b04cc37c356cf73e8dde1",
-    // "datetime":"2023-12-18T16:44:00.000+00:00"
-    // }
-
-    // useEffect(() => {
-    //   const fetchData = async (ddddd) => {
-    //     try {
-    //       const response = await fetch('https://crm-backend-1qcz.onrender.com/api/v1/getLetestnotificat', {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(ddddd), 
-    //       });
-    //       const data = await response.json();
-    //       console.log('API Response:', data);
-    //     } catch (error) {
-    //       console.error('API Error:', error);
-    //     }
-    //   };
-    // }, []); 
-   
 
     useEffect(() => {
       const checkToken = async () => {
@@ -93,8 +74,7 @@ import TransactionalSMS from './components/Pages/TransactionalSMS';
      
              <Routes>  
           <Route path="/login" element={<Main  lo={isLogined}/>}></Route>
-          {/* Catch-all route for unknown URLs */}
-        <Route path="*" element={<NotFound />} />
+         <Route path="*" element={<NotFound />} />
           <Route path="/home"  element={<Main  lo={isLogined}/>}></Route>  
           <Route path="/" element={<Main  lo={isLogined}/>}></Route>  
          <Route path="/employeesreport" element={<Main  lo={isLogined}/>}></Route>
@@ -134,12 +114,7 @@ import TransactionalSMS from './components/Pages/TransactionalSMS';
     
      <Routes>  
        {isLogined ?(<>
-        {/* <Route
-            path="*"
-            element={<Breadcrumb pathSegments={pathSegments} />}
-          /> */}
-       
-          <Route path="/login" element={<Home1 />}></Route>  
+           <Route path="/login" element={<Home1 />}></Route>  
           <Route path="/home" element={<Home />}></Route>  
           <Route path="/" element={<Home />}></Route>  
           <Route path="/employeesreport" element={<EmployeeReport />}></Route>
@@ -147,6 +122,17 @@ import TransactionalSMS from './components/Pages/TransactionalSMS';
           <Route path="/call_log_details/:id" element={<CallLogDetails/>}></Route>  
           <Route path="/Addlead" element={<Addlead />}></Route>
          <Route path="/Leads" element={<Leads />}></Route>
+
+         <Route path="/GroupSms" element={<GroupSms />}></Route>
+         <Route path="/ActiveLeads" element={<ActiveLeads />}></Route>
+         <Route path="/Allsmsleads" element={<Allsmsleads />}></Route>
+         <Route path="/UploadContent" element={<UploadData />}></Route>
+         <Route path="/buysms" element={<Buysms/>}></Route>
+         <Route path="/History" element={<History/>}></Route>
+
+         <Route path="/newlead" element={<NewLead/>}></Route>
+         <Route path="/todaylead" element={<TodayLead/>}></Route>
+
          <Route path="/import-lead" element={<ImportLead />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
          <Route path="/Forwardleads" element={<Forwardleads />}></Route>

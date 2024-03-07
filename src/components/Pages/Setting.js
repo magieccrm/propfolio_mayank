@@ -33,31 +33,31 @@ function Setting() {
   const DBuUrl = process.env.REACT_APP_DB_URL;
   const [idToDelete, setIdToDelete] = useState();
   const [idToDelete1, setIdToDelete1] = useState();
-  
-  const LeadTransfer=async(e)=>{
-  e.preventDefault();
-  const dataleadtran=await {'totransfer':idToDelete1?.agent_id,'oftransfer':idToDelete}
-  console.log('dataleadtran',dataleadtran)
-  try {
-    
-    const response = await axios.put(
-      `${apiUrl}/LeadTransfer/`,
-      dataleadtran
-    );
-    if(response.data.success===true){
-      window.$('#exampleModal').modal('hide');
-      toast.success(response?.data?.message);
-       dispatch(deleteAgent(idToDelete));
-      
-      
-    
+
+  const LeadTransfer = async (e) => {
+    e.preventDefault();
+    const dataleadtran = await { 'totransfer': idToDelete1?.agent_id, 'oftransfer': idToDelete }
+    console.log('dataleadtran', dataleadtran)
+    try {
+
+      const response = await axios.put(
+        `${apiUrl}/LeadTransfer/`,
+        dataleadtran
+      );
+      if (response.data.success === true) {
+        window.$('#exampleModal').modal('hide');
+        toast.success(response?.data?.message);
+        dispatch(deleteAgent(idToDelete));
+
+
+
+      }
+
+
+    } catch (error) {
+      console.log(error);
     }
-    
-   
-  } catch (error) {
-   console.log(error);
   }
- }
   const removeSite = async (_id) => {
     const confirmDelete1 = window.confirm(
       "Are you sure you want to delete this agent?"
@@ -129,6 +129,7 @@ function Setting() {
       }
     } else {
       const { _id, ...newAaa } = await formData;
+      console.log('newAaa', newAaa);
       const aaaaa = await dispatch(addagent(newAaa));
       if (aaaaa.payload.success === true) {
         toast.success("Agent add Successfully");
@@ -145,6 +146,19 @@ function Setting() {
       agent_status: "",
     });
   };
+  const [assigntlnone,setassigntlnone]=useState('none')
+  const UserType = async (e) => {
+    setFormData({
+      ...formData,
+      role: e.target.value,
+    })
+    if(e.target.value==="user"){
+      setassigntlnone('block')
+    }
+    if(e.target.value==="TeamLeader"){
+      setassigntlnone('none')
+    }
+    }
 
   const editagent = async (_id) => {
     const selectedData = await agent?.agent.find((item) => item._id === _id);
@@ -220,14 +234,14 @@ function Setting() {
 
   const setpayingcap = async () => {
     const agent_count = await agent?.agent?.length;
-    console.log(hostings["0"]?.Package);
+    // console.log(hostings["0"]?.Package);
     if (agent_count == hostings["0"]?.Package) {
       setblock("none");
     } else {
       setblock("contents");
     }
   };
-  console.log(none);
+  
   useEffect(() => {
     dispatch(getAllLeadSource());
     dispatch(getAllStatus());
@@ -2229,7 +2243,6 @@ function Setting() {
                                     >
                                       <div className="col-md-3">
                                         <div className="form-group">
-                                          {/* <input type="hidden" name="aid" id="aid" autoComplete="off" /> */}
                                           <input
                                             value={formData?.agent_name}
                                             type="text"
@@ -2328,6 +2341,42 @@ function Setting() {
                                           </select>
                                         </div>
                                       </div>
+
+                                      <div className="col-md-3">
+                                        <div className="form-group">
+                                          <select
+                                            value={formData?.role}
+                                            className="form-control"
+                                              onChange={UserType}
+                                            name="role"
+                                            id="aroll"
+                                          >
+                                            <option value>User Type</option>
+                                            <option value="user">Agent</option>
+                                            <option value="TeamLeader">Team Leader</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div className="col-md-3" style={{display:assigntlnone}}>
+                                        <div className="form-group">
+                                          <select
+                                            // value={formData?.role}
+                                            className="form-control"
+                                            onChange={(e) =>
+                                              setFormData({
+                                                ...formData,
+                                                assigntl: e.target.value,
+                                              })
+                                            }
+                                            name="assigntl"
+                                            id="aroll"
+                                          >
+                                            <option value>Assign Team Leader</option>
+                                            <option value="TeamLeader">Team Leader</option>
+                                          </select>
+                                        </div>
+                                      </div>
+
                                       {/* <div className="col-md-3">
                                         <div className="form-group">
                                           <select
@@ -2373,11 +2422,12 @@ function Setting() {
                                       </div>
                                       <div className="col-md-3">
                                         <div className="form-group" style={{ marginTop: '10px' }}>
+                                          {  }
                                           <b >Remaining User Count :</b> <b>{hostings["0"]?.Package - agent?.agent?.length}</b>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div>   
 
 
 
@@ -2407,7 +2457,7 @@ function Setting() {
                                               <th className="sorting">
                                                 Status
                                               </th>
-                                              <th className="sorting">
+                                               <th className="sorting">
                                                 Action
                                               </th>
                                             </tr>
@@ -2455,7 +2505,7 @@ function Setting() {
                                                     </td>
                                                     <td className="sorting_1">
                                                       {" "}
-                                                      {agents.agent_roll}
+                                                      {agents.role}
                                                     </td>
                                                     <td className="sorting_1">
                                                       {" "}
@@ -2531,40 +2581,40 @@ function Setting() {
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                <form onSubmit={LeadTransfer}>
-                                  <div className="row">
-                                   
-                                    <div className="col-md-12">
-                                      <div className="form-group">
-                                        <select
-                                          className="form-control"
-                                          onChange={(e) =>
-                                            setIdToDelete1({
-                                              ...idToDelete1,
-                                              agent_id: e.target.value,
-                                            })
-                                          }
-                                          name="agent_id"
-                                          id="aroll"
-                                        >
-                                          <option value>Select Agent</option>
-                                          {agent?.agent?.map(
-                                            (agents, key) => {
-                                              if (agents?._id == idToDelete) {
-                                              } else {
-                                                return (<option value={agents?._id}>{agents?.agent_name}</option>);
-                                              }
-                                             })}
-                                      </select>
+                                  <form onSubmit={LeadTransfer}>
+                                    <div className="row">
+
+                                      <div className="col-md-12">
+                                        <div className="form-group">
+                                          <select
+                                            className="form-control"
+                                            onChange={(e) =>
+                                              setIdToDelete1({
+                                                ...idToDelete1,
+                                                agent_id: e.target.value,
+                                              })
+                                            }
+                                            name="agent_id"
+                                            id="aroll"
+                                          >
+                                            <option value>Select Agent</option>
+                                            {agent?.agent?.map(
+                                              (agents, key) => {
+                                                if (agents?._id == idToDelete) {
+                                                } else {
+                                                  return (<option value={agents?._id}>{agents?.agent_name}</option>);
+                                                }
+                                              })}
+                                          </select>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="col-md-12">
-                                      <div className="form-group">
-                                        <button type="submit" class="btn btn-primary">Transfer</button>
+                                      <div className="col-md-12">
+                                        <div className="form-group">
+                                          <button type="submit" class="btn btn-primary">Transfer</button>
+                                        </div>
                                       </div>
+
                                     </div>
-                                    
-                                  </div>
                                   </form>
                                 </div>
 

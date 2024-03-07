@@ -7,6 +7,7 @@ function SideNav() {
   const [lead1, setlead] = useState("none");
   const [callManageshow, setcallManageshow] = useState("none");
   const [sms, setsms] = useState("none");
+  const [wtsp, setwtsp] = useState("none");
       const openclose=()=>{
         if(line==='none'){
           setline("block")
@@ -33,6 +34,13 @@ function SideNav() {
           setsms("block") 
         }else{
           setsms("none")
+        }
+       }
+       const wtspManage=()=>{
+        if(wtsp==='none'){  
+          setwtsp("block") 
+        }else{
+          setwtsp("none")
         }
        }
 ////// Hide And Show///////
@@ -169,6 +177,20 @@ const handleItemClick = (itemName) => {
                       <p> Followup Leads</p>
                     </a>
                   </li>
+
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'newlead' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('newlead')}>
+                      <p> New Leads</p>
+                    </a>
+                  </li>
+
+                  {/* <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'todaylead' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('todaylead')}>
+                      <p> Today Leads</p>
+                    </a>
+                  </li> */}
                 
                 </ul>
               </li>
@@ -199,7 +221,45 @@ const handleItemClick = (itemName) => {
 
                 {/* manage sms start */}
 
+                <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={smsManage}>
+                  <i className="nav-icon fas fa fa fa-cog" />
+                   SMS Panel
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:sms}}>
+                <li className="nav-item">
+                  <a    href="javascript:void(0);"  className={activeItem === 'GroupSms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('GroupSms')}>
+                      <p>Compose SMS</p>
+                    </a>
+                  </li>
+                 
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'History' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('History')}>
+                      <p> SMS Report</p>   
+                    </a>
+                  </li>
 
+                 
+
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('buysms')}>
+                      <p> SMS Pack</p>   
+                    </a>
+                  </li>
+
+                  {/* <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('buysms')}>
+                      <p> Setting</p>   
+                    </a>
+                  </li> */}
+                  
+                </ul>
+                </li>
          
 
 
@@ -207,14 +267,60 @@ const handleItemClick = (itemName) => {
 
                  {/* manage Wtsp start */}
 
+                 <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={wtspManage}>
+                  <i className="nav-icon fas fa fa fa-cog" />
+                   What's App 
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:wtsp}}>
+                <li className="nav-item">
+                  <a    href="javascript:void(0);"  className={activeItem === 'GroupSms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('GroupSms')}>
+                      <p>Compose SMS</p>
+                    </a>
+                  </li>
+                 
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'History' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('History')}>
+                      <p> SMS Report</p>   
+                    </a>
+                  </li>
 
+                  
+
+                  <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('buysms')}>
+                      <p> SMS Pack</p>   
+                    </a>
+                  </li>
+
+                  {/* <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('buysms')}>
+                      <p> Setting</p>   
+                    </a>
+                  </li> */}
+                  
+                </ul>
+                </li>
              
 
                 {/* manage Wtsp end */}
 
 
-
+                <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'UploadContent' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('UploadContent')}>
+                     <i className="nav-icon far fa-credit-card" />
+                     Contact's  
+                    </a>
+                  </li>
             
+
+             
 
 
               <li className="nav-item">

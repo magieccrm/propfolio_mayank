@@ -10,7 +10,7 @@ export const getHostingbydomain=createAsyncThunk("getHostingbydomain",async(host
     const response= await axios.post(`${apiUrl1}/getByDomain`, { domain:host });
    
     try {
-         return response.data.hosting; 
+         return response?.data?.hosting; 
     } catch (error) { 
           
        return rejectWithValue(error);
@@ -88,7 +88,7 @@ export const allhosting=createSlice({
        },
        [getHostingbydomain.fulfilled]:(state,action) =>{
            state.loading=false;
-           state.hostings.push(action.payload); 
+           state.hostings.push(action?.payload); 
        },
        [getHostingbydomain.rejected]:(state,action) =>{
            state.loading=false;

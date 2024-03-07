@@ -37,4 +37,4 @@ function requestPermission() {
   });
 }
 
-requestPermission();
+// requestPermission();

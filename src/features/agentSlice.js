@@ -14,9 +14,7 @@ const DBuUrl = process.env.REACT_APP_DB_URL;
                body:JSON.stringify(data)
         })  
         const result=await responce.json();
-        //console.log(result)
-         
-      if(result.success===true){  
+        if(result.success===true){  
          return result;
     }else{  
        return rejectWithValue(result);
