@@ -349,7 +349,7 @@ function Buysms() {
         </div>
 
         <div className="col-md-12 col-xs-12 py-10 pt-10 ">
-          <input type="submit" name="AddAnother" className="button-57 pull-right" value="But Now" />
+          <input type="submit" name="AddAnother" className="button-57 pull-right" value="Place Order" />
         </div>
 
       </div>

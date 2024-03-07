@@ -336,8 +336,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
           pass: await hostings["0"]?.smspass,
           sender: await hostings["0"]?.smssender,
           phone: await selectedmobilenumber,
-
-          text: 'API Test - SMSFresh',
+            text: 'API Test - SMSFresh',
           priority: 'ndnd',
           stype: 'normal'
         }
@@ -346,6 +345,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
       console.error(error);
     }
   };
+  
   const savesmsreport = async (updated) => {
     try {
       const responce = await axios.post(
@@ -369,7 +369,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "mongodb-url":DBuUrl,
+        "mongodb-url": DBuUrl,
       },
       body: JSON.stringify(adSerch),
     })
@@ -390,17 +390,29 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
         // Handle errors
       });
   };
-
-
+  const [carecters, setCarecters] = useState(0);
+  const [row, setRow] = useState(1);
   
-  //if (leads.length === 0) {
-   /// return <Loader />;
-   //return  <p>No leads found.</p>;
- // }
-   
-  return (   
+  const EnterMessage = (e) => {
+    const message = e.target.value;
+    const characterCount = message.length;
+    setCarecters(characterCount);
+  
+    if (characterCount === 0) {
+      setRow(1);
+    } else if (characterCount <= 160) {
+      setRow(1);
+    } else {
+      const numberOfRows = Math.ceil(characterCount / 160);
+      setRow(numberOfRows);
+    }
+  
+    setsendmessage({ ...sendmessage, message: message });
+  };
+
+  return (
     <div>
-       <div className="row " style={{ display: dataFromParent }}>
+      <div className="row " style={{ display: dataFromParent }}>
         <div className="col-md-12 advS">
           <form onSubmit={AdvanceSerch}>
             <div className="row">
@@ -415,14 +427,14 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
                   >
                     <option>Status</option>
                     {Statusdata?.leadstatus?.map((status, key) => {
-                       if(status.status_name=='Lost' || status.status_name=='Won'){
+                      if (status.status_name == 'Lost' || status.status_name == 'Won') {
 
-                       }else{
+                      } else {
                         return (
                           <option value={status._id}>{status.status_name}</option>
                         );
-                       }
-                     
+                      }
+
                     })}
                   </select>
                 </div>
@@ -501,107 +513,123 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
         <div className="col-md-12 advS">
           <form onSubmit={AdvanceSerch}>
             <div className="row">
+           
               <div className="col-md-3 ">
-                <div className="form-group">
-                 
-                </div>
-              </div>
-              <div className="col-md-3">
+              <label>Enter Message</label>
                 <div className="form-group">
                 <textarea
                     type="text"
-                    placeholder="Type Your Massage"
+                    placeholder="Enter Message"
                     className="form-control"
-                    onChange={(e) =>
-                      setsendmessage({ ...sendmessage, message: e.target.value })
-                    }
-                    name="startDate"
+                   
+                    onChange={EnterMessage}
+                    name="message"
                   ></textarea>
                 </div>
               </div>
+              <div className="col-md-3">
+              <label>Characters</label>
+                <div className="form-group">
+                <input
+                    type="text"
+                    value={carecters}
+                    className="form-control"
+                    placeholder="Characters"
+                    name="message"
+                  />
+                </div>
+              </div>
               <div className="col-md-3 ">
                 <div className="form-group">
-                 
+                <label>No of SMS</label>
+                <input
+                    type="text"
+                    value={row}
+                    className="form-control"
+                    placeholder="No of SMS"
+                    name="message"
+                  />
+                </div>
+              </div>
+              <div className="col-md-3 " style={{ marginTop: '25px' }}>
+                <div className="form-group">
+                <label></label>
                   <button className="btn  btn-sm btn-danger" onClick={DeleteSelected}>
-          Send SMS
-        </button>
+                  Send Instant SMS
+                  </button>
                 </div>
               </div>
-              <div className="col-md-3 ">
-                <div className="form-group">
-                
-                </div>
-              </div>
+              
 
-           
+
             </div>
           </form>
         </div>
       </div>
-       {/* ///////   for send sms */}
+      {/* ///////   for send sms */}
       {status === false ? (
-       <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
-       <thead>
-         <tr>
-           <th>Full Name</th>
-           <th>Number</th>
-           <th>Agent</th>
-           <th>Service</th>
-           <th>Lead Source</th>
-           <th>Status</th> 
-         </tr> 
-       </thead>
-       <tbody>
-         <tr>
-        <p className="text-center">No Followup leads Founds</p>
-         </tr>
-      
-       </tbody>
-     </table>
+        <table id="example" className="table table-striped pt-3" style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Number</th>
+              <th>Agent</th>
+              <th>Service</th>
+              <th>Lead Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <p className="text-center">No Followup leads Founds</p>
+            </tr>
+
+          </tbody>
+        </table>
       ) : (
         <>
-        {/* <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
+          {/* <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
         <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
         Export Excel
-      </button> */}  
-        {
-          isAdmin?(<></>):(<></>)
-        }
-        <DataTable
-        responsive 
-        id="table-to-export"
-        columns={columns}
-        data={filterleads}
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="550px"
-        selectableRows
-        selectableRowsHighlight
-        highlightOnHover
-        subHeader
-        // subHeaderComponent={
-        //   <input
-        //     type="text"
-        //     placeholder="Search here"
-        //     value={search}
-        //     onChange={(e) => setsearch(e.target.value)}
-        //     className="form-control w-25 "
-        //   />
-        // }
-        customStyles={customStyles} 
-        selectedRows={selectedRowIds}
-        onSelectedRowsChange={handleSelectedRowsChange}
-        striped
-      />
+      </button> */}
+          {
+            isAdmin ? (<></>) : (<></>)
+          }
+          <DataTable
+            responsive
+            id="table-to-export"
+            columns={columns}
+            data={filterleads}
+            pagination
+            fixedHeader
+            fixedHeaderScrollHeight="550px"
+            selectableRows
+            selectableRowsHighlight
+            highlightOnHover
+            subHeader
+            // subHeaderComponent={
+            //   <input
+            //     type="text"
+            //     placeholder="Search here"
+            //     value={search}
+            //     onChange={(e) => setsearch(e.target.value)}
+            //     className="form-control w-25 "
+            //   />
+            // }
+            customStyles={customStyles}
+            selectedRows={selectedRowIds}
+            onSelectedRowsChange={handleSelectedRowsChange}
+            striped
+          />
         </>
-        
+
       )}
-      
-    
-     
-     
-      
-      
+
+
+
+
+
+
     </div>
   );
 }
