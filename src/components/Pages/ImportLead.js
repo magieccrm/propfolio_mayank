@@ -261,7 +261,7 @@ export default function ImportLead() {
                                   <option value="">Select Country</option>
                                   {CountryState?.country?.map((country1, key) => {
                               return (
-                                <option value={country1.short_name}>
+                                <option value={country1?.isoCode}>
                                   {country1.name}{" "}
                                 </option>
                               );
@@ -298,7 +298,7 @@ export default function ImportLead() {
                                   <option value="">Select State</option>
                                   {StateByCountry?.state?.map((state1, key) => {
                               return (
-                                <option value={state1._id}>
+                                <option value={state1.name}>
                                   {state1.name}
                                 </option>
                               );

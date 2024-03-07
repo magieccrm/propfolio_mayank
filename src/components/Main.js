@@ -17,7 +17,7 @@ export default function Main({lo}) {
   
  },[]);
     const dispatch=useDispatch();
-    const {hostings,loading} = useSelector((state)=>state.app);  
+    const {hostings,loading} = useSelector((state)=>state?.app);  
     //  change    
    const [isLogined, setIsLogined]= useState(false); 
    const [isDomain, setIsDomain] = useState(false);
