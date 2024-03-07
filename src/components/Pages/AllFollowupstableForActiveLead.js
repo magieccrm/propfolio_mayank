@@ -483,7 +483,9 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
         <div className="col-md-12 advS">
           <form onSubmit={AdvanceSerch}>
             <div className="row">
+           
               <div className="col-md-3 ">
+              <label>Enter Message</label>
                 <div className="form-group">
                 <textarea
                     type="text"
@@ -496,6 +498,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
                 </div>
               </div>
               <div className="col-md-3">
+              <label>Characters</label>
                 <div className="form-group">
                 <input
                     type="text"
@@ -508,6 +511,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
               </div>
               <div className="col-md-3 ">
                 <div className="form-group">
+                <label>No of SMS</label>
                 <input
                     type="text"
                     value={row}
@@ -517,9 +521,9 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
                   />
                 </div>
               </div>
-              <div className="col-md-3 ">
+              <div className="col-md-3 " style={{ marginTop: '25px' }}>
                 <div className="form-group">
-
+                <label></label>
                   <button className="btn  btn-sm btn-danger" onClick={DeleteSelected}>
                   Send Instant SMS
                   </button>
