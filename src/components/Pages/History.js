@@ -1,48 +1,65 @@
-import axios from 'axios';
-import React, { useEffect, useState }   from 'react'
+import React   from 'react'
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 
 
 function History() {
-      const [data,setdata]=useState([]);
-      const getSmsReport=async()=>{
-        try {
-          const responce = await axios.get(
-            `http://localhost:5000/api/v1/getAllSmsReport`,
-          );
-          setdata(responce.data.smsreport);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    
-      useEffect(()=>{
-              getSmsReport();
-      },[])
-
-
 const columns =[
     {
-      name: 'Message',
-      selector: row => row.message,
+      name: 'Name',
+      selector: row => row.name,
       sortable:true
     },
     {
-      name: 'No Of Person',
-      selector: row => row.noofperson,
+      name: 'Number',
+      selector: row => row.number,
       sortable:true
     },
     {
-      name: 'Date & Time',
-      selector: row => row.createdAt,
+      name: 'Agent',
+      selector: row => row.agent,
       sortable:true
     },
-   
+    {
+      name: 'Status',
+      selector: row => row.status,
+      sortable:true
+    },
+    {
+      name: 'Service',
+      selector: row => row.service,
+      sortable:true
+    },
     
    ];
    
-   
+    const data =[
+    {
+       id: 1,
+       name: 'Abhilekh Singh',
+       number: 'XXXXXXXXXX',
+       agent: 'Komal',
+       status: 'Won',
+       service: 'Digital Services',
+      },
+      {
+        id: 2,
+        name: 'Subhash Singh',
+        number: 'XXXXXXXXXX',
+        agent: 'Neha',
+        status: 'Won',
+        service: 'Digital Services',
+       },
+       {
+        id: 3,
+        name: 'Juhi Mishra',
+        number: 'XXXXXXXXXX',
+        agent: 'Neha',
+        status: 'Won',
+        service: 'Digital Services',
+       },
+      
+    ]
     const customStyles = {
       cells: {
         style: {
@@ -96,7 +113,7 @@ const columns =[
                    customStyles={customStyles}
                     columns={columns}
                     data={data}
-                    // selectableRows
+                    selectableRows
                     fixedHeader
                     pagination
                     selectableRowsHighlight
