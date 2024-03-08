@@ -1,65 +1,50 @@
-import React   from 'react'
+import axios from 'axios';
+import React, { useEffect, useState }   from 'react'
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
 
 
 function History() {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+      const [data,setdata]=useState([]);
+      const getSmsReport=async()=>{
+        try {
+          const responce = await axios.get(
+            `${apiUrl}/getAllSmsReport`,
+          );
+          setdata(responce.data.smsreport);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+      useEffect(()=>{
+              getSmsReport();
+      },[])
+
+
 const columns =[
     {
-      name: 'Name',
-      selector: row => row.name,
+      name: 'Message',
+      selector: row => row.message,
       sortable:true
     },
     {
-      name: 'Number',
-      selector: row => row.number,
+      name: 'No Of Person',
+      selector: row => row.noofperson,
       sortable:true
     },
     {
-      name: 'Agent',
-      selector: row => row.agent,
+      name: 'Date & Time',
+      selector: row => row.createdAt,
       sortable:true
     },
-    {
-      name: 'Status',
-      selector: row => row.status,
-      sortable:true
-    },
-    {
-      name: 'Service',
-      selector: row => row.service,
-      sortable:true
-    },
+   
     
    ];
    
-    const data =[
-    {
-       id: 1,
-       name: 'Abhilekh Singh',
-       number: 'XXXXXXXXXX',
-       agent: 'Komal',
-       status: 'Won',
-       service: 'Digital Services',
-      },
-      {
-        id: 2,
-        name: 'Subhash Singh',
-        number: 'XXXXXXXXXX',
-        agent: 'Neha',
-        status: 'Won',
-        service: 'Digital Services',
-       },
-       {
-        id: 3,
-        name: 'Juhi Mishra',
-        number: 'XXXXXXXXXX',
-        agent: 'Neha',
-        status: 'Won',
-        service: 'Digital Services',
-       },
-      
-    ]
+   
     const customStyles = {
       cells: {
         style: {
@@ -113,7 +98,7 @@ const columns =[
                    customStyles={customStyles}
                     columns={columns}
                     data={data}
-                    selectableRows
+                    // selectableRows
                     fixedHeader
                     pagination
                     selectableRowsHighlight
