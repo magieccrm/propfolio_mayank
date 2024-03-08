@@ -185,12 +185,7 @@ const handleItemClick = (itemName) => {
                     </a>
                   </li>
 
-                  {/* <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'todaylead' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('todaylead')}>
-                      <p> Today Leads</p>
-                    </a>
-                  </li> */}
+                
                 
                 </ul>
               </li>
@@ -251,12 +246,7 @@ const handleItemClick = (itemName) => {
                     </a>
                   </li>
 
-                  {/* <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('buysms')}>
-                      <p> Setting</p>   
-                    </a>
-                  </li> */}
+                
                   
                 </ul>
                 </li>
@@ -275,15 +265,15 @@ const handleItemClick = (itemName) => {
                 </Link>
                 <ul className="nav nav-treeview" style={{display:wtsp}}>
                 <li className="nav-item">
-                  <a    href="javascript:void(0);"  className={activeItem === 'GroupSms' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('GroupSms')}>
+                  <a    href="javascript:void(0);"  className={activeItem === 'GroupSmsWtsp' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('GroupSmsWtsp')}>
                       <p>Compose SMS</p>
                     </a>
                   </li>
                  
                   <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'History' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('History')}>
+                  <a   href="javascript:void(0);" className={activeItem === 'HistoryWtsp' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('HistoryWtsp')}>
                       <p> SMS Report</p>   
                     </a>
                   </li>
@@ -291,8 +281,8 @@ const handleItemClick = (itemName) => {
                   
 
                   <li className="nav-item">
-                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
-                  onClick={() => handleItemClick('buysms')}>
+                  <a   href="javascript:void(0);" className={activeItem === 'BuysmsWtsp' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('BuysmsWtsp')}>
                       <p> SMS Pack</p>   
                     </a>
                   </li>

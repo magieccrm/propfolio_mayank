@@ -39,11 +39,16 @@ import Callreport from './components/Pages/Callreport';
 import BulkWhatsAppSMS from './components/Pages/BulkWhatsAppSMS';
 import TransactionalSMS from './components/Pages/TransactionalSMS';
 import GroupSms from './components/Pages/GroupSms';
+import GroupSmsWtsp from './components/Pages/GroupSmsWtsp';
+import ActiveLeadsWtsp from './components/Pages/ActiveLeadsWtsp';
+import AllsmsleadsWtsp from './components/Pages/AllsmsleadsWtsp';
 import ActiveLeads from './components/Pages/ActiveLeads';
 import Allsmsleads from './components/Pages/Allsmsleads';
 import UploadData from './components/Pages/UploadData';
 import Buysms from './components/Pages/Buysms';
+import BuysmsWtsp from './components/Pages/BuysmsWtsp';
 import History from './components/Pages/History';
+import HistoryWtsp from './components/Pages/HistoryWtsp';
 import TodayLead from './components/Pages/TodayLead';
 import NewLead from './components/Pages/NewLead';
   function App() { 
@@ -124,11 +129,23 @@ import NewLead from './components/Pages/NewLead';
          <Route path="/Leads" element={<Leads />}></Route>
 
          <Route path="/GroupSms" element={<GroupSms />}></Route>
+
+         <Route path="/GroupSmsWtsp" element={<GroupSmsWtsp />}></Route>
+
+
          <Route path="/ActiveLeads" element={<ActiveLeads />}></Route>
          <Route path="/Allsmsleads" element={<Allsmsleads />}></Route>
+
+         <Route path="/ActiveLeadsWtsp" element={<ActiveLeadsWtsp />}></Route>
+         <Route path="/AllsmsleadsWtsp" element={<AllsmsleadsWtsp />}></Route>
+
+
          <Route path="/UploadContent" element={<UploadData />}></Route>
          <Route path="/buysms" element={<Buysms/>}></Route>
+         <Route path="/BuysmsWtsp" element={<BuysmsWtsp/>}></Route>
+
          <Route path="/History" element={<History/>}></Route>
+         <Route path="/HistoryWtsp" element={<HistoryWtsp/>}></Route>
 
          <Route path="/newlead" element={<NewLead/>}></Route>
          <Route path="/todaylead" element={<TodayLead/>}></Route>

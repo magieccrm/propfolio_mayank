@@ -1,51 +1,58 @@
 import React, { useState, useEffect } from "react";
 
-import Loader from "../Loader";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-
-
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { toast } from "react-toastify";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
-import { getHostingbydomain } from "../../features/licenceSlice";
+import { toast } from "react-toastify";
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel'; // Import the library
 
-export default function AllFollowupstableForActiveLead({ sendDataToParent, dataFromParent }) {
+export const AllNewLead = ({ sendDataToParent, dataFromParent }) => {
+
   const dispatch = useDispatch();
-  const apiUrl = process.env.REACT_APP_API_URL;
-  const DBuUrl = process.env.REACT_APP_DB_URL;
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
-  const { hostings, loading } = useSelector((state) => state?.app);
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
   const { agent } = useSelector((state) => state.agent);
   const { Statusdata } = useSelector((state) => state.StatusData);
-  const Refresh = () => {
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 500);
-  };
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;    
+   useEffect(() => {
+    const fetchData = async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          dispatch(getAllAgent());
+          dispatch(getAllStatus());
+       
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
+      };
+
+    fetchData();
+}, []);
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/get_All_Lead_Followup`, {
-        headers: {
-          "Content-Type": "application/json",
-          "mongodb-url": DBuUrl,
-        },
-      }
+        `${apiUrl}/getAllNewLead`,{
+          headers: {
+            "Content-Type": "application/json",
+            "mongodb-url":DBuUrl,
+          },
+        }
       );
 
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
+      return (responce?.data?.message);
     } catch (error) {
-      const message = await error?.response?.data?.message;
-      if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
         getAllLead1();
       }
       console.log(error);
@@ -53,58 +60,44 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
     }
   };
 
-
   const getAllLead2 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
-        `${apiUrl}/get_Leadby_agentid_status`,
+        `${apiUrl}/getAllNewLeadBYAgentId`,
         {
           assign_to_agent,
-          headers: {
-            "Content-Type": "application/json",
-            "mongodb-url": DBuUrl,
-          },
-        }
-      );
-
+        },
+      ); 
       if (responce?.data?.success === true) {
-        setstatus(responce?.data?.success)
+        setstatus(responce?.data?.success);
         setleads(responce?.data?.lead);
         setfilterleads(responce?.data?.lead);
       }
       if (responce?.data?.success === false) {
-        setstatus(responce?.data?.success)
+        setstatus(responce?.data?.success);
         setleads(responce?.data?.lead);
         setfilterleads(responce?.data?.lead);
       }
-
-
     } catch (error) {
-      const message = await error?.response?.data?.message;
-      if (message == 'Client must be connected before running operations') {
-        getAllLead2(assign_to_agent);
+      const message=await error?.response?.data?.message;
+      if(message=='Client must be connected before running operations'){
+        getAllLead2();
       }
       console.log(error);
       setfilterleads();
     }
   };
 
-
-
   useEffect(() => {
-    var host = window.location.hostname;
-    dispatch(getHostingbydomain(host));
-    if (localStorage.getItem("role") === 'admin') {
-      getAllLead1();
-    } else {
+    if (localStorage.getItem("role") === "admin") {
+    getAllLead1();
+      } else {
       getAllLead2(localStorage.getItem("user_id"));
     }
-    dispatch(getAllAgent());
-    dispatch(getAllStatus());
-  }, [localStorage.getItem("user_id")]);
-
+  }, [localStorage.getItem("user_id"),apiUrl,DBuUrl]);
+  
   useEffect(() => {
-    const result = leads?.filter((lead) => {
+    const result = leads.filter((lead) => {
       return (
         lead.full_name.toLowerCase().match(search.toLowerCase()) ||
         lead?.agent_details[0]?.agent_name
@@ -127,7 +120,9 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
   const commonColumns = [
     {
       name: "Name",
-      cell: (row) => row?.full_name,
+      cell: (row) => (
+        <a href={`/followupleads/${row?._id}`}>{row?.full_name}</a>  
+      ),
       selector: (row) => row?.full_name,
       sortable: true,
     },
@@ -136,11 +131,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
       selector: (row) => row?.contact_no,
       sortable: true,
     },
-    {
-      name: "Service",
-      selector: (row) => row?.service_details[0]?.product_service_name,
-      sortable: true,
-    },
+   
   ];
 
   const getStatusBadgeClass = (statusName) => {
@@ -160,7 +151,6 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
     }
   };
 
-
   const adminColumns = [
     {
       name: "Agent",
@@ -168,60 +158,121 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
       sortable: true,
     },
     {
-      name: "Followup date",
-      selector: (row) => (row?.followup_date) ? (row?.followup_date) : (''),
+      name: "Status",
+      selector: (row) => row?.status_details[0]?.status_name,
+
       sortable: true,
     },
-   
+    {
+      name: "Service",
+      selector: (row) => row?.service_details[0]?.product_service_name,
+      sortable: true,
+    },
+    {
+      name: <div style={{ display: 'none' }}>
+      Last Comment
+    </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
+    },
+    {
+      name: "Action",
+      cell: (row) => (
+        <a href={`/followupleads/${row?._id}`}>
+          <button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
+          <span
+            className={`badge ${getStatusBadgeClass(
+              row?.status_details[0]?.status_name
+            )}`}
+            style={{ marginLeft: "10px" }}
+          >
+            {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
+              ? "Hot"
+              : row?.status_details[0]?.status_name == "Call Back"
+              ? "C"
+              : row?.status_details[0]?.status_name == "Meeting"
+              ? "M"
+              : ""}
+          </span>
+        </a>
+      ),
+
+      sortable: true,
+    },
   ];
 
   const userColumns = [
-
     {
-      name: "Followup date",
-      selector: (row) => (row?.followup_date) ? (row?.followup_date) : (''),
+      name: "Status",
+      selector: (row) => row?.status_details[0]?.status_name,
       sortable: true,
     },
-    
+    {
+      name: "Service",
+      selector: (row) => row?.service_details[0]?.product_service_name,
+      sortable: true,
+    },
+    {
+      name: <div style={{ display: 'none' }}>
+      Last Comment
+    </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
+    },
+    {
+      name: "Action",
+      cell: (row) => (
+        <a href={`/followupleads/${row?._id}`}>
+          <button className="btn btn-success"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
+          <span
+            className={`badge ${getStatusBadgeClass(
+              row?.status_details[0]?.status_name
+            )}`}
+            style={{ marginLeft: "10px" }}
+          >
+            {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
+              ? "Hot"
+              : row?.status_details[0]?.status_name == "Call Back"
+              ? "C"
+              : row?.status_details[0]?.status_name == "Meeting"
+              ? "M"
+              : ""}
+          </span>
+        </a>
+      ),
+      sortable: true,
+    },
   ];
 
-  const columns = isAdmin ? [...commonColumns, ...adminColumns] : [...commonColumns, ...userColumns];
-
-
-  const getdatetimeformate = (datetime) => {
-    const dateObject = new Date(datetime);
-    const formattedDate = `${dateObject.getFullYear()}-${padZero(dateObject.getMonth() + 1)}-${padZero(dateObject.getDate())} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
-    return formattedDate;
-
-  }
-  function padZero(num) {
-    return num < 10 ? `0${num}` : num;
-  }
-
-
-
+  const columns = isAdmin
+    ? [...commonColumns, ...adminColumns]
+    : [...commonColumns, ...userColumns];
 
   const exportToPDF = () => {
-
     const doc = new jsPDF();
     const tableDataForPDF = filterleads.map((row) =>
       columns.map((column) => {
-        if (column.selector && typeof column.selector === 'function') {
+        if (column.selector && typeof column.selector === "function") {
           return column.selector(row);
         }
         return row[column.selector];
       })
     );
-
-
-
-
-
     doc.autoTable({
       head: [columns.map((column) => column.name)],
       body: tableDataForPDF,
     });
-    doc.save('table.pdf');
+    doc.save("table.pdf");
   };
 
   const customStyles = {
@@ -229,6 +280,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
       style: {
         border: "0px solid #ddd", // Set the cell border
         fontSize: "14px",
+        // background: "#f4f3fe",
       },
     },
     headCells: {
@@ -236,7 +288,6 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
         border: "0px solid #111", // Set the header cell border
         fontSize: "14px",
         background: "#f0f0f0",
-
       },
     },
     rows: {
@@ -254,84 +305,61 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
         background: "#f8f9fa", // Set the background color for striped rows
       },
     },
+     // Hide the Last Comment column
+  // rows: {
+  //   style: {
+  //     display: "none",
+  //   },
+  // },
   };
-
-
-  const exportToExcel = () => {
-    const columnsForExport = columns.map(column => ({
-      title: column.name,
-      dataIndex: column.selector,
-    }));
-
-    const dataForExport = filterleads.map(row =>
-      columns.map(column => {
-        if (column.selector && typeof column.selector === "function") {
-          return column.selector(row);
-        }
-        return row[column.selector];
-      })
-    );
-
-    const exportData = [columnsForExport.map(col => col.title), ...dataForExport];
-
-    const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
-      type: 'application/vnd.ms-excel',
-    });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'table.xls';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-  const [selectedRowIds, setSelectedRowIds] = useState();
 
   const handleSelectedRowsChange = ({ selectedRows }) => {
-    const selectedIds = selectedRows.map((row) => row.contact_no);
+    const selectedIds = selectedRows.map((row) => row._id);
     setSelectedRowIds(selectedIds);
-
+    sendDataToParent(selectedIds);
   };
-  const [sendmessage, setsendmessage] = useState([]);
-  const [smsdata, setsmsdata] = useState();
-  const DeleteSelected = async (e) => {
-    e.preventDefault();
-    const url = await hostings["0"]?.smsendpointurl;
-    const updated = { ...sendmessage, "noofperson": selectedRowIds.length };
-    const selectedmobilenumber = selectedRowIds.join(',')
-    try {
-      savesmsreport(updated);
-      const response = await axios.get(`${url}`, {
-        params: {
-          user: await hostings["0"]?.smsuser,
-          pass: await hostings["0"]?.smspass,
-          sender: await hostings["0"]?.smssender,
-          phone: await selectedmobilenumber,
-            text: 'API Test - SMSFresh',
-          priority: 'ndnd',
-          stype: 'normal'
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  const savesmsreport = async (updated) => {
-    try {
-      const responce = await axios.post(
-        `http://localhost:5000/api/v1/addSmsReport`,
-        {
-          updated,
-        }
-      );
-      if (responce?.data?.success === true) {
-        toast.success(responce.data.message1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   const [adSerch, setAdvanceSerch] = useState([]);
+
+  const DeleteSelected = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+
+    if (confirmDelete) {
+      const aaaaa = { ids: selectedRowIds };
+
+      fetch(`${apiUrl}/BulkDeleteLead`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url":DBuUrl,
+        },
+        body: JSON.stringify(aaaaa),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+           if (data?.success == true) {
+            toast.success(data?.message);
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 500);
+          } else {
+            toast.warn(data?.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        });
+      console.log("Item deleted!");
+    } else {
+      toast.success("Delete canceled");
+      console.log("Delete canceled");
+    }
+  };
+
   const AdvanceSerch = async (e) => {
     e.preventDefault();
     console.log(adSerch);
@@ -339,7 +367,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "mongodb-url": DBuUrl,
+        "mongodb-url":DBuUrl,
       },
       body: JSON.stringify(adSerch),
     })
@@ -360,24 +388,44 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
         // Handle errors
       });
   };
-  const [carecters, setCarecters] = useState(0);
-  const [row, setRow] = useState(1);
-  
-  const EnterMessage = (e) => {
-    const message = e.target.value;
-    const characterCount = message.length;
-    setCarecters(characterCount);
-  
-    if (characterCount === 0) {
-      setRow(1);
-    } else if (characterCount <= 160) {
-      setRow(1);
-    } else {
-      const numberOfRows = Math.ceil(characterCount / 160);
-      setRow(numberOfRows);
-    }
-  
-    setsendmessage({ ...sendmessage, message: message });
+
+  const exportToExcel = () => {
+    const columnsForExport = columns.map((column) => ({
+      title: column.name,
+      dataIndex: column.selector,
+    }));
+
+    const dataForExport = filterleads.map((row) =>
+      columns.map((column) => {
+        if (column.selector && typeof column.selector === "function") {
+          return column.selector(row);
+        }
+        return row[column.selector];
+      })
+    );
+
+    const exportData = [
+      columnsForExport.map((col) => col.title),
+      ...dataForExport,
+    ];
+    const blob = new Blob(
+      [exportData.map((row) => row.join("\t")).join("\n")],
+      {
+        type: "application/vnd.ms-excel",
+      }
+    );
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "table.xls";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const Refresh = () => {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
   };
 
   return (
@@ -397,14 +445,9 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
                   >
                     <option>Status</option>
                     {Statusdata?.leadstatus?.map((status, key) => {
-                      if (status.status_name == 'Lost' || status.status_name == 'Won') {
-
-                      } else {
-                        return (
-                          <option value={status._id}>{status.status_name}</option>
-                        );
-                      }
-
+                      return (
+                        <option value={status._id}>{status.status_name}</option>
+                      );
                     })}
                   </select>
                 </div>
@@ -427,7 +470,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
                   </select>
                 </div>
               </div>
-              <div className="col-md-3 d-none">
+              <div className="col-md-3">
                 <div className="form-group">
                   <input
                     type="date"
@@ -440,7 +483,7 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
                   />
                 </div>
               </div>
-              <div className="col-md-3 d-none">
+              <div className="col-md-3">
                 <div className="form-group">
                   <input
                     type="date"
@@ -478,71 +521,16 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
           </form>
         </div>
       </div>
-      {/* ///////for send sms */}
-      <div className="row " style={{ display: dataFromParent }}>
-        <div className="col-md-12 advS">
-          <form onSubmit={AdvanceSerch}>
-            <div className="row">
-           
-              <div className="col-md-3 ">
-              <label>Enter Message</label>
-                <div className="form-group">
-                <textarea
-                    type="text"
-                    placeholder="Enter Message"
-                    className="form-control"
-                   
-                    onChange={EnterMessage}
-                    name="message"
-                    required
-                  ></textarea>
-                </div>
-              </div>
-              <div className="col-md-3">
-              <label>Characters</label>
-                <div className="form-group">
-                <input
-                    type="text"
-                    value={carecters}
-                    className="form-control"
-                    placeholder="Characters"
-                    name="message"
-                  />
-                </div>
-              </div>
-              <div className="col-md-3 ">
-                <div className="form-group">
-                <label>No of SMS</label>
-                <input
-                    type="text"
-                    value={row}
-                    className="form-control"
-                    placeholder="No of SMS"
-                    name="message"
-                  />
-                </div>
-              </div>
-              <div className="col-md-3 " style={{ marginTop: '25px' }}>
-                <div className="form-group">
-                <label></label>
-                  <button className="btn  btn-sm btn-danger" onClick={DeleteSelected}>
-                  Send Instant SMS
-                  </button>
-                </div>
-              </div>
-              
 
-
-            </div>
-          </form>
-        </div>
-      </div>
-      {/* ///////   for send sms */}
       {status === false ? (
-        <table id="example" className="table table-striped pt-3" style={{ width: '100%' }}>
+        <table
+          id="example"
+          className="table table-striped pt-3"
+          style={{ width: "100%" }}
+        >
           <thead>
             <tr>
-              <th>Full Name</th>
+              <th>Name</th>
               <th>Number</th>
               <th>Agent</th>
               <th>Service</th>
@@ -554,18 +542,28 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
             <tr>
               <p className="text-center">No Followup leads Founds</p>
             </tr>
-
           </tbody>
         </table>
       ) : (
         <>
-          {/* <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
-        <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
-        Export Excel
-      </button> */}
-          {
-            isAdmin ? (<></>) : (<></>)
-          }
+          <button
+            className="btn btn-sm  shadow_btn btn-success ml-10"
+            onClick={exportToPDF}
+          >
+            Export PDF
+          </button>
+
+          <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
+            Export Excel
+          </button>
+
+          {isAdmin ? (
+            <button className="btn shadow_btn btn-sm btn-danger" onClick={DeleteSelected}>
+              Delete
+            </button>
+          ) : (
+            <></>
+          )}
           <DataTable
             responsive
             id="table-to-export"
@@ -578,29 +576,22 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
             selectableRowsHighlight
             highlightOnHover
             subHeader
-            // subHeaderComponent={
-            //   <input
-            //     type="text"
-            //     placeholder="Search here"
-            //     value={search}
-            //     onChange={(e) => setsearch(e.target.value)}
-            //     className="form-control w-25 "
-            //   />
-            // }
+            subHeaderComponent={
+              <input
+                type="text"
+                placeholder="Search here"
+                value={search}
+                onChange={(e) => setsearch(e.target.value)}
+                className="form-control w-25 "
+              />
+            }
             customStyles={customStyles}
             selectedRows={selectedRowIds}
             onSelectedRowsChange={handleSelectedRowsChange}
             striped
           />
         </>
-
       )}
-
-
-
-
-
-
     </div>
   );
-}
+};

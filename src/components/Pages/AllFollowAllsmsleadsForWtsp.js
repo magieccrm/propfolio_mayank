@@ -14,7 +14,7 @@ import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import {getHostingbydomain} from "../../features/licenceSlice";
 
-export default function AllFollowupstableForAllsmsleads({ sendDataToParent, dataFromParent }) {
+export default function AllFollowAllsmsleadsForWtsp({ sendDataToParent, dataFromParent }) {
   const dispatch = useDispatch();
   const apiUrl = process.env.REACT_APP_API_URL;
   const DBuUrl = process.env.REACT_APP_DB_URL; 

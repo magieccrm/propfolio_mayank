@@ -433,7 +433,9 @@ function Setting() {
                         <i className="fa wiht fa-wrench" /> Cron Jobs
                       </a>
                     </li> */}
-                        <li>
+
+
+                        {/* <li>
                           <a
                             id="v-pills-purchase-tab"
                             data-toggle="pill"
@@ -445,7 +447,9 @@ function Setting() {
                             {" "}
                             <i className="fa wiht fa-cloud " /> Security Setting
                           </a>
-                        </li>
+                        </li> */}
+
+
                         {/* <li>
                       <a
                         id="v-pills-manufacturing-tab"
