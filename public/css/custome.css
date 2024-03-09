@@ -156,6 +156,47 @@ h4.mb-0.total_smsm {
 }
 .sms_heading{
   cursor: pointer;
+  border-bottom: 3px solid #22c55e;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-bottom: 1rem;
+}
+.sms_heading .card {
+  box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+  margin-bottom: 0;
+}
+.plan_active{
+  border: 3px solid #22c55e;
+  border-radius: 5px;
+}
+.plan_active .card{
+  background-color: #22c55e!important;
+  border-radius: 0;
+}
+.plan_active h6{
+  color: #fff!important;
+}
+.plan_active .button-butNow {
+  background-color: #fff;
+  border: 0;
+  border-radius: 8px;
+  color: #22c55e;
+  /* cursor: pointer; */
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 600;
+  outline: 0;
+  padding: 5px 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overflow: hidden;
+  box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+  transform: scale(1.05);
 }
 .sms_heading a{
   color:#182d49;
@@ -183,10 +224,7 @@ h4.mb-0.total_smsm {
     line-height: 1.1;
 }
 .bd_bottom{
-  border-bottom: 3px solid #a0696c;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    padding: 18px 10px 10px 10px;
+  
 }
 .bd_bottom1{
   border-bottom: 3px solid #1b5c60;
@@ -401,10 +439,17 @@ background: rgba(183, 51, 106, 0.38);
     font-family: 'Alegreya Sans', sans-serif;
 }
  
-.sidebar{
+/* .sidebar{
   height:100vh;
   overflow: scroll;
+} */
+
+.sidebar{
+  position: fixed;
+  overflow-y: scroll;
+  overflow-y: auto;
 }
+
 .content_tabs{
   display:none;
 }

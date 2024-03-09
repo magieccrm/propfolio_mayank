@@ -1,96 +1,124 @@
-import React   from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 function UploadData() {
-const columns =[
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
+  const [uploaddata, setuploaddata] = useState([]);
+
+  const getUploadedData = async () => {
+    try {
+      const responce = await axios.get(
+        `${apiUrl}/ContactUplode`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
+      );
+      setuploaddata(responce?.data?.Document);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUploadedData();
+  }, []);
+
+  const columns = [
     {
-      name: 'Name',
-      selector: row => row.name,
-      sortable:true
+      name: 'Document name',
+      selector: row => row.document_name,
+      cell: (row) => (
+        <a href={`/UploadContent/${row?._id}`}>{row?.document_name}</a>
+      ),
+      sortable: true
     },
     {
-      name: 'Number',
-      selector: row => row.number,
-      sortable:true
+      name: 'Uploaded Date',
+      selector: row => (row.createdAt.split('T'))[0],
+      sortable: true
     },
-    {
-      name: 'Agent',
-      selector: row => row.agent,
-      sortable:true
+  ];
+  const [file, setFile] = useState(null);
+  const allowedFileTypes = ["text/csv"];
+  const filesety = async (e) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    if (selectedFile) {
+      if (allowedFileTypes.includes(selectedFile.type)) {
+        setFile(selectedFile);
+      } else {
+        toast.error("Invalid file type");
+      }
+    }
+  };
+
+  const UplodeExcelFile = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await fetch(
+        `${apiUrl}/ExcelUplodeContactdata`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      toast.success(data.message);
+    } catch (error) {
+      toast.warn(error.data.message);
+    }
+  }
+
+  const handleDownload = () => {
+    const fileUrl = 'ExcelUplodeData/sample.csv';
+    const link = document.createElement('a');
+     link.href = fileUrl;
+     link.target = '_blank';
+     link.download = 'sample.csv'; 
+     document.body.appendChild(link);
+     link.click();
+     document.body.removeChild(link);
+   };
+
+  const customStyles = {
+    cells: {
+      style: {
+        border: "0px solid #ddd", // Set the cell border
+        fontSize: "14px",
+        // background: "#f4f3fe",
+      },
     },
-    {
-      name: 'Status',
-      selector: row => row.status,
-      sortable:true
+    headCells: {
+      style: {
+        border: "0px solid #111", // Set the header cell border
+        fontSize: "14px",
+        background: "#f0f0f0",
+      },
     },
-    {
-      name: 'Service',
-      selector: row => row.service,
-      sortable:true
+    rows: {
+      style: {
+        background: "#fdf1f1", // Set the default background color
+      },
     },
-    
-   ];
-   
-    const data =[
-    {
-       id: 1,
-       name: 'Abhilekh Singh',
-       number: 'XXXXXXXXXX',
-       agent: 'Komal',
-       status: 'Won',
-       service: 'Digital Services',
+    highlightOnHover: {
+      style: {
+        background: "#f4f3fe", // Set the background color on hover
       },
-      {
-        id: 2,
-        name: 'Subhash Singh',
-        number: 'XXXXXXXXXX',
-        agent: 'Neha',
-        status: 'Won',
-        service: 'Digital Services',
-       },
-       {
-        id: 3,
-        name: 'Juhi Mishra',
-        number: 'XXXXXXXXXX',
-        agent: 'Neha',
-        status: 'Won',
-        service: 'Digital Services',
-       },
-      
-    ]
-    const customStyles = {
-      cells: {
-        style: {
-          border: "0px solid #ddd", // Set the cell border
-          fontSize: "14px",
-          // background: "#f4f3fe",
-        },
+    },
+    striped: {
+      style: {
+        background: "#f8f9fa", // Set the background color for striped rows
       },
-      headCells: {
-        style: {
-          border: "0px solid #111", // Set the header cell border
-          fontSize: "14px",
-          background: "#f0f0f0",
-        },
-      },
-      rows: {
-        style: {
-          background: "#fdf1f1", // Set the default background color
-        },
-      },
-      highlightOnHover: {
-        style: {
-          background: "#f4f3fe", // Set the background color on hover
-        },
-      },
-      striped: {
-        style: {
-          background: "#f8f9fa", // Set the background color for striped rows
-        },
-      },
-    };
+    },
+  };
   return (
     <div>
       <div className="content-wrapper">
@@ -102,43 +130,53 @@ const columns =[
                   <h4>Upload Data </h4>
                 </div>
 
-                <form>
-                <div className="row">
-                <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3"> 
-                   <div className="form-group">
-                     <label htmlFor="fileInput">Choose file</label>
-                      <input type="file" className="form-control-file" id="fileInput" />
+                <form onSubmit={UplodeExcelFile} >
+                  <div className="row">
+                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                      <div className="form-group">
+                        <label htmlFor="fileInput">Choose file</label>
+                        <input type="file" onChange={filesety} className="form-control-file" required id="fileInput" />
+                      </div>
                     </div>
-                </div>
-                <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3"> 
-                <button type="submit" className="button-57 buttonns_057">
-                  Upload
-                </button>
-                </div>
-                </div>
-              
-              </form>
-              
+                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                      <button type="submit" className="button-57 buttonns_057">
+                        Upload
+                      </button>
+                    </div>
+
+                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                    <button type="button" class="btn btn-danger button-57 d-none">Download Sample File</button>
+                    </div>
+
+                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                      <button type="button" onClick={handleDownload} class="btn btn-danger button-57" style={{'marginLeft': '500px'}}>Download Sample File</button>
+                    </div>
+
+
+                  </div>
+
+                </form>
+
               </div>
 
               <div className="panel-body bg-white ">
-                 <div className="">
-                 
-                   <DataTable
-                   responsive
-                   customStyles={customStyles}
+                <div className="">
+
+                  <DataTable
+                    responsive
+                    customStyles={customStyles}
                     columns={columns}
-                    data={data}
+                    data={uploaddata}
                     selectableRows
                     fixedHeader
                     pagination
-                    selectableRowsHighlight
+                    // selectableRowsHighlight
                     highlightOnHover
-                    
-                   >
-                   
-                   </DataTable>
-                 </div>
+
+                  >
+
+                  </DataTable>
+                </div>
               </div>
             </div>
           </div>

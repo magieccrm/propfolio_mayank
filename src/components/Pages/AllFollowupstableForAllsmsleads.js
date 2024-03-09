@@ -325,6 +325,9 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
   const [smsdata, setsmsdata] = useState();
   const DeleteSelected = async (e) => {
     e.preventDefault();
+    if(!selectedRowIds){
+      return toast.success("Plz Select Client");
+  }
     const url = await hostings["0"]?.smsendpointurl;
     const updated = { ...sendmessage, "noofperson": selectedRowIds.length };
     const selectedmobilenumber = selectedRowIds.join(',')
@@ -349,7 +352,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
   const savesmsreport = async (updated) => {
     try {
       const responce = await axios.post(
-        `http://localhost:5000/api/v1/addSmsReport`,
+        `${apiUrl}/addSmsReport`,
         {
           updated,
         }
@@ -511,7 +514,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
       {/* ///////for send sms */}
       <div className="row " style={{ display: dataFromParent }}>
         <div className="col-md-12 advS">
-          <form onSubmit={AdvanceSerch}>
+          <form onSubmit={DeleteSelected}>
             <div className="row">
            
               <div className="col-md-3 ">
@@ -524,6 +527,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
                    
                     onChange={EnterMessage}
                     name="message"
+                    required
                   ></textarea>
                 </div>
               </div>
@@ -554,7 +558,7 @@ export default function AllFollowupstableForAllsmsleads({ sendDataToParent, data
               <div className="col-md-3 " style={{ marginTop: '25px' }}>
                 <div className="form-group">
                 <label></label>
-                  <button className="btn  btn-sm btn-danger" onClick={DeleteSelected}>
+                  <button className="btn  btn-sm btn-danger" >
                   Send Instant SMS
                   </button>
                 </div>
