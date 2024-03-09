@@ -49,8 +49,8 @@ import Buysms from './components/Pages/Buysms';
 import BuysmsWtsp from './components/Pages/BuysmsWtsp';
 import History from './components/Pages/History';
 import HistoryWtsp from './components/Pages/HistoryWtsp';
-import TodayLead from './components/Pages/TodayLead';
 import NewLead from './components/Pages/NewLead';
+import UploadDataDetails from './components/Pages/UploadDataDetails';
   function App() { 
     const [isLoading, setIsLoading] = useState(true);
     const [isLogined, setIsLogined]= useState(false); 
@@ -141,6 +141,8 @@ import NewLead from './components/Pages/NewLead';
 
 
          <Route path="/UploadContent" element={<UploadData />}></Route>
+         <Route path="/UploadContent/:id" element={<UploadDataDetails />}></Route>
+
          <Route path="/buysms" element={<Buysms/>}></Route>
          <Route path="/BuysmsWtsp" element={<BuysmsWtsp/>}></Route>
 
@@ -148,7 +150,7 @@ import NewLead from './components/Pages/NewLead';
          <Route path="/HistoryWtsp" element={<HistoryWtsp/>}></Route>
 
          <Route path="/newlead" element={<NewLead/>}></Route>
-         <Route path="/todaylead" element={<TodayLead/>}></Route>
+ 
 
          <Route path="/import-lead" element={<ImportLead />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>

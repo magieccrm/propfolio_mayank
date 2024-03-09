@@ -27,33 +27,32 @@ export default function Followupage() {
 
   const [localDetails, setLocalDetails] = useState({});
   const _id = useParams();
- console.log('_id',_id)
   const { lead, loading } = useSelector((state) => state.lead);
   const foundObject = lead?.lead?.find((obj) => obj._id === _id.id);
   const AllDetails = useSelector((state) => state.lead?.lead1?.leads?.["0"]);
   const [data, setdata] = useState({
     followup_desc: localDetails?.massage_of_calander,
   });
-  console.log("localDetails", localDetails);
   useEffect(() => {
     setLocalDetails(AllDetails || {});
   }, [AllDetails]);
-  useEffect(() => {
-    const getalltransactional = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/v1/getallsmsrecord', {
-          headers: {
-            "Content-Type": "application/json",
-            "mongodb-url": DBuUrl,
-          },
-        });
-        setsmsdata(response?.data?.transactional['0']);
-      } catch (error) {
-        console.log(error);
-      }
+  // const getalltransactional = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:3000/api/v1/getallsmsrecord', {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "mongodb-url": DBuUrl,
+  //       },
+  //     });
+  //     setsmsdata(response?.data?.transactional['0']);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    }
-    getalltransactional();
+  // }
+  useEffect(() => {
+   
+    // getalltransactional();
     dispatch(getAllStatus());
     dispatch(getAllLead());
     dispatch(getAllAgent());
@@ -148,12 +147,9 @@ export default function Followupage() {
       assign_to_agent: e.target.elements.assign_to_agent?.value,
       followup_status_id: e.target.elements.followup_status_id?.value,
     };
-    // console.log(data);
-
-    if (updatedLeadData.lead_id) {
+     if (updatedLeadData.lead_id) {
       const aaaa = await dispatch(addfollowup(updatedLeadData));
-
-      if (aaaa.payload.success === true) {
+     if (aaaa.payload.success === true) {
         navigate("/Followupleads");
         toast.success(aaaa.payload?.message);
       } else {
@@ -163,10 +159,6 @@ export default function Followupage() {
       toast.warn("all field required");
     }
   };
-
-  // useEffect(()=>{
-
-  // },[]);
 
   /////////for attechment //////
   const [file, setFile] = useState(null);
@@ -224,8 +216,7 @@ export default function Followupage() {
           body: formData,
         }
       );
-      console.log("API Response:", response);
-      const data = await response.json();
+       const data = await response.json();
       toast.success(data.message);
       await getAttechmenthistory(_id?.id);
     } catch (error) {
@@ -272,27 +263,27 @@ export default function Followupage() {
   };
 
   // for sms
-  const [smsdata, setsmsdata] = useState();
-  const sendSMS = async (e) => {
-    e.preventDefault();
-    const url = await smsdata?.endpointurl;
-    try {
-      const response = await axios.get(`${url}`, {
-        params: {
-          user: smsdata?.user,
-          pass: smsdata?.pass,
-          sender: smsdata?.sender,
-          phone: localDetails?.contact_no,
-          text: 'API Test - SMSFresh',
-          priority: 'ndnd',
-          stype: 'normal'
-        }
-      });
-      console.log('jhfkjd', response);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // const [smsdata, setsmsdata] = useState();
+  // const sendSMS = async (e) => {
+  //   e.preventDefault();
+  //   const url = await smsdata?.endpointurl;
+  //   try {
+  //     const response = await axios.get(`${url}`, {
+  //       params: {
+  //         user: smsdata?.user,
+  //         pass: smsdata?.pass,
+  //         sender: smsdata?.sender,
+  //         phone: localDetails?.contact_no,
+  //         text: 'API Test - SMSFresh',
+  //         priority: 'ndnd',
+  //         stype: 'normal'
+  //       }
+  //     });
+  //     console.log('jhfkjd', response);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   return (
     <div>
@@ -669,7 +660,7 @@ export default function Followupage() {
                             </div>
                           </form>
                           {/* for sms start*/}
-                          <form onSubmit={sendSMS}>
+                          {/* <form onSubmit={sendSMS}>
                             <div className="mai-falows">
                               <div className="row">
                                 <div className="col-md-12">
@@ -705,7 +696,7 @@ export default function Followupage() {
                                 </div>
                               </div>
                             </div>
-                          </form>
+                          </form> */}
                           {/* for sms end */}
                         </div>
                       </div>

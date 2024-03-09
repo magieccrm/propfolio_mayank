@@ -159,10 +159,10 @@ function Setting() {
       setassigntlnone('none')
     }
     }
-
   const editagent = async (_id) => {
     const selectedData = await agent?.agent.find((item) => item._id === _id);
     setFormData(selectedData);
+    setassigntlnone('block')
   };
   const editstatus = async (_id) => {
     const selectedData = await Statusdata?.leadstatus.find(
@@ -371,9 +371,25 @@ function Setting() {
       }
     }
   };
-
+  const [TeamLeader,setTeamLeader]=useState([]);
+  const getTeamLeader=async ()=>{
+    try {
+      const responce = await axios.get(
+        `${apiUrl}/getAllTeamLeader`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
+      );
+      setTeamLeader(responce?.data?.agent);
+     } catch (error) {
+     console.error(error)
+    }
+  }
   useEffect(() => {
     GetCompanyDetails();
+    getTeamLeader();
   }, []);
 
   return (
@@ -2375,8 +2391,12 @@ function Setting() {
                                             name="assigntl"
                                             id="aroll"
                                           >
+
                                             <option value>Assign Team Leader</option>
-                                            <option value="TeamLeader">Team Leader</option>
+                                            {TeamLeader?.map((TeamLeader1)=>{  
+                                              return(<option value={TeamLeader1?._id}>{TeamLeader1?.agent_name}</option>);
+                                            })}
+                                            
                                           </select>
                                         </div>
                                       </div>

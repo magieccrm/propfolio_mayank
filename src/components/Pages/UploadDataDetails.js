@@ -1,50 +1,54 @@
 import axios from 'axios';
 import React, { useEffect, useState }   from 'react'
 import DataTable from 'react-data-table-component';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+  
 
-
-function History() {
+function UploadDataDetails() {
   const apiUrl = process.env.REACT_APP_API_URL;
-
-      const [data,setdata]=useState([]);
-      const getSmsReport=async()=>{
-        try {
-          const responce = await axios.get(
-            `${apiUrl}/getAllSmsReport`,
-          );
-          setdata(responce.data.smsreport);
-        } catch (error) {
-          console.log(error);
-        }
+  const DBuUrl = process.env.REACT_APP_DB_URL;
+  const _id = useParams();
+  const [uploaddata,setuploaddata]=useState([]);
+  const getUploadedData = async () => {
+    try {
+      const responce = await axios.get(
+        `${apiUrl}/ContactUplodeData/${_id?.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
       }
-    
-      useEffect(()=>{
-              getSmsReport();
-      },[])
+      );
+     
+      setuploaddata(responce?.data?.Document);
+    } catch (error) {
+      console.log(error);
+     }
+  };
 
-
+  useEffect(()=>{
+    getUploadedData();
+  },[]);
+  
 const columns =[
     {
-      name: 'Message',
-      selector: row => row.message,
+      name: 'Client Name',
+      selector: row => row?.clientname,
       sortable:true
     },
     {
-      name: 'No Of Person',
-      selector: row => row.noofperson,
-      sortable:true
-    },
+        name: 'Client Contact No.',
+        selector: row => row?.clientMobile,
+        sortable:true
+      },
     {
-      name: 'Date & Time',
+      name: 'Uploaded Date',
       selector: row => (row.createdAt.split('T'))[0],
       sortable:true
     },
-   
-    
    ];
    
-   
+  
     const customStyles = {
       cells: {
         style: {
@@ -84,10 +88,16 @@ const columns =[
             <div className="panel panel-bd lobidrag lobipanel">
               <div className="panel-heading">
                 <div className="btn-group bg-white ">
-                  <h4>SMS Report </h4>
+                  <h4>Upload Data </h4>
                 </div>
 
-               
+                <form>
+                <div className="row">
+            
+                </div>
+              
+              </form>
+              
               </div>
 
               <div className="panel-body bg-white ">
@@ -97,11 +107,11 @@ const columns =[
                    responsive
                    customStyles={customStyles}
                     columns={columns}
-                    data={data}
-                    // selectableRows
+                    data={uploaddata}
+                    selectableRows
                     fixedHeader
                     pagination
-                    selectableRowsHighlight
+                    // selectableRowsHighlight
                     highlightOnHover
                     
                    >
@@ -116,4 +126,4 @@ const columns =[
     </div>
   )
 }
-export default History;
+export default UploadDataDetails;

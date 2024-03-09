@@ -581,16 +581,7 @@ export default function AllFollowupstableForActiveLeadForWtsp({ sendDataToParent
             selectableRowsHighlight
             highlightOnHover
             subHeader
-            // subHeaderComponent={
-            //   <input
-            //     type="text"
-            //     placeholder="Search here"
-            //     value={search}
-            //     onChange={(e) => setsearch(e.target.value)}
-            //     className="form-control w-25 "
-            //   />
-            // }
-            customStyles={customStyles}
+                customStyles={customStyles}
             selectedRows={selectedRowIds}
             onSelectedRowsChange={handleSelectedRowsChange}
             striped
