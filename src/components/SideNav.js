@@ -8,6 +8,7 @@ function SideNav() {
   const [callManageshow, setcallManageshow] = useState("none");
   const [sms, setsms] = useState("none");
   const [wtsp, setwtsp] = useState("none");
+  const [apis, setapis] = useState("none");
       const openclose=()=>{
         if(line==='none'){
           setline("block")
@@ -41,6 +42,14 @@ function SideNav() {
           setwtsp("block") 
         }else{
           setwtsp("none")
+        }
+       }
+
+       const allapi=()=>{
+        if(apis==='none'){  
+          setapis("block") 
+        }else{
+          setapis("none")
         }
        }
 ////// Hide And Show///////
@@ -251,7 +260,7 @@ const handleItemClick = (itemName) => {
                 </ul>
                 </li>
          
-
+                     
 
                 {/* manage sms end */}
 
@@ -299,7 +308,8 @@ const handleItemClick = (itemName) => {
              
 
                 {/* manage Wtsp end */}
-
+                
+                
 
                 <li className="nav-item">
                   <a   href="javascript:void(0);" className={activeItem === 'UploadContent' ? 'nav-link active' : 'nav-link'}
@@ -309,6 +319,27 @@ const handleItemClick = (itemName) => {
                     </a>
                   </li>
             
+
+             {/* Api  */}
+             <li className="nav-item">
+              <Link to="#" className="nav-link" onClick={allapi}>
+                  <i className="nav-icon fas fa fa fa-cog" />
+                 Api
+                  <i className="fas fa-angle-left right" />
+                </Link>
+                <ul className="nav nav-treeview" style={{display:apis}}>
+                <li className="nav-item">
+                  <a    href="javascript:void(0);"  className={activeItem === 'housingapi' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('housingapi')}>
+                      <p>Housing Api</p>
+                    </a>
+                  </li>
+                 
+                
+                  
+                </ul>
+                </li>
+                      {/* Api */}
 
              
 

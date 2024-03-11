@@ -51,6 +51,7 @@ import History from './components/Pages/History';
 import HistoryWtsp from './components/Pages/HistoryWtsp';
 import NewLead from './components/Pages/NewLead';
 import UploadDataDetails from './components/Pages/UploadDataDetails';
+import Housingapi from './components/Pages/Housingapi';
   function App() { 
     const [isLoading, setIsLoading] = useState(true);
     const [isLogined, setIsLogined]= useState(false); 
@@ -151,7 +152,7 @@ import UploadDataDetails from './components/Pages/UploadDataDetails';
 
          <Route path="/newlead" element={<NewLead/>}></Route>
  
-
+         <Route path="/housingapi" element={<Housingapi />}></Route>
          <Route path="/import-lead" element={<ImportLead />}></Route>
          <Route path="/Followupleads" element={<Followupleads />}></Route>
          <Route path="/Forwardleads" element={<Forwardleads />}></Route>
