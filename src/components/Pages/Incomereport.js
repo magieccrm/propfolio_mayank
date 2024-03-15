@@ -7,62 +7,65 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
 import { getAllAgent } from "../../features/agentSlice";
+import { getAllLeadSource } from "../../features/leadSource";
 import { getAllStatus } from "../../features/statusSlice";
 import DataTable from "react-data-table-component";
 import toast from "react-hot-toast";
 
 export default function Incomereport() {
-  const apiUrl = process.env.REACT_APP_API_URL;  
-  const DBuUrl = process.env.REACT_APP_DB_URL;  
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const DBuUrl = process.env.REACT_APP_DB_URL;
   const [data, setdata] = useState([]);
   const [total, settotal] = useState([]);
   const { ProductService } = useSelector((state) => state.ProductService);
   const { Statusdata } = useSelector((state) => state.StatusData);
+  const { leadSourcedata } = useSelector((state) => state.leadSource);
   var { agent } = useSelector((state) => state.agent);
-  const [leadsource , setleadsource]=useState([]);
-  const [leadsourcedata1 , setleadsourcedata]=useState([]);
+  const [leadsource, setleadsource] = useState([]);
+  const [leadsourcedata1, setleadsourcedata] = useState([]);
   const dispatch = useDispatch();
-  const [llll,setllll]=useState('block');
-  const [llll1,setllll1]=useState('none');
-  const getAllLeadSourceOverview1=async ()=>{
+  const [llll, setllll] = useState('block');
+  const [llll1, setllll1] = useState('none');
+  const getAllLeadSourceOverview1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/EmployeesReportDetail`,{
-           headers:{
-              "Content-Type": "application/json",
-                "mongodb-url":DBuUrl,
-            }
-         }
+        `${apiUrl}/EmployeesReportDetail`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        }
+      }
       );
       setleadsourcedata(responce?.data?.value);
       setleadsource(responce?.data?.name);
-      
+
     } catch (error) {
-      const message=await error?.response?.data?.message;
-      if(message=='Client must be connected before running operations'  || message=='Internal Server Error'){
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
         getAllLeadSourceOverview1();
       }
       console.log(error);
     }
   }
-  useEffect(()=>{
-      getAllLeadSourceOverview1();
-      dispatch(getAllProductService());
-      dispatch(getAllAgent());
-      dispatch(getAllStatus());
-    },[]);
-    const options = {
-      labels: leadsource,
-    };
+  useEffect(() => {
+    getAllLeadSourceOverview1();
+    dispatch(getAllProductService());
+    dispatch(getAllLeadSource());
+    dispatch(getAllAgent());
+    dispatch(getAllStatus());
+  }, []);
+  const options = {
+    labels: leadsource,
+  };
 
-  
 
-    const [getLeadData, setLeadData] = useState([]);
+
+  const [getLeadData, setLeadData] = useState([]);
   const getEmployeeReport = async (e) => {
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
-      "mongodb-url":DBuUrl,
+      "mongodb-url": DBuUrl,
     };
     try {
       const responce = await axios.post(
@@ -130,180 +133,207 @@ export default function Incomereport() {
           <div className="container pl-0">
             <div className="row pl-0 pr-0">
               <div className="col-12 pl-0 pr-0">
-            <div className="panel-body pt-2">
-              <div className="panel panel-bd lobidrag lobipanel">
-              <div className="panel-heading">
-                <div className="btn-group bg-white ">
-                  <h4>Income Report</h4>
-                </div>
-                
-              </div>
-              
-                <div className="pt-3">
-                  <div className="  bg-white">
-                  <div className="col-sm-12 col-md-12 col-xs-12">
-                    <div className="cards pt-3 ">
-                      <div className="serach-lists" style={{ padding: 0 }}>
-                        <form onSubmit={getEmployeeReport}>
-                          <div className="row">
-                            <div className="col-md-4">
-                              <div className="form-group">
-                                <select className="form-control"
-                                   onChange={(e) =>
-                                    setdata({
-                                      ...data,
-                                      service: e.target.value,
-                                    })
-                                  }
-                                name="service">
-                                  <option value="">Select product</option>
+                <div className="panel-body pt-2">
+                  <div className="panel panel-bd lobidrag lobipanel">
+                    <div className="panel-heading">
+                      <div className="btn-group bg-white ">
+                        <h4>Income Report</h4>
+                      </div>
 
-                                  {ProductService?.product_service?.map(
-                                    (ProductService1) => {
-                                      return (
-                                        <option value={ProductService1?._id}>
-                                          {
-                                            ProductService1?.product_service_name
+                    </div>
+
+                    <div className="pt-3">
+                      <div className="  bg-white">
+                        <div className="col-sm-12 col-md-12 col-xs-12">
+                          <div className="cards pt-3 ">
+                            <div className="serach-lists" style={{ padding: 0 }}>
+                              <form onSubmit={getEmployeeReport}>
+                                <div className="row">
+                                  <div className="col-md-4">
+                                    <div className="form-group">
+                                      <select className="form-control"
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            service: e.target.value,
+                                          })
+                                        }
+                                        name="service">
+                                        <option value="">Select product</option>
+
+                                        {ProductService?.product_service?.map(
+                                          (ProductService1) => {
+                                            return (
+                                              <option value={ProductService1?._id}>
+                                                {
+                                                  ProductService1?.product_service_name
+                                                }
+                                              </option>
+                                            );
                                           }
-                                        </option>
-                                      );
-                                    }
-                                  )}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-4">
-                              <div className="form-group">
-                                <select className="form-control"
-                                   onChange={(e) =>
-                                    setdata({
-                                      ...data,
-                                      status: e.target.value,
-                                    })
-                                  }
-                                name="status">
-                                  <option value="">Select Status</option>
-                                  {Statusdata?.leadstatus?.map((status, key) => {
-                      return (
-                        <option value={status._id}>{status.status_name}</option>
-                      );
-                    })}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-4">
-                              <div className="form-group">
-                                <select
-                                  className="form-control"
-                                  name="agent"
-                                  onChange={(e) =>
-                                    setdata({
-                                      ...data,
-                                      agent: e.target.value,
-                                    })
-                                  }
-                                >
-                                  <option value="">Select Employee</option>
+                                        )}
+                                      </select>
+                                    </div>
+                                  </div>
 
-                                  {agent?.agent?.map((agents, key) => {
-                                    return (
-                                      <option value={agents._id}>
-                                        {agents.agent_name}
-                                      </option>
-                                    );
-                                  })}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-3">
-                              <div className="form-group">
-                                <input
-                                  name="startDate"
-                                  onChange={(e) =>
-                                    setdata({
-                                      ...data,
-                                      startDate: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Choose Date From"
-                                  type="date"
-                                  className="form-control"
-                                  autoComplete="off"
-                                  defaultValue=""
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-3">
-                              <div className="form-group">
-                                <input
-                                  onChange={(e) =>
-                                    setdata({
-                                      ...data,
-                                      endDate: e.target.value,
-                                    })
-                                  }
-                                  name="endDate"
-                                  placeholder="Choose Date To"
-                                  type="date"
-                                  className="form-control"
-                                  autoComplete="off"
-                                  defaultValue=""
-                                />
-                              </div>
-                            </div>
-                            <div className="col-md-2 col-sm-12">
-                              <div className="form-group">
-                                <button
-                                  type="submit"
-                                  className="btn btn-success button-57 form-control"
-                                >
-                                  Submit
-                                </button>
-                              </div>
-                            </div>
-                            <div className="col-md-2 col-sm-12"  style={{ display:llll1}} >
-                              <div className="form-group">
-                                <button onClick={Refresh}
-                                  type="button"
-                                  className="btn btn-success button-57 form-control"
-                                >
-                                  Refresh
-                                </button>
-                              </div>
+                                  <div className="col-md-4">
+                                    <div className="form-group">
+                                      <select className="form-control"
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            lead_source: e.target.value,
+                                          })
+                                        }
+                                        name="lead_source">
+                                        <option value="">Select Lead Source</option>
+                                        {leadSourcedata?.leadSource?.map(
+                                          (leadSource1) => {
+                                            return (
+                                              <option value={leadSource1?._id}>
+                                                {
+                                                  leadSource1?.lead_source_name
+                                                }
+                                              </option>
+                                            );
+                                          }
+                                        )}
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  <div className="col-md-4">
+                                    <div className="form-group">
+                                      <select className="form-control"
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            status: e.target.value,
+                                          })
+                                        }
+                                        name="status">
+                                        <option value="">Select Status</option>
+                                        {Statusdata?.leadstatus?.map((status, key) => {
+                                          return (
+                                            <option value={status._id}>{status.status_name}</option>
+                                          );
+                                        })}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-4">
+                                    <div className="form-group">
+                                      <select
+                                        className="form-control"
+                                        name="agent"
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            agent: e.target.value,
+                                          })
+                                        }
+                                      >
+                                        <option value="">Select Employee</option>
+
+                                        {agent?.agent?.map((agents, key) => {
+                                          return (
+                                            <option value={agents._id}>
+                                              {agents.agent_name}
+                                            </option>
+                                          );
+                                        })}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <div className="form-group">
+                                      <input
+                                        name="startDate"
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            startDate: e.target.value,
+                                          })
+                                        }
+                                        placeholder="Choose Date From"
+                                        type="date"
+                                        className="form-control"
+                                        autoComplete="off"
+                                        defaultValue=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <div className="form-group">
+                                      <input
+                                        onChange={(e) =>
+                                          setdata({
+                                            ...data,
+                                            endDate: e.target.value,
+                                          })
+                                        }
+                                        name="endDate"
+                                        placeholder="Choose Date To"
+                                        type="date"
+                                        className="form-control"
+                                        autoComplete="off"
+                                        defaultValue=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="col-md-2 col-sm-12">
+                                    <div className="form-group">
+                                      <button
+                                        type="submit"
+                                        className="btn btn-success button-57 form-control"
+                                      >
+                                        Submit
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-2 col-sm-12" style={{ display: llll1 }} >
+                                    <div className="form-group">
+                                      <button onClick={Refresh}
+                                        type="button"
+                                        className="btn btn-success button-57 form-control"
+                                      >
+                                        Refresh
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
                             </div>
                           </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-12">
-                    <div className="col-lg-6 mx-auto">
-                        <Chart  options={options} series={leadsourcedata1} type="pie"  
-                        style={{width:'500px',height:'500px', display:llll}} />  
                         </div>
-                    </div>
-                  </div>
-                  <div className="card-headers">
-                  <DataTable
-                          className="custom-datatable"
-                          responsive
-                          id="table-to-export"
-                          columns={columns}
-                          data={getLeadData}
-                          pagination
-                          fixedHeader
-                          fixedHeaderScrollHeight="550px"
-                          selectableRowsHighlight
-                          highlightOnHover
-                          subHeader
-                          customStyles={customStyles}
-                        />
-                  </div>
-                </div>
-              </div></div>
+                        <div className="row">
+                          <div className="col-12">
+                            <div className="col-lg-6 mx-auto">
+                              <Chart options={options} series={leadsourcedata1} type="pie"
+                                style={{ width: '500px', height: '500px', display: llll }} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-headers">
+                          <DataTable
+                            className="custom-datatable"
+                            responsive
+                            id="table-to-export"
+                            columns={columns}
+                            data={getLeadData}
+                            pagination
+                            fixedHeader
+                            fixedHeaderScrollHeight="550px"
+                            selectableRowsHighlight
+                            highlightOnHover
+                            subHeader
+                            customStyles={customStyles}
+                          />
+                        </div>
+                      </div>
+                    </div></div>
+                </div></div>
             </div></div>
-          </div></div>
         </section>
       </div>
     </div>

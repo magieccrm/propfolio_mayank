@@ -372,7 +372,7 @@ const handleItemClick = (itemName) => {
                 </a>
               </li>  
 
-    </>):(<>
+    </>):localStorage.getItem("role")==='user'?(<>
       <li className="nav-item">
                 <a   href="javascript:void(0);" className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
                   onClick={() => handleItemClick('home')}
@@ -430,17 +430,7 @@ const handleItemClick = (itemName) => {
                       <p>Employees</p>
                     </a>
                   </li> 
-                  {/* <li className="nav-item">
-                  <Link to="/Manageexcludenos" className="nav-link">
-                      <p>Exclude Phone Number</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                  <Link to="/ManageUser" className="nav-link">
-                      <p> User</p>
-                    </Link>
-                  </li> */}
-
+                
                   <li className="nav-item">
                   <a  
                    href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
@@ -452,7 +442,8 @@ const handleItemClick = (itemName) => {
                   
                 </ul>
               </li>
-    </>)  }
+    </>):(<>    
+          </>)  }
 
 
             </ul>

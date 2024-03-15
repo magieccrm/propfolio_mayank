@@ -37,7 +37,7 @@ function Header() {
       setleadcountdata(responce?.data?.Count);
     } catch (error) {
       const message = await error?.response?.data?.message;
-     
+
       if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
         getLeadCountData();
       }
@@ -46,7 +46,7 @@ function Header() {
   }
   console.log(leadcountdata);
   useEffect(() => {
-    getLeadCountData();  
+    getLeadCountData();
   }, []);
 
   return (
@@ -71,57 +71,58 @@ function Header() {
               {/* Home */}
             </Link>
           </li>
-          {/* <li className="nav-item d-none d-sm-inline-block">
-            
-            <div className="nav-link">Dashboard</div>
-          </li> */}
+
         </ul>
 
         <Breadcrumb />
+         <div className="text-center blink-soft" style={{ marginLeft: '30%'}}><h2>In Demo SMS Will Not Work</h2></div>
+
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">
-          <Link className="nav-link" data-toggle="dropdown" to="#">
-    <i className="far fa-bell pe-7s-bell" />
-    {Array.isArray(leadcountdata) && (
-      <span className="badge badge-warning navbar-badge">
-        {leadcountdata.reduce(
-          (total, item) =>
-            item.name !== "Total Lead" && item.name !== "Total Agent"
-              ? total + item.Value
-              : total,
-          0
-        )}
-      </span>
-    )}
-  </Link>
+            <Link className="nav-link" data-toggle="dropdown" to="#">
+              <i className="far fa-bell pe-7s-bell" />
+              {Array.isArray(leadcountdata) && (
+                <span className="badge badge-warning navbar-badge">
+                  {leadcountdata.reduce(
+                    (total, item) =>
+                      item.name !== "Total Lead" && item.name !== "Total Agent"
+                        ? total + item.Value
+                        : total,
+                    0
+                  )}
+                </span>
+              )}
+            </Link>
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-  {
-    Array.isArray(leadcountdata) && leadcountdata.map((leadcountdata1, index) => (
-      leadcountdata1?.name === 'Total Lead' ? (
-        null
-      ) : leadcountdata1?.name === 'Total Agent' ? (
-        null
-      ) : (
-        leadcountdata1?.Value !== 0 ? (
-        
-          <React.Fragment key={index}>
-            <Link to="/followupleads" className="dropdown-item">
-              <i className="fas fa-envelope mr-2" /> {leadcountdata1?.Value} new {leadcountdata1?.name}
-             </Link>
-          </React.Fragment>
-        ) : null
-      )
-    ))
-  }
-  {/* Calculate and render the total */}
-  {/* <div className="dropdown-divider" />
+              {
+                Array.isArray(leadcountdata) && leadcountdata.map((leadcountdata1, index) => (
+                  leadcountdata1?.name === 'Total Lead' ? (
+                    null
+                  ) : leadcountdata1?.name === 'Total Agent' ? (
+                    null
+                  ) : (
+                    leadcountdata1?.Value !== 0 ? (
+
+                      <React.Fragment key={index}>
+                        <Link to="/followupleads" className="dropdown-item">
+                          <i className="fas fa-envelope mr-2" /> {leadcountdata1?.Value} new {leadcountdata1?.name}
+                        </Link>
+                      </React.Fragment>
+                    ) : null
+                  )
+                ))
+              }
+              {/* Calculate and render the total */}
+              {/* <div className="dropdown-divider" />
   <div className="dropdown-item">
     Total: {leadcountdata.reduce((total, item) => item.name !== 'Total Lead' && item.name !== 'Total Agent' ? total + item.Value : total, 0)}
   </div> */}
-</div>
+
+            </div>
 
           </li>
+
           {/* Messages Dropdown Menu */}
           <li className="nav-item dropdown">
             <Link className="nav-link" data-toggle="dropdown" href="#">
