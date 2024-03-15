@@ -462,6 +462,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
                     name="agent"
                   >
                     <option>Agent</option>
+                    <option value="Unassigne">Unassigned Agent</option>
                     {agent?.agent?.map((agents, key) => {
                       return (
                         <option value={agents._id}>{agents.agent_name}</option>

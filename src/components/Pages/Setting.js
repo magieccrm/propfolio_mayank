@@ -39,7 +39,6 @@ function Setting() {
     const dataleadtran = await { 'totransfer': idToDelete1?.agent_id, 'oftransfer': idToDelete }
     console.log('dataleadtran', dataleadtran)
     try {
-
       const response = await axios.put(
         `${apiUrl}/LeadTransfer/`,
         dataleadtran

@@ -173,6 +173,19 @@ h4.mb-0.total_smsm {
   background-color: #22c55e!important;
   border-radius: 0;
 }
+.blink-soft h2{
+  font-size:24px;
+  color:red;
+  font-weight:600;
+}
+.blink-soft {
+  animation: blinker 1.5s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 .plan_active h6{
   color: #fff!important;
 }
