@@ -1587,7 +1587,6 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {/* {datafomate(follow?.created)} */}
                                               {format(new Date(datafomate(
                                                 follow?.created
                                               )), 'dd/MM/yy hh:mm:ss')}
