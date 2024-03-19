@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
-
+import { format } from 'date-fns';
 
 export default function AllFollowupstable({ sendDataToParent, dataFromParent }) {
   const dispatch = useDispatch();
@@ -24,6 +24,15 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   const [filterleads, setfilterleads] = useState([]);
   const { agent } = useSelector((state) => state.agent);
   const { Statusdata } = useSelector((state) => state.StatusData);
+
+  ////////end attechment //////
+  const datafomate = (date) => {
+    const dateTime = new Date(date);
+    const formattedDate = dateTime.toLocaleDateString();
+    const formattedTime = dateTime.toLocaleTimeString();
+    return `${formattedDate} ${formattedTime}`;
+  };
+
   const Refresh = () => {
     setTimeout(() => {
       window.location.reload(false);
@@ -181,7 +190,9 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
       },
       {  
       name: "Followup date",
-       selector: (row) => (row?.followup_date)?(row?.followup_date):(''),
+       selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
+      row?.followup_date
+    )), 'dd/MM/yy hh:mm:ss')):(''),
      //  + 
       //  row?.status_details['0']?.status_name,
        sortable: true,  
@@ -205,9 +216,10 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     
     {  
     name: "Followup date",
-     selector: (row) => (row?.followup_date)?(row?.followup_date):(''),
-     //+ (row?.status_details['0']?.status_name),
-     sortable: true,  
+     selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
+      row?.followup_date
+    )), 'dd/MM/yy hh:mm:ss')):(''),
+      sortable: true,  
     },
     {
      name: "Action",     

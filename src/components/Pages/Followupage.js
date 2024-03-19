@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-
+import { format } from 'date-fns';
 import { getAllLead, getLeadById } from "../../features/leadSlice";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
@@ -48,11 +48,8 @@ export default function Followupage() {
   //   } catch (error) {
   //     console.log(error);
   //   }
-
   // }
   useEffect(() => {
-   
-    // getalltransactional();
     dispatch(getAllStatus());
     dispatch(getAllLead());
     dispatch(getAllAgent());
@@ -69,12 +66,12 @@ export default function Followupage() {
 
   const handleInputChange = (e) => {
     setLocalDetails({
-          ...localDetails,
-          country: e.target.value,
-        })
+      ...localDetails,
+      country: e.target.value,
+    })
     getStateByCountry(e.target.value);
   };
- 
+
 
   const getStateByCountry = (data) => {
     dispatch(getStatebycountry(data));
@@ -147,9 +144,9 @@ export default function Followupage() {
       assign_to_agent: e.target.elements.assign_to_agent?.value,
       followup_status_id: e.target.elements.followup_status_id?.value,
     };
-     if (updatedLeadData.lead_id) {
+    if (updatedLeadData.lead_id) {
       const aaaa = await dispatch(addfollowup(updatedLeadData));
-     if (aaaa.payload.success === true) {
+      if (aaaa.payload.success === true) {
         navigate("/Followupleads");
         toast.success(aaaa.payload?.message);
       } else {
@@ -174,7 +171,7 @@ export default function Followupage() {
 
   const filesety = async (e) => {
     const selectedFile = e.target.files && e.target.files[0];
-   
+
     if (selectedFile) {
       if (allowedFileTypes.includes(selectedFile.type)) {
         setFile(selectedFile);
@@ -216,7 +213,7 @@ export default function Followupage() {
           body: formData,
         }
       );
-       const data = await response.json();
+      const data = await response.json();
       toast.success(data.message);
       await getAttechmenthistory(_id?.id);
     } catch (error) {
@@ -491,7 +488,7 @@ export default function Followupage() {
                                       </select>
                                     </div>
                                   </div>
-                                   
+
                                   <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
                                       Won Amount Of Lead
@@ -507,7 +504,7 @@ export default function Followupage() {
                                       />
                                     </div>
                                   </div>
-                                  
+
                                   <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
                                       Followup
@@ -555,7 +552,7 @@ export default function Followupage() {
                                         //value={localDetails?.massage_of_calander}
                                         id="followup_desc"
                                         placeholder="Enter description..."
-                                       
+
                                       />
                                     </div>
                                   </div>
@@ -819,7 +816,7 @@ export default function Followupage() {
                                         <div className="form-group">
                                           <label htmlFor="company_name">
                                             Company Name
-                                          </label> 
+                                          </label>
                                         </div>
                                       </div>
                                       <div className="col-md-8 col-xs-12">
@@ -1064,7 +1061,7 @@ export default function Followupage() {
                             </form>
                           </div>
                           {/*-------------------------------------------tab3  additionnal information-----------------------------*/}
-               
+
                           <div className="tab-pane fade" id="tab4">
                             <form onSubmit={UpdateAdditionnalInformation}>
                               <div className="row">
@@ -1590,7 +1587,9 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {datafomate(follow?.created)}
+                                              {format(new Date(datafomate(
+                                                follow?.created
+                                              )), 'dd/MM/yy hh:mm:ss')}
                                             </td>
                                             <td>
                                               {
@@ -1599,9 +1598,9 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {datafomate(
+                                              {format(new Date(datafomate(
                                                 follow?.followup_date
-                                              )}
+                                              )), 'dd/MM/yy hh:mm:ss')}
                                             </td>
                                             <td>{follow?.followup_desc}</td>
                                           </tr>
