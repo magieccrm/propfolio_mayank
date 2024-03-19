@@ -193,8 +193,6 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
        selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
       row?.followup_date
     )), 'dd/MM/yy hh:mm:ss')):(''),
-     //  + 
-      //  row?.status_details['0']?.status_name,
        sortable: true,  
       },
       {
