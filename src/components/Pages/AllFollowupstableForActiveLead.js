@@ -137,8 +137,8 @@ export default function AllFollowupstableForActiveLead({ sendDataToParent, dataF
       sortable: true,
     },
     {
-      name: "Service",
-      selector: (row) => row?.service_details[0]?.product_service_name,
+      name: "Status",
+      selector: (row) => row?.status_details[0]?.status_name,
       sortable: true,
     },
   ];

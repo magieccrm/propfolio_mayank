@@ -22,11 +22,6 @@ function Home() {
   var { agent } = useSelector((state) => state.agent);
   const { leadSourcedata } = useSelector((state) => state.leadSource);
   const dispatch = useDispatch();
-
-
-
-
-
   useEffect(() => {
     const fetchData1 = async () => {
       try {
@@ -39,7 +34,7 @@ function Home() {
     };
     fetchData1();
 
-
+    // getAllUnassignLead();
 
 
   }, []);
@@ -108,6 +103,22 @@ function Home() {
       console.log(error);
     }
   }
+
+  // const getAllUnassignLead=async()=>{
+  //   try {
+  //     const responce = await axios.get(
+  //       `${apiUrl}/getAllUnassignLead`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "mongodb-url": DBuUrl,
+  //       },
+  //     }
+  //     );
+  //     setleadcountdata(responce?.data?.lead);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   useEffect(() => {
     getSale()
     getLeadCountData();

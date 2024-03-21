@@ -5,54 +5,53 @@ import DataTable from "react-data-table-component";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent ,getAllAgentWithData} from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { toast } from "react-toastify";
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel'; // Import the library
 
 export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
-
   const dispatch = useDispatch();
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const { agent } = useSelector((state) => state.agent);
+  const { agent } = useSelector((state) => state.agent); 
   const { Statusdata } = useSelector((state) => state.StatusData);
   const apiUrl = process.env.REACT_APP_API_URL;
-  const DBuUrl = process.env.REACT_APP_DB_URL;    
-   useEffect(() => {
+  const DBuUrl = process.env.REACT_APP_DB_URL;
+  useEffect(() => {
     const fetchData = async () => {
-        try {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          dispatch(getAllAgent());
-          dispatch(getAllStatus());
-       
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+       // dispatch(getAllAgent());
+        dispatch(getAllStatus());
+
       } catch (error) {
-          console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error);
       }
-      };
+    };
 
     fetchData();
-}, []);
+  }, []);
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/get_all_lead`,{
-          headers: {
-            "Content-Type": "application/json",
-            "mongodb-url":DBuUrl,
-          },
-        }
+        `${apiUrl}/get_all_lead`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
       );
-
+      setstatus(responce?.data?.success);
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
       return (responce?.data?.message);
     } catch (error) {
-      const message=await error?.response?.data?.message;
-      if(message=='Client must be connected before running operations'){
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations') {
         getAllLead1();
       }
       console.log(error);
@@ -67,7 +66,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         {
           assign_to_agent,
         },
-      ); 
+      );
       if (responce?.data?.success === true) {
         setstatus(responce?.data?.success);
         setleads(responce?.data?.lead);
@@ -79,9 +78,33 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         setfilterleads(responce?.data?.lead);
       }
     } catch (error) {
-      const message=await error?.response?.data?.message;
-      if(message=='Client must be connected before running operations'){
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations') {
         getAllLead2();
+      }
+      console.log(error);
+      setfilterleads();
+    }
+  };
+  /////// For Team Leader
+  const getAllLead3 = async (assign_to_agent) => {
+    try { 
+      const responce = await axios.post(
+        `http://localhost:5000/api/v1/getLeadbyTeamLeaderidandwithstatus`,
+        {
+          assign_to_agent,
+        },
+      );
+      if (responce?.data?.success === true) {
+        setleads(responce?.data?.lead);
+      setfilterleads(responce?.data?.lead);
+      return (responce?.data?.message);
+      }
+      
+    } catch (error) {
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations') {
+        getAllLead3();
       }
       console.log(error);
       setfilterleads();
@@ -90,12 +113,17 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
 
   useEffect(() => {
     if (localStorage.getItem("role") === "admin") {
-    getAllLead1();
-      } else {
+      getAllLead1();
+    }
+    if (localStorage.getItem("role") === "TeamLeader") {
+      getAllLead3(localStorage.getItem("user_id"));
+        dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+      } 
+    else {
       getAllLead2(localStorage.getItem("user_id"));
     }
-  }, [localStorage.getItem("user_id"),apiUrl,DBuUrl]);
-  
+  }, [localStorage.getItem("user_id"), apiUrl, DBuUrl]);
+
   useEffect(() => {
     const result = leads.filter((lead) => {
       return (
@@ -121,7 +149,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     {
       name: "Name",
       cell: (row) => (
-        <a href={`/followupleads/${row?._id}`}>{row?.full_name}</a>  
+        <a href={`/followupleads/${row?._id}`}>{row?.full_name}</a>
       ),
       selector: (row) => row?.full_name,
       sortable: true,
@@ -131,7 +159,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       selector: (row) => row?.contact_no,
       sortable: true,
     },
-   
+
   ];
 
   const getStatusBadgeClass = (statusName) => {
@@ -170,8 +198,8 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     },
     {
       name: <div style={{ display: 'none' }}>
-      Last Comment
-    </div>,
+        Last Comment
+      </div>,
       selector: (row) => row?.description,
       sortable: true,
       cell: (row) => (
@@ -194,10 +222,10 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
             {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
               ? "Hot"
               : row?.status_details[0]?.status_name == "Call Back"
-              ? "C"
-              : row?.status_details[0]?.status_name == "Meeting"
-              ? "M"
-              : ""}
+                ? "C"
+                : row?.status_details[0]?.status_name == "Meeting"
+                  ? "M"
+                  : ""}
           </span>
         </a>
       ),
@@ -219,8 +247,8 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     },
     {
       name: <div style={{ display: 'none' }}>
-      Last Comment
-    </div>,
+        Last Comment
+      </div>,
       selector: (row) => row?.description,
       sortable: true,
       cell: (row) => (
@@ -243,10 +271,10 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
             {row?.status_details[0]?.status_name == "Call Back & Hot Lead"
               ? "Hot"
               : row?.status_details[0]?.status_name == "Call Back"
-              ? "C"
-              : row?.status_details[0]?.status_name == "Meeting"
-              ? "M"
-              : ""}
+                ? "C"
+                : row?.status_details[0]?.status_name == "Meeting"
+                  ? "M"
+                  : ""}
           </span>
         </a>
       ),
@@ -305,12 +333,12 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         background: "#f8f9fa", // Set the background color for striped rows
       },
     },
-     // Hide the Last Comment column
-  // rows: {
-  //   style: {
-  //     display: "none",
-  //   },
-  // },
+    // Hide the Last Comment column
+    // rows: {
+    //   style: {
+    //     display: "none",
+    //   },
+    // },
   };
 
   const handleSelectedRowsChange = ({ selectedRows }) => {
@@ -330,7 +358,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
-          "mongodb-url":DBuUrl,
+          "mongodb-url": DBuUrl,
         },
         body: JSON.stringify(aaaaa),
       })
@@ -341,7 +369,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
           return response.json();
         })
         .then((data) => {
-           if (data?.success == true) {
+          if (data?.success == true) {
             toast.success(data?.message);
             setTimeout(() => {
               window.location.reload(false);
@@ -367,7 +395,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "mongodb-url":DBuUrl,
+        "mongodb-url": DBuUrl,
       },
       body: JSON.stringify(adSerch),
     })

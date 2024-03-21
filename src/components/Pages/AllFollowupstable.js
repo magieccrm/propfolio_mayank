@@ -10,7 +10,7 @@ import "jspdf-autotable";
 import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent ,getAllAgentWithData } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { format } from 'date-fns';
 
@@ -48,7 +48,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
           },
         }
       );
-      
+      setstatus(responce?.data?.success)
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
     } catch (error) {
@@ -98,11 +98,42 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
  };
 
 
+  /////// For Team Leader
+  const getAllLead3 = async (assign_to_agent) => {
+    try { 
+      const responce = await axios.post(
+        `http://localhost:5000/api/v1/getLeadbyTeamLeaderidandwithoutstatus`,
+        {
+          assign_to_agent,
+        },
+      );
+      if (responce?.data?.success === true) {
+        setleads(responce?.data?.lead); 
+      setfilterleads(responce?.data?.lead);
+      return (responce?.data?.message);
+      }
+      
+    } catch (error) {
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations') {
+        getAllLead3();
+      }
+      console.log(error);
+      setfilterleads();
+    }
+  };
+
+
 
   useEffect(() => {
    if(localStorage.getItem("role")==='admin'){
     getAllLead1();
-   }else{
+   }
+   if (localStorage.getItem("role") === "TeamLeader") {
+    getAllLead3(localStorage.getItem("user_id"));
+    dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+  } 
+   else{
        getAllLead2(localStorage.getItem("user_id"));
    }     
           dispatch(getAllAgent());
@@ -193,10 +224,21 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
        selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
       row?.followup_date
     )), 'dd/MM/yy hh:mm:ss')):(''),
-     //  + 
-      //  row?.status_details['0']?.status_name,
        sortable: true,  
       },
+      {
+        name: <div style={{ display: 'none' }}>
+        Last Comment
+      </div>,
+        selector: (row) => row?.description,
+        sortable: true,
+        cell: (row) => (
+          <div style={{ display: 'none' }}>
+            {row.description}
+          </div>
+        ),
+      },
+
       {
        name: "Action",     
         cell: (row) => (
@@ -220,6 +262,18 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
       row?.followup_date
     )), 'dd/MM/yy hh:mm:ss')):(''),
       sortable: true,  
+    },
+    {
+      name: <div style={{ display: 'none' }}>
+      Last Comment
+    </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
     },
     {
      name: "Action",     
@@ -341,7 +395,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   const handleSelectedRowsChange = ({ selectedRows }) => {
     const selectedIds = selectedRows.map((row) => row._id);
     setSelectedRowIds(selectedIds);
-    
+    sendDataToParent(selectedIds);
   };
   const DeleteSelected = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete?');
