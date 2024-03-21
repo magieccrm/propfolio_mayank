@@ -29,9 +29,44 @@ function ManageEmployee() {
       setDetail(error.responce?.data?.array);
     }
    }
+
+   const GetUserCallAccordingToTeamLeader=async(assign_to_agent)=>{
+    try {
+       const responce = await axios.post(
+         `http://localhost:5000/api/v1/GetUserCallAccordingToTeamLeader`,{
+          assign_to_agent,
+        },{
+              headers:{
+               "Content-Type": "application/json",
+                "mongodb-url":DBuUrl,
+              }
+         }
+       );
+       setDetail(responce?.data?.array);
+      } catch (error) {
+       const message=await error?.response?.data?.message;
+       if(message=='Client must be connected before running operations'){
+        GetUserCallAccordingToTeamLeader();
+       }
+       console.log(error);
+       setDetail(error.responce?.data?.array);
+     }
+    }
    const [adSerch, setAdvanceSerch] = useState([]);
   useEffect(()=>{
-     getHigstNoOfCall();
+
+    if(localStorage.getItem("role")==='admin'){
+      getHigstNoOfCall();
+     }
+     if (localStorage.getItem("role") === "TeamLeader") {
+      GetUserCallAccordingToTeamLeader(localStorage.getItem("user_id"))
+    } 
+    if(localStorage.getItem("role")==='user'){
+      dispatch(getHigstNoOfCall());
+     }
+
+    
+     
      // dispatch(getAllAgent())
  },[]);
  const Refresh = () => {

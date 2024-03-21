@@ -9,6 +9,8 @@ import { getAllStatus } from "../../features/statusSlice";
 import { getAllCountry } from "../../features/country_stateSlice";
 import { getStatebycountry } from "../../features/getStateByCountrySlice";
 import { addfollowup, getAllFollowup } from "../../features/followupSlice";
+import { getAllProductService } from "../../features/product_serviceSlice";
+import { getAllLeadSource } from "../../features/leadSource";
 import Loader from "../Loader";
 import { toast } from "react-toastify";
 import { getAllLostReason } from "../../features/lostreasonSlice";
@@ -20,6 +22,9 @@ export default function Followupage() {
   const { agent } = useSelector((state) => state.agent);
   const { CountryState } = useSelector((state) => state.Country_State);
   const { StateByCountry } = useSelector((state) => state.getStateByCountry);
+  const { ProductService } = useSelector((state) => state.ProductService);
+  const { leadSourcedata } = useSelector((state) => state.leadSource);
+
   const { followup } = useSelector((state) => state.followup);
   const { lostreason } = useSelector(
     (state) => state.lostreasonSlice?.LostReasondata
@@ -55,6 +60,8 @@ export default function Followupage() {
     dispatch(getAllAgent());
     dispatch(getAllCountry());
     dispatch(getAllLostReason());
+    dispatch(getAllProductService());
+    dispatch(getAllLeadSource());
 
     if (_id.id) {
       dispatch(getAllFollowup(_id.id));
@@ -488,8 +495,7 @@ export default function Followupage() {
                                       </select>
                                     </div>
                                   </div>
-
-                                  <div className="row status-bottom">
+                                 {foundObject?.followup_won_amount?(<> <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
                                       Won Amount Of Lead
                                     </div>
@@ -503,7 +509,8 @@ export default function Followupage() {
                                         autoComplete="off"
                                       />
                                     </div>
-                                  </div>
+                                  </div></>):<></>}
+                                 
 
                                   <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
@@ -871,7 +878,7 @@ export default function Followupage() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="col-md-6 col-xs-12 d-none">
+                                  <div className="col-md-6 col-xs-12">
                                     <div className="row">
                                       <div className="col-md-4 col-xs-12 pd-top">
                                         <div className="form-group">
@@ -885,8 +892,26 @@ export default function Followupage() {
                                           name="service"
                                           id="service"
                                           className="form-control"
+
+                                          value={localDetails.service || ""}
+                                          onChange={(e) =>
+                                            setLocalDetails({
+                                              ...localDetails,
+                                              service: e.target.value,
+                                            })
+                                          }
+
                                         >
                                           <option value="">Select</option>
+                                          {ProductService?.product_service?.map(
+                                (service, key) => {
+                                  return (
+                                    <option value={service._id}>  
+                                      {service?.product_service_name}
+                                    </option>
+                                  );
+                                }
+                              )}
                                         </select>
                                       </div>
                                     </div>
@@ -981,7 +1006,7 @@ export default function Followupage() {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="col-md-6 col-xs-12 d-none">
+                                  <div className="col-md-6 col-xs-12">
                                     <div class="row">
                                       <div className="col-md-4 col-xs-12 pd-top">
                                         <div className="form-group">
@@ -1004,7 +1029,17 @@ export default function Followupage() {
                                             })
                                           }
                                         >
+
                                           <option value="">Select</option>
+                                          {leadSourcedata?.leadSource?.map(
+                                (leadsource, key) => {
+                                  return (
+                                    <option value={leadsource._id}>
+                                      {leadsource?.lead_source_name}
+                                    </option>
+                                  );
+                                }
+                              )}
                                         </select>
                                       </div>
                                     </div>

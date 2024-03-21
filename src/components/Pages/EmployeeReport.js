@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent ,getAllAgentWithData} from "../../features/agentSlice";
 import { useState } from "react";
 import { getEmployeeReport } from "../../features/employeesreportSlice";
 import { Doughnut } from "react-chartjs-2";
@@ -17,7 +17,20 @@ export default function EmployeeReport() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllAgent());
+    
+    if(localStorage.getItem("role")==='admin'){
+      dispatch(getAllAgent());
+     }
+     if (localStorage.getItem("role") === "TeamLeader") {
+      dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+    }
+    if(localStorage.getItem("role")==='user'){
+      dispatch(getAllAgent());
+     }
+
+  
+
+
   }, []);
 
   const GetData = async (e) => {

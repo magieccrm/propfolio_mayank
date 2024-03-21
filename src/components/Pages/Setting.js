@@ -37,7 +37,6 @@ function Setting() {
   const LeadTransfer = async (e) => {
     e.preventDefault();
     const dataleadtran = await { 'totransfer': idToDelete1?.agent_id, 'oftransfer': idToDelete }
-    console.log('dataleadtran', dataleadtran)
     try {
       const response = await axios.put(
         `${apiUrl}/LeadTransfer/`,
@@ -47,13 +46,15 @@ function Setting() {
         window.$('#exampleModal').modal('hide');
         toast.success(response?.data?.message);
         dispatch(deleteAgent(idToDelete));
-
-
-
-      }
-
-
-    } catch (error) {
+   }
+     } catch (error) {
+      console.log('error',error);
+      if (error.response.data.message=='Please select leads') {
+        window.$('#exampleModal').modal('hide');
+        toast.success('Leads have been transferred successfully.');  
+        dispatch(deleteAgent(idToDelete));
+    }
+    
       console.log(error);
     }
   }
@@ -122,6 +123,9 @@ function Setting() {
     if (formData._id) {
       const aaaaa = await dispatch(EditAgentDetails(formData));
       if (aaaaa.payload.success === true) {
+        setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
         toast.success("Update Successfully");
       } else {
         toast.warn("There are some problem");
@@ -131,6 +135,9 @@ function Setting() {
       console.log('newAaa', newAaa);
       const aaaaa = await dispatch(addagent(newAaa));
       if (aaaaa.payload.success === true) {
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 500);
         toast.success("Agent add Successfully");
       } else {
         toast.warn("There are some problem");
@@ -145,7 +152,8 @@ function Setting() {
       agent_status: "",
     });
   };
-  const [assigntlnone,setassigntlnone]=useState('none')
+  const [assigntlnone,setassigntlnone]=useState('none');
+  const [assigntlnonetype,setassigntlnonetype]=useState('block');
   const UserType = async (e) => {
     setFormData({
       ...formData,
@@ -158,10 +166,17 @@ function Setting() {
       setassigntlnone('none')
     }
     }
-  const editagent = async (_id) => {
+  const editagent = async (_id,role) => {
     const selectedData = await agent?.agent.find((item) => item._id === _id);
     setFormData(selectedData);
-    setassigntlnone('block')
+    if(role=='admin' || role=='TeamLeader'){
+      setassigntlnone('none')
+      setassigntlnonetype('none')
+    }else{
+      setassigntlnone('block')
+      setassigntlnonetype('block')
+    }
+   
   };
   const editstatus = async (_id) => {
     const selectedData = await Statusdata?.leadstatus.find(
@@ -2340,7 +2355,7 @@ function Setting() {
                                           />
                                         </div>
                                       </div>
-                                      <div className="col-md-3">
+                                      <div className="col-md-3" >
                                         <div className="form-group">
                                           <select
                                             value={formData?.agent_status}
@@ -2361,7 +2376,7 @@ function Setting() {
                                         </div>
                                       </div>
 
-                                      <div className="col-md-3">
+                                      <div className="col-md-3" style={{display:assigntlnonetype}}>
                                         <div className="form-group">
                                           <select
                                             value={formData?.role}
@@ -2379,7 +2394,7 @@ function Setting() {
                                       <div className="col-md-3" style={{display:assigntlnone}}>
                                         <div className="form-group">
                                           <select
-                                            // value={formData?.role}
+                                            value={formData?.assigntl}
                                             className="form-control"
                                             onChange={(e) =>
                                               setFormData({
@@ -2475,11 +2490,11 @@ function Setting() {
                                               </th>
                                               <th className="sorting">Roll</th>
                                               <th className="sorting">
-                                                Feature Action
+                                               Assign TeamLeader
                                               </th>
-                                              <th className="sorting">
+                                              {/* <th className="sorting">
                                                 Status
-                                              </th>
+                                              </th> */}
                                                <th className="sorting">
                                                 Action
                                               </th>
@@ -2530,19 +2545,23 @@ function Setting() {
                                                       {" "}
                                                       {agents.role}
                                                     </td>
+
                                                     <td className="sorting_1">
-                                                      {" "}
-                                                      Client Access{" "}
+                                                       {agents?.agent_details[0]?.agent_name}
+                                                    </td>
+                                                    {/* <td className="sorting_1">
+                                                      Client Access
                                                       <input
                                                         checked={client_access1}
                                                         type="checkbox"
                                                         id=""
                                                         data-id="MjQ="
                                                       ></input>
-                                                    </td>
-                                                    <td className="sorting_1">
+                                                    </td> */}
+                                                    {/* <td className="sorting_1">
                                                       {lllll}
-                                                    </td>
+                                                    </td> */}
+                                                    
                                                     <td>
                                                       <button
                                                         type="button"
@@ -2568,7 +2587,7 @@ function Setting() {
                                                         type="button"
                                                         className="btn btn-success btn-x"
                                                         onClick={(e) =>
-                                                          editagent(agents._id)
+                                                          editagent(agents?._id,agents?.role)
                                                         }
                                                       >
                                                         <i

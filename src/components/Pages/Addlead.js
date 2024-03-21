@@ -7,7 +7,7 @@ import { getStatebycountry } from "../../features/getStateByCountrySlice";
 import { toast } from "react-toastify";
 import { getAllStatus } from "../../features/statusSlice";
 import { addlead } from "../../features/leadSlice";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent,getAllAgentWithData } from "../../features/agentSlice";
 import Loader from "../Loader";
 import Select from "react-select";
 import { Link, useNavigate } from "react-router-dom";
@@ -101,7 +101,7 @@ function Addlead() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         dispatch(getAllProductService());
         dispatch(getAllLeadSource());
         // dispatch(getAllStatus());
@@ -113,13 +113,19 @@ function Addlead() {
     };
     const fetchData1 = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         // dispatch(getAllProductService());
         // dispatch(getAllLeadSource());
         dispatch(getAllStatus());
         dispatch(getAllCountry());
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        dispatch(getAllAgent());
+        // await new Promise(resolve => setTimeout(resolve, 2000));
+        if(localStorage.getItem("role")==='admin'){
+          dispatch(getAllAgent());
+        }
+        if(localStorage.getItem("role")==='TeamLeader'){
+          dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+        }
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -388,9 +394,39 @@ function Addlead() {
                               <span className="text-danger ferror"> </span>
                             </div>
                           </>
-                        ) : (
-                          ""
-                        )}
+                        ) : localStorage.getItem("role") == "TeamLeader"?(
+                          <>
+                            <div className="col-md-4 pd-top mobile-hids">
+                              <label htmlFor="assign_to_agent">
+                                Assign to agent
+                              </label>
+                            </div>
+                            <div className="col-md-8 mob-left-right col-xs-12  form-group">
+                              <select
+                                name="assign_to_agent"
+                                onChange={(e) =>
+                                  setleaddata({
+                                    ...leaddata,
+                                    assign_to_agent: e.target.value,
+                                  })
+                                }
+                                className="form-control"
+                                required
+                              >
+                                <option value="">Select</option>
+
+                                {agent?.agent?.map((agents, key) => {
+                                  return (
+                                    <option value={agents._id}>
+                                      {agents.agent_name}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                              <span className="text-danger ferror"> </span>
+                            </div>
+                          </>
+                         ):("")}
 
                         <div className="col-md-4 pd-top mobile-hids">
                           <label htmlFor="status">

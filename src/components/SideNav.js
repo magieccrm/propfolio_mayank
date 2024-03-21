@@ -193,12 +193,8 @@ function SideNav() {
                         <p> New Leads</p>
                       </a>
                     </li>
-
-
-
                   </ul>
                 </li>
-
                 <li className="nav-item">
                   <Link to="#" className="nav-link" onClick={callManage}>
                     <i className="nav-icon fas fa fa fa-cog" />
@@ -222,9 +218,7 @@ function SideNav() {
 
                   </ul>
                 </li>
-
                 {/* manage sms start */}
-
                 <li className="nav-item">
                   <Link to="#" className="nav-link" onClick={smsManage}>
                     <i className="nav-icon fas fa fa fa-cog" />
@@ -259,13 +253,8 @@ function SideNav() {
 
                   </ul>
                 </li>
-
-
-
                 {/* manage sms end */}
-
                 {/* manage Wtsp start */}
-
                 <li className="nav-item">
                   <Link to="#" className="nav-link" onClick={wtspManage}>
                     <i className="nav-icon fas fa fa fa-cog" />
@@ -276,14 +265,14 @@ function SideNav() {
                     <li className="nav-item">
                       <a href="javascript:void(0);" className={activeItem === 'GroupSmsWtsp' ? 'nav-link active' : 'nav-link'}
                         onClick={() => handleItemClick('GroupSmsWtsp')}>
-                        <p>Compose SMS</p>
+                        <p>Compose What's App</p>
                       </a>
                     </li>
 
                     <li className="nav-item">
                       <a href="javascript:void(0);" className={activeItem === 'HistoryWtsp' ? 'nav-link active' : 'nav-link'}
                         onClick={() => handleItemClick('HistoryWtsp')}>
-                        <p> SMS Report</p>
+                        <p> What's App Report</p>
                       </a>
                     </li>
 
@@ -292,7 +281,7 @@ function SideNav() {
                     <li className="nav-item">
                       <a href="javascript:void(0);" className={activeItem === 'BuysmsWtsp' ? 'nav-link active' : 'nav-link'}
                         onClick={() => handleItemClick('BuysmsWtsp')}>
-                        <p> SMS Pack</p>
+                        <p> What's App Pack</p>
                       </a>
                     </li>
 
@@ -305,12 +294,7 @@ function SideNav() {
 
                   </ul>
                 </li>
-
-
                 {/* manage Wtsp end */}
-
-
-
                 <li className="nav-item">
                   <a href="javascript:void(0);" className={activeItem === 'UploadContent' ? 'nav-link active' : 'nav-link'}
                     onClick={() => handleItemClick('UploadContent')}>
@@ -318,8 +302,6 @@ function SideNav() {
                     Contact's
                   </a>
                 </li>
-
-
                 {/* Api  */}
                 <li className="nav-item">
                   <Link to="#" className="nav-link" onClick={allapi}>
@@ -340,10 +322,6 @@ function SideNav() {
                   </ul>
                 </li>
                 {/* Api */}
-
-
-
-
                 <li className="nav-item">
                   <a href="javascript:void(0);" className={activeItem === 'productservices' ? 'nav-link active' : 'nav-link'}
                     onClick={() => handleItemClick('productservices')}>
@@ -351,9 +329,6 @@ function SideNav() {
                     Product & Services
                   </a>
                 </li>
-
-
-
                 <li className="nav-item">
                   <a href="javascript:void(0);" className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
                     onClick={() => handleItemClick('Report')}>
@@ -361,7 +336,6 @@ function SideNav() {
                     Report
                   </a>
                 </li>
-
                 <li className="nav-item">
                   <a href="javascript:void(0);"
                     className={activeItem === 'Setting' ? 'nav-link active' : 'nav-link'}
@@ -372,11 +346,82 @@ function SideNav() {
                   </a>
                 </li>
 
-              </>) : localStorage.getItem("role") === 'user' ? (<>
+              </>) : localStorage.getItem("role") === 'user' ? (
+                <>
+                  <li className="nav-item">
+                    <a href="javascript:void(0);" className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
+                      onClick={() => handleItemClick('home')}
+
+                    >
+                      <i className="nav-icon fas fa fa-home" />
+                      Dashboard
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="#" className="nav-link" onClick={lead}>
+                      <i className="nav-icon fas fa fa-user-md" />
+                      Lead
+                      <i className="fas fa-angle-left right" />
+                    </Link>
+                    <ul className="nav nav-treeview" style={{ display: lead1 }}>
+                      <li className="nav-item">
+                        <a
+                          href="javascript:void(0);" className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
+                          onClick={() => handleItemClick('Addlead')}
+                        >
+                          <p>Add Lead</p>
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a
+                          href="javascript:void(0);" className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
+                          onClick={() => handleItemClick('leads')}
+                        >
+                          <p>All Leads</p>
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a
+                          href="javascript:void(0);" className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
+                          onClick={() => handleItemClick('followupleads')}
+                        >
+                          <p> Followup Leads</p>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to="#" className="nav-link" onClick={callManage}>
+                      <i className="nav-icon fas fa fa fa-cog" />
+                      Call  Manage
+                      <i className="fas fa-angle-left right" />
+                    </Link>
+                    <ul className="nav nav-treeview" style={{ display: callManageshow }}>
+                      <li className="nav-item">
+                        <a href="javascript:void(0);" className={activeItem === 'ManageEmployee' ? 'nav-link active' : 'nav-link'}
+                          onClick={() => handleItemClick('ManageEmployee')}>
+                          <p>Employees</p>
+                        </a>
+                      </li>
+
+                      <li className="nav-item">
+                        <a
+                          href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
+                          onClick={() => handleItemClick('employeesreport')}
+                        >
+                          <p> Employees Report</p>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </li>
+                </>
+              ) : (<>
                 <li className="nav-item">
                   <a href="javascript:void(0);" className={activeItem === 'home' ? 'nav-link active' : 'nav-link'}
                     onClick={() => handleItemClick('home')}
-
                   >
                     <i className="nav-icon fas fa fa-home" />
                     Dashboard
@@ -390,37 +435,36 @@ function SideNav() {
                   </Link>
                   <ul className="nav nav-treeview" style={{ display: lead1 }}>
                     <li className="nav-item">
-                      <a
-                        href="javascript:void(0);" className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
-                        onClick={() => handleItemClick('Addlead')}
-                      >
+                      <a href="javascript:void(0);" className={activeItem === 'Addlead' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('Addlead')}>
                         <p>Add Lead</p>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a
-                        href="javascript:void(0);" className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
-                        onClick={() => handleItemClick('leads')}
-                      >
+                      <a href="javascript:void(0);" className={activeItem === 'leads' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('leads')}>
                         <p>All Leads</p>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a
-                        href="javascript:void(0);" className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
-                        onClick={() => handleItemClick('followupleads')}
-                      >
+                      <a href="javascript:void(0);" className={activeItem === 'followupleads' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('followupleads')}>
                         <p> Followup Leads</p>
                       </a>
                     </li>
 
+                    {/* <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'newlead' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('newlead')}>
+                        <p> New Leads</p>
+                      </a>
+                    </li> */}
                   </ul>
                 </li>
-
                 <li className="nav-item">
                   <Link to="#" className="nav-link" onClick={callManage}>
                     <i className="nav-icon fas fa fa fa-cog" />
-                    Call  Manage
+                    Call Manage
                     <i className="fas fa-angle-left right" />
                   </Link>
                   <ul className="nav nav-treeview" style={{ display: callManageshow }}>
@@ -430,19 +474,108 @@ function SideNav() {
                         <p>Employees</p>
                       </a>
                     </li>
-
                     <li className="nav-item">
-                      <a
-                        href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
-                        onClick={() => handleItemClick('employeesreport')}
-                      >
+                      <a href="javascript:void(0);" className={activeItem === 'employeesreport' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('employeesreport')}>
                         <p> Employees Report</p>
                       </a>
                     </li>
+                  </ul>
+                </li>
+                {/* manage sms start */}
+                <li className="nav-item">
+                  <Link to="#" className="nav-link" onClick={smsManage}>
+                    <i className="nav-icon fas fa fa fa-cog" />
+                    SMS Panel
+                    <i className="fas fa-angle-left right" />
+                  </Link>
+                  <ul className="nav nav-treeview" style={{ display: sms }}>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'GroupSms' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('GroupSms')}>
+                        <p>Compose SMS</p>
+                      </a>
+                    </li>
+
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'History' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('History')}>
+                        <p> SMS Report</p>
+                      </a>
+                    </li>
+
+
+
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('buysms')}>
+                        <p> SMS Pack</p>
+                      </a>
+                    </li>
+
+
 
                   </ul>
-                </li> 
-              </>) : (<>
+                </li>
+                {/* manage sms end */}
+                {/* manage Wtsp start */}
+                <li className="nav-item">
+                  <Link to="#" className="nav-link" onClick={wtspManage}>
+                    <i className="nav-icon fas fa fa fa-cog" />
+                    What's App
+                    <i className="fas fa-angle-left right" />
+                  </Link>
+                  <ul className="nav nav-treeview" style={{ display: wtsp }}>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'GroupSmsWtsp' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('GroupSmsWtsp')}>
+                        <p>Compose What's App</p>
+                      </a>
+                    </li>
+
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'HistoryWtsp' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('HistoryWtsp')}>
+                        <p> What's App Report</p>
+                      </a>
+                    </li>
+
+
+
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'BuysmsWtsp' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('BuysmsWtsp')}>
+                        <p> What's App Pack</p>
+                      </a>
+                    </li>
+
+                    {/* <li className="nav-item">
+                  <a   href="javascript:void(0);" className={activeItem === 'buysms' ? 'nav-link active' : 'nav-link'}
+                  onClick={() => handleItemClick('buysms')}>
+                      <p> Setting</p>   
+                    </a>
+                  </li> */}
+
+                  </ul>
+                </li>
+                {/* manage Wtsp end */}
+                <li className="nav-item">
+                  <a href="javascript:void(0);" className={activeItem === 'UploadContent' ? 'nav-link active' : 'nav-link'}
+                    onClick={() => handleItemClick('UploadContent')}>
+                    <i className="nav-icon far fa-credit-card" />
+                    Contact's
+                  </a>
+                </li>
+
+
+                <li className="nav-item">
+                  <a href="javascript:void(0);" className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
+                    onClick={() => handleItemClick('Report')}>
+                    <i className="nav-icon far fa-file" />
+                    Report
+                  </a>
+                </li>
+
               </>)}
 
 
