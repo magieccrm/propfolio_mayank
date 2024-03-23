@@ -56,10 +56,10 @@ function Addlead() {
     const length1 = leaddata?.alternative_no?.length;
 
     if (length < 10) {
-      return toast.success("PlZ Enter 10 Digit Contact No");
+      return toast.warn("PlZ Enter 10 Digit Contact No");
     }
     if (length1 < 10 && length1 >= 1) {
-      return toast.success("PlZ Enter 10 Digit Alternative No");
+      return toast.warn("PlZ Enter 10 Digit Alternative No");
     }
 
     const buttonValue = e.nativeEvent.submitter.value;
