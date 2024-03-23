@@ -10,14 +10,14 @@ import "jspdf-autotable";
 import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent ,getAllAgentWithData } from "../../features/agentSlice";
+import { getAllAgent, getAllAgentWithData } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { format } from 'date-fns';
 
 export default function AllFollowupstable({ sendDataToParent, dataFromParent }) {
   const dispatch = useDispatch();
   const apiUrl = process.env.REACT_APP_API_URL;
-  const DBuUrl = process.env.REACT_APP_DB_URL; 
+  const DBuUrl = process.env.REACT_APP_DB_URL;
   const [leads, setleads] = useState([]);
   const [status, setstatus] = useState();
   const [search, setsearch] = useState("");
@@ -27,9 +27,15 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
 
   ////////end attechment //////
   const datafomate = (date) => {
+    // const dateTime = new Date(date);
+    // const formattedDate = dateTime.toLocaleDateString();
+    // const formattedTime = dateTime.toLocaleTimeString();
+    // return `${formattedDate} ${formattedTime}`;
+    if (!date) return "";
     const dateTime = new Date(date);
-    const formattedDate = dateTime.toLocaleDateString();
-    const formattedTime = dateTime.toLocaleTimeString();
+    if (isNaN(dateTime)) return "";
+    const formattedDate = dateTime?.toLocaleDateString();
+    const formattedTime = dateTime?.toLocaleTimeString();
     return `${formattedDate} ${formattedTime}`;
   };
 
@@ -41,66 +47,66 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   const getAllLead1 = async () => {
     try {
       const responce = await axios.get(
-        `${apiUrl}/get_All_Lead_Followup`,{
-          headers: {
-            "Content-Type": "application/json",
-            "mongodb-url":DBuUrl,
-          },
-        }
+        `${apiUrl}/get_All_Lead_Followup`, {
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+      }
       );
       setstatus(responce?.data?.success)
       setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
     } catch (error) {
-      const message=await error?.response?.data?.message;
-      if(message=='Client must be connected before running operations' || message=='Internal Server Error'){
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations' || message == 'Internal Server Error') {
         getAllLead1();
       }
       console.log(error);
       setfilterleads();
     }
   };
-  
+
 
   const getAllLead2 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
         `${apiUrl}/get_Leadby_agentid_status`,
-          {  
-             assign_to_agent, 
-             headers: {
-              "Content-Type": "application/json",
-              "mongodb-url":DBuUrl,
-            },
-          } 
-       );
-           
-      if(responce?.data?.success===true){ 
+        {
+          assign_to_agent,
+          headers: {
+            "Content-Type": "application/json",
+            "mongodb-url": DBuUrl,
+          },
+        }
+      );
+
+      if (responce?.data?.success === true) {
         setstatus(responce?.data?.success)
-        setleads(responce?.data?.lead); 
+        setleads(responce?.data?.lead);
         setfilterleads(responce?.data?.lead);
       }
-      if(responce?.data?.success===false){
+      if (responce?.data?.success === false) {
         setstatus(responce?.data?.success)
-        setleads(responce?.data?.lead); 
+        setleads(responce?.data?.lead);
         setfilterleads(responce?.data?.lead);
       }
-     
-      
-    } catch (error) { 
-      const message=await error?.response?.data?.message;
-      if(message=='Client must be connected before running operations'){
+
+
+    } catch (error) {
+      const message = await error?.response?.data?.message;
+      if (message == 'Client must be connected before running operations') {
         getAllLead2(assign_to_agent);
       }
       console.log(error);
       setfilterleads();
     }
- };
+  };
 
 
   /////// For Team Leader
   const getAllLead3 = async (assign_to_agent) => {
-    try { 
+    try {
       const responce = await axios.post(
         `http://localhost:5000/api/v1/getLeadbyTeamLeaderidandwithoutstatus`,
         {
@@ -108,11 +114,11 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
         },
       );
       if (responce?.data?.success === true) {
-        setleads(responce?.data?.lead); 
-      setfilterleads(responce?.data?.lead);
-      return (responce?.data?.message);
+        setleads(responce?.data?.lead);
+        setfilterleads(responce?.data?.lead);
+        return (responce?.data?.message);
       }
-      
+
     } catch (error) {
       const message = await error?.response?.data?.message;
       if (message == 'Client must be connected before running operations') {
@@ -126,18 +132,18 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
 
 
   useEffect(() => {
-   if(localStorage.getItem("role")==='admin'){
-    getAllLead1();
-   }
-   if (localStorage.getItem("role") === "TeamLeader") {
-    getAllLead3(localStorage.getItem("user_id"));
-    dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
-  } 
-   else{
-       getAllLead2(localStorage.getItem("user_id"));
-   }     
-          dispatch(getAllAgent());
-          dispatch(getAllStatus());
+    if (localStorage.getItem("role") === 'admin') {
+      getAllLead1();
+    }
+    if (localStorage.getItem("role") === "TeamLeader") {
+      getAllLead3(localStorage.getItem("user_id"));
+      dispatch(getAllAgentWithData({ assign_to_agent: localStorage.getItem("user_id") }));
+    }
+    else {
+      getAllLead2(localStorage.getItem("user_id"));
+    }
+    dispatch(getAllAgent());
+    dispatch(getAllStatus());
   }, [localStorage.getItem("user_id")]);
 
   useEffect(() => {
@@ -161,7 +167,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     setfilterleads(result);
   }, [search]);
   const isAdmin = localStorage.getItem("role") === "admin";
-  const commonColumns  = [
+  const commonColumns = [
     {
       name: "Name",
       cell: (row) => (
@@ -174,14 +180,14 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
       name: "Number",
       selector: (row) => row?.contact_no,
       sortable: true,
-   },
-   
-   
-  //  {
-  //    name: "Agent",
-  //    selector: (row) => row?.agent_details[0]?.agent_name,
-  //    sortable: true,
-  //  },
+    },
+
+
+    //  {
+    //    name: "Agent",
+    //    selector: (row) => row?.agent_details[0]?.agent_name,
+    //    sortable: true,
+    //  },
     {
       name: "Service",
       selector: (row) => row?.service_details[0]?.product_service_name,
@@ -192,21 +198,21 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     //   selector: (row) => row?.lead_source_details[0]?.lead_source_name,
     //   sortable: true,
     //  },
-    
-  ]; 
+
+  ];
 
   const getStatusBadgeClass = (statusName) => {
     switch (statusName) {
-      case "Call Back & Hot Lead":{
+      case "Call Back & Hot Lead": {
         return "bg-danger";
       }
-        case "Meeting":{
-          return "bg-success";
-        }
-        case "Call Back":{
-          return "bg-warning text-dark";
-        }
-         
+      case "Meeting": {
+        return "bg-success";
+      }
+      case "Call Back": {
+        return "bg-warning text-dark";
+      }
+
       default:
         return "bg-default"; // Default class for other statuses
     }
@@ -214,59 +220,59 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
 
 
   const adminColumns = [
-      {
+    {
       name: "Agent",
       selector: (row) => row?.agent_details[0]?.agent_name,
       sortable: true,
-      },
-      {  
+    },
+    {
       name: "Followup date",
-       selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
-      row?.followup_date
-    )), 'dd/MM/yy hh:mm:ss')):(''),
-       sortable: true,  
-      },
-      {
-        name: <div style={{ display: 'none' }}>
-        Last Comment
-      </div>,
-        selector: (row) => row?.description,
-        sortable: true,
-        cell: (row) => (
-          <div style={{ display: 'none' }}>
-            {row.description}
-          </div>
-        ),
-      },
-
-      {
-       name: "Action",     
-        cell: (row) => (
-         <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
-         <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
-              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
-              row?.status_details[0]?.status_name=='Meeting'?'M':''
-              }
-      </span>
-         </a>
-       ),
-       sortable: true,
-     },
-  ];
-
-  const userColumns = [
-    
-    {  
-    name: "Followup date",
-     selector: (row) => (row?.followup_date)?(format(new Date(datafomate(
-      row?.followup_date
-    )), 'dd/MM/yy hh:mm:ss')):(''),
-      sortable: true,  
+      selector: (row) => (row?.followup_date) ? (
+        row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+      ) : (''),
+      sortable: true,
     },
     {
       name: <div style={{ display: 'none' }}>
-      Last Comment
-    </div>,
+        Last Comment
+      </div>,
+      selector: (row) => row?.description,
+      sortable: true,
+      cell: (row) => (
+        <div style={{ display: 'none' }}>
+          {row.description}
+        </div>
+      ),
+    },
+
+    {
+      name: "Action",
+      cell: (row) => (
+        <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
+          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`} style={{ marginLeft: '10px' }} >
+            {row?.status_details[0]?.status_name == 'Call Back & Hot Lead' ? 'Hot' : row?.status_details[0]?.status_name == 'Call Back' ? 'C' :
+              row?.status_details[0]?.status_name == 'Meeting' ? 'M' : ''
+            }
+          </span>
+        </a>
+      ),
+      sortable: true,
+    },
+  ];
+
+  const userColumns = [
+
+    {
+      name: "Followup date",
+      selector: (row) => (row?.followup_date) ? (
+        row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+      ) : (''),
+      sortable: true,
+    },
+    {
+      name: <div style={{ display: 'none' }}>
+        Last Comment
+      </div>,
       selector: (row) => row?.description,
       sortable: true,
       cell: (row) => (
@@ -276,57 +282,57 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
       ),
     },
     {
-     name: "Action",     
+      name: "Action",
       cell: (row) => (
-       <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
-        <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`}  style={{ marginLeft: '10px' }} >
-              {row?.status_details[0]?.status_name=='Call Back & Hot Lead'? 'Hot':row?.status_details[0]?.status_name=='Call Back'?'C':
-              row?.status_details[0]?.status_name=='Meeting'?'M':''
-              }
-      </span>
-       </a>
-     ),
-     sortable: true,
-   },
-];
-  
-  const columns = isAdmin ? [...commonColumns, ...adminColumns] : [...commonColumns, ...userColumns];
-  
+        <a href={`/followupleads/${row?._id}`}><button className="btn btn-success btn-sm"><i className="fa fa-pencil-square" aria-hidden="true"></i></button>
+          <span className={`badge ${getStatusBadgeClass(row?.status_details[0]?.status_name)}`} style={{ marginLeft: '10px' }} >
+            {row?.status_details[0]?.status_name == 'Call Back & Hot Lead' ? 'Hot' : row?.status_details[0]?.status_name == 'Call Back' ? 'C' :
+              row?.status_details[0]?.status_name == 'Meeting' ? 'M' : ''
+            }
+          </span>
+        </a>
+      ),
+      sortable: true,
+    },
+  ];
 
-  const getdatetimeformate=(datetime)=>{
+  const columns = isAdmin ? [...commonColumns, ...adminColumns] : [...commonColumns, ...userColumns];
+
+
+  const getdatetimeformate = (datetime) => {
     const dateObject = new Date(datetime);
     const formattedDate = `${dateObject.getFullYear()}-${padZero(dateObject.getMonth() + 1)}-${padZero(dateObject.getDate())} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
     return formattedDate;
-   
+
   }
   function padZero(num) {
     return num < 10 ? `0${num}` : num;
   }
 
-  
-  
+
+
 
   const exportToPDF = () => {
-    
+
     const doc = new jsPDF();
     const tableDataForPDF = filterleads.map((row) =>
-    columns.map((column) => {
-          if (column.selector && typeof column.selector === 'function') {
-        return column.selector(row);
-      }
-      return row[column.selector];
-    })
-  );
+      columns.map((column) => {
+        if (column.selector && typeof column.selector === 'function') {
+          return column.selector(row);
+        }
+        return row[column.selector];
+      })
+    );
 
-    
 
-    
+
+
 
     doc.autoTable({
       head: [columns.map((column) => column.name)],
       body: tableDataForPDF,
     });
-      doc.save('table.pdf');
+    doc.save('table.pdf');
   };
 
   const customStyles = {
@@ -342,7 +348,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
         border: "0px solid #111", // Set the header cell border
         fontSize: "14px",
         background: "#f0f0f0",
-        
+
       },
     },
     rows: {
@@ -380,7 +386,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
 
     const exportData = [columnsForExport.map(col => col.title), ...dataForExport];
 
-      const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
+    const blob = new Blob([exportData.map(row => row.join('\t')).join('\n')], {
       type: 'application/vnd.ms-excel',
     });
     const link = document.createElement('a');
@@ -399,41 +405,41 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   };
   const DeleteSelected = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete?');
-  if (confirmDelete) {
-    const aaaaa={ids:selectedRowIds};
-       
-    fetch(`${apiUrl}/BulkDeleteLead`, {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json",
-        "mongodb-url":DBuUrl,
-      },
-      body: JSON.stringify(aaaaa),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Response from server:", data);
-      if (data?.success == true) {  
-        toast.success(data?.message);
-        setTimeout(()=>{ 
-          window.location.reload(false);
-          }, 500); 
-       } else {
-        toast.warn(data?.message);
-      }
-     })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+    if (confirmDelete) {
+      const aaaaa = { ids: selectedRowIds };
+
+      fetch(`${apiUrl}/BulkDeleteLead`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+          "mongodb-url": DBuUrl,
+        },
+        body: JSON.stringify(aaaaa),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+        .then((data) => {
+          console.log("Response from server:", data);
+          if (data?.success == true) {
+            toast.success(data?.message);
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 500);
+          } else {
+            toast.warn(data?.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+        });
     } else {
       toast.success('Delete canceled');
-     console.log('Delete canceled');
+      console.log('Delete canceled');
     }
-   
+
   };
   const [adSerch, setAdvanceSerch] = useState([]);
   const AdvanceSerch = async (e) => {
@@ -443,7 +449,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "mongodb-url":DBuUrl,
+        "mongodb-url": DBuUrl,
       },
       body: JSON.stringify(adSerch),
     })
@@ -466,15 +472,15 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   };
 
 
-  
+
   //if (leads.length === 0) {
-   /// return <Loader />;
-   //return  <p>No leads found.</p>;
- // }
-   
-  return (   
+  /// return <Loader />;
+  //return  <p>No leads found.</p>;
+  // }
+
+  return (
     <div>
-       <div className="row " style={{ display: dataFromParent }}>
+      <div className="row " style={{ display: dataFromParent }}>
         <div className="col-md-12 advS">
           <form onSubmit={AdvanceSerch}>
             <div className="row">
@@ -489,14 +495,14 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
                   >
                     <option>Status</option>
                     {Statusdata?.leadstatus?.map((status, key) => {
-                       if(status.status_name=='Lost' || status.status_name=='Won'){
+                      if (status.status_name == 'Lost' || status.status_name == 'Won') {
 
-                       }else{
+                      } else {
                         return (
                           <option value={status._id}>{status.status_name}</option>
                         );
-                       }
-                     
+                      }
+
                     })}
                   </select>
                 </div>
@@ -572,70 +578,70 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
         </div>
       </div>
       {status === false ? (
-       <table id="example" className="table table-striped pt-3" style={{width: '100%'}}>
-       <thead>
-         <tr>
-           <th>Full Name</th>
-           <th>Number</th>
-           <th>Agent</th>
-           <th>Service</th>
-           <th>Lead Source</th>
-           <th>Status</th> 
-         </tr> 
-       </thead>
-       <tbody>
-         <tr>
-        <p className="text-center">No Followup leads Founds</p>
-         </tr>
-      
-       </tbody>
-     </table>
+        <table id="example" className="table table-striped pt-3" style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Number</th>
+              <th>Agent</th>
+              <th>Service</th>
+              <th>Lead Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <p className="text-center">No Followup leads Founds</p>
+            </tr>
+
+          </tbody>
+        </table>
       ) : (
         <>
-        <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
-        <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
-        Export Excel
-      </button>
-        {
-          isAdmin?(<button className="btn shadow_btn btn-sm btn-danger" onClick={DeleteSelected}>
-          Delete
-        </button>):(<></>)
-        }
-        <DataTable
-        responsive 
-        id="table-to-export"
-        columns={columns}
-        data={filterleads}
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="550px"
-        selectableRows
-        selectableRowsHighlight
-        highlightOnHover
-        subHeader
-        subHeaderComponent={
-          <input
-            type="text"
-            placeholder="Search here"
-            value={search}
-            onChange={(e) => setsearch(e.target.value)}
-            className="form-control w-25 "
+          <button className="btn btn-sm shadow_btn btn-success" onClick={exportToPDF}>Export PDF</button>
+          <button className="btn btn-sm shadow_btn btn-success" onClick={exportToExcel}>
+            Export Excel
+          </button>
+          {
+            isAdmin ? (<button className="btn shadow_btn btn-sm btn-danger" onClick={DeleteSelected}>
+              Delete
+            </button>) : (<></>)
+          }
+          <DataTable
+            responsive
+            id="table-to-export"
+            columns={columns}
+            data={filterleads}
+            pagination
+            fixedHeader
+            fixedHeaderScrollHeight="550px"
+            selectableRows
+            selectableRowsHighlight
+            highlightOnHover
+            subHeader
+            subHeaderComponent={
+              <input
+                type="text"
+                placeholder="Search here"
+                value={search}
+                onChange={(e) => setsearch(e.target.value)}
+                className="form-control w-25 "
+              />
+            }
+            customStyles={customStyles}
+            selectedRows={selectedRowIds}
+            onSelectedRowsChange={handleSelectedRowsChange}
+            striped
           />
-        }
-        customStyles={customStyles} 
-        selectedRows={selectedRowIds}
-        onSelectedRowsChange={handleSelectedRowsChange}
-        striped
-      />
         </>
-        
+
       )}
-      
-    
-     
-     
-      
-      
+
+
+
+
+
+
     </div>
   );
 }

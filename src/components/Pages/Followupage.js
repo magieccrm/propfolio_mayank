@@ -229,9 +229,11 @@ export default function Followupage() {
   };
   ////////end attechment //////
   const datafomate = (date) => {
+    if (!date) return "";
     const dateTime = new Date(date);
-    const formattedDate = dateTime.toLocaleDateString();
-    const formattedTime = dateTime.toLocaleTimeString();
+    if (isNaN(dateTime)) return "";
+    const formattedDate = dateTime?.toLocaleDateString();
+    const formattedTime = dateTime?.toLocaleTimeString();
     return `${formattedDate} ${formattedTime}`;
   };
   /////////// form Attechment History
@@ -495,7 +497,7 @@ export default function Followupage() {
                                       </select>
                                     </div>
                                   </div>
-                                 {foundObject?.followup_won_amount?(<> <div className="row status-bottom">
+                                  {foundObject?.followup_won_amount ? (<> <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
                                       Won Amount Of Lead
                                     </div>
@@ -509,8 +511,8 @@ export default function Followupage() {
                                         autoComplete="off"
                                       />
                                     </div>
-                                  </div></>):<></>}
-                                 
+                                  </div></>) : <></>}
+
 
                                   <div className="row status-bottom">
                                     <div className="col-md-4 pd-top col-xs-4">
@@ -904,14 +906,14 @@ export default function Followupage() {
                                         >
                                           <option value="">Select</option>
                                           {ProductService?.product_service?.map(
-                                (service, key) => {
-                                  return (
-                                    <option value={service._id}>  
-                                      {service?.product_service_name}
-                                    </option>
-                                  );
-                                }
-                              )}
+                                            (service, key) => {
+                                              return (
+                                                <option value={service._id}>
+                                                  {service?.product_service_name}
+                                                </option>
+                                              );
+                                            }
+                                          )}
                                         </select>
                                       </div>
                                     </div>
@@ -1032,14 +1034,14 @@ export default function Followupage() {
 
                                           <option value="">Select</option>
                                           {leadSourcedata?.leadSource?.map(
-                                (leadsource, key) => {
-                                  return (
-                                    <option value={leadsource._id}>
-                                      {leadsource?.lead_source_name}
-                                    </option>
-                                  );
-                                }
-                              )}
+                                            (leadsource, key) => {
+                                              return (
+                                                <option value={leadsource._id}>
+                                                  {leadsource?.lead_source_name}
+                                                </option>
+                                              );
+                                            }
+                                          )}
                                         </select>
                                       </div>
                                     </div>
@@ -1622,9 +1624,7 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {format(new Date(datafomate(
-                                                follow?.created
-                                              )), 'dd/MM/yy hh:mm:ss')}
+                                              {follow?.followup_date && format(new Date(datafomate(follow?.created)), 'dd/MM/yy hh:mm:ss')}
                                             </td>
                                             <td>
                                               {
@@ -1633,9 +1633,7 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {format(new Date(datafomate(
-                                                follow?.followup_date
-                                              )), 'dd/MM/yy hh:mm:ss')}
+                                              {follow?.followup_date && format(new Date(datafomate(follow?.followup_date)), 'dd/MM/yy hh:mm:ss')}
                                             </td>
                                             <td>{follow?.followup_desc}</td>
                                           </tr>
