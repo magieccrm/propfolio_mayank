@@ -228,7 +228,8 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     {
       name: "Followup date",
       selector: (row) => (row?.followup_date) ? (
-        row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+      //  row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+      row?.followup_date
       ) : (''),
       sortable: true,
     },
@@ -265,7 +266,8 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     {
       name: "Followup date",
       selector: (row) => (row?.followup_date) ? (
-        row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+        // row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+        row?.followup_date
       ) : (''),
       sortable: true,
     },
