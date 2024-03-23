@@ -1624,7 +1624,8 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {follow?.followup_date && format(new Date(datafomate(follow?.created)), 'dd/MM/yy hh:mm:ss')}
+                                            {follow?.created}
+                                              {/* {follow?.followup_date && format(new Date(datafomate(follow?.created)), 'dd/MM/yy hh:mm:ss')} */}
                                             </td>
                                             <td>
                                               {
@@ -1633,7 +1634,8 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {follow?.followup_date && format(new Date(datafomate(follow?.followup_date)), 'dd/MM/yy hh:mm:ss')}
+                                              {follow?.followup_date}
+                                              {/* {follow?.followup_date && format(new Date(datafomate(follow?.followup_date)), 'dd/MM/yy hh:mm:ss')} */}
                                             </td>
                                             <td>{follow?.followup_desc}</td>
                                           </tr>
