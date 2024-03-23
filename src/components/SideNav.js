@@ -9,7 +9,8 @@ function SideNav() {
   const [sms, setsms] = useState("none");
   const [wtsp, setwtsp] = useState("none");
   const [apis, setapis] = useState("none");
-  const openclose = () => {
+  const [Report1, setReport1] = useState("none");
+  const openclose = () => { 
     if (line === 'none') {
       setline("block")
     } else {
@@ -50,6 +51,13 @@ function SideNav() {
       setapis("block")
     } else {
       setapis("none")
+    }
+  }
+  const Report=()=>{
+    if (Report1 === 'none') {
+      setReport1("block")
+    } else {
+      setReport1("none")
     }
   }
   ////// Hide And Show///////
@@ -329,13 +337,43 @@ function SideNav() {
                     Product & Services
                   </a>
                 </li>
-                <li className="nav-item">
+
+
+                {/* <li className="nav-item">
                   <a href="javascript:void(0);" className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
                     onClick={() => handleItemClick('Report')}>
                     <i className="nav-icon far fa-file" />
                     Report
                   </a>
+                </li> */}
+
+
+                {/* for report  */}
+                <li className="nav-item">
+                  <Link to="#" className="nav-link" onClick={Report}>
+                    <i className="nav-icon fas fa fa-user-md" />
+                    Report 
+                    <i className="fas fa-angle-left right" />
+                  </Link>
+                  <ul className="nav nav-treeview" style={{ display: Report1 }}>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'Incomereport' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('Incomereport')}>
+                        <p>Manage Report</p>  
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'Callreport' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('Callreport')}>
+                        <p>Callreport</p>
+                      </a>
+                    </li>
+
+                  </ul>
                 </li>
+                {/* for report */}
+
+
                 <li className="nav-item">
                   <a href="javascript:void(0);"
                     className={activeItem === 'Setting' ? 'nav-link active' : 'nav-link'}
