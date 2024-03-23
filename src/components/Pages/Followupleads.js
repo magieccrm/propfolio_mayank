@@ -138,10 +138,7 @@ try {
                     </form>
                   </div>
                 </div>
-
-              </div>
-
-
+            </div>
               <div className="pt-3">
                 <div className="container pl-0">
                   <AllFollowupstable sendDataToParent={handleChildData} dataFromParent={none} />
