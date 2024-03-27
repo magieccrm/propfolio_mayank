@@ -61,6 +61,7 @@ export default function Incomereport() {
 
 
   const [getLeadData, setLeadData] = useState([]);
+  const [getLeadData1, setLeadData1] = useState([]);
   const getEmployeeReport = async (e) => {
     e.preventDefault();
     const headers = {
@@ -74,6 +75,7 @@ export default function Incomereport() {
         { headers }
       );
       setLeadData(responce?.data?.lead);
+      setLeadData1(responce?.data?.data);
       toast(responce?.data?.message);
       setllll('none')
       setllll1('block')
@@ -313,7 +315,46 @@ export default function Incomereport() {
                                 style={{ width: '500px', height: '500px', display: llll }} />
                             </div>
                           </div>
+                          </div>
+
+                      {
+                        getLeadData1.length>0?(<>
+                        <div className="row">
+                         <div class="col-3">
+                          <div class="button-30 border-lefts1 mb-4">
+                            <div class="heading_lead py-2 pt-2">
+                              <h5>Total</h5>
+                              <p>{getLeadData1[0].Total}</p>
+                            </div>
+                          </div>
                         </div>
+                          <div class="col-3">
+                          <div class="button-30 border-lefts1 mb-4">
+                            <div class="heading_lead py-2 pt-2">
+                              <h5>Won</h5>
+                              <p>{getLeadData1[0].Won}</p>
+                            </div>
+                          </div>
+                        </div>
+                         <div class="col-3">
+                          <div class="button-30 border-lefts1 mb-4">
+                            <div class="heading_lead py-2 pt-2">
+                            <h5>Ratio</h5>
+                              <p>{getLeadData1[0].Ratio}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="button-30 border-lefts1 mb-4">
+                            <div class="heading_lead py-2 pt-2">
+                            <h5>Amount</h5>
+                              <p>{getLeadData1[0].Amount}</p>
+                            </div>
+                          </div>
+                        </div></div>
+                        </>):(<></>)
+                      }
+                        
                         <div className="card-headers">
                           <DataTable
                             className="custom-datatable"
