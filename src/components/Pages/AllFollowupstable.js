@@ -228,8 +228,8 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     {
       name: "Followup date",
       selector: (row) => (row?.followup_date) ? (
-      //  row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
-      row?.followup_date
+        //  row?.followup_date && format(new Date(datafomate(row?.followup_date)), 'dd/MM/yy hh:mm:ss')
+        getdatetimeformate(row?.followup_date)
       ) : (''),
       sortable: true,
     },
@@ -302,10 +302,13 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
 
 
   const getdatetimeformate = (datetime) => {
-    const dateObject = new Date(datetime);
-    const formattedDate = `${dateObject.getFullYear()}-${padZero(dateObject.getMonth() + 1)}-${padZero(dateObject.getDate())} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
-    return formattedDate;
-
+    if (datetime) {
+      const dateObject = new Date(datetime);
+      const formattedDate = `${padZero(dateObject.getDate())}-${padZero(dateObject.getMonth() + 1)}-${dateObject.getFullYear()} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
+      return formattedDate;
+    } else {
+      return " ";
+    }
   }
   function padZero(num) {
     return num < 10 ? `0${num}` : num;
