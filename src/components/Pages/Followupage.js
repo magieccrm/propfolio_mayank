@@ -291,6 +291,19 @@ export default function Followupage() {
   //   }
   // }
 
+  const getdatetimeformate = (datetime) => {
+    if (datetime) {
+      const dateObject = new Date(datetime);
+      const formattedDate = `${padZero(dateObject.getDate())}-${padZero(dateObject.getMonth() + 1)}-${dateObject.getFullYear()} ${padZero(dateObject.getHours())}:${padZero(dateObject.getMinutes())}`;
+      return formattedDate;
+    } else {
+      return " ";
+    }
+  }
+  function padZero(num) {
+    return num < 10 ? `0${num}` : num;
+  }
+
   return (
     <div>
       <div className="content-wrapper">
@@ -1624,7 +1637,7 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                            {follow?.created}
+                                            {getdatetimeformate(follow?.created)}
                                               {/* {follow?.followup_date && format(new Date(datafomate(follow?.created)), 'dd/MM/yy hh:mm:ss')} */}
                                             </td>
                                             <td>
@@ -1634,7 +1647,7 @@ export default function Followupage() {
                                               }
                                             </td>
                                             <td>
-                                              {follow?.followup_date}
+                                              {getdatetimeformate(follow?.followup_date)}
                                               {/* {follow?.followup_date && format(new Date(datafomate(follow?.followup_date)), 'dd/MM/yy hh:mm:ss')} */}
                                             </td>
                                             <td>{follow?.followup_desc}</td>
