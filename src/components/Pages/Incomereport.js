@@ -315,7 +315,7 @@ export default function Incomereport() {
                                 style={{ width: '500px', height: '500px', display: llll }} />
                             </div>
                           </div>
-                        </div>
+                          </div>
 
                       {
                         getLeadData1.length>0?(<>
