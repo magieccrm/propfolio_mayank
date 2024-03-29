@@ -75,7 +75,7 @@ function Header() {
         </ul>
 
         <Breadcrumb />
-         <div className="text-center blink-soft" style={{ marginLeft: '30%'}}><h2>In Demo SMS Will Not Work</h2></div>
+         <div className="text-center blink-soft"><h2 className="demo_smsm">In Demo SMS Will Not Work</h2></div>
 
         <ul className="navbar-nav ml-auto">
           {/* Notifications Dropdown Menu */}

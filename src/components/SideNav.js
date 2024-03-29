@@ -78,20 +78,18 @@ function SideNav() {
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}
           <div className="user-panel ">
-            <div className="info">
-              <h2> Your Company </h2>
-            </div>
-            <div className="image">
-              <div class="image pull-center">
-                <img src={companyLogo} alt="BigCo Inc. logo" />
-              </div>
-            </div>
-            <div className="info text-center">
-              <h4>Welcome</h4>
-              <p>Admin</p>
-            </div>
-          </div>
-
+           
+           <div className="image">
+             <div class="image pull-center">
+               <img src={companyLogo} alt="BigCo Inc. logo" />
+               <div className="welcome_agent">
+                     <h4>Welcome</h4>
+                     <p>Agent</p>
+                  </div>
+             </div>
+           </div>
+            
+         </div>
 
           <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

@@ -82,48 +82,86 @@ const columns =[
     };
   return (
     <div>
-      <div className="content-wrapper">
-        <section className="content content-header  py-5">
-          <div className="container">
-            <div className="panel panel-bd lobidrag lobipanel">
-              <div className="panel-heading">
-                <div className="btn-group bg-white ">
-                  <h4>Upload Data </h4>
-                </div>
-
-                <form>
-                <div className="row">
-            
-                </div>
-              
-              </form>
-              
+    <div className="content-wrapper">
+      <section className="content content-header  py-5">
+        <div className="container">
+          <div className="panel panel-bd lobidrag lobipanel">
+            <div className="panel-heading">
+              <div className="btn-group bg-white ">
+                <h4>Upload Data </h4>
               </div>
-
-              <div className="panel-body bg-white ">
-                 <div className="">
+              <form>
+<div className="row">
+  <div className="col-md-3 ">
+    <label>Enter Message</label>
+    <div className="form-group">
+      <textarea
+        type="text"
+        placeholder="Enter Message"
+        className="form-control"
+        name="message"
+        required=""
+        defaultValue={""}
+      />
+    </div>
+  </div>
+  <div className="col-md-3">
+    <label>Characters</label>
+    <div className="form-group">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Characters"
+        name="message"
+        defaultValue={0}
+      />
+    </div>
+  </div>
+  <div className="col-md-3 ">
+    <div className="form-group">
+      <label>No of SMS</label>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="No of SMS"
+        name="message"
+        defaultValue={1}
+      />
+    </div>
+  </div>
+  <div className="col-md-3 " style={{ marginTop: 25 }}>
+    <div className="form-group">
+      <label />
+      <button className="btn  btn-sm button-57">Send Instant SMS</button>
+    </div>
+  </div>
+</div>
+</form>
+</div>
+ <div className="panel-body bg-white ">
+               <div className="">
+               
+                 <DataTable
+                 responsive
+                 customStyles={customStyles}
+                  columns={columns}
+                  data={uploaddata}
+                  selectableRows
+                  fixedHeader
+                  pagination
+                  // selectableRowsHighlight
+                  highlightOnHover
+                  
+                 >
                  
-                   <DataTable
-                   responsive
-                   customStyles={customStyles}
-                    columns={columns}
-                    data={uploaddata}
-                    selectableRows
-                    fixedHeader
-                    pagination
-                    // selectableRowsHighlight
-                    highlightOnHover
-                    
-                   >
-                   
-                   </DataTable>
-                 </div>
-              </div>
+                 </DataTable>
+               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
+  </div>
   )
 }
 export default UploadDataDetails;

@@ -133,43 +133,84 @@ function Home() {
       <div className="content-wrapper">
         <section className="content py-5">
           <div className="container ">
+          <div className="row">
+            <div className="col-12 col-lg-6 col-md-6 col-xl-6 pl-0 ">
+                  <div className="cardbox02">
+                        <div className="panel-body new_leads bd-panel">
+                           <h2>New Lead</h2>
+                           <p>16</p>
+                         </div>
+                         <div className="lead_img  align-items-center">
+                              <img src="dist/img/Capture_Leads.png"  />
+                         </div>
+                     </div>
+             </div>
+            <div className="col-12 col-lg-6 col-md-6 col-xl-6 pl-0 ">
+            <div className="cardbox02">
+                  <div className="panel-body new_leads bd-panel">
+                     <h2>UnAssigned Lead</h2>
+                      <p>60</p>
+                    </div>
+                    <div className="lead_img  align-items-center">
+                        <img src="dist/img/lead_img.png"  />
+                    </div>
+            </div></div>
+                         
+            </div>
             <div className="row">
-              {
+            {
                 Array?.isArray(leadcountdata) ? (
                   leadcountdata?.map((leadcountdata1, index) => (
                     leadcountdata1?.name === 'Followup Lead' ? (
-                   <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
-                      <Link to="/leads">  <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
-                          <div className="heading_lead py-2 pt-2">
-                            <h5>{leadcountdata1?.name}</h5>
-                            <p>{leadcountdata1?.Value}</p>
+                      <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
+                        <Link to="/leads">  <div className={`buttons-30 border-lefts${index + 1} mb-4`} role="button">
+                          <div className="text-center pt-3">
+                            <div className="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
+                              <i className="fa fa-solid fa-users text-red-500"></i>
+                            </div>
+                            <h5 className="mt-2 mb-2"><span className="counter-value">{leadcountdata1?.name}</span></h5>
+                            <p className="text-slate-500 dark:text-zink-200">{leadcountdata1?.Value}</p>
                           </div>
                         </div></Link>
                       </div>
                     ) : leadcountdata1?.name === 'Total Agent' ? (
                       <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
-                      <Link to="/Setting">    <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
-                          <div className="heading_lead py-2 pt-2">
-                            <h5>{leadcountdata1?.name}</h5>
-                            <p>{leadcountdata1?.Value}</p>
+                        <Link to="/Setting">    <div className={`buttons-30 border-lefts${index + 1} mb-4`} role="button">
+                          <div className="text-center pt-3">
+                            <div className="flex items-center justify-center mx-auto  bg-green-100 rounded-full size-14 dark:bg-red-500/20">
+                              <i className="fa fa-solid fa-user text-green-500"></i>
+                            </div>
+                            <h5 className="mt-2 mb-2"><span className="counter-value">{leadcountdata1?.name}</span></h5>
+                            <p className="text-slate-500 dark:text-zink-200">{leadcountdata1?.Value}</p>
                           </div>
                         </div></Link>
                       </div>
                     ) : (
                       <div className="col-xs-6 col-sm-6 col-md-6 pl-0 dashboard-fixeds col-lg-4" key={index}>
-                       <Link to="/followupleads">    <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
-                          <div className="heading_lead py-2 pt-2">
-                            <h5>{leadcountdata1?.name}</h5>
-                            <p>{leadcountdata1?.Value} - {leadcountdata1?.Value1}</p>
+                        <Link to="/followupleads">    <div className={`button-30 border-lefts${index + 1} mb-4`} role="button">
+                          <div className="text-center pt-3">
+                            <div className="flex items-center justify-center mx-auto text-red-500 1 bg-custom-100 rounded-full size-14 dark:bg-red-500/20">
+                              {index == 3 ? (<i className={`fa fa-solid fa-lightbulb-o text-custom-500 2`}>
+                              </i>) : index == 4 ? (<i className={`fa fa-solid fa-calendar-check-o  text-purple-500 3`}></i>)
+                                : index == 5 ? (<i className={`fa fa-solid fa-clock-o text-red-500 4`}></i>) :
+                                  (<i className={`fa fa-solid fa-handshake-o text-custom-500 5`}></i>)}
+
+                            </div>
+                            <h5 className="mt-2 mb-2"><span className="counter-value">
+                              {leadcountdata1?.name}</span></h5>
+                            <p className="text-slate-500 dark:text-zink-200">{leadcountdata1?.Value} - {leadcountdata1?.Value1}</p>
                           </div>
                         </div></Link>
+                        
                       </div>
+                     
                     )
                   ))
                 ) : (
                   <p>Loading or No Data</p>
-                )
+                ) 
               }
+
 
 
 
@@ -362,13 +403,15 @@ function Home() {
                 </div>
               </div>
               </div>
+            
               <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 pl-0">
                 <div className="panel panel-bd  bg-white">
                   <div className="panel-heading">
                     <div className="panel-title   d-flex justify-content-between">
                       <div className="card-title mb-0">
-                        <h5 className="mb-0"> Best Employee List</h5>
+                        <h5 className="mb-0">   Employee Report</h5>
+                        <p className="since_list">Since Last Year</p>
 
                       </div>
                       <div className="value_serve">
@@ -391,35 +434,41 @@ function Home() {
                   <div className="panel-body personal">
                     <div className="card-bodyes  ">
                       <ul className="p-0 m-0">
-                      <li className="mb-1 d-flex justify-content-between align-items-center">
-                      <div className="bg-label-success rounded">
-                    </div>
-                    <div className="d-flex justify-content-between w-100 flex-wrap">
-                      <h4 className="mb-0 ms-3"> Employee Name </h4>
-                      <div className="d-flex">
+                        <li className="mb-1 d-flex justify-content-between align-items-center">
+                          <div className="bg-label-success rounded">
+                          </div>
+                          <div className="d-flex justify-content-between w-100 flex-wrap">
+                            
+                            <div className="d-flex">
 
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between w-100 flex-wrap">
-                      <h6 className="mb-0 ms-3"> Today Working Hours</h6>
-                      <div className="d-flex">
+                            </div>
+                          </div>
+                          <div className="d-flex justify-content-between w-100 flex-wrap">
+                            
+                            <div className="d-flex">
 
-                      </div>
-                    </div>
-                  </li>
+                            </div>
+                          </div>
+                        </li>
                         {agent?.agent?.map((agent1, key) => {
                           return (
-                            <li className="mb-1 d-flex justify-content-between align-items-center">
-                      <div className="bg-label-success rounded">
+                            <li className="mb-3 d-flex justify-content-between align-items-center">
+                              <div className="bg-label-success rounded">
                                 <img src="img/user_img.jpg" alt="User" className="rounded-circle me-3" width="28" />
                               </div>
                               <div className="d-flex justify-content-between w-100 flex-wrap">
                                 <h6 className="mb-0 ms-3">   {agent1.agent_name}</h6>
                                 <div className="d-flex">
-                               </div>
+                                </div>
                               </div>
-                              <div className="d-flex justify-content-between w-100 flex-wrap">
-                                <h6 className="mb-0 ms-3">  0 h</h6>
+                              <div className="d-flex justify-content-between phone_btns w-100 flex-wrap">
+                                <h6 className="mb-0 ms-3"> <i className="fa fa-phone" aria-hidden="true"></i> 20  </h6>
+                                <div className="d-flex">
+                                </div>
+                              </div>
+                              <div className="d-flex  w-30">
+                                <h6 className="mb-0 ms-3">
+                                   <span className="badge badge-primary light border-0">0h 50m 2s</span></h6>
                                 <div className="d-flex">
                                 </div>
                               </div>
@@ -434,7 +483,72 @@ function Home() {
                   </div>
                 </div>
               </div>
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div className="panel panel-bd  bg-white">
+                  <div className="panel-heading">
+                    <div className="panel-title   d-flex justify-content-between">
+                      <div className="card-title mb-0">
+                        <h5 className="mb-0"> All Leads Information</h5>
+                         <p className="since_list">Since Last Year</p>
+                      </div>
+                      <div className="value_serve">
+                        <div className="dropdown">
+                          <button className="btn p-0" type="button" id="sourceVisits">
+                            <i className="fa fa-ellipsis-v fa-sm text-muted"></i>
+                          </button>
+                          <div className="dropdown-menu dropdown-menu-end">
+                            <a className="dropdown-item" href="javascript:void(0);">Refresh</a>
+                            <a className="dropdown-item" href="javascript:void(0);">Download</a>
+                            <a className="dropdown-item" href="javascript:void(0);">View All</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
+
+                  </div>
+
+                  <div className="panel-body personal">
+                    <div className="card-bodyes  ">
+                      <ul className="p-0 m-0">
+                        <li className="mb-1 d-flex justify-content-between align-items-center">
+                          <div className="bg-label-success rounded">
+                          </div>
+                           
+                          
+                        </li>
+                        {agent?.agent?.map((agent1, key) => {
+                          return (
+                            <li className="mb-3 d-flex justify-content-between align-items-center">
+                              <div className="badge bg-label-secondaryess p-2 me-3 rounded svg-icons-prev">
+                              <i className="fab fa fa-user" aria-hidden="true"></i>
+                              </div>
+                              <div className="d-flex justify-content-between w-100 flex-wrap">
+                                <h6 className="mb-0 ms-3">   {agent1.agent_name}</h6>
+                                <div className="d-flex">
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-between w-100 flex-wrap">
+                                
+                                <div className="d-flex">
+                                </div>
+                              </div>
+                              <div className="d-flex  w-30">
+                                <h6 className="mb-0 ms-3"> <span className="badge badge-primaryess light border-0">400</span></h6>
+                                <div className="d-flex">
+                                </div>
+                              </div>
+                            </li>
+
+
+                          );
+                        })}
+                      </ul>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="row pt-3">
               <div className="col-xs-12 col-sm-12 col-md-4 pl-0">

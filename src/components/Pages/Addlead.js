@@ -158,14 +158,12 @@ function Addlead() {
                 <button
                   type="button"
                   style={{ float: "right" }}
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primaryess"
                   data-toggle="modal"
                   data-target="#custome"
                 >
-                  {" "}
                   <Link className="btn btnes exports" to="/import-lead">
-                    {" "}
-                    <i className="fa fa-download" />
+                     <i className="fa fa-download" />
                     &nbsp; Import{" "}
                   </Link>
                 </button>
@@ -521,7 +519,7 @@ function Addlead() {
                             <div className="col-sm-6   mob-left-right col-xs-12">
                               <div className="row">
                                 <div className="col-12 address_information">
-                                  <div className="address-sec"> Address </div>
+                                  {/* <div className="address-sec"> Address </div> */}
                                 </div>
 
                                 <div className="col-md-4 pd-top mobile-hids">
@@ -621,12 +619,12 @@ function Addlead() {
                             </div>
                             <div className="col-sm-6  mob-left-right col-xs-12">
                               <div className="row">
-                                <div className="address_information newaddress">
+                                {/* <div className="address_information newaddress">
                                   <div className="address-sec">
                                     {" "}
                                     Additional Information{" "}
                                   </div>
-                                </div>
+                                </div> */}
                               </div>
 
                               <div className="row">
@@ -765,41 +763,35 @@ function Addlead() {
 
                     <div className="col-sm-6 row mob-left-right col-xs-12 ">
                       <div className="row mob-left-right form-group">
-                        {/* <div className="col-md-4 pd-top mobile-hids">
-            <label htmlFor="followup">Description</label>
-          </div>
-          <div className="col-md-8 mob-left-right col-xs-12  form-group">
-            <textarea name="followup_desc" onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  tabIndex={20} className="form-control"  />
-          </div> */}
+                       
                       </div>
 
                       <div className="col-md-5">
-                        {/* <label htmlFor="addtocal"> Add to calender
-          <input type="checkbox"  onChange={e=>setleaddata({...leaddata,status_name:e.target.value})}  name="addtocal"   autoComplete="off" />
-        </label> */}
+                      
                       </div>
                       <input type="hidden" name="isAddNew" autoComplete="off" />
-                      {/* <div className="col-md-4 col-xs-6">
-        <button type="button"  className="btn btnes btn-sm btn-primary  fontsize" tabIndex={20}>Save and Add another</button>
-      </div> */}
-
-                      <div className="col-md-12 col-xs-12 py-10 pt-10 ">
-                        <input
-                          type="submit"
-                          value="save"
-                          name="save"
-                          className="button-57 pull-right"
-                        />
-                        <input
+                      
+</div></div>
+<div className="row text-center pt-3">
+                      <div className="col-md-12 col-xs- max-auto py-10 pt-10 ">
+                      <input
                           type="submit"
                           value="AddAnother"
                           name="AddAnother"
                           style={{ marginRight: "10px" }}
-                          className="button-57 pull-right"
+                          className="button-57 bg_buttonsd"
                         />
-                      </div>
+                        <input
+                          type="submit"
+                          value="save"
+                          name="save"
+                          className="button-57 buttons_sdsre"
+                        />
+                       
+                      
                     </div>
-                  </div>
+                    </div>
+                  
                 </form>
               </div>
             </div>
