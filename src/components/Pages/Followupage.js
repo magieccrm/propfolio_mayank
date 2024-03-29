@@ -316,14 +316,152 @@ export default function Followupage() {
                 <div className="panel panel-bd lobidrag lobipanel">
                   <div className="panel-heading">
                     <div className="row">
-                      <div className="col-md-6 col-xs-6">
+                    <div className="col-12 col-md-8 col-xs-8">
                         <div className="btn-group">
                           <p>Followup</p>
                         </div>
                       </div>
-                      <div className="col-md-6 col-xs-6">
-                        <div className="reset-buttons"></div>
+                    
+                      <div className="col-12 col-md-2 col-xs-2">
+                        <div className="form-group">
+                        <button className="button-wa pull-right " data-toggle="modal" data-target="#myModal">  Whatsapp</button>
+                        </div>
+                       </div>
+                      <div id="myModal" class="modal fade" role="dialog">
+                        <div className="modal-dialog">
+
+
+                          <div className="modal-content">
+                            <div className="modal-header">
+                            Send Whatsapp
+                              <button type="button" className="close" data-dismiss="modal">&times;</button>
+                               
+                            </div>
+                            <div className="modal-body">
+                            <form>
+                            <div className="row">
+                              <div className="col-md-12 ">
+                                <label>Enter Message</label>
+                                <div className="form-group">
+                                  <textarea
+                                    type="text"
+                                    placeholder="Enter Message"
+                                    className="form-control"
+                                    name="message"
+                                    required=""
+                                    defaultValue={""}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <label>Characters</label>
+                                <div className="form-group">
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Characters"
+                                    name="message"
+                                    defaultValue={0}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-12 ">
+                                <div className="form-group">
+                                  <label>No of SMS</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="No of SMS"
+                                    name="message"
+                                    defaultValue={1}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-6 " style={{ marginTop: 25 }}>
+                                <div className="form-group">
+                                  <label />
+                                  <button className="button-57">Send Instant SMS</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+
+                            </div>
+                             
+                          </div>
+
+                        </div>
                       </div>
+                      <div className="col-12 col-md-2 col-xs-2">
+                      <div className="form-group">
+                      <button className="button-57 pull-right" data-toggle="modal" data-target="#myModal1">Send SMS</button>
+                      </div></div>
+                      <div id="myModal1" class="modal fade" role="dialog">
+                        <div className="modal-dialog">
+
+
+                          <div className="modal-content">
+                            <div className="modal-header">
+                            Send SMS
+                              <button type="button" className="close" data-dismiss="modal">&times;</button>
+                               
+                            </div>
+                            <div className="modal-body">
+                            <form>
+                            <div className="row">
+                              <div className="col-md-12 ">
+                                <label>Enter Message</label>
+                                <div className="form-group">
+                                  <textarea
+                                    type="text"
+                                    placeholder="Enter Message"
+                                    className="form-control"
+                                    name="message"
+                                    required=""
+                                    defaultValue={""}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-12">
+                                <label>Characters</label>
+                                <div className="form-group">
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Characters"
+                                    name="message"
+                                    defaultValue={0}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-12 ">
+                                <div className="form-group">
+                                  <label>No of SMS</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="No of SMS"
+                                    name="message"
+                                    defaultValue={1}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-6 " style={{ marginTop: 25 }}>
+                                <div className="form-group">
+                                  <label />
+                                  <button className="button-57">Send Instant SMS</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+
+                            </div>
+                             
+                          </div>
+
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                   <div className="panel-body bg-white">
@@ -603,120 +741,26 @@ export default function Followupage() {
                                       </div>
                                     </div>
 
-                                    <div className="row">
-                                      <div className="col-md-12 col-xs-12">
+                                   
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-md-12 col-xs-12">
+                                <div className="max-widyhsSubmit">
                                         <input
                                           type="submit"
                                           name="submit"
-                                          Value="Submit"
+                                          Value="Submit  "
                                           className="btn btenss form-control btn-success"
                                           autoComplete="off"
-                                          placeholder="Submit"
-                                        />
+                                          placeholder="Submit  "
+                                        /></div>
                                       </div>
-
-                                      {/* <div className="col-md-6 col-xs-6 d-none">
-                            <input
-                              type="button"
-                              onclick="openSmsM();"
-                              name="sms"
-                              defaultValue="Send"
-                              className="btn btn-warning paddingsss form-control"
-                              autoComplete="off"
-                            />
-                          </div>   */}
-
-                                      <div
-                                        id="smsModal"
-                                        className="modal fade"
-                                        role="dialog"
-                                      >
-                                        <div className="modal-dialog">
-                                          <div className="modal-content">
-                                            <div className="modal-header">
-                                              <button
-                                                type="button"
-                                                className="close"
-                                                data-dismiss="modal"
-                                              >
-                                                ×
-                                              </button>
-                                              <h4 className="modal-title">
-                                                SMS Content
-                                              </h4>
-                                            </div>
-                                            <div className="modal-body">
-                                              <label>Enter content</label>
-                                              <textarea
-                                                className="form-controls"
-                                                id="smsC"
-                                                defaultValue={""}
-                                              />
-                                            </div>
-                                            <div className="modal-footer">
-                                              <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                onclick="sendFsms();"
-                                              >
-                                                Send
-                                              </button>
-                                              <button
-                                                type="button"
-                                                className="btn btn-default"
-                                                data-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
                               </div>
-                            </div>
                           </form>
-                          {/* for sms start*/}
-                          {/* <form onSubmit={sendSMS}>
-                            <div className="mai-falows">
-                              <div className="row">
-                                <div className="col-md-12">
-
-                                  <div className="row bottoms-border">
-                                    <div className="col-md-2 col-xs-2">
-                                      <lable>Send Message</lable>
-                                    </div>
-                                    <div className="col-md-7 col-xs-7">
-                                      <textarea className="form-control"
-                                        type="test"
-                                        name=""
-
-                                      />
-                                      <input className="form-control"
-                                        name="endpointurl" value={smsdata?.endpointurl}
-                                        type="hidden" />
-                                      <input className="form-control"
-                                        name="sender" value={smsdata?.sender}
-                                        type="hidden" />
-                                      <input className="form-control"
-                                        name="user" value={smsdata?.user}
-                                        type="hidden" />
-                                      <input className="form-control"
-                                        name="pass" value={smsdata?.pass}
-                                        type="hidden" />
-
-                                    </div>
-                                    <div className="col-md-3 col-xs-3">
-                                      <button type="submit" className="btn btenss form-control btn-success">Send Sms</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form> */}
-                          {/* for sms end */}
+                          
                         </div>
                       </div>
                       {/* Nav tabs */}
@@ -1089,24 +1133,20 @@ export default function Followupage() {
                                         />
                                       </div>
                                     </div>
-                                  </div>
-                                  <div className="col-md-6" />
-                                  <div className="col-md-6">
-                                    <div className="row">
+                                  </div>   </div>
+                                  <div className="row">
                                       <div className="col-md-12">
-                                        <div className="col-md-8 col-xs-8" />
-                                        <div className="col-md-4 col-xs-4">
+                                          <div className="max-widyhsSubmit pt-3">
                                           <button
                                             type="submit"
                                             className="btn btn-sm btn-primary form-control"
                                           >
-                                            Submit
+                                            Submit  
                                           </button>
-                                        </div>
+                                          </div>
                                       </div>
-                                    </div>
+                                   
                                   </div>
-                                </div>
                               </div>
                             </form>
                           </div>
@@ -1393,19 +1433,17 @@ export default function Followupage() {
                                   </div>
                                 </div>
 
-                                <div className="col-md-6" />
-                                <div className="col-md-6">
-                                  <div className="col-md-12">
-                                    <div className="col-md-8 col-xs-8" />
-                                    <div className="col-md-4 col-xs-4">
+                                <div className="col-md-12">
+                                    
+                                    <div className="max-widyhsSubmit py-3">
                                       <button
                                         type="submit"
-                                        className="btn btn-sm btn-primary form-control"
+                                        className="btn btn-sm btn-primary ad_infor form-control"
                                       >
                                         Submit
                                       </button>
                                     </div>
-                                  </div>
+                               
                                 </div>
                               </div>
                             </form>

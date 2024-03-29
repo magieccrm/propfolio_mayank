@@ -528,8 +528,8 @@ export default function AllFollowupstableForActiveLeadForWtsp({ sendDataToParent
               <div className="col-md-3 " style={{ marginTop: '25px' }}>
                 <div className="form-group">
                 <label></label>
-                  <button className="btn  btn-sm btn-danger" >
-                  Send Instant SMS
+                <button className="btn  button-57 btn-sm btn-danger" >
+                Send Instant Wtsp Message  
                   </button>
                 </div>
               </div>

@@ -11,12 +11,12 @@ function GroupSms() {
           <div className="container">
             <div className="panel panel-bd lobidrag lobipanel">
              <div className="panel-body bg-white ">
-                <div className="row">
-                    <div className="col-xl-6 col-md-6" >
+             <div className="row">
+                <div className="col-xl-4 col-md-4" >
                     <Link to="/ActiveLeads">
                          <div className="sms_headings">
                          <div className="card card-animate">
-                          <div className="card-body bd_bottom">
+                          <div className="card-body bd_bottom2">
                               <div className="align-items-center">
                               <div className="text-center overflow-hidden">
                               <div className="counter-icon bg-primary-gradient box-shadow-primary rounded-circle ms-auto mb-0"> 
@@ -32,7 +32,7 @@ function GroupSms() {
                        </div>
                        </Link> 
                     </div>
-                    <div className="col-xl-6 col-md-6" >
+                    <div className="col-xl-4 col-md-4" >
                     <Link to="/Allsmsleads">
                          <div className="sms_headings">
                          <div className="card card-animate">
@@ -53,7 +53,7 @@ function GroupSms() {
                        </div>
                        </Link> 
                     </div>
-                    {/* <div className="col-xl-4 col-md-6 d-none" >
+                    <div className="col-xl-4 col-md-4" >
                     <Link to="/UploadContent">
                          <div className="sms_headings">
                          <div className="card card-animate">
@@ -72,7 +72,7 @@ function GroupSms() {
                          </div>
                        </div>
                        </Link> 
-                    </div> */}
+                    </div>
                      
                  </div>
                   

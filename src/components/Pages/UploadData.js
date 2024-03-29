@@ -131,30 +131,31 @@ function UploadData() {
                 </div>
 
                 <form onSubmit={UplodeExcelFile} >
-                  <div className="row">
-                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                      <div className="form-group">
-                        <label htmlFor="fileInput">Choose file</label>
-                        <input type="file" onChange={filesety} className="form-control-file" required id="fileInput" />
+                  <div className="upload_filses panel ">
+                    <div className="row">
+                      <div className="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                        <div className="form-group  ">
+                          <div className=" ">
+                            <input type="file" onChange={filesety} className="form-control-file  " required id="fileInput" />
+                          </div></div>
                       </div>
-                    </div>
-                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                      <button type="submit" className="button-57 buttonns_057">
-                        Upload
-                      </button>
-                    </div>
+                      <div className="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                        <button type="submit" className="button-57 w-50 ad_infor  buttonns_057">
+                          Upload
+                        </button>
+                      </div>
 
-                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                    <button type="button" class="btn btn-danger button-57 d-none">Download Sample File</button>
+                      <div className="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                        <button type="button" class="btn btn-danger button-57 d-none">Download Sample File</button>
+                      </div>
+
+                      <div className="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                        <button type="button" onClick={handleDownload} class="btn btn-danger float-right button-57">Download Sample File</button>
+                      </div>
+
+
                     </div>
-
-                    <div calssName="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                      <button type="button" onClick={handleDownload} class="btn btn-danger button-57" style={{'marginLeft': '500px'}}>Download Sample File</button>
-                    </div>
-
-
                   </div>
-
                 </form>
 
               </div>
