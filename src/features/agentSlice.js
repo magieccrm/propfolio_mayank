@@ -84,6 +84,42 @@ export const getAllAgent = createAsyncThunk("getAllAgent", async (data, { reject
     }
 });
 
+export const getAllAgent1 = createAsyncThunk("getAllAgent1", async (data, { rejectWithValue }) => {
+        try { 
+            const response = await fetch(`${apiUrl}/get_all_agent`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "mongodb-url": DBuUrl,
+                },
+            });
+            const result = await response.json();
+            if (result.success === true) {
+                return result;
+            } else {
+                if (result.message === 'Client must be connected before running operations') {
+                    // Retry the request if client must be connected
+                    const retryResponse = await fetch(`${apiUrl}/get_all_agent`, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "mongodb-url": DBuUrl,
+                        },
+                    });
+                    const retryResult = await retryResponse.json();
+                    if (retryResult.success === true) {
+                        return retryResult;
+                    }
+                } else {
+                    // Reject with error message if request fails
+                    return rejectWithValue(result.message);
+                }
+            }
+        } catch (error) {
+            // Handle fetch or parsing error
+            return rejectWithValue(error.message);
+        }
+   
+});
+
 
 
 export const getAllAgentWithData = createAsyncThunk("getAllAgentWithData", async (data, { rejectWithValue }) => {
@@ -228,6 +264,20 @@ export const agentSource = createSlice({
 
         },
         [getAllAgent.rejected]: (state, action) => {
+            state.loading = false;
+            state.agent = action.payload;
+        },
+
+
+        [getAllAgent1.pending]: (state) => {
+            state.loading = true;
+        },
+        [getAllAgent1.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.agent = action.payload;
+
+        },
+        [getAllAgent1.rejected]: (state, action) => {
             state.loading = false;
             state.agent = action.payload;
         },
