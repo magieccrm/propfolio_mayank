@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent ,getAllAgentWithData} from "../../features/agentSlice";
+import { getAllAgent ,getAllAgent1,getAllAgentWithData} from "../../features/agentSlice";
 import { useState } from "react";
 import { getEmployeeReport } from "../../features/employeesreportSlice";
 import { Doughnut } from "react-chartjs-2";
@@ -25,7 +25,7 @@ export default function EmployeeReport() {
       dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
     }
     if(localStorage.getItem("role")==='user'){
-      dispatch(getAllAgent());
+      dispatch(getAllAgent1());
      }
 
   
