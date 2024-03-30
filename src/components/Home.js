@@ -43,7 +43,7 @@ function Home() {
     try {
       const responce = await axios.get(
         `${apiUrl}/YearlySaleApi`, {
-        headers: {
+        headers: {  
           "Content-Type": "application/json",
           "mongodb-url": DBuUrl,
         },

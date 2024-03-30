@@ -108,7 +108,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   const getAllLead3 = async (assign_to_agent) => {
     try {
       const responce = await axios.post(
-        `http://localhost:5000/api/v1/getLeadbyTeamLeaderidandwithoutstatus`,
+        `${apiUrl}/getLeadbyTeamLeaderidandwithoutstatus`,
         {
           assign_to_agent,
         },
