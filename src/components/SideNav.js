@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import companyLogo from "./avatar5.png";
 function SideNav() {
@@ -10,6 +10,9 @@ function SideNav() {
   const [wtsp, setwtsp] = useState("none");
   const [apis, setapis] = useState("none");
   const [Report1, setReport1] = useState("none");
+
+
+
   const openclose = () => { 
     if (line === 'none') {
       setline("block")
@@ -20,6 +23,11 @@ function SideNav() {
   const lead = () => {
     if (lead1 === 'none') {
       setlead("block")
+      setcallManageshow("none")
+      setsms("none")
+      setwtsp("none")
+      setapis("none")
+      setReport1("none")
     } else {
       setlead("none")
     }
@@ -27,6 +35,11 @@ function SideNav() {
   const callManage = () => {
     if (callManageshow === 'none') {
       setcallManageshow("block")
+      setlead("none")
+      setsms("none")
+      setwtsp("none")
+      setapis("none")
+      setReport1("none")
     } else {
       setcallManageshow("none")
     }
@@ -34,6 +47,12 @@ function SideNav() {
   const smsManage = () => {
     if (sms === 'none') {
       setsms("block")
+      setcallManageshow("none")
+      setlead("none")
+   
+      setwtsp("none")
+      setapis("none")
+      setReport1("none")
     } else {
       setsms("none")
     }
@@ -41,6 +60,13 @@ function SideNav() {
   const wtspManage = () => {
     if (wtsp === 'none') {
       setwtsp("block")
+      setsms("none")
+      setcallManageshow("none")
+      setlead("none")
+   
+     
+      setapis("none")
+      setReport1("none")
     } else {
       setwtsp("none")
     }
@@ -49,6 +75,11 @@ function SideNav() {
   const allapi = () => {
     if (apis === 'none') {
       setapis("block")
+      setwtsp("none")
+      setsms("none")
+      setcallManageshow("none")
+      setlead("none")
+      setReport1("none")
     } else {
       setapis("none")
     }
@@ -56,12 +87,20 @@ function SideNav() {
   const Report=()=>{
     if (Report1 === 'none') {
       setReport1("block")
+      
+      setapis("none")
+      setwtsp("none")
+      setsms("none")
+      setcallManageshow("none")
+      setlead("none")
+     
     } else {
       setReport1("none")
     }
   }
   ////// Hide And Show///////
-
+ 
+ 
   const [activeItem, setActiveItem] = useState('home');
   const nevigate = useNavigate();
   // Function to handle menu item clicks
@@ -69,8 +108,14 @@ function SideNav() {
     nevigate(`/${itemName}`);
     setActiveItem(itemName);
   };
+  useEffect(()=>{
+    const pathname = window.location.pathname;
+    const parts = pathname.split('/');
+    const lastPart = parts[parts.length - 1];
+    setActiveItem(`${lastPart}`)
+  },[]);
 
-
+  console.log('activeItem',activeItem)
   return (
     <div>
       <side className="main-sidebar sidebar-dark-primary bg-menu-theme elevationes-4">
@@ -90,7 +135,8 @@ function SideNav() {
            </div>
             
          </div>
-
+         <div className="scroll-bar-wrap">
+            <div className="scroll-box">
           <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -202,7 +248,7 @@ function SideNav() {
                   </ul>
                 </li>
                 <li className="nav-item">
-                  <Link to="#" className="nav-link" onClick={callManage}>
+                  <Link to="#" className="nav-link " onClick={callManage}>
                     <i className="nav-icon fas fa fa fa-cog" />
                     Call Manage
                     <i className="fas fa-angle-left right" />
@@ -617,7 +663,7 @@ function SideNav() {
 
             </ul>
           </nav>
-        </div>
+        </div> </div> </div>
       </side>
 
     </div>

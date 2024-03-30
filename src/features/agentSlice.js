@@ -87,7 +87,7 @@ export const getAllAgent = createAsyncThunk("getAllAgent", async (data, { reject
 
 
 export const getAllAgentWithData = createAsyncThunk("getAllAgentWithData", async (data, { rejectWithValue }) => {
-    const responce = await fetch(`http://localhost:5000/api/v1/getAllAgentByTeamLeader`, {
+    const responce = await fetch(`${apiUrl}/getAllAgentByTeamLeader`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export const getAllAgentWithData = createAsyncThunk("getAllAgentWithData", async
         return result;
     } else {
         if (result.message == 'Client must be connected before running operations') {
-            const responce = await fetch(`http://localhost:5000/api/v1/getAllAgentByTeamLeader`, {
+            const responce = await fetch(`${apiUrl}/getAllAgentByTeamLeader`, {
                 headers: {
                     "Content-Type": "application/json",
                     "mongodb-url": DBuUrl,
