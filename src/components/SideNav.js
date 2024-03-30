@@ -90,7 +90,8 @@ function SideNav() {
            </div>
             
          </div>
-
+         <div className="scroll-bar-wrap">
+            <div className="scroll-box">
           <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -617,7 +618,7 @@ function SideNav() {
 
             </ul>
           </nav>
-        </div>
+        </div> </div> </div>
       </side>
 
     </div>
