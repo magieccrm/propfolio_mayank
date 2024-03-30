@@ -39,9 +39,9 @@ const MyCalendar = () => {
   const aaaaa = data.map((leads) => ({
     title: (
       <React.Fragment>
-        {leads.massage_of_calander} --Client   
-         <Link to={`/followupleads/${leads._id}`}>{leads.full_name}  </Link>
-          and Agent -- <Link to={`/followupleads/${leads._id}`}>{leads?.agent_details['0']?.agent_name} </Link>
+        {leads.massage_of_calander} --Client    
+         <Link to={`/followupleads/${leads._id}`}> : {leads.full_name}  </Link>
+          and Agent : <Link to={`/followupleads/${leads._id}`}>{leads?.agent_details['0']?.agent_name} </Link>
       </React.Fragment>
     ),
     start: new Date(leads.followup_date), // Convert to Date object

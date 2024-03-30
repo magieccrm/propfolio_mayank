@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const dispatch = useDispatch();
   const [leads, setleads] = useState([]);
-  const [status, setstatus] = useState();
+  const [status, setstatus] = useState('true');
   const [search, setsearch] = useState("");
   const [filterleads, setfilterleads] = useState([]);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
@@ -21,6 +21,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const { Statusdata } = useSelector((state) => state.StatusData);
   const apiUrl = process.env.REACT_APP_API_URL;
   const DBuUrl = process.env.REACT_APP_DB_URL;
+  console.log('status',status)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,6 +68,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
           assign_to_agent,
         },
       );
+      setstatus(responce?.data?.success);
       if (responce?.data?.success === true) {
         setstatus(responce?.data?.success);
         setleads(responce?.data?.lead);
@@ -90,12 +92,13 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   const getAllLead3 = async (assign_to_agent) => {
     try { 
       const responce = await axios.post(
-        `http://localhost:5000/api/v1/getLeadbyTeamLeaderidandwithstatus`,
+        `${apiUrl}/getLeadbyTeamLeaderidandwithstatus`,
         {
           assign_to_agent,
         },
       );
-      if (responce?.data?.success === true) {
+      setstatus(responce?.data?.success);
+      if (responce?.data?.success === true) {   
         setleads(responce?.data?.lead);
       setfilterleads(responce?.data?.lead);
       return (responce?.data?.message);
@@ -122,7 +125,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
     else {
       getAllLead2(localStorage.getItem("user_id"));
     }
-  }, [localStorage.getItem("user_id"), apiUrl, DBuUrl]);
+  }, [localStorage.getItem("user_id"), apiUrl, DBuUrl,localStorage.getItem("role")]);
 
   useEffect(() => {
     const result = leads.filter((lead) => {

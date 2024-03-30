@@ -427,7 +427,7 @@ function Setting() {
                       <ul className="nav flex-column nav-tabs tabs-left border-lefttab destop-View">
                         <li>
                           <a
-                            classname="active"
+                            classname=""
                             id="v-pills-account-tab"
                             data-toggle="pill"
                             href="#v-pills-account"
@@ -523,7 +523,7 @@ function Setting() {
                    <a id="email-template-tab" data-toggle="pill" href="#email-template-exim" role="tab" aria-controls="email-template-exim" aria-selected="false"><i className="fa wiht fa-globe" /> Email Templates</a>
                    </li> */}
                         <li>
-                          <a
+                          <a  classname="active"
                             id="v-pills-department-tab"
                             data-toggle="pill"
                             href="#v-pills-department"
@@ -577,7 +577,7 @@ function Setting() {
                     <div className="col-12 col-sm-10">
                       <div className="tab-content" id="v-pills-tabContent">
                         <div
-                          className="tab-pane fade show active"
+                          className="tab-pane fade "
                           id="v-pills-account"
                           role="tabpanel"
                           aria-labelledby="v-pills-account-tab"
@@ -2260,7 +2260,7 @@ function Setting() {
                         </div>
 
                         <div
-                          className="tab-pane"
+                          className="tab-pane show active"
                           id="v-pills-department"
                           role="tabpanel"
                           aria-labelledby="v-pills-department-tab"
