@@ -120,6 +120,11 @@ function Setting() {
   });
   const agentSubmit = async (e) => {
     e.preventDefault();
+    const length = formData?.agent_mobile?.length;
+   
+    if (length < 10) {
+      return toast.warn("PlZ Enter 10 Digit Contact No");
+    }
     if (formData._id) {
       const aaaaa = await dispatch(EditAgentDetails(formData));
       if (aaaaa.payload.success === true) {
@@ -405,6 +410,16 @@ function Setting() {
     GetCompanyDetails();
     getTeamLeader();
   }, []);
+
+  const handleContactNoChange = (e) => {
+    const inputValue = e.target.value;
+ const numericValue = inputValue.replace(/\D/g, "");
+  const limitedValue = numericValue.slice(0, 10);
+  setFormData({
+    ...formData,
+    agent_mobile:limitedValue,
+  })
+  };
 
   return (
     <div className="content-wrapper">
@@ -2322,12 +2337,13 @@ function Setting() {
                                             value={formData?.agent_mobile}
                                             maxLength={10}
                                             className="form-control"
-                                            onChange={(e) =>
-                                              setFormData({
-                                                ...formData,
-                                                agent_mobile: e.target.value,
-                                              })
-                                            }
+                                            onChange={handleContactNoChange}
+                                            // onChange={(e) =>
+                                            //   setFormData({ 
+                                            //     ...formData,
+                                            //     agent_mobile: e.target.value,
+                                            //   })
+                                            // }
                                             name="agent_mobile"
                                             placeholder="Mobile"
                                             required
