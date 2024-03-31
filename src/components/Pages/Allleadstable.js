@@ -5,7 +5,7 @@ import DataTable from "react-data-table-component";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAgent ,getAllAgentWithData} from "../../features/agentSlice";
+import {getAllAgent, getAllAgentWithData} from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { toast } from "react-toastify";
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel'; // Import the library
@@ -117,6 +117,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
   useEffect(() => {
     if (localStorage.getItem("role") === "admin") {
       getAllLead1();
+      dispatch(getAllAgent()); 
     }
     if (localStorage.getItem("role") === "TeamLeader") {
       getAllLead3(localStorage.getItem("user_id"));
@@ -124,6 +125,7 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
       } 
     else {
       getAllLead2(localStorage.getItem("user_id"));
+      dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
     }
   }, [localStorage.getItem("user_id"), apiUrl, DBuUrl,localStorage.getItem("role")]);
 
@@ -393,14 +395,14 @@ export const Allleadstable = ({ sendDataToParent, dataFromParent }) => {
 
   const AdvanceSerch = async (e) => {
     e.preventDefault();
-    console.log(adSerch);
+     const updatedata={...adSerch,user_id:localStorage.getItem("user_id"),role:localStorage.getItem("role")}
     fetch(`${apiUrl}/getAdvanceFillter`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "mongodb-url": DBuUrl,
       },
-      body: JSON.stringify(adSerch),
+      body: JSON.stringify(updatedata),
     })
       .then((response) => {
         if (!response.ok) {

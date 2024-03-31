@@ -56,33 +56,31 @@ export const getAllAgent = createAsyncThunk("getAllAgent", async (data, { reject
             const result = await response.json();
             if (result.success === true) {
                 return result;
-            } else {
-                if (result.message === 'Client must be connected before running operations') {
-                    // Retry the request if client must be connected
-                    const retryResponse = await fetch(`${apiUrl}/get_all_agent`, {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "mongodb-url": DBuUrl,
-                        },
-                    });
-                    const retryResult = await retryResponse.json();
-                    if (retryResult.success === true) {
-                        return retryResult;
-                    }
-                } else {
-                    // Reject with error message if request fails
-                    return rejectWithValue(result.message);
-                }
             }
         } catch (error) {
             // Handle fetch or parsing error
             return rejectWithValue(error.message);
         }
     } else {
-        // Handle case where user role is not admin
-        return rejectWithValue("User is not an admin");
+        if (localStorage.getItem("role") === 'user') {
+        const responce = await fetch(`${apiUrl}/getAllAgentofATeamByAgent`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "mongodb-url": DBuUrl,
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await responce.json();
+        if (result.success === true) {
+            return result;
+        }else{
+            return rejectWithValue(result.message);
+        }
+      
     }
-});
+}
+}); 
 
 export const getAllAgent1 = createAsyncThunk("getAllAgent1", async (data, { rejectWithValue }) => {
         try { 

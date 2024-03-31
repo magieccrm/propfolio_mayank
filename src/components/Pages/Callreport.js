@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductService } from "../../features/product_serviceSlice";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent,getAllAgentWithData } from "../../features/agentSlice";
 import DataTable from "react-data-table-component";
 export default function Callreport() {
   const [data, setdata] = useState([]);
@@ -45,7 +45,16 @@ export default function Callreport() {
 
   useEffect(() => {
       getAllCallDetails();
-    dispatch(getAllAgent());
+    // dispatch(getAllAgent());
+    if(localStorage.getItem("role")==='admin'){
+      dispatch(getAllAgent());
+     }
+     if (localStorage.getItem("role") === "TeamLeader") {
+      dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+    }
+    if(localStorage.getItem("role")==='user'){
+      dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
+     }
   }, []);
   const [leads, setleads] = useState([]);
   const [search, setsearch] = useState("");
