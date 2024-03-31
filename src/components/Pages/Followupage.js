@@ -4,7 +4,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from 'date-fns';
 import { getAllLead, getLeadById } from "../../features/leadSlice";
-import { getAllAgent } from "../../features/agentSlice";
+import { getAllAgent ,getAllAgentWithData} from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 import { getAllCountry } from "../../features/country_stateSlice";
 import { getStatebycountry } from "../../features/getStateByCountrySlice";
@@ -57,11 +57,20 @@ export default function Followupage() {
   useEffect(() => {
     dispatch(getAllStatus());
     dispatch(getAllLead());
-    dispatch(getAllAgent());
+    // dispatch(getAllAgent());
     dispatch(getAllCountry());
     dispatch(getAllLostReason());
     dispatch(getAllProductService());
     dispatch(getAllLeadSource());
+    if(localStorage.getItem("role")==='admin'){
+      dispatch(getAllAgent());
+     }
+     if (localStorage.getItem("role") === "TeamLeader") {
+      dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
+    }
+    if(localStorage.getItem("role")==='user'){
+      dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
+     }
 
     if (_id.id) {
       dispatch(getAllFollowup(_id.id));

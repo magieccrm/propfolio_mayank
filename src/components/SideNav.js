@@ -114,8 +114,6 @@ function SideNav() {
     const lastPart = parts[parts.length - 1];
     setActiveItem(`${lastPart}`)
   },[]);
-
-  console.log('activeItem',activeItem)
   return (
     <div>
       <side className="main-sidebar sidebar-dark-primary bg-menu-theme elevationes-4">
@@ -650,13 +648,30 @@ function SideNav() {
                 </li>
 
 
-                <li className="nav-item">
-                  <a href="javascript:void(0);" className={activeItem === 'Report' ? 'nav-link active' : 'nav-link'}
-                    onClick={() => handleItemClick('Report')}>
-                    <i className="nav-icon far fa-file" />
-                    Report
-                  </a>
+                 {/* for report  */}
+                 <li className="nav-item">
+                  <Link to="#" className="nav-link" onClick={Report}>
+                    <i className="nav-icon fas fa fa-user-md" />
+                    Report 
+                    <i className="fas fa-angle-left right" />
+                  </Link>
+                  <ul className="nav nav-treeview" style={{ display: Report1 }}>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'Incomereport' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('Incomereport')}>
+                        <p>Manage Report</p>  
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a href="javascript:void(0);" className={activeItem === 'Callreport' ? 'nav-link active' : 'nav-link'}
+                        onClick={() => handleItemClick('Callreport')}>
+                        <p>Callreport</p>
+                      </a>
+                    </li>
+
+                  </ul>
                 </li>
+                {/* for report */}
 
               </>)}
 

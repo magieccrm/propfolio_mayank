@@ -25,7 +25,7 @@ export default function EmployeeReport() {
       dispatch(getAllAgentWithData({assign_to_agent:localStorage.getItem("user_id")}));
     }
     if(localStorage.getItem("role")==='user'){
-      dispatch(getAllAgent1());
+      dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
      }
 
   
