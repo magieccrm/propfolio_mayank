@@ -129,7 +129,7 @@ function SideNav() {
                <img src={companyLogo} alt="BigCo Inc. logo" />
                <div className="welcome_agent">
                      <h4>Welcome</h4>
-                     <p>Agent</p>
+                     <p>{localStorage.getItem("agent_name")}({localStorage.getItem("role")})</p>
                   </div>
              </div>
            </div>

@@ -33,7 +33,7 @@ function ManageEmployee() {
    const GetUserCallAccordingToTeamLeader=async(assign_to_agent)=>{
     try {
        const responce = await axios.post(
-         `http://localhost:5000/api/v1/GetUserCallAccordingToTeamLeader`,{
+         `${apiUrl}/GetUserCallAccordingToTeamLeader`,{
           assign_to_agent,
         },{
               headers:{
@@ -56,13 +56,13 @@ function ManageEmployee() {
   useEffect(()=>{
 
     if(localStorage.getItem("role")==='admin'){
-      getHigstNoOfCall();
+      getHigstNoOfCall(); 
      }
      if (localStorage.getItem("role") === "TeamLeader") {
       GetUserCallAccordingToTeamLeader(localStorage.getItem("user_id"))
     } 
     if(localStorage.getItem("role")==='user'){
-      dispatch(getHigstNoOfCall());
+      dispatch(getHigstNoOfCall()); 
      }
 
     

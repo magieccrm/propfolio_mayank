@@ -19,7 +19,7 @@ function Leads() {
 
   useEffect(() => {
     dispatch(getAllLead());
-    dispatch(getAllAgent());
+    
     dispatch(getAllStatus());
   }, []);
   const BulkAction = async (e) => {

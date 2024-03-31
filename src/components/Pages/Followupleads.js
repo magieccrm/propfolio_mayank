@@ -7,20 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAgent } from "../../features/agentSlice";
 import { getAllStatus } from "../../features/statusSlice";
 function Followupleads() {
-  const apiUrl = process.env.REACT_APP_API_URL;  
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { agent } = useSelector((state) => state.agent);
-  const { Statusdata } = useSelector((state) => state.StatusData);  
+  const { Statusdata } = useSelector((state) => state.StatusData);
   const [none, setnone] = useState('none');
   const [leads, setLeadID] = useState([]);
 
-  const [LeadStatus,setLeadStatus]=useState();
-  const [Leadagent,setLeadagent]=useState();
+  const [LeadStatus, setLeadStatus] = useState();
+  const [Leadagent, setLeadagent] = useState();
 
-  const dispatch=useDispatch(); 
-  useEffect(()=>{
-    dispatch(getAllAgent()); 
+  const dispatch = useDispatch();
+  useEffect(() => {
+  
     dispatch(getAllStatus());
-  },[]);
+  }, []);
 
   const advanceserch = () => {
     if (none == 'none') {
@@ -30,38 +30,34 @@ function Followupleads() {
     }
   }
 
-  
 
-  const BulkAction=async(e)=>{ 
+
+  const BulkAction = async (e) => {
     e.preventDefault();
-const updatedData = {
-    leads,
-    Leadagent,
-    LeadStatus    
-};
-   console.log('updatedData',updatedData)
+    const updatedData = {
+      leads,
+      Leadagent,
+      LeadStatus
+    };
+    try {
+      const response = await axios.put(
+        `${apiUrl}/BulkLeadUpdate/`,
+        updatedData
+      );
+      if (response.data.success === false) {
+        toast.warn(response.data.message);
+      }
+      if (response.data.success === true) {
+        window.location.reload(false);
+        toast.success(response.data.message);
 
-try {
-  const response = await axios.put(
-    `${apiUrl}/BulkLeadUpdate/`,
-    updatedData
-  );
- 
- if(response.data.success===false){
-  toast.warn(response.data.message); 
+      }
+    } catch (error) {
+      toast.warn(error.response?.data?.message);
+
+    }
+
   }
-  if(response.data.success===true){
-    window.location.reload(false); 
-    toast.success(response.data.message); 
-
-  }
-} catch (error) {
- 
-  toast.warn(error.response?.data?.message); 
-//  console.error('Error updating lead', error);
-}
-
-}
 
   const handleChildData = (data) => {
     setLeadID(data);
@@ -138,7 +134,7 @@ try {
                     </form>
                   </div>
                 </div>
-            </div>
+              </div>
               <div className="pt-3">
                 <div className="container pl-0">
                   <AllFollowupstable sendDataToParent={handleChildData} dataFromParent={none} />

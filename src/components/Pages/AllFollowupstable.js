@@ -134,6 +134,7 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   useEffect(() => {
     if (localStorage.getItem("role") === 'admin') {
       getAllLead1();
+      dispatch(getAllAgent());
     }
     if (localStorage.getItem("role") === "TeamLeader") {
       getAllLead3(localStorage.getItem("user_id"));
@@ -141,8 +142,9 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
     }
     else {
       getAllLead2(localStorage.getItem("user_id"));
+      dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
     }
-    dispatch(getAllAgent());
+   
     dispatch(getAllStatus());
   }, [localStorage.getItem("user_id")]);
 
