@@ -451,14 +451,14 @@ export default function AllFollowupstable({ sendDataToParent, dataFromParent }) 
   const [adSerch, setAdvanceSerch] = useState([]);
   const AdvanceSerch = async (e) => {
     e.preventDefault();
-    console.log(adSerch);
+    const updatedata={...adSerch,user_id:localStorage.getItem("user_id"),role:localStorage.getItem("role")}
     fetch(`${apiUrl}/getAdvanceFillter`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "mongodb-url": DBuUrl,
       },
-      body: JSON.stringify(adSerch),
+      body: JSON.stringify(updatedata),
     })
       .then((response) => {
         if (!response.ok) {
