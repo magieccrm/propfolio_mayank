@@ -11,7 +11,7 @@ import { getAllLeadSource } from "../../features/leadSource";
 import { getAllStatus } from "../../features/statusSlice";
 import DataTable from "react-data-table-component";
 import toast from "react-hot-toast";
-
+import randomcolor from 'randomcolor';
 export default function Incomereport() {
   const apiUrl = process.env.REACT_APP_API_URL;
   const DBuUrl = process.env.REACT_APP_DB_URL;
@@ -63,8 +63,10 @@ export default function Incomereport() {
       dispatch(getAllAgent({assign_to_agent:localStorage.getItem("user_id")}));
      }
   }, []);
+  const colors = randomcolor({ count: leadsourcedata1.length });
   const options = {
     labels: leadsource,
+    colors: colors,
   };
 
 
