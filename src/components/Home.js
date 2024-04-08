@@ -1,6 +1,6 @@
 import { Tooltip } from "bootstrap";
 import React, { useState } from "react";
-
+import randomcolor from 'randomcolor';
 import { Link } from "react-router-dom";
 import LineChart from "./LineChart";
 import LineChart1 from "./LineChart1";
@@ -124,8 +124,11 @@ function Home() {
     getLeadCountData();
     getAllLeadSourceOverview()
   }, []);
+
+  const colors = randomcolor({ count: leadsourcedata1.length });
   const options = {
     labels: leadsource,
+    colors: colors,
   };
   return (
     <div>
